@@ -1,0 +1,88 @@
+---
+description: Mohandes Man frontend architecture, folder structure, and coding conventions
+alwaysApply: true
+---
+
+# Mohandes Man frontend architecture
+
+Follow this architecture for every change. Do not invent a different structure.
+
+## Hard constraints
+
+- Never create a `src/` directory. Routes live in `app/` at the project root.
+- Never create `index.ts` or `index.tsx` barrel files.
+- Pages must stay thin. Domain UI does not live in route files.
+- Server Components by default. Add `"use client"` only when the file needs events, state, effects, or browser APIs.
+- Do not convert `app/layout.tsx` into a Client Component. Compose client providers from `providers/`.
+- Use `@/` imports. Do not use deep relative imports when an alias is clearer.
+- Do not use `any`, `@ts-ignore`, or unsafe assertions unless there is a documented technical reason.
+- Do not install new dependencies without a clear need.
+- Do not change this architecture without explicit instruction.
+- Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, Bootstrap, or shadcn/ui unless explicitly requested.
+- pnpm is the only package manager.
+
+## Folder map
+
+- `app/` — routes, layouts, loading/error boundaries, Route Handlers
+- `components/layout/` — header, footer, navigation, search shell
+- `components/ui/` — design-system primitives only
+- `components/common/` — reusable non-primitive, non-domain UI
+- `components/store/` — all store/domain feature UI
+- `hooks/` — reusable React hooks
+- `lib/` — pure utilities and infrastructure
+- `services/` — domain API access
+- `providers/` — React providers
+- `config/` — static configuration
+- `types/store/` — shared domain types
+- `css/` — global styles only (`css/globals.css`)
+
+## Naming
+
+Components: camelCase folders and files, PascalCase exports.
+
+```text
+components/store/cartDrawer/cartDrawer.tsx
+components/ui/button/button.tsx
+export function CartDrawer() {}
+export function Button() {}
+```
+
+Hooks, lib, providers, config, and services: kebab-case folder per module.
+
+```text
+hooks/use-cart/use-cart.ts
+lib/utils/cn/cn.ts
+lib/api/http-client/http-client.ts
+providers/query-provider/query-provider.tsx
+providers/app-provider/app-provider.tsx
+config/site.config/site.config.ts
+services/auth-service/auth-service.ts
+```
+
+Routes: kebab-case, groups `(auth)` and `(shop)`, dynamic `[id]`.
+
+```text
+app/(auth)/sign-in/page.tsx
+app/(shop)/engineers/[id]/page.tsx
+```
+
+Do not put hook files directly in `hooks/`. Do not put lib files directly in `lib/`. Do not put domain components in `components/ui/`.
+
+## Feature UI shape
+
+```text
+components/store/<feature>/<componentName>/<componentName>.tsx
+components/store/<feature>/<componentName>/type/<componentName>.types.ts
+```
+
+Colocate component types. Put shared domain types in `types/store/*.types.ts`.
+
+## Data and env
+
+- Read the API origin from `NEXT_PUBLIC_API_BASE_URL` via `lib/env/env.ts`.
+- Do not hardcode API base URLs.
+- Keep application-specific queries out of `providers/query-provider/`.
+- Use native fetch only. Do not introduce Axios.
+- Use TanStack Query only for client-side server state (refetch, mutations, polling, client cache).
+- The application is Persian and RTL. Keep `lang="fa"` and `dir="rtl"` on the root document.
+- Do not change this architecture unless explicitly instructed.

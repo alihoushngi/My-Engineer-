@@ -1,0 +1,8 @@
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
+
+verifyDepsBeforeRun: false
+fetchRetries: 10
+fetchRetryMaxtimeout: 120000
+fetchTimeout: 300000
