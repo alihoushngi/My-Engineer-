@@ -6,6 +6,12 @@ Rulebook for the Mohandes Man frontend. Follow these rules in human and AI-assis
 
 This frontend is a Next.js App Router application. The first phase establishes structure, not product features. Architecture exists to keep routes thin, server rendering the default, and domain UI isolated from primitives.
 
+Product routes, layouts, and domain component maps are specified in:
+
+- [INFORMATION-ARCHITECTURE.md](INFORMATION-ARCHITECTURE.md)
+- [COMPONENT-ARCHITECTURE.md](COMPONENT-ARCHITECTURE.md)
+- [STATE-MATRIX.md](STATE-MATRIX.md)
+
 ## No `src/` directory
 
 Application code lives at the repository root. Routes belong in `app/`. Do not create `src/`.
@@ -61,10 +67,10 @@ Routes, layouts, loading UI, error UI, and Route Handlers. Nothing else.
 
 Route groups:
 
-- `(auth)` — authentication routes
+- `(auth)` — authentication and expert-registration routes
 - `(shop)` — storefront routes
 
-Route names are kebab-case. Dynamic segments use `[id]`.
+Route names are kebab-case. Dynamic segments use `[id]` for opaque identity (experts). Public SEO resources use `[slug]` or `[category]` (services, articles, FAQ, knowledge). See [INFORMATION-ARCHITECTURE.md](INFORMATION-ARCHITECTURE.md).
 
 ### `components/ui/`
 
@@ -93,8 +99,8 @@ components/store/<feature>/<componentName>/<componentName>.tsx
 Examples:
 
 ```text
-components/store/home/heroSection/heroSection.tsx
-components/store/engineer/engineerCard/engineerCard.tsx
+components/store/home/homeHero/homeHero.tsx
+components/store/expert/expertCard/expertCard.tsx
 ```
 
 ### `hooks/`
@@ -245,7 +251,7 @@ The application is Persian and RTL.
 - Tailwind CSS only for application styling.
 - Use `cn()` from `lib/utils/cn/cn.ts` for conditional classes.
 - Global tokens live in `css/globals.css`.
-- Visual language, semantic tokens, and UI primitives are documented in [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md).
+- Visual language, semantic tokens, and UI primitives are documented in [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md). Domain components compose those primitives; they do not duplicate them.
 
 ## State
 
