@@ -27,7 +27,9 @@ export function Input({
   const isPhone = type === "tel";
   const isControlled = value !== undefined;
   const resolvedValue = isPhone ? latinValue(value) : value;
-  const resolvedDefaultValue = isPhone ? latinValue(defaultValue) : defaultValue;
+  const resolvedDefaultValue = isPhone
+    ? latinValue(defaultValue)
+    : defaultValue;
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (isPhone) {

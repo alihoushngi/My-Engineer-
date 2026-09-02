@@ -159,29 +159,29 @@ Motion communicates state: hover, focus, open/close, expand/collapse. Timing tok
 
 Primitives live in `components/ui/<componentName>/<componentName>.tsx`.
 
-| Primitive                               | Intended use                                             |
-| --------------------------------------- | -------------------------------------------------------- |
-| Button                                  | Primary actions, secondary, outline, ghost, danger, link |
-| Input / Textarea / Label                | Form controls. `type="tel"` converts Persian/Arabic digits to Latin. |
-| Checkbox / RadioGroup / Select / Switch | Choice controls                                          |
-| Field                                   | Label, required mark, description, hint, error           |
+| Primitive                               | Intended use                                                                                                                                         |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Button                                  | Primary actions, secondary, outline, ghost, danger, link                                                                                             |
+| Input / Textarea / Label                | Form controls. `type="tel"` converts Persian/Arabic digits to Latin.                                                                                 |
+| Checkbox / RadioGroup / Select / Switch | Choice controls                                                                                                                                      |
+| Field                                   | Label, required mark, description, hint, error                                                                                                       |
 | OtpInput                                | One-time code. Pass `length` at the call site. Fill and delete are always left-to-right. Persian/Arabic digits are converted to Latin before submit. |
-| FileUpload                              | Generic file picker visual; no upload API                |
-| Badge                                   | Status, verification, metadata                           |
-| Avatar                                  | Image with fallback initials                             |
-| Card                                    | Light composable surface                                 |
-| Separator                               | Visual division                                          |
-| Skeleton / Spinner / Progress           | Loading and completion                                   |
-| Alert                                   | Info, success, warning, error                            |
-| Empty                                   | Generic empty result with optional action                |
-| Dialog                                  | Accessible modal                                         |
-| Sheet                                   | Side surface                                             |
-| Drawer                                  | Mobile bottom sheet                                      |
-| Accordion                               | Progressive disclosure                                   |
-| Tabs                                    | In-page panels                                           |
-| Tooltip                                 | Short labeling for icon-only controls                    |
-| Popover                                 | Lightweight anchored content                             |
-| DropdownMenu                            | Action menus                                             |
+| FileUpload                              | Generic file picker visual; no upload API                                                                                                            |
+| Badge                                   | Status, verification, metadata                                                                                                                       |
+| Avatar                                  | Image with fallback initials                                                                                                                         |
+| Card                                    | Light composable surface                                                                                                                             |
+| Separator                               | Visual division                                                                                                                                      |
+| Skeleton / Spinner / Progress           | Loading and completion                                                                                                                               |
+| Alert                                   | Info, success, warning, error                                                                                                                        |
+| Empty                                   | Generic empty result with optional action                                                                                                            |
+| Dialog                                  | Accessible modal                                                                                                                                     |
+| Sheet                                   | Side surface                                                                                                                                         |
+| Drawer                                  | Mobile bottom sheet                                                                                                                                  |
+| Accordion                               | Progressive disclosure                                                                                                                               |
+| Tabs                                    | In-page panels                                                                                                                                       |
+| Tooltip                                 | Short labeling for icon-only controls                                                                                                                |
+| Popover                                 | Lightweight anchored content                                                                                                                         |
+| DropdownMenu                            | Action menus                                                                                                                                         |
 
 ## Component Rules
 

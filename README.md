@@ -103,5 +103,8 @@ This value is the API origin only. Do not commit secrets. See [docs/DEVELOPMENT.
 - [Developer guide](docs/DEVELOPMENT.md)
 - [Architecture rulebook](docs/ARCHITECTURE.md)
 - [Design system](docs/DESIGN-SYSTEM.md)
+- [Legacy frontend audit](docs/LEGACY-AUDIT.md)
+- [Product flows](docs/PRODUCT-FLOWS.md)
+- [Phase 1 scope matrix](docs/PHASE-1-SCOPE.md)
 - [Docker guide](docs/DOCKER.md)
 - Cursor architecture rules: `.cursor/rules/project-architecture.mdc`
