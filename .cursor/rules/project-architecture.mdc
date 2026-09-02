@@ -18,7 +18,8 @@ Follow this architecture for every change. Do not invent a different structure.
 - Do not use `any`, `@ts-ignore`, or unsafe assertions unless there is a documented technical reason.
 - Do not install new dependencies without a clear need.
 - Do not change this architecture without explicit instruction.
-- Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, Bootstrap, or shadcn/ui unless explicitly requested.
+- Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, or Bootstrap.
+- shadcn/ui may be used for accessible primitives. Project architecture overrides shadcn’s default filesystem layout. Do not add every shadcn component. Review generated source before keeping it.
 - pnpm is the only package manager.
 
 ## Folder map

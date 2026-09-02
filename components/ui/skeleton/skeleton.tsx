@@ -1,0 +1,15 @@
+import { type ComponentProps } from "react";
+import { cn } from "@/lib/utils/cn/cn";
+
+export function Skeleton({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="skeleton"
+      className={cn(
+        "animate-pulse rounded-md bg-surface-muted motion-reduce:animate-none",
+        className,
+      )}
+      {...props}
+    />
+  );
+}

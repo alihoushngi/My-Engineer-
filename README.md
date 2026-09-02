@@ -6,15 +6,16 @@ This is a **Persian, RTL**, API-driven frontend. Development is organized into p
 
 ## Current Phase
 
-**Phase 0 — Foundation**
+**Phase 0 — Foundation, plus design-system primitives**
 
 - Next.js App Router, TypeScript, Tailwind CSS, ESLint, and Prettier
 - Folder architecture and naming conventions
 - Persian RTL root layout and Vazirmatn
 - Native fetch HTTP client and TanStack Query provider
 - Docker production image and Compose
+- Semantic design tokens and reusable UI primitives
 
-Later phases will add routes, domain UI, and API integration. Do not treat empty folders as implemented features.
+Later phases will add product routes, domain UI, and API integration. Do not treat empty folders as implemented features.
 
 ## Technology stack
 
@@ -33,7 +34,7 @@ Later phases will add routes, domain UI, and API integration. Do not treat empty
 | Formatting      | Prettier              |
 | Runtime         | Node.js 22, Docker    |
 
-Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, Bootstrap, or shadcn/ui unless a later task explicitly requests them.
+Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, or Bootstrap. shadcn/ui may be used for accessible primitives; project architecture and Mohandes Man tokens override its defaults.
 
 ## High-level architecture
 
@@ -101,5 +102,6 @@ This value is the API origin only. Do not commit secrets. See [docs/DEVELOPMENT.
 
 - [Developer guide](docs/DEVELOPMENT.md)
 - [Architecture rulebook](docs/ARCHITECTURE.md)
+- [Design system](docs/DESIGN-SYSTEM.md)
 - [Docker guide](docs/DOCKER.md)
 - Cursor architecture rules: `.cursor/rules/project-architecture.mdc`

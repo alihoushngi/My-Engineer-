@@ -1,0 +1,47 @@
+---
+description: Mohandes Man design tokens, UI primitives, RTL, and visual rules
+alwaysApply: true
+---
+
+# Mohandes Man design system
+
+Follow `docs/DESIGN-SYSTEM.md`. Keep visual decisions on semantic tokens.
+
+## Tokens
+
+- Source of truth: `css/globals.css`.
+- Style with semantic utilities (`bg-primary`, `text-muted-foreground`, `border-border`).
+- Do not use raw brand palette classes (`bg-blue-500`, `text-green-600`, `border-gray-200`) in reusable UI.
+- Retheme by changing `:root` (and later `.dark`) variables, not by editing dozens of components.
+- Do not scatter `dark:` color overrides in primitives. Dark values exist on `.dark` for a future theme.
+
+## Primitives
+
+- `components/ui` contains generic primitives only.
+- Do not put domain or layout UI in `components/ui`.
+- Folder shape: `components/ui/<componentName>/<componentName>.tsx`.
+- No `index.ts` barrels.
+
+## Visual direction
+
+- Minimal, premium, professional, Persian-first, RTL-first, mobile-first.
+- Prefer whitespace, typography, and hierarchy over decoration.
+- Restrained borders and shadows. Cards are light, not floating by default.
+- Glassmorphism is allowed only for floating search, sticky navigation, overlays, hero treatments, and modal/sheet surfaces. It is not the default for cards, forms, sections, or buttons.
+- Pill radius is for tags, chips, selected filters, and small badges.
+
+## Accessibility and direction
+
+- Keep keyboard behavior, `focus-visible`, disabled/invalid states, labels, and semantic HTML.
+- Default interactive controls should meet a comfortable mobile touch target.
+- Prefer logical CSS (`start`/`end`, `ps`/`pe`, `ms`/`me`).
+- Nested `dir` is only for LTR islands such as codes, phone numbers, and OTP.
+
+## shadcn
+
+- shadcn may provide accessibility, behavior, and composition.
+- Mohandes Man tokens control appearance.
+- Do not install unnecessary UI dependencies or another complete UI framework.
+- Do not blindly add every shadcn component.
+- If the CLI generates a flat `components/ui/button.tsx` file, relocate it to `components/ui/button/button.tsx` and fix imports.
+- Review generated source before keeping it.

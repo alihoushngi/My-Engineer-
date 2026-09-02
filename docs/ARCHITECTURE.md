@@ -245,7 +245,7 @@ The application is Persian and RTL.
 - Tailwind CSS only for application styling.
 - Use `cn()` from `lib/utils/cn/cn.ts` for conditional classes.
 - Global tokens live in `css/globals.css`.
-- Do not invent a finished brand system until design tokens are specified.
+- Visual language, semantic tokens, and UI primitives are documented in [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md).
 
 ## State
 

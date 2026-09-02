@@ -55,6 +55,8 @@ pnpm dev
 
 The App Router application starts in development mode.
 
+A development-only design system preview is available at `/dev/design-system`. It is not linked in product navigation and returns 404 in production builds. Visual rules are documented in [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md).
+
 ## Production build
 
 ```bash
@@ -331,7 +333,7 @@ The `id` argument is shown only to illustrate the route contract. Do not invent 
 components/ui/button/button.tsx
 ```
 
-Primitives belong in `components/ui/` only. They must not contain domain logic.
+Primitives belong in `components/ui/` only. They must not contain domain logic. Follow [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md) for tokens, variants, and accessibility.
 
 ## Adding a utility
 
