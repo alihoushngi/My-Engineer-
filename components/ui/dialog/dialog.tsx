@@ -94,7 +94,7 @@ export function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn("text-h4 font-semibold", className)}
+      className={cn("type-h4 font-semibold", className)}
       {...props}
     />
   );
@@ -107,7 +107,7 @@ export function DialogDescription({
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn("text-body-sm text-muted-foreground", className)}
+      className={cn("type-body-sm text-muted-foreground", className)}
       {...props}
     />
   );

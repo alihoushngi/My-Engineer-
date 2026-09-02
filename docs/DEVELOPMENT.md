@@ -202,6 +202,7 @@ Each lib module gets its own kebab-case folder.
 ```text
 lib/api/http-client/http-client.ts
 lib/utils/cn/cn.ts
+lib/utils/to-latin-digits/to-latin-digits.ts
 ```
 
 ### Providers
@@ -348,6 +349,6 @@ Each lib module gets its own kebab-case folder. Do not put files directly in `li
 - The root document is `lang="fa"` and `dir="rtl"`.
 - Components should not set `dir` or force RTL unless a nested island must be LTR.
 - Prefer logical CSS (`ms`, `me`, `ps`, `pe`, `start`, `end`) over `left` / `right`.
-- Body text uses Vazirmatn through `--font-vazirmatn`.
+- Body text uses local Kalameh (FaNum) through `--font-kalameh`.
 
 Docker usage is documented in [DOCKER.md](DOCKER.md).

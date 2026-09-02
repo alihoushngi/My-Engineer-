@@ -86,8 +86,7 @@
   --space-field: 0.5rem;
   --space-form: 1rem;
 
-  --font-sans-family:
-    var(--font-vazirmatn), ui-sans-serif, system-ui, sans-serif;
+  --font-sans-family: var(--font-kalameh), ui-sans-serif, system-ui, sans-serif;
   --font-mono-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;

@@ -66,7 +66,7 @@ export function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "relative flex min-h-9 cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-body-sm outline-none select-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:ps-8 data-[variant=danger]:text-danger data-[variant=danger]:focus:bg-danger/10 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-9 cursor-default items-center gap-2 rounded-sm px-2 py-1.5 type-body-sm outline-none select-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:ps-8 data-[variant=danger]:text-danger data-[variant=danger]:focus:bg-danger/10 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -84,7 +84,7 @@ export function DropdownMenuCheckboxItem({
     <DropdownMenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
-        "relative flex min-h-9 cursor-default items-center gap-2 rounded-sm py-1.5 pe-2 ps-8 text-body-sm outline-none select-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex min-h-9 cursor-default items-center gap-2 rounded-sm py-1.5 pe-2 ps-8 type-body-sm outline-none select-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
       checked={checked}
@@ -110,7 +110,7 @@ export function DropdownMenuLabel({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
-        "px-2 py-1.5 text-body-sm font-medium data-[inset]:ps-8",
+        "px-2 py-1.5 type-body-sm font-medium data-[inset]:ps-8",
         className,
       )}
       {...props}
@@ -150,7 +150,7 @@ export function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex min-h-9 cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-body-sm outline-none select-none focus:bg-accent data-[inset]:ps-8 data-[state=open]:bg-accent",
+        "flex min-h-9 cursor-default items-center gap-2 rounded-sm px-2 py-1.5 type-body-sm outline-none select-none focus:bg-accent data-[inset]:ps-8 data-[state=open]:bg-accent",
         className,
       )}
       {...props}

@@ -25,6 +25,7 @@ Follow `docs/DESIGN-SYSTEM.md`. Keep visual decisions on semantic tokens.
 ## Visual direction
 
 - Minimal, premium, professional, Persian-first, RTL-first, mobile-first.
+- Use local Kalameh (FaNum) from `fonts/_Woff2` via `lib/fonts/kalameh/kalameh.ts`. Do not load Google Fonts.
 - Prefer whitespace, typography, and hierarchy over decoration.
 - Restrained borders and shadows. Cards are light, not floating by default.
 - Glassmorphism is allowed only for floating search, sticky navigation, overlays, hero treatments, and modal/sheet surfaces. It is not the default for cards, forms, sections, or buttons.

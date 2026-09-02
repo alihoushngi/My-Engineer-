@@ -48,7 +48,7 @@ export function FieldDescription({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       data-slot="field-description"
-      className={cn("text-body-sm text-muted-foreground", className)}
+      className={cn("type-body-sm text-muted-foreground", className)}
       {...props}
     />
   );
@@ -67,7 +67,7 @@ export function FieldError({
     <p
       role="alert"
       data-slot="field-error"
-      className={cn("text-body-sm text-danger", className)}
+      className={cn("type-body-sm text-danger", className)}
       {...props}
     >
       {children}
@@ -84,7 +84,7 @@ export function FieldHint({ className, children }: FieldHintProps) {
   return (
     <p
       data-slot="field-hint"
-      className={cn("text-caption text-muted-foreground", className)}
+      className={cn("type-caption text-muted-foreground", className)}
     >
       {children}
     </p>

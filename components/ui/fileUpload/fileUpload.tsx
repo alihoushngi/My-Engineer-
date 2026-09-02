@@ -78,12 +78,12 @@ export function FileUpload({
         type="button"
         disabled={disabled}
         onClick={openPicker}
-        className="text-body font-medium text-primary underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:no-underline"
+        className="type-body font-medium text-primary underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:no-underline"
       >
         {label}
       </button>
       {description ? (
-        <p className="text-caption text-muted-foreground">{description}</p>
+        <p className="type-caption text-muted-foreground">{description}</p>
       ) : null}
       <input
         ref={inputRef}

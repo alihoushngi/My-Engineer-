@@ -28,7 +28,7 @@ export function CardTitle({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="card-title"
-      className={cn("text-h4 font-semibold", className)}
+      className={cn("type-h4 font-semibold", className)}
       {...props}
     />
   );
@@ -41,7 +41,7 @@ export function CardDescription({
   return (
     <div
       data-slot="card-description"
-      className={cn("text-body-sm text-muted-foreground", className)}
+      className={cn("type-body-sm text-muted-foreground", className)}
       {...props}
     />
   );

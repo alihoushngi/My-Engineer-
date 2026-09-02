@@ -236,7 +236,7 @@ Do not put every API request in TanStack Query.
 The application is Persian and RTL.
 
 - `html` uses `lang="fa"` and `dir="rtl"`
-- Vazirmatn is loaded with `next/font` and exposed as `--font-vazirmatn`
+- Kalameh (FaNum) is loaded locally with `next/font/local` and exposed as `--font-kalameh`
 - Prefer logical CSS properties
 - Do not set `dir` on individual components unless a nested LTR island is required
 

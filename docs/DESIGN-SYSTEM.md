@@ -8,7 +8,7 @@ This document is the source of truth for appearance. Architecture, routing, and 
 
 The interface is modern, minimal, premium, and calm. It should feel trustworthy for a professional platform that connects customers, engineers, contractors, and specialists.
 
-- **Persian-first and RTL-first.** Vazirmatn, comfortable line heights, and logical CSS (`start` / `end`, `ps` / `pe`, `ms` / `me`) are the default.
+- **Persian-first and RTL-first.** Kalameh (FaNum), comfortable line heights, and logical CSS (`start` / `end`, `ps` / `pe`, `ms` / `me`) are the default.
 - **Mobile-first.** Touch targets, readable type, and sheets/drawers are designed for small screens first.
 - **Whitespace and hierarchy.** Prefer spacing, type, and contrast over decoration.
 - **Restrained surfaces.** Cards use a light border, not heavy shadows. Pills are for tags, chips, badges, and selected filters — not generic cards.
@@ -89,7 +89,9 @@ If a component needs a raw color class to look correct, the component is wrong �
 
 ## Typography
 
-Vazirmatn is the application font. Named roles are enough; do not invent a large font-size utility set.
+Kalameh (FaNum) is the application font, loaded from `fonts/_Woff2` via `next/font/local`. It includes Persian digits. Named roles are enough; do not invent a large font-size utility set. Do not load Vazirmatn or other webfonts from Google.
+
+Use `type-*` utilities for the type scale (`type-body`, `type-h1`, …). Do not use `text-body` or `text-h1` next to color classes such as `text-primary-foreground`. Both share the `text-` prefix, so `cn()` / `tailwind-merge` can drop the color.
 
 | Role    | Utility        | Notes                       |
 | ------- | -------------- | --------------------------- |
@@ -160,10 +162,10 @@ Primitives live in `components/ui/<componentName>/<componentName>.tsx`.
 | Primitive                               | Intended use                                             |
 | --------------------------------------- | -------------------------------------------------------- |
 | Button                                  | Primary actions, secondary, outline, ghost, danger, link |
-| Input / Textarea / Label                | Form controls                                            |
+| Input / Textarea / Label                | Form controls. `type="tel"` converts Persian/Arabic digits to Latin. |
 | Checkbox / RadioGroup / Select / Switch | Choice controls                                          |
 | Field                                   | Label, required mark, description, hint, error           |
-| OtpInput                                | Generic one-time-code entry                              |
+| OtpInput                                | One-time code. Pass `length` at the call site. Fill and delete are always left-to-right. Persian/Arabic digits are converted to Latin before submit. |
 | FileUpload                              | Generic file picker visual; no upload API                |
 | Badge                                   | Status, verification, metadata                           |
 | Avatar                                  | Image with fallback initials                             |

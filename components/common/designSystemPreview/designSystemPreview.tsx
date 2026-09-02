@@ -51,7 +51,7 @@ import {
 import { FileUpload } from "@/components/ui/fileUpload/fileUpload";
 import { Input } from "@/components/ui/input/input";
 import { Label } from "@/components/ui/label/label";
-import { OtpInput, OtpInputSlot } from "@/components/ui/otpInput/otpInput";
+import { OtpInput } from "@/components/ui/otpInput/otpInput";
 import { Progress } from "@/components/ui/progress/progress";
 import {
   RadioGroup,
@@ -134,7 +134,7 @@ export function DesignSystemPreview() {
           ].map(([name, classes]) => (
             <div
               key={name}
-              className={`rounded-md px-3 py-6 text-body-sm ${classes}`}
+              className={`rounded-md px-3 py-6 type-body-sm ${classes}`}
             >
               {name}
             </div>
@@ -166,6 +166,16 @@ export function DesignSystemPreview() {
             <Input id="sample-input" placeholder="مقدار نمونه" />
             <FieldDescription>توضیح کوتاه فیلد.</FieldDescription>
             <FieldHint>متن کمکی اختیاری</FieldHint>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="sample-phone">شماره تلفن</FieldLabel>
+            <Input
+              id="sample-phone"
+              type="tel"
+              placeholder="09120000000"
+              autoComplete="tel"
+            />
+            <FieldHint>ارقام فارسی به انگلیسی تبدیل می‌شوند.</FieldHint>
           </Field>
           <Field invalid>
             <FieldLabel htmlFor="invalid-input">ورودی نامعتبر</FieldLabel>
@@ -213,13 +223,7 @@ export function DesignSystemPreview() {
             <Label htmlFor="sample-switch">کلید</Label>
           </div>
         </div>
-        <OtpInput maxLength={5}>
-          <OtpInputSlot index={0} />
-          <OtpInputSlot index={1} />
-          <OtpInputSlot index={2} />
-          <OtpInputSlot index={3} />
-          <OtpInputSlot index={4} />
-        </OtpInput>
+        <OtpInput length={5} aria-label="رمز یک‌بارمصرف" />
         <FileUpload description="پرونده را بکشید یا انتخاب کنید." />
       </Section>
 

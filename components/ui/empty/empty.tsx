@@ -33,9 +33,9 @@ export function Empty({
         </div>
       ) : null}
       <div className="flex max-w-sm flex-col items-center gap-1.5">
-        <h2 className="text-h4 font-medium text-foreground">{title}</h2>
+        <h2 className="type-h4 font-medium text-foreground">{title}</h2>
         {description ? (
-          <p className="text-body-sm text-muted-foreground">{description}</p>
+          <p className="type-body-sm text-muted-foreground">{description}</p>
         ) : null}
       </div>
       {action ? <div className="mt-2">{action}</div> : null}

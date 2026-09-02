@@ -10,7 +10,7 @@ This is a **Persian, RTL**, API-driven frontend. Development is organized into p
 
 - Next.js App Router, TypeScript, Tailwind CSS, ESLint, and Prettier
 - Folder architecture and naming conventions
-- Persian RTL root layout and Vazirmatn
+- Persian RTL root layout and local Kalameh (FaNum)
 - Native fetch HTTP client and TanStack Query provider
 - Docker production image and Compose
 - Semantic design tokens and reusable UI primitives
