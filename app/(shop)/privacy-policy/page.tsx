@@ -5,10 +5,9 @@ import {
   privacyDocument,
 } from "@/config/legal.config/legal.config";
 import { storePaths } from "@/config/navigation.config/navigation.config";
-import { siteConfig } from "@/config/site.config/site.config";
 
 export const metadata: Metadata = {
-  title: `${privacyCopy.breadcrumb} | ${siteConfig.name}`,
+  title: privacyCopy.breadcrumb,
   description: privacyCopy.metadataDescription,
   alternates: {
     canonical: storePaths.privacy,

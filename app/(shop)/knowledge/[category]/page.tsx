@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { KnowledgeCategoryPage } from "@/components/store/knowledge/knowledgeCategoryPage/knowledgeCategoryPage";
 import { knowledgeCopy } from "@/config/knowledge.config/knowledge.config";
-import { siteConfig } from "@/config/site.config/site.config";
+import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { getKnowledgeCategory } from "@/services/knowledge-service/knowledge-service";
 
 type KnowledgeCategoryRouteProps = {
@@ -16,11 +16,11 @@ export async function generateMetadata({
   const category = await getKnowledgeCategory(slug);
 
   if (!category) {
-    return { title: siteConfig.name };
+    return notFoundMetadata;
   }
 
   return {
-    title: `${category.title} | ${knowledgeCopy.landingTitle} | ${siteConfig.name}`,
+    title: `${category.title} | ${knowledgeCopy.landingTitle}`,
     description: category.description ?? knowledgeCopy.metadataDescription,
     alternates: {
       canonical: category.href,

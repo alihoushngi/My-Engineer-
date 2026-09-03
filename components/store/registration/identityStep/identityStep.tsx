@@ -161,7 +161,7 @@ export function IdentityStep() {
               <Link
                 href={storePaths.terms}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-primary underline-offset-4 hover:underline"
               >
                 {registrationCopy.termsLink}
@@ -170,7 +170,7 @@ export function IdentityStep() {
               <Link
                 href={storePaths.privacy}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-primary underline-offset-4 hover:underline"
               >
                 {registrationCopy.privacyLink}

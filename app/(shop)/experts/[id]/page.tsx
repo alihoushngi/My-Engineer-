@@ -1,8 +1,11 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExpertProfilePage } from "@/components/store/expert/expertProfilePage/expertProfilePage";
-import { siteConfig } from "@/config/site.config/site.config";
-import { isDevelopmentExpertPreviewId } from "@/lib/experts/expert-profile/expert-profile";
+import {
+  isDevelopmentExpertPreviewId,
+  toExpertSharePath,
+} from "@/lib/experts/expert-profile/expert-profile";
+import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { getExpertProfile } from "@/services/expert-service/expert-service";
 
 type ExpertPageProps = {
@@ -16,12 +19,15 @@ export async function generateMetadata({
   const expert = await getExpertProfile(id);
 
   if (!expert) {
-    return { title: siteConfig.name };
+    return notFoundMetadata;
   }
 
   return {
-    title: `${expert.name} | ${expert.profession} | ${siteConfig.name}`,
+    title: `${expert.name} | ${expert.profession}`,
     description: expert.shortIntroduction ?? expert.profession,
+    alternates: {
+      canonical: toExpertSharePath(id),
+    },
   };
 }
 

@@ -89,7 +89,7 @@ If a component needs a raw color class to look correct, the component is wrong â
 
 ## Typography
 
-Kalameh (FaNum) is the application font, loaded from `fonts/_Woff2` via `next/font/local`. It includes Persian digits. Named roles are enough; do not invent a large font-size utility set. Do not load Vazirmatn or other webfonts from Google.
+Kalameh (FaNum) is the application font, loaded from `fonts/_Woff2` via `next/font/local`. It includes Persian digits. Only the weights used by the type scale (400, 500, 600, 700) are registered. Named roles are enough; do not invent a large font-size utility set. Do not load Vazirmatn or other webfonts from Google.
 
 Use `type-*` utilities for the type scale (`type-body`, `type-h1`, â€¦). Do not use `text-body` or `text-h1` next to color classes such as `text-primary-foreground`. Both share the `text-` prefix, so `cn()` / `tailwind-merge` can drop the color.
 

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   agentRules: false,
   experimental: {
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: ["lucide-react", "radix-ui"],
   },
 };
 

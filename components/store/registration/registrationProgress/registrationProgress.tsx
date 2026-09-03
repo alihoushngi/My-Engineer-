@@ -1,5 +1,3 @@
-"use client";
-
 import { Progress } from "@/components/ui/progress/progress";
 import {
   registrationCopy,

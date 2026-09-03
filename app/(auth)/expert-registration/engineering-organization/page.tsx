@@ -1,14 +1,10 @@
-"use client";
-
 import { OrganizationStep } from "@/components/store/registration/organizationStep/organizationStep";
-import { useRegistrationStepGuard } from "@/hooks/use-registration-wizard/use-registration-wizard";
+import { RegistrationStepGuard } from "@/components/store/registration/registrationStepGuard/registrationStepGuard";
 
 export default function OrganizationPage() {
-  const allowed = useRegistrationStepGuard(7);
-
-  if (!allowed) {
-    return null;
-  }
-
-  return <OrganizationStep />;
+  return (
+    <RegistrationStepGuard step={7}>
+      <OrganizationStep />
+    </RegistrationStepGuard>
+  );
 }

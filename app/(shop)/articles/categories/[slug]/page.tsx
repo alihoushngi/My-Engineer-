@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleCategoryPage } from "@/components/store/article/articleCategoryPage/articleCategoryPage";
 import { articlesCopy } from "@/config/articles.config/articles.config";
-import { siteConfig } from "@/config/site.config/site.config";
+import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import {
   getArticleCategory,
   listArticlesByCategory,
@@ -19,11 +19,11 @@ export async function generateMetadata({
   const category = await getArticleCategory(slug);
 
   if (!category) {
-    return { title: siteConfig.name };
+    return notFoundMetadata;
   }
 
   return {
-    title: `${category.title} | ${articlesCopy.hubTitle} | ${siteConfig.name}`,
+    title: `${category.title} | ${articlesCopy.hubTitle}`,
     description: category.description ?? articlesCopy.metadataDescription,
     alternates: {
       canonical: category.href,

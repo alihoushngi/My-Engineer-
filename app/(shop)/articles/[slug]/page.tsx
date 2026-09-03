@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleDetailPage } from "@/components/store/article/articleDetailPage/articleDetailPage";
 import { articlesCopy } from "@/config/articles.config/articles.config";
-import { siteConfig } from "@/config/site.config/site.config";
+import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { getArticleBySlug } from "@/services/article-service/article-service";
 
 type ArticleDetailRouteProps = {
@@ -16,11 +16,11 @@ export async function generateMetadata({
   const article = await getArticleBySlug(slug);
 
   if (!article) {
-    return { title: siteConfig.name };
+    return notFoundMetadata;
   }
 
   return {
-    title: `${article.title} | ${articlesCopy.hubTitle} | ${siteConfig.name}`,
+    title: `${article.title} | ${articlesCopy.hubTitle}`,
     description: article.excerpt ?? articlesCopy.metadataDescription,
     alternates: {
       canonical: article.href,

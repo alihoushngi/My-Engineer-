@@ -368,5 +368,7 @@ Registration wizard (Tasks 08–10):
 - **Privacy contact.** Source support email is incomplete (`@info-mohandeseman`) and is shown as-is. A complete address is a **legal/business requirement**. Phone and Rasht office address are from the same source.
 - **Legal-implied product surfaces.** Terms/privacy mention accounts, passwords, optional platform fees / «پرداخت امن», complaint intake, account deletion, user panel edit, and cookies. Those product surfaces remain **BUSINESS DECISION REQUIRED** and are not built from this copy.
 - **Service listing.** `/services/[slug]` validates known slugs and `notFound()` otherwise. Expert results are empty until a listing API exists. Do not invent specialists to hide that empty state.
+- **Public metadata.** Titles, descriptions, and canonicals use existing copy. The root title template appends the site name. Search and expert-registration are `noindex`. `app/robots.ts` disallows `/expert-registration` and `/dev`. Do not invent a production origin or sitemap until the public site URL is known.
+- **Fonts.** Kalameh (FaNum) is loaded locally at weights 400–700, matching the type scale. Do not load Vazirmatn or Google Fonts.
 
 Docker usage is documented in [DOCKER.md](DOCKER.md).

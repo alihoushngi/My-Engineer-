@@ -26,14 +26,13 @@ import {
 
 export function OtpStep() {
   const router = useRouter();
-  const { data, commitOtpVerified, maxStep } = useRegistrationWizard();
+  const { data, commitOtpVerified } = useRegistrationWizard();
   const { secondsLeft, canResend, restartTimer } = useOtpTimer();
   const [verifyError, setVerifyError] = useState<string | null>(null);
   const [resendError, setResendError] = useState<string | null>(null);
   const verifyMutation = useApiMutation(verifyOtp);
   const resendMutation = useApiMutation(sendOtp);
 
-  // Guard: redirect if step 1 not completed
   const phone = data.identity?.phone;
 
   const {
@@ -45,12 +44,6 @@ export function OtpStep() {
     resolver: zodResolver(otpStepSchema),
     defaultValues: { code: "" },
   });
-
-  // Guard redirect on mount — no fake state
-  if (!phone || maxStep < 2) {
-    // This runs during render on first evaluation (edge case on refresh)
-    // OtpGuard component handles the redirect imperatively via useEffect
-  }
 
   async function onSubmit(formData: OtpStepData) {
     if (!phone) return;

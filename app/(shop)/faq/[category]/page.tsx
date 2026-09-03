@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FaqCategoryPage } from "@/components/store/faq/faqCategoryPage/faqCategoryPage";
 import { faqCopy } from "@/config/faq.config/faq.config";
-import { siteConfig } from "@/config/site.config/site.config";
+import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { getFaqCategory } from "@/services/faq-service/faq-service";
 
 type FaqCategoryRouteProps = {
@@ -16,11 +16,11 @@ export async function generateMetadata({
   const category = await getFaqCategory(slug);
 
   if (!category) {
-    return { title: siteConfig.name };
+    return notFoundMetadata;
   }
 
   return {
-    title: `${category.title} | ${faqCopy.landingTitle} | ${siteConfig.name}`,
+    title: `${category.title} | ${faqCopy.landingTitle}`,
     description: category.description ?? faqCopy.metadataDescription,
     alternates: {
       canonical: category.href,

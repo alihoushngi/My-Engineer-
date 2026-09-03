@@ -1,14 +1,10 @@
-"use client";
-
 import { RegistrationComplete } from "@/components/store/registration/registrationComplete/registrationComplete";
-import { useRegistrationStepGuard } from "@/hooks/use-registration-wizard/use-registration-wizard";
+import { RegistrationStepGuard } from "@/components/store/registration/registrationStepGuard/registrationStepGuard";
 
 export default function CompletePage() {
-  const allowed = useRegistrationStepGuard("complete");
-
-  if (!allowed) {
-    return null;
-  }
-
-  return <RegistrationComplete />;
+  return (
+    <RegistrationStepGuard step="complete">
+      <RegistrationComplete />
+    </RegistrationStepGuard>
+  );
 }

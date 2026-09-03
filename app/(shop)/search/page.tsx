@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { SearchResultsPage } from "@/components/store/search/searchResultsPage/searchResultsPage";
-import { siteConfig } from "@/config/site.config/site.config";
+import { searchCopy } from "@/config/search.config/search.config";
 import { parseSearchParams } from "@/lib/search/search-params/search-params";
 import { searchCatalog } from "@/services/search-service/search-service";
 
@@ -12,8 +12,8 @@ type SearchPageProps = {
 };
 
 export const metadata: Metadata = {
-  title: `جستجو | ${siteConfig.name}`,
-  description: "جستجوی خدمات و متخصصان ساختمان در مهندس من.",
+  title: searchCopy.title,
+  description: searchCopy.description,
   robots: {
     index: false,
     follow: true,

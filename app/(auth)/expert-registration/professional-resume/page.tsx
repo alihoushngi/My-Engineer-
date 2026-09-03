@@ -1,14 +1,10 @@
-"use client";
-
 import { ProfessionalResumeStep } from "@/components/store/registration/professionalResumeStep/professionalResumeStep";
-import { useRegistrationStepGuard } from "@/hooks/use-registration-wizard/use-registration-wizard";
+import { RegistrationStepGuard } from "@/components/store/registration/registrationStepGuard/registrationStepGuard";
 
 export default function ProfessionalResumePage() {
-  const allowed = useRegistrationStepGuard(8);
-
-  if (!allowed) {
-    return null;
-  }
-
-  return <ProfessionalResumeStep />;
+  return (
+    <RegistrationStepGuard step={8}>
+      <ProfessionalResumeStep />
+    </RegistrationStepGuard>
+  );
 }
