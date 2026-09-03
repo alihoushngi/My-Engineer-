@@ -19,6 +19,7 @@ import {
 } from "@/components/store/registration/organizationStep/type/organizationStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
@@ -33,6 +34,7 @@ export function OrganizationStep() {
   const router = useRouter();
   const { data, commitOrganization } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const saveMutation = useApiMutation(saveOrganization);
   const [licenseFile, setLicenseFile] = useState<File | undefined>(
     data.organization?.licenseFile,
   );
@@ -67,7 +69,7 @@ export function OrganizationStep() {
     const payload = toOrganizationPayload(formData, licenseFile);
 
     try {
-      await saveOrganization({
+      await saveMutation.mutateAsync({
         isMember: payload.isMember,
         membershipNumber: payload.membershipNumber,
         hasLicense: payload.hasLicense,
@@ -179,8 +181,8 @@ export function OrganizationStep() {
           onContinue={() => {
             void handleSubmit(onSubmit)();
           }}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting}
+          isPending={isSubmitting || saveMutation.isPending}
+          isContinueDisabled={isSubmitting || saveMutation.isPending}
         />
       </form>
     </div>

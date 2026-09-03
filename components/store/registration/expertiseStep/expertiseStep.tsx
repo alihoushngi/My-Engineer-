@@ -20,6 +20,7 @@ import {
 } from "@/components/store/registration/expertiseStep/type/expertiseStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { saveExpertise } from "@/services/registration-service/registration-service";
 
@@ -27,6 +28,7 @@ export function ExpertiseStep() {
   const router = useRouter();
   const { data, commitExpertise } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const saveMutation = useApiMutation(saveExpertise);
 
   const {
     handleSubmit,
@@ -66,7 +68,7 @@ export function ExpertiseStep() {
     setApiError(null);
 
     try {
-      await saveExpertise({
+      await saveMutation.mutateAsync({
         expertiseIds: formData.expertiseIds,
         softwareIds: formData.softwareIds,
       });
@@ -183,8 +185,8 @@ export function ExpertiseStep() {
         onContinue={() => {
           void handleSubmit(onSubmit)();
         }}
-        isPending={isSubmitting}
-        isContinueDisabled={isSubmitting}
+        isPending={isSubmitting || saveMutation.isPending}
+        isContinueDisabled={isSubmitting || saveMutation.isPending}
       />
     </div>
   );

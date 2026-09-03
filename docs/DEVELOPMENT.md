@@ -355,7 +355,8 @@ Each lib module gets its own kebab-case folder. Do not put files directly in `li
 
 Registration wizard (Tasks 08–10):
 
-- **API CONTRACT REQUIRED.** OTP, catalogs, persistence, uploads, and final submit have no documented endpoints. Service functions throw and the UI shows an integration error instead of fake success.
+- **API CONTRACT REQUIRED.** OTP, catalogs, persistence, uploads, and final submit have no documented endpoints. Service functions throw a typed `ApiError` (`code: "unavailable"`) and the UI shows an integration error instead of fake success. Domain services still must not invent URLs or response shapes.
+- **HTTP errors.** `lib/api/http-client` classifies network, timeout, abort, validation, unauthorized, forbidden, not found, and server failures as `ApiError`. `toUserErrorMessage` maps those codes to Persian copy and never surfaces env var names, status-line dumps, or English stack text.
 - **Refresh recovery.** Committed wizard state is in-memory only. Missing prerequisites redirect to the first valid step. Do not persist national ID, OTP, or files in `localStorage` or the URL.
 - **Step 5 location fields.** Omitted until product decides whether they duplicate Step 3, represent birth place, or stay.
 - **Step 7 ترافیک / شهرسازی.** Discipline options exist in source; qualification options do not. The UI shows an info state and does not invent qualifications.

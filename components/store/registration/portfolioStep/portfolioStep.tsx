@@ -16,6 +16,7 @@ import { RegistrationProgress } from "@/components/store/registration/registrati
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
@@ -42,6 +43,7 @@ export function PortfolioStep() {
   const router = useRouter();
   const { data, commitSubmitted } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const submitMutation = useApiMutation(submitRegistration);
   const [formatError, setFormatError] = useState<string | null>(null);
   const [images, setImages] = useState<PortfolioImageEntry[]>(
     data.portfolio?.images ? [...data.portfolio.images] : [],
@@ -120,7 +122,7 @@ export function PortfolioStep() {
     setApiError(null);
 
     try {
-      await submitRegistration({
+      await submitMutation.mutateAsync({
         imageCount: images.length,
         certificateCount: certificates.length,
         acceptRules: formData.acceptRules,
@@ -241,8 +243,10 @@ export function PortfolioStep() {
           onContinue={() => {
             void handleSubmit(onSubmit)();
           }}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting || acceptRules !== true}
+          isPending={isSubmitting || submitMutation.isPending}
+          isContinueDisabled={
+            isSubmitting || submitMutation.isPending || acceptRules !== true
+          }
         />
       </form>
     </div>

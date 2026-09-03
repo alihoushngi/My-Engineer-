@@ -1,5 +1,9 @@
 import { env } from "@/lib/env/env";
-import { ApiError, apiErrorFromResponse } from "@/lib/api/api-error/api-error";
+import {
+  ApiError,
+  apiErrorFromFetchFailure,
+  apiErrorFromResponse,
+} from "@/lib/api/api-error/api-error";
 
 type QueryPrimitive = string | number | boolean;
 type QueryValue = QueryPrimitive | null | undefined;
@@ -20,7 +24,10 @@ type HttpRequestOptions<TBody = unknown> = {
   body?: TBody;
   query?: QueryParams;
   signal?: AbortSignal;
+  timeoutMs?: number;
 } & NextFetchOptions;
+
+const DEFAULT_TIMEOUT_MS = 15_000;
 
 export async function httpGet<TResponse>(
   path: string,
@@ -64,22 +71,59 @@ export async function httpRequest<TResponse, TBody = unknown>(
 ): Promise<TResponse> {
   const url = buildRequestUrl(path, options.query);
   const headers = new Headers(options.headers);
-  const body = serializeBody(method, options.body, headers);
 
-  const response = await fetch(url, {
-    method,
-    headers,
-    body,
-    signal: options.signal,
-    cache: options.cache,
-    next: options.next,
-  });
+  if (!headers.has("Accept")) {
+    headers.set("Accept", "application/json");
+  }
+
+  const body = serializeBody(method, options.body, headers);
+  const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const timeoutSignal = AbortSignal.timeout(timeoutMs);
+  const signal = composeAbortSignals(options.signal, timeoutSignal);
+
+  let response: Response;
+
+  try {
+    response = await fetch(url, {
+      method,
+      headers,
+      body,
+      signal,
+      cache: options.cache,
+      next: options.next,
+    });
+  } catch (error) {
+    throw apiErrorFromFetchFailure(
+      error,
+      timeoutSignal.aborted,
+      options.signal?.aborted === true,
+    );
+  }
 
   if (!response.ok) {
     throw await apiErrorFromResponse(response);
   }
 
-  return parseSuccessBody<TResponse>(response);
+  try {
+    return await parseSuccessBody<TResponse>(response);
+  } catch {
+    throw new ApiError({
+      status: response.status,
+      code: "unknown",
+      message: "Response body was not valid JSON",
+    });
+  }
+}
+
+function composeAbortSignals(
+  callerSignal: AbortSignal | undefined,
+  timeoutSignal: AbortSignal,
+): AbortSignal {
+  if (!callerSignal) {
+    return timeoutSignal;
+  }
+
+  return AbortSignal.any([callerSignal, timeoutSignal]);
 }
 
 function buildRequestUrl(path: string, query?: QueryParams): string {
@@ -88,6 +132,7 @@ function buildRequestUrl(path: string, query?: QueryParams): string {
   if (baseUrl === "") {
     throw new ApiError({
       status: 0,
+      code: "unconfigured",
       message: "NEXT_PUBLIC_API_BASE_URL is not configured",
     });
   }

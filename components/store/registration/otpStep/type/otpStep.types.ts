@@ -9,5 +9,3 @@ export const otpStepSchema = z.object({
 });
 
 export type OtpStepData = z.infer<typeof otpStepSchema>;
-
-export type OtpError = "invalid" | "expired" | "network" | null;

@@ -18,6 +18,9 @@ export function QueryProvider({ children }: QueryProviderProps) {
             retry: 1,
             refetchOnWindowFocus: false,
           },
+          mutations: {
+            retry: false,
+          },
         },
       }),
   );

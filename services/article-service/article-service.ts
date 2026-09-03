@@ -1,7 +1,7 @@
 /**
  * Article catalog access.
  * API CONTRACT REQUIRED — no documented article list/detail endpoint exists.
- * Do not invent article bodies or demo cards.
+ * Empty results are honest empty states, not invented article bodies.
  */
 import {
   type Article,

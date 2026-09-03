@@ -1,11 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   getProvinces,
   getCitiesByProvince,
 } from "@/services/city-service/city-service";
-import { type Province, type City } from "@/types/store/registration.types";
+import { type City, type Province } from "@/types/store/registration.types";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 
 type UseProvinceCitiesReturn = {
   provinces: readonly Province[];
@@ -20,108 +22,48 @@ type UseProvinceCitiesReturn = {
   setSelectedProvince: (provinceId: string) => void;
 };
 
+const PROVINCE_ERROR_FALLBACK = "خطا در بارگذاری استان‌ها";
+const CITY_ERROR_FALLBACK = "خطا در بارگذاری شهرها";
+
 export function useProvinceCities(): UseProvinceCitiesReturn {
-  const [provinces, setProvinces] = useState<readonly Province[]>([]);
-  const [cities, setCities] = useState<readonly City[]>([]);
-  const [isLoadingProvinces, setIsLoadingProvinces] = useState(true);
-  const [isLoadingCities, setIsLoadingCities] = useState(false);
-  const [provinceError, setProvinceError] = useState<string | null>(null);
-  const [cityError, setCityError] = useState<string | null>(null);
   const [selectedProvinceId, setSelectedProvinceId] = useState("");
-  const [provinceTrigger, setProvinceTrigger] = useState(0);
-  const [cityTrigger, setCityTrigger] = useState(0);
 
-  const retryProvinces = useCallback(() => {
-    setProvinceTrigger((prev) => prev + 1);
-  }, []);
+  const provincesQuery = useQuery({
+    queryKey: ["registration", "provinces"],
+    queryFn: getProvinces,
+    retry: false,
+  });
 
-  const retryCities = useCallback(() => {
-    setCityTrigger((prev) => prev + 1);
-  }, []);
+  const citiesQuery = useQuery({
+    queryKey: ["registration", "cities", selectedProvinceId],
+    queryFn: () => getCitiesByProvince(selectedProvinceId),
+    enabled: selectedProvinceId !== "",
+    retry: false,
+  });
 
-  useEffect(() => {
-    let cancelled = false;
+  const retryProvinces = () => {
+    void provincesQuery.refetch();
+  };
 
-    async function load() {
-      if (!cancelled) {
-        setIsLoadingProvinces(true);
-        setProvinceError(null);
-      }
-
-      try {
-        const result = await getProvinces();
-
-        if (!cancelled) {
-          setProvinces(result);
-          setIsLoadingProvinces(false);
-        }
-      } catch (err: unknown) {
-        if (!cancelled) {
-          setProvinceError(
-            err instanceof Error ? err.message : "خطا در بارگذاری استان‌ها",
-          );
-          setIsLoadingProvinces(false);
-        }
-      }
-    }
-
-    void load();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [provinceTrigger]);
-
-  useEffect(() => {
-    if (!selectedProvinceId) {
-      return;
-    }
-
-    let cancelled = false;
-
-    async function load() {
-      if (!cancelled) {
-        setIsLoadingCities(true);
-        setCityError(null);
-        setCities([]);
-      }
-
-      try {
-        const result = await getCitiesByProvince(selectedProvinceId);
-
-        if (!cancelled) {
-          setCities(result);
-          setIsLoadingCities(false);
-        }
-      } catch (err: unknown) {
-        if (!cancelled) {
-          setCityError(
-            err instanceof Error ? err.message : "خطا در بارگذاری شهرها",
-          );
-          setIsLoadingCities(false);
-        }
-      }
-    }
-
-    void load();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedProvinceId, cityTrigger]);
+  const retryCities = () => {
+    void citiesQuery.refetch();
+  };
 
   const setSelectedProvince = useCallback((provinceId: string) => {
     setSelectedProvinceId(provinceId);
-    // Clearing cities happens in the city effect when selectedProvinceId changes
   }, []);
 
   return {
-    provinces,
-    cities,
-    isLoadingProvinces,
-    isLoadingCities,
-    provinceError,
-    cityError,
+    provinces: provincesQuery.data ?? [],
+    cities: citiesQuery.data ?? [],
+    isLoadingProvinces: provincesQuery.isPending,
+    isLoadingCities: selectedProvinceId !== "" && citiesQuery.isPending,
+    provinceError: provincesQuery.error
+      ? toUserErrorMessage(provincesQuery.error, PROVINCE_ERROR_FALLBACK)
+      : null,
+    cityError: citiesQuery.error
+      ? toUserErrorMessage(citiesQuery.error, CITY_ERROR_FALLBACK)
+      : null,
     retryProvinces,
     retryCities,
     selectedProvinceId,

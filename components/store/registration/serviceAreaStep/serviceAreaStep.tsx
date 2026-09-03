@@ -25,6 +25,7 @@ import {
 } from "@/components/store/registration/serviceAreaStep/type/serviceAreaStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { saveServiceArea } from "@/services/registration-service/registration-service";
 import { useProvinceCities } from "@/hooks/use-province-cities/use-province-cities";
@@ -33,6 +34,7 @@ export function ServiceAreaStep() {
   const router = useRouter();
   const { commitServiceArea, data } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const saveMutation = useApiMutation(saveServiceArea);
 
   const {
     provinces,
@@ -67,7 +69,7 @@ export function ServiceAreaStep() {
     setApiError(null);
 
     try {
-      await saveServiceArea({
+      await saveMutation.mutateAsync({
         provinceId: formData.provinceId,
         cityId: formData.cityId,
         nearbyCityIds: formData.nearbyCityIds,
@@ -280,8 +282,10 @@ export function ServiceAreaStep() {
           onContinue={() => {
             void handleSubmit(onSubmit)();
           }}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting || isLoadingProvinces}
+          isPending={isSubmitting || saveMutation.isPending}
+          isContinueDisabled={
+            isSubmitting || saveMutation.isPending || isLoadingProvinces
+          }
         />
       </form>
     </div>

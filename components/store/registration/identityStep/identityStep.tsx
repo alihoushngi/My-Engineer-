@@ -23,6 +23,7 @@ import {
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { storePaths } from "@/config/navigation.config/navigation.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { sendOtp } from "@/services/registration-service/registration-service";
 
@@ -30,6 +31,7 @@ export function IdentityStep() {
   const router = useRouter();
   const { commitIdentity, data } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const sendOtpMutation = useApiMutation(sendOtp);
 
   const {
     register,
@@ -49,7 +51,7 @@ export function IdentityStep() {
     setApiError(null);
 
     try {
-      await sendOtp({
+      await sendOtpMutation.mutateAsync({
         phone: formData.phone,
         nationalId: formData.nationalId,
       });
@@ -194,8 +196,8 @@ export function IdentityStep() {
           onContinue={() => {
             void handleSubmit(onSubmit)();
           }}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting}
+          isPending={isSubmitting || sendOtpMutation.isPending}
+          isContinueDisabled={isSubmitting || sendOtpMutation.isPending}
         />
       </form>
     </div>

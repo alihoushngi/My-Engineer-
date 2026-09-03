@@ -20,6 +20,7 @@ import {
 } from "@/components/store/registration/professionalResumeStep/type/professionalResumeStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
@@ -29,6 +30,7 @@ export function ProfessionalResumeStep() {
   const router = useRouter();
   const { data, commitResume } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const saveMutation = useApiMutation(saveResume);
 
   const {
     register,
@@ -46,7 +48,7 @@ export function ProfessionalResumeStep() {
     setApiError(null);
 
     try {
-      await saveResume({
+      await saveMutation.mutateAsync({
         experienceYears: formData.experienceYears,
         resumeText: formData.resumeText,
       });
@@ -145,8 +147,8 @@ export function ProfessionalResumeStep() {
           onContinue={() => {
             void handleSubmit(onSubmit)();
           }}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting}
+          isPending={isSubmitting || saveMutation.isPending}
+          isContinueDisabled={isSubmitting || saveMutation.isPending}
         />
       </form>
     </div>

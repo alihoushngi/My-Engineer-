@@ -5,6 +5,8 @@ import { getDevExpertPreview } from "@/lib/experts/dev-expert-preview/dev-expert
  * Public expert profile access.
  * API CONTRACT REQUIRED: no documented GET expert-by-id endpoint exists.
  * Do not call invented URLs from this module.
+ *
+ * The development preview is a local layout fixture, not an API response.
  */
 export async function getExpertProfile(
   id: string,

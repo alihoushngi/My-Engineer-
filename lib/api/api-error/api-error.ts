@@ -1,3 +1,8 @@
+import {
+  apiErrorCodeFromStatus,
+  type ApiErrorCode,
+} from "@/lib/api/api-error-code/api-error-code";
+
 export type ApiValidationError = {
   field?: string;
   message: string;
@@ -6,18 +11,21 @@ export type ApiValidationError = {
 type ApiErrorInput = {
   status: number;
   message: string;
+  code?: ApiErrorCode;
   payload?: unknown;
   validationErrors?: readonly ApiValidationError[];
 };
 
 export class ApiError extends Error {
   readonly status: number;
+  readonly code: ApiErrorCode;
   readonly payload: unknown;
   readonly validationErrors: readonly ApiValidationError[];
 
   constructor({
     status,
     message,
+    code,
     payload = null,
     validationErrors = [],
   }: ApiErrorInput) {
@@ -26,6 +34,8 @@ export class ApiError extends Error {
     this.status = status;
     this.payload = payload;
     this.validationErrors = validationErrors;
+    this.code =
+      code ?? apiErrorCodeFromStatus(status, validationErrors.length > 0);
   }
 }
 
@@ -37,12 +47,41 @@ export async function apiErrorFromResponse(
   response: Response,
 ): Promise<ApiError> {
   const payload = await readResponsePayload(response);
+  const validationErrors = readValidationErrors(payload);
 
   return new ApiError({
     status: response.status,
     message: readErrorMessage(payload, response.status),
     payload,
-    validationErrors: readValidationErrors(payload),
+    validationErrors,
+  });
+}
+
+export function apiErrorFromFetchFailure(
+  error: unknown,
+  timedOut: boolean,
+  abortedByCaller: boolean,
+): ApiError {
+  if (abortedByCaller) {
+    return new ApiError({
+      status: 0,
+      code: "aborted",
+      message: "Request was aborted",
+    });
+  }
+
+  if (timedOut || isTimeoutFailure(error)) {
+    return new ApiError({
+      status: 0,
+      code: "timeout",
+      message: "Request timed out",
+    });
+  }
+
+  return new ApiError({
+    status: 0,
+    code: "network",
+    message: "Network request failed",
   });
 }
 
@@ -115,6 +154,10 @@ function readValidationErrors(payload: unknown): ApiValidationError[] {
   }
 
   return [];
+}
+
+function isTimeoutFailure(error: unknown): boolean {
+  return error instanceof DOMException && error.name === "TimeoutError";
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

@@ -22,6 +22,7 @@ import {
 } from "@/components/store/registration/educationStep/type/educationStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { type DegreeKey } from "@/types/store/registration.types";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
@@ -31,6 +32,7 @@ export function EducationStep() {
   const router = useRouter();
   const { data, commitEducation } = useRegistrationWizard();
   const [apiError, setApiError] = useState<string | null>(null);
+  const saveMutation = useApiMutation(saveEducation);
   // Local file selections per degree key — not stored in RHF (File objects)
   const [degreeFiles, setDegreeFiles] = useState<
     Partial<Record<DegreeKey, File>>
@@ -67,7 +69,7 @@ export function EducationStep() {
     setApiError(null);
 
     try {
-      await saveEducation({
+      await saveMutation.mutateAsync({
         level: formData.level,
         degrees: formData.degrees,
         degreeFileUploadIds: {},
@@ -275,8 +277,8 @@ export function EducationStep() {
           onContinue={() => {
             void handleSubmit(onSubmit)();
           }}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting}
+          isPending={isSubmitting || saveMutation.isPending}
+          isContinueDisabled={isSubmitting || saveMutation.isPending}
         />
       </form>
     </div>

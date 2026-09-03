@@ -13,24 +13,25 @@ import { RegistrationProgress } from "@/components/store/registration/registrati
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import {
   otpStepSchema,
-  type OtpError,
   type OtpStepData,
 } from "@/components/store/registration/otpStep/type/otpStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
+import { useOtpTimer } from "@/hooks/use-otp-timer/use-otp-timer";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import {
   sendOtp,
   verifyOtp,
 } from "@/services/registration-service/registration-service";
-import { useOtpTimer } from "@/hooks/use-otp-timer/use-otp-timer";
 
 export function OtpStep() {
   const router = useRouter();
   const { data, commitOtpVerified, maxStep } = useRegistrationWizard();
   const { secondsLeft, canResend, restartTimer } = useOtpTimer();
-  const [otpError, setOtpError] = useState<OtpError>(null);
+  const [verifyError, setVerifyError] = useState<string | null>(null);
   const [resendError, setResendError] = useState<string | null>(null);
-  const [isResending, setIsResending] = useState(false);
+  const verifyMutation = useApiMutation(verifyOtp);
+  const resendMutation = useApiMutation(sendOtp);
 
   // Guard: redirect if step 1 not completed
   const phone = data.identity?.phone;
@@ -53,19 +54,14 @@ export function OtpStep() {
 
   async function onSubmit(formData: OtpStepData) {
     if (!phone) return;
-    setOtpError(null);
+    setVerifyError(null);
 
     try {
-      await verifyOtp({ phone, code: formData.code });
+      await verifyMutation.mutateAsync({ phone, code: formData.code });
     } catch (err) {
-      const message = err instanceof Error ? err.message : "";
-      // API CONTRACT REQUIRED for distinguishing invalid vs expired codes.
-      // Using a generic error until error codes are defined.
-      if (message.includes("expired")) {
-        setOtpError("expired");
-      } else {
-        setOtpError("invalid");
-      }
+      setVerifyError(
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
+      );
       return;
     }
 
@@ -76,19 +72,19 @@ export function OtpStep() {
   async function handleResend() {
     if (!phone || !canResend) return;
     setResendError(null);
-    setIsResending(true);
 
     try {
-      await sendOtp({ phone, nationalId: data.identity?.nationalId ?? "" });
+      await resendMutation.mutateAsync({
+        phone,
+        nationalId: data.identity?.nationalId ?? "",
+      });
       restartTimer();
       reset();
-      setOtpError(null);
+      setVerifyError(null);
     } catch (err) {
       setResendError(
         toUserErrorMessage(err, registrationCopy.errorGenericDescription),
       );
-    } finally {
-      setIsResending(false);
     }
   }
 
@@ -96,12 +92,8 @@ export function OtpStep() {
     router.push("/expert-registration");
   }
 
-  const otpErrorMessage =
-    otpError === "expired"
-      ? registrationCopy.otpExpiredError
-      : otpError === "invalid"
-        ? registrationCopy.otpInvalidError
-        : null;
+  const isBusy =
+    isSubmitting || verifyMutation.isPending || resendMutation.isPending;
 
   return (
     <div className="space-y-8">
@@ -122,7 +114,7 @@ export function OtpStep() {
         className="space-y-6"
         aria-label={registrationCopy.step2Title}
       >
-        <Field invalid={Boolean(errors.code) || Boolean(otpErrorMessage)}>
+        <Field invalid={Boolean(errors.code) || Boolean(verifyError)}>
           <FieldLabel htmlFor="reg-otp">{registrationCopy.otpLabel}</FieldLabel>
           <Controller
             control={control}
@@ -133,16 +125,16 @@ export function OtpStep() {
                 length={5}
                 value={field.value}
                 onChange={field.onChange}
-                invalid={Boolean(errors.code) || Boolean(otpErrorMessage)}
-                disabled={isSubmitting}
+                invalid={Boolean(errors.code) || Boolean(verifyError)}
+                disabled={isBusy}
                 aria-describedby={
-                  otpErrorMessage || errors.code ? "reg-otp-error" : undefined
+                  verifyError || errors.code ? "reg-otp-error" : undefined
                 }
               />
             )}
           />
           <FieldError id="reg-otp-error">
-            {otpErrorMessage ?? errors.code?.message}
+            {verifyError ?? errors.code?.message}
           </FieldError>
         </Field>
 
@@ -165,7 +157,7 @@ export function OtpStep() {
             variant="ghost"
             size="sm"
             onClick={handleEditPhone}
-            disabled={isSubmitting}
+            disabled={isBusy}
           >
             {registrationCopy.editPhoneLabel}
           </Button>
@@ -176,8 +168,8 @@ export function OtpStep() {
             onClick={() => {
               void handleResend();
             }}
-            disabled={!canResend || isResending || isSubmitting}
-            loading={isResending}
+            disabled={!canResend || isBusy}
+            loading={resendMutation.isPending}
           >
             {canResend
               ? registrationCopy.resendLabel
@@ -191,8 +183,8 @@ export function OtpStep() {
             void handleSubmit(onSubmit)();
           }}
           continueLabel={registrationCopy.verifyLabel}
-          isPending={isSubmitting}
-          isContinueDisabled={isSubmitting}
+          isPending={isBusy}
+          isContinueDisabled={isBusy}
         />
       </form>
     </div>
