@@ -50,7 +50,7 @@ export function ExpertCard({ expert, className }: ExpertCardProps) {
             </Avatar>
             <div className="min-w-0 flex-1 space-y-2">
               <div className="space-y-1">
-                <h3 className="type-h4 font-semibold text-card-foreground">
+                <h3 className="break-words type-h4 font-semibold text-card-foreground">
                   {expert.name}
                 </h3>
                 <p className="type-body-sm text-muted-foreground">

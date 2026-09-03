@@ -47,10 +47,7 @@ export function ExpertQuickFacts({ expert }: ExpertQuickFactsProps) {
   }
 
   return (
-    <section
-      aria-label="خلاصه اطلاعات"
-      className="container-app py-10 sm:py-12"
-    >
+    <section aria-label="خلاصه اطلاعات" className="container-app py-page">
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {facts.map((fact) => (
           <div key={fact.label} className="space-y-1">

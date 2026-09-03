@@ -17,7 +17,7 @@ export function HeaderCityButton({ selectedCityLabel }: HeaderCityButtonProps) {
       <Button
         type="button"
         variant="ghost"
-        className="hidden max-w-44 text-muted-foreground md:inline-flex lg:max-w-none"
+        className="hidden max-w-36 text-muted-foreground md:inline-flex xl:max-w-44"
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls="city-selector-surface"

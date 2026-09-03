@@ -27,7 +27,7 @@ export function SearchSurface({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         id={id}
-        className="max-h-[min(90vh,40rem)] overflow-y-auto sm:max-w-2xl"
+        className="sm:max-w-2xl"
         aria-describedby={descriptionId}
       >
         <DialogHeader>

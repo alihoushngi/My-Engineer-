@@ -16,7 +16,7 @@ type StoreErrorProps = {
 
 export function StoreError({ onRetry }: StoreErrorProps) {
   return (
-    <div className="container-app flex flex-col gap-6 py-16">
+    <div className="container-app flex flex-col gap-6 py-section">
       <Alert variant="danger">
         <CircleAlertIcon />
         <AlertTitle>بارگذاری صفحه با مشکل مواجه شد</AlertTitle>

@@ -24,8 +24,8 @@ export function RegistrationStepNav({
   isContinueDisabled = false,
 }: RegistrationStepNavProps) {
   return (
-    <div className="sticky bottom-0 z-10 -mx-4 mt-2 border-t border-border bg-background/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:static sm:z-auto sm:mx-0 sm:mt-0 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-      <div className="flex flex-col gap-3 sm:flex-row-reverse">
+    <div className="glass-chrome sticky bottom-0 z-10 mt-2 bleed-page-x border-t border-border py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:static sm:z-auto sm:mt-0 sm:border-0 sm:bg-transparent sm:p-0 sm:[backdrop-filter:none] sm:mx-0 sm:px-0">
+      <div className="flex flex-col gap-3 sm:flex-row">
         <Button
           type="button"
           onClick={onContinue}

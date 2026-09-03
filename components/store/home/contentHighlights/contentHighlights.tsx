@@ -8,7 +8,7 @@ export function ContentHighlights() {
   return (
     <section
       aria-labelledby="content-highlights-heading"
-      className="container-app py-16 sm:py-20"
+      className="container-app py-section"
     >
       <div className="space-y-8">
         <SectionHeader
@@ -26,8 +26,8 @@ export function ContentHighlights() {
                 <Card className="h-full transition-colors group-hover:border-border-strong group-hover:bg-accent/40">
                   <CardHeader>
                     <div className="flex items-start justify-between gap-3">
-                      <div className="space-y-1">
-                        <h3 className="type-h4 font-semibold text-card-foreground">
+                      <div className="min-w-0 space-y-1">
+                        <h3 className="break-words type-h4 font-semibold text-card-foreground">
                           {item.title}
                         </h3>
                         <p className="type-body-sm text-muted-foreground">

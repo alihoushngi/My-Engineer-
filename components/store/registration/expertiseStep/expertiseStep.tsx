@@ -127,13 +127,16 @@ export function ExpertiseStep() {
           <div className="flex flex-wrap gap-2" role="list">
             {expertiseIds.map((id) => (
               <div key={id} role="listitem">
-                <Badge variant="secondary" className="gap-1 pe-1">
+                <Badge
+                  variant="secondary"
+                  className="max-w-full min-w-0 gap-1 pe-0.5 whitespace-normal"
+                >
                   <span>{id}</span>
                   <button
                     type="button"
                     onClick={() => removeExpertise(id)}
                     aria-label={registrationCopy.removeExpertiseLabel(id)}
-                    className="rounded-full p-0.5 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="inline-flex size-8 items-center justify-center rounded-full hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <XIcon className="size-3" aria-hidden="true" />
                   </button>
@@ -142,13 +145,16 @@ export function ExpertiseStep() {
             ))}
             {softwareIds.map((id) => (
               <div key={`sw-${id}`} role="listitem">
-                <Badge variant="outline" className="gap-1 pe-1">
+                <Badge
+                  variant="outline"
+                  className="max-w-full min-w-0 gap-1 pe-0.5 whitespace-normal"
+                >
                   <span>{id}</span>
                   <button
                     type="button"
                     onClick={() => removeSoftware(id)}
                     aria-label={registrationCopy.removeExpertiseLabel(id)}
-                    className="rounded-full p-0.5 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="inline-flex size-8 items-center justify-center rounded-full hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <XIcon className="size-3" aria-hidden="true" />
                   </button>

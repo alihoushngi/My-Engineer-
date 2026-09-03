@@ -20,7 +20,7 @@ export function ExpertContactCta({ expert }: ExpertContactCtaProps) {
       aria-labelledby="expert-contact-cta-heading"
       className="border-t border-border"
     >
-      <div className="container-narrow flex flex-col items-start gap-5 py-14 sm:py-16">
+      <div className="container-narrow flex flex-col items-start gap-5 py-section">
         <div className="space-y-2">
           <h2
             id="expert-contact-cta-heading"

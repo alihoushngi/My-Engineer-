@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton/skeleton";
 export default function ShopLoading() {
   return (
     <div
-      className="container-app flex flex-col gap-6 py-10 sm:py-16"
+      className="container-app flex flex-col gap-6 py-section"
       aria-busy="true"
       aria-live="polite"
     >

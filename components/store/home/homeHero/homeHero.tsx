@@ -6,10 +6,10 @@ import { homeHeroCopy } from "@/config/home.config/home.config";
 export function HomeHero() {
   return (
     <section className="border-b border-border bg-surface-muted">
-      <div className="container-app py-14 sm:py-20 lg:py-24">
+      <div className="container-app py-section lg:py-24">
         <div className="max-w-2xl space-y-6 text-start">
           <div className="space-y-4">
-            <h1 className="type-h1 text-foreground lg:type-display">
+            <h1 className="type-display text-foreground">
               {homeHeroCopy.title}
             </h1>
             <p className="type-body-lg text-muted-foreground">

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton/skeleton";
 export default function KnowledgeCategoryLoading() {
   return (
     <div
-      className="container-app flex flex-col gap-6 py-8 sm:py-12"
+      className="container-app flex flex-col gap-6 py-page"
       aria-busy="true"
       aria-live="polite"
     >

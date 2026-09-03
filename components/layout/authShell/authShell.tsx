@@ -15,7 +15,7 @@ export function AuthShell({ children }: AuthShellProps) {
       <main
         id="main-content"
         tabIndex={-1}
-        className="flex flex-1 items-center justify-center px-4 py-10 outline-none sm:py-16"
+        className="flex flex-1 items-center justify-center py-page outline-none"
       >
         <div className="container-form w-full">{children}</div>
       </main>

@@ -22,7 +22,7 @@ export function ExpertReviews({
   return (
     <section
       aria-labelledby="expert-reviews-heading"
-      className="container-app py-10 sm:py-12"
+      className="container-app py-page"
     >
       <div className="max-w-3xl space-y-8">
         <div className="space-y-3">

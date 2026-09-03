@@ -19,7 +19,7 @@ export function ExpertAbout({ about }: ExpertAboutProps) {
     return (
       <section
         aria-labelledby="expert-about-heading"
-        className="container-app py-10 sm:py-12"
+        className="container-app py-page"
       >
         <SectionHeader
           titleId="expert-about-heading"
@@ -41,7 +41,7 @@ export function ExpertAbout({ about }: ExpertAboutProps) {
   return (
     <section
       aria-labelledby="expert-about-heading"
-      className="container-app py-10 sm:py-12"
+      className="container-app py-page"
     >
       <div className="max-w-3xl space-y-6">
         <SectionHeader

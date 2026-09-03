@@ -93,6 +93,8 @@ Kalameh (FaNum) is the application font, loaded from `fonts/_Woff2` via `next/fo
 
 Use `type-*` utilities for the type scale (`type-body`, `type-h1`, …). Do not use `text-body` or `text-h1` next to color classes such as `text-primary-foreground`. Both share the `text-` prefix, so `cn()` / `tailwind-merge` can drop the color.
 
+Display, h1, and h2 scale from `:root` at `640px` and `1024px`. Do not add per-page `lg:type-display` overrides unless a heading needs a different role.
+
 | Role    | Utility        | Notes                       |
 | ------- | -------------- | --------------------------- |
 | display | `type-display` | Hero/display headings       |
@@ -112,13 +114,15 @@ Persian body text should stay at 16px or above. Avoid 12px UI copy. Numbers, pho
 
 Use Tailwind spacing. Prefer the 4px rhythm. Avoid arbitrary values unless a layout truly needs them.
 
-| Context             | Default                              |
-| ------------------- | ------------------------------------ |
-| Page inline padding | `--space-page-x` (`px-4`, `sm:px-6`) |
-| Section stack       | `--space-section-y`                  |
-| Card padding        | `--space-card` / primitive `p-5`     |
-| Label to control    | `gap-2`                              |
-| Fields in a form    | `gap-4`                              |
+| Context             | Default                                                        |
+| ------------------- | -------------------------------------------------------------- |
+| Page inline padding | `--space-page-x` / `px-page`                                   |
+| Content page block  | `--space-page-y` / `py-page`                                   |
+| Marketing sections  | `--space-section-y` / `py-section`, `pt-section`, `pb-section` |
+| Full-bleed sticky   | `bleed-page-x`                                                 |
+| Card padding        | `--space-card` on the Card primitive                           |
+| Label to control    | `gap-2`                                                        |
+| Fields in a form    | `gap-4`                                                        |
 
 ## Containers
 
@@ -149,7 +153,7 @@ Prefer `border + shadow-xs/sm`. Use `shadow-md` / `shadow-lg` for dialogs, sheet
 
 ## Glassmorphism
 
-Use `.glass-surface` only for floating or overlay treatments listed in Design Principles. It is prohibited as the default look of cards, forms, sections, or buttons.
+Use `.glass-surface` only for floating or overlay treatments listed in Design Principles (search, overlays, hero search). Use `.glass-chrome` for sticky header and bottom bars — frosted fill without an extra border or shadow. Glass is prohibited as the default look of cards, forms, sections, or buttons.
 
 ## Motion
 

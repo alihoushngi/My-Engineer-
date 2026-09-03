@@ -41,7 +41,7 @@ export function ServiceCard({
                 </span>
               ) : null}
               <div className="min-w-0 space-y-1">
-                <h3 className="type-h4 font-semibold text-card-foreground">
+                <h3 className="break-words type-h4 font-semibold text-card-foreground">
                   {title}
                 </h3>
                 {description ? (

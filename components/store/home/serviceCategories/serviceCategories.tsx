@@ -7,7 +7,7 @@ export function ServiceCategories() {
     <section
       id="service-categories"
       aria-labelledby="service-categories-heading"
-      className="container-app py-16 sm:py-20"
+      className="container-app py-section"
     >
       <div className="space-y-8">
         <SectionHeader

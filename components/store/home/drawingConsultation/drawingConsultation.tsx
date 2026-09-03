@@ -14,7 +14,7 @@ export function DrawingConsultation({ items }: DrawingConsultationProps) {
   return (
     <section
       aria-labelledby="drawing-consultation-heading"
-      className="container-app py-16 sm:py-20"
+      className="container-app py-section"
     >
       <div className="space-y-8">
         <SectionHeader
@@ -23,7 +23,7 @@ export function DrawingConsultation({ items }: DrawingConsultationProps) {
         />
         <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {items.map((item) => (
-            <li key={item.href}>
+            <li key={item.href} className="min-w-0">
               <ServiceCard href={item.href} title={item.label} />
             </li>
           ))}

@@ -9,7 +9,7 @@ export function AboutServicesSection() {
   return (
     <section
       aria-labelledby="about-services-heading"
-      className="border-y border-border bg-surface py-12 sm:py-16"
+      className="border-y border-border bg-surface py-section"
     >
       <div className="container-app space-y-8">
         <SectionHeader

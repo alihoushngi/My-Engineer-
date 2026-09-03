@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site.config/site.config";
 
 export function StoreNotFound() {
   return (
-    <div className="container-narrow flex flex-col items-start gap-5 py-16 sm:py-24">
+    <div className="container-narrow flex flex-col items-start gap-5 py-section">
       <p className="type-caption text-muted-foreground">
         <span className="ltr-data">404</span>
       </p>

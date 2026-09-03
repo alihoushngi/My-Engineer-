@@ -7,7 +7,7 @@ export function HomeNarrative() {
       aria-labelledby="home-narrative-heading"
       className="border-y border-border bg-surface"
     >
-      <div className="container-narrow py-16 sm:py-20">
+      <div className="container-narrow py-section">
         <SectionHeader
           titleId="home-narrative-heading"
           title={homeNarrativeCopy.title}

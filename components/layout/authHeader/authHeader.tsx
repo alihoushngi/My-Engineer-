@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site.config/site.config";
 export function AuthHeader() {
   return (
     <header className="border-b border-border">
-      <div className="flex items-center justify-between gap-3 px-4 py-4 sm:gap-4 sm:px-6">
+      <div className="flex items-center justify-between gap-3 px-page py-4 sm:gap-4">
         <BrandLogo className="min-w-0 shrink" />
         <Link
           href={siteConfig.homeHref}

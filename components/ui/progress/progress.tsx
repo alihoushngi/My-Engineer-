@@ -21,7 +21,7 @@ export function Progress({ className, value, ...props }: ProgressProps) {
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className="h-full bg-primary transition-all duration-(--duration-normal)"
+        className="absolute inset-y-0 start-0 h-full bg-primary transition-all duration-(--duration-normal)"
         style={{ width: `${safeValue}%` }}
       />
     </ProgressPrimitive.Root>

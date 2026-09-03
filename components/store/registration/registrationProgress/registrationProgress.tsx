@@ -20,11 +20,11 @@ export function RegistrationProgress({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-4">
-        <p className="type-body-sm text-muted-foreground">
+        <p className="shrink-0 type-body-sm text-muted-foreground">
           {registrationCopy.stepOf(currentStep, TOTAL_REGISTRATION_STEPS)}
         </p>
         {stepInfo ? (
-          <p className="type-body-sm font-medium text-foreground">
+          <p className="min-w-0 truncate type-body-sm font-medium text-foreground">
             {stepInfo.label}
           </p>
         ) : null}

@@ -19,7 +19,7 @@ export function SearchResults({ services, experts }: SearchResultsProps) {
           </h2>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {services.map((service) => (
-              <li key={service.slug}>
+              <li key={service.slug} className="min-w-0">
                 <ServiceCard
                   href={service.href}
                   title={service.label}
@@ -38,7 +38,7 @@ export function SearchResults({ services, experts }: SearchResultsProps) {
         {experts.length > 0 ? (
           <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {experts.map((expert) => (
-              <li key={expert.id}>
+              <li key={expert.id} className="min-w-0">
                 <ExpertCard expert={expert} />
               </li>
             ))}

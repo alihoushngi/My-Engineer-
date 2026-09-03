@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config/site.config";
 export function StoreFooter() {
   return (
     <footer className="mt-auto border-t border-border bg-surface">
-      <div className="container-app flex flex-col gap-10 py-10 sm:py-12">
+      <div className="container-app flex flex-col gap-10 py-page">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-xs space-y-3">
             <BrandLogo />
@@ -19,14 +19,14 @@ export function StoreFooter() {
           <nav aria-label="پیوندهای پاورقی">
             <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
               {footerNavigation.map((group) => (
-                <div key={group.id} className="space-y-3">
+                <div key={group.id} className="min-w-0 space-y-3">
                   <h2 className="type-label text-foreground">{group.label}</h2>
                   <ul className="space-y-2">
                     {group.items.map((item) => (
                       <li key={item.href}>
                         <Link
                           href={item.href}
-                          className="type-body-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                          className="break-words type-body-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                         >
                           {item.label}
                         </Link>

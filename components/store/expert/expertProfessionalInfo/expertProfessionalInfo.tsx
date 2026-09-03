@@ -30,7 +30,7 @@ export function ExpertProfessionalInfo({
       aria-labelledby="expert-professional-heading"
       className="border-y border-border bg-surface-muted"
     >
-      <div className="container-app py-10 sm:py-12">
+      <div className="container-app py-page">
         <div className="max-w-3xl space-y-8">
           <SectionHeader
             titleId="expert-professional-heading"

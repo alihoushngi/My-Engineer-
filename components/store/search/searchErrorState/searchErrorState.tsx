@@ -18,7 +18,7 @@ type SearchErrorStateProps = {
 
 export function SearchErrorState({ onRetry }: SearchErrorStateProps) {
   return (
-    <div className="container-wide flex flex-col gap-6 py-16">
+    <div className="container-wide flex flex-col gap-6 py-section">
       <Alert variant="danger">
         <CircleAlertIcon />
         <AlertTitle>{searchCopy.errorTitle}</AlertTitle>

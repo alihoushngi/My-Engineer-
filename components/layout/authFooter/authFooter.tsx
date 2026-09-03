@@ -6,7 +6,7 @@ export function AuthFooter() {
     <footer className="border-t border-border">
       <nav
         aria-label="پیوندهای قانونی"
-        className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-4 py-4"
+        className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-page py-4"
       >
         {legalNavigation.map((item) => (
           <Link

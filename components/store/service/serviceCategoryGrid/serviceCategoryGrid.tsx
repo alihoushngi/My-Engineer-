@@ -14,7 +14,7 @@ export function ServiceCategoryGrid({
   return (
     <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
       {serviceCategories.map((service) => (
-        <li key={service.slug}>
+        <li key={service.slug} className="min-w-0">
           <ServiceCard
             href={service.href}
             title={service.label}

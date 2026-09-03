@@ -31,7 +31,7 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
       aria-labelledby="expert-portfolio-heading"
       className="border-y border-border bg-surface-muted"
     >
-      <div className="container-app py-10 sm:py-12">
+      <div className="container-app py-page">
         <div className="space-y-8">
           <SectionHeader
             titleId="expert-portfolio-heading"
@@ -48,7 +48,10 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
                       setOpenIndex(index);
                     }}
                   >
-                    <PortfolioMedia item={item} className="h-28 sm:h-40" />
+                    <PortfolioMedia
+                      item={item}
+                      className="aspect-[4/3] w-full"
+                    />
                     {item.title ? (
                       <span className="block p-3 type-body-sm font-medium text-card-foreground">
                         {item.title}
@@ -114,7 +117,10 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
                   </DialogDescription>
                 )}
               </DialogHeader>
-              <PortfolioMedia item={selected} className="h-52 sm:h-80" />
+              <PortfolioMedia
+                item={selected}
+                className="aspect-[16/9] w-full"
+              />
               {portfolio.length > 1 ? (
                 <div className="flex justify-between gap-3">
                   <Button

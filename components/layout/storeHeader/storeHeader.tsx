@@ -8,9 +8,9 @@ import { type StoreHeaderProps } from "@/components/layout/storeHeader/type/stor
 
 export function StoreHeader({ selectedCityLabel }: StoreHeaderProps) {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container-app flex items-center gap-3 py-3 lg:gap-6 lg:py-4">
-        <BrandLogo className="min-w-0 shrink-0" />
+    <header className="glass-chrome sticky top-0 z-40 border-b border-border">
+      <div className="container-app flex min-w-0 items-center gap-2 py-3 sm:gap-3 lg:gap-6 lg:py-4">
+        <BrandLogo className="min-w-0 max-w-[9.5rem] truncate sm:max-w-none" />
         <HeaderNavigation />
         <div className="ms-auto flex items-center gap-1 sm:gap-2">
           <HeaderSearchButton />

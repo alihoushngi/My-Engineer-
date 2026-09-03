@@ -23,7 +23,7 @@ export function ArticleCategoryPage({
   articles,
 }: ArticleCategoryPageProps) {
   return (
-    <div className="container-app flex flex-col gap-8 py-8 sm:py-12">
+    <div className="container-app flex flex-col gap-8 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },

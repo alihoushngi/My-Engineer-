@@ -20,7 +20,7 @@ export function RelatedExperts({ experts, excludeId }: RelatedExpertsProps) {
       aria-labelledby="related-experts-heading"
       className="border-t border-border bg-surface-muted"
     >
-      <div className="container-app py-10 sm:py-12">
+      <div className="container-app py-page">
         <div className="space-y-8">
           <SectionHeader
             titleId="related-experts-heading"
@@ -28,7 +28,7 @@ export function RelatedExperts({ experts, excludeId }: RelatedExpertsProps) {
           />
           <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {items.map((expert) => (
-              <li key={expert.id}>
+              <li key={expert.id} className="min-w-0">
                 <ExpertCard expert={expert} />
               </li>
             ))}

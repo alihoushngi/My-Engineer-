@@ -29,13 +29,13 @@ export function ArticleCard({ article, className }: ArticleCardProps) {
               className="aspect-[16/9] w-full object-cover"
             />
           ) : null}
-          <CardHeader className="p-5">
+          <CardHeader className="p-(--space-card)">
             {article.categoryLabel ? (
               <p className="type-caption text-muted-foreground">
                 {article.categoryLabel}
               </p>
             ) : null}
-            <h2 className="type-h4 font-semibold text-card-foreground">
+            <h2 className="break-words type-h4 font-semibold text-card-foreground">
               {article.title}
             </h2>
             {article.excerpt ? (

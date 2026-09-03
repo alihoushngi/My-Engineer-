@@ -18,8 +18,8 @@ export function KnowledgeCategoryCard({
       <Card className="h-full transition-colors group-hover:border-border-strong group-hover:bg-accent/40">
         <CardHeader>
           <div className="flex items-start justify-between gap-3">
-            <div className="space-y-1">
-              <h2 className="type-h4 font-semibold text-card-foreground">
+            <div className="min-w-0 space-y-1">
+              <h2 className="break-words type-h4 font-semibold text-card-foreground">
                 {category.title}
               </h2>
               {category.description ? (

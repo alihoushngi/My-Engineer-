@@ -28,7 +28,7 @@ function OtpSlot({
       data-active={isActive || undefined}
       data-filled={char ? true : undefined}
       className={cn(
-        "relative flex h-12 min-w-10 flex-1 items-center justify-center rounded-md border bg-input-background type-h3 font-medium tabular-nums shadow-xs transition-colors",
+        "relative flex h-12 min-w-0 flex-1 items-center justify-center rounded-md border bg-input-background type-h3 font-medium tabular-nums shadow-xs transition-colors",
         "border-border text-foreground",
         "data-[filled=true]:border-border-strong",
         "data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-2 data-[active=true]:ring-ring/30",

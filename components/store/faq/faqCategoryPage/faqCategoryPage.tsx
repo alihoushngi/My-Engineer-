@@ -19,7 +19,7 @@ export function FaqCategoryPage({ category }: FaqCategoryPageProps) {
   const related = category.relatedCategories ?? [];
 
   return (
-    <div className="container-narrow flex flex-col gap-8 py-8 sm:py-12">
+    <div className="container-narrow flex flex-col gap-8 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },
@@ -46,7 +46,7 @@ export function FaqCategoryPage({ category }: FaqCategoryPageProps) {
         />
       )}
       {category.relatedServiceHref && category.relatedServiceLabel ? (
-        <Button asChild>
+        <Button asChild className="max-w-full min-w-0 whitespace-normal">
           <Link href={category.relatedServiceHref}>
             {faqCopy.serviceCtaLabel}: {category.relatedServiceLabel}
           </Link>

@@ -25,7 +25,7 @@ export function SectionHeader({
         className,
       )}
     >
-      <div className="max-w-2xl space-y-2">
+      <div className="max-w-2xl min-w-0 space-y-2">
         {eyebrow ? (
           <p className="type-caption text-muted-foreground">{eyebrow}</p>
         ) : null}

@@ -30,7 +30,7 @@ export function ArticleDetailPage({ article }: ArticleDetailPageProps) {
     : undefined;
 
   return (
-    <article className="container-narrow flex flex-col gap-8 py-8 sm:py-12">
+    <article className="container-narrow flex flex-col gap-8 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },
@@ -62,7 +62,7 @@ export function ArticleDetailPage({ article }: ArticleDetailPageProps) {
         <img
           src={article.coverSrc}
           alt=""
-          className="w-full rounded-lg object-cover"
+          className="aspect-[16/9] w-full rounded-lg object-cover"
         />
       ) : null}
       <ArticleToc items={toc} />
@@ -88,7 +88,11 @@ export function ArticleDetailPage({ article }: ArticleDetailPageProps) {
       ) : null}
       <RelatedArticles items={related} />
       {article.relatedServiceHref && article.relatedServiceLabel ? (
-        <Button asChild variant="outline">
+        <Button
+          asChild
+          variant="outline"
+          className="max-w-full min-w-0 whitespace-normal"
+        >
           <Link href={article.relatedServiceHref}>
             {articlesCopy.serviceCtaPrefix}: {article.relatedServiceLabel}
           </Link>

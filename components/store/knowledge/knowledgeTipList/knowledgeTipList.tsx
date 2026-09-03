@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui/card/card";
 import { knowledgeCopy } from "@/config/knowledge.config/knowledge.config";
 import { type KnowledgeTip } from "@/types/store/knowledge.types";
 
@@ -17,18 +18,15 @@ export function KnowledgeTipList({ tips }: KnowledgeTipListProps) {
       </h2>
       <ul className="space-y-3">
         {tips.map((tip) => (
-          <li
-            key={tip.id}
-            className="rounded-lg border border-border bg-card p-5"
-          >
-            <h3 className="type-h4 font-semibold text-card-foreground">
-              {tip.title}
-            </h3>
-            {tip.body ? (
-              <p className="mt-2 type-body-sm text-muted-foreground">
-                {tip.body}
-              </p>
-            ) : null}
+          <li key={tip.id} className="min-w-0">
+            <Card>
+              <h3 className="break-words type-h4 font-semibold text-card-foreground">
+                {tip.title}
+              </h3>
+              {tip.body ? (
+                <p className="type-body-sm text-muted-foreground">{tip.body}</p>
+              ) : null}
+            </Card>
           </li>
         ))}
       </ul>

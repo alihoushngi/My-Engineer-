@@ -32,7 +32,7 @@ export function ExpertProfileHero({ expert }: ExpertProfileHeroProps) {
 
   return (
     <header className="border-b border-border bg-surface-muted">
-      <div className="container-app py-10 sm:py-14">
+      <div className="container-app py-page">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex min-w-0 flex-col gap-5 sm:flex-row sm:items-start">
             <Avatar className="size-24 sm:size-28">
@@ -43,7 +43,9 @@ export function ExpertProfileHero({ expert }: ExpertProfileHeroProps) {
             </Avatar>
             <div className="min-w-0 space-y-4">
               <div className="space-y-2">
-                <h1 className="type-h1 text-foreground">{expert.name}</h1>
+                <h1 className="break-words type-h1 text-foreground">
+                  {expert.name}
+                </h1>
                 <p className="type-body-lg text-muted-foreground">
                   {expert.profession}
                   {expert.primarySpecialty

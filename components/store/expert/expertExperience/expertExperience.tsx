@@ -14,7 +14,7 @@ export function ExpertExperience({ history }: ExpertExperienceProps) {
   return (
     <section
       aria-labelledby="expert-experience-heading"
-      className="container-app py-10 sm:py-12"
+      className="container-app py-page"
     >
       <div className="max-w-3xl space-y-6">
         <SectionHeader

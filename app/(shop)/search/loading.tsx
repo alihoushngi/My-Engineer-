@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton/skeleton";
 export default function SearchLoading() {
   return (
     <div
-      className="container-wide flex flex-col gap-8 py-8 sm:py-12"
+      className="container-wide flex flex-col gap-8 py-page"
       aria-busy="true"
       aria-live="polite"
     >

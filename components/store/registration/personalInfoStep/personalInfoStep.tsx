@@ -200,7 +200,7 @@ export function PersonalInfoStep() {
                   type="button"
                   onClick={handleRemoveAvatar}
                   aria-label={registrationCopy.fileRemoveLabel}
-                  className="absolute -end-1 -top-1 rounded-full bg-danger p-0.5 text-danger-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="absolute -end-1 -top-1 inline-flex size-8 items-center justify-center rounded-full bg-danger text-danger-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <XIcon className="size-3.5" aria-hidden="true" />
                 </button>
