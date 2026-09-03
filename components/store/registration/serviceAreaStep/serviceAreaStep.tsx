@@ -88,11 +88,7 @@ export function ServiceAreaStep() {
       nearbyCityIds: formData.nearbyCityIds,
     });
 
-    // Steps 4–9 are not implemented in Task 08.
-    // When the next route is ready, navigate there.
-    // For now, stay on this page after successful commit.
-    // IMPLEMENTATION NOTE: navigate to /expert-registration/expertise when Task 09+ implements it.
-    router.push("/expert-registration/service-area");
+    router.push("/expert-registration/expertise");
   }
 
   function handleBack() {

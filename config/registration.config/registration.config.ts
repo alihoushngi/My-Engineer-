@@ -85,4 +85,61 @@ export const registrationCopy = {
   provinceErrorMessage: "بارگذاری استان‌ها ناموفق بود.",
   nearbyCitiesApiNote:
     "انتخاب شهرهای مجاور پس از اتصال سرویس در این مرحله فعال می‌شود.",
+  // Step 4
+  step4Title: "تخصص‌ها",
+  step4Description:
+    "حوزه‌های تخصصی خود را انتخاب کنید. می‌توانید چندین تخصص و نرم‌افزار مرتبط را انتخاب کنید.",
+  expertiseCatalogApiNote:
+    "فهرست تخصص‌ها پس از اتصال سرویس در دسترس خواهد بود.",
+  expertiseCatalogErrorTitle: "خطا در بارگذاری تخصص‌ها",
+  expertiseCatalogErrorDescription:
+    "بارگذاری فهرست تخصص‌ها ناموفق بود. لطفاً دوباره تلاش کنید.",
+  expertiseSelectedLabel: "تخصص‌های انتخاب‌شده",
+  expertiseNoneSelected: "هنوز تخصصی انتخاب نشده است.",
+  expertiseSheetTitle: (category: string) => `انتخاب تخصص — ${category}`,
+  expertiseSheetConfirm: "تأیید",
+  expertiseSheetCancel: "لغو",
+  removeExpertiseLabel: (label: string) => `حذف ${label}`,
+  softwareLabel: "نرم‌افزارهای مرتبط",
+  // Step 5
+  step5Title: "اطلاعات شخصی",
+  step5Description: "اطلاعات شخصی خود را وارد کنید.",
+  firstNameLabel: "نام",
+  firstNamePlaceholder: "نام",
+  lastNameLabel: "نام خانوادگی",
+  lastNamePlaceholder: "نام خانوادگی",
+  nationalIdDisplayLabel: "کد ملی (از مرحله ۱)",
+  avatarLabel: "تصویر پروفایل (اختیاری)",
+  avatarHelp: "تصویر پروفایل باید فرمت JPG، JPEG یا PNG داشته باشد.",
+  avatarInvalidFormat:
+    "فرمت فایل انتخابی پشتیبانی نمی‌شود. JPG، JPEG یا PNG انتخاب کنید.",
+  avatarUploadApiNote:
+    "آپلود تصویر پس از اتصال سرویس فعال می‌شود. تصویر انتخابی پس از اتصال آپلود خواهد شد.",
+  expertiseSummaryLabel: "تخصص‌های انتخاب‌شده",
+  expertiseSummaryEmpty: "تخصصی انتخاب نشده است.",
+  backToExpertise: "بازگشت به مرحله تخصص",
+  // Step 6
+  step6Title: "تحصیلات",
+  step6Description:
+    "سطح تحصیلات و مدرک خود را مشخص کنید و در صورت امکان مدارک مربوطه را بارگذاری کنید.",
+  educationLevelLabel: "سطح تحصیلات",
+  educationLevelDiplomaOrLower: "دیپلم یا پایین‌تر",
+  educationLevelAboveDiploma: "بالاتر از دیپلم",
+  degreeSelectionLabel: "مقاطع تحصیلی",
+  degreeSelectionHelp: "مقاطعی که مدرک دارید را انتخاب کنید.",
+  degreeAssociate: "کاردانی",
+  degreeBachelor: "کارشناسی",
+  degreeMaster: "کارشناسی ارشد",
+  degreeDoctorate: "دکتری",
+  degreeDiploma: "دیپلم",
+  degreeRequiredError:
+    "برای سطح بالاتر از دیپلم، حداقل یک مقطع تحصیلی انتخاب کنید.",
+  uploadDegreeLabel: (degree: string) => `بارگذاری مدرک ${degree}`,
+  uploadDegreeAccept: ".pdf,.jpg,.jpeg,.png",
+  uploadDegreeDescription: "PDF، JPG، JPEG یا PNG",
+  uploadApiNote:
+    "بارگذاری مدارک پس از اتصال سرویس انجام خواهد شد. فایل‌ها به صورت محلی انتخاب شده‌اند.",
+  fileSelected: (name: string) => `فایل انتخاب‌شده: ${name}`,
+  fileRemoveLabel: "حذف فایل",
+  fileChangeLabel: "تغییر فایل",
 } as const;

@@ -1,0 +1,332 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleAlertIcon, UserIcon, XIcon } from "lucide-react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert/alert";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar/avatar";
+import { Badge } from "@/components/ui/badge/badge";
+import { Button } from "@/components/ui/button/button";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
+import { Input } from "@/components/ui/input/input";
+import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
+import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
+import {
+  personalInfoStepSchema,
+  type PersonalInfoStepData,
+} from "@/components/store/registration/personalInfoStep/type/personalInfoStep.types";
+import { registrationCopy } from "@/config/registration.config/registration.config";
+import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
+import { savePersonalInfo } from "@/services/registration-service/registration-service";
+
+export function PersonalInfoStep() {
+  const router = useRouter();
+  const { data, commitPersonalInfo } = useRegistrationWizard();
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | undefined>(
+    data.personalInfo?.avatarFile,
+  );
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | undefined>(
+    undefined,
+  );
+  const [avatarFormatError, setAvatarFormatError] = useState<string | null>(
+    null,
+  );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<PersonalInfoStepData>({
+    resolver: zodResolver(personalInfoStepSchema),
+    defaultValues: {
+      firstName: data.personalInfo?.firstName ?? "",
+      lastName: data.personalInfo?.lastName ?? "",
+    },
+  });
+
+  function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setAvatarFormatError(null);
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const accepted = ["image/jpeg", "image/jpg", "image/png"];
+
+    if (!accepted.includes(file.type)) {
+      setAvatarFormatError(registrationCopy.avatarInvalidFormat);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    setAvatarFile(file);
+    const url = URL.createObjectURL(file);
+    setAvatarPreviewUrl(url);
+  }
+
+  function handleRemoveAvatar() {
+    setAvatarFile(undefined);
+    if (avatarPreviewUrl) {
+      URL.revokeObjectURL(avatarPreviewUrl);
+      setAvatarPreviewUrl(undefined);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }
+
+  async function onSubmit(formData: PersonalInfoStepData) {
+    setApiError(null);
+
+    try {
+      await savePersonalInfo({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        // avatarUploadId: not available until upload API exists
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : registrationCopy.errorGenericDescription;
+      setApiError(message);
+      return;
+    }
+
+    commitPersonalInfo({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      avatarFile,
+    });
+    router.push("/expert-registration/education");
+  }
+
+  function handleBack() {
+    router.push("/expert-registration/expertise");
+  }
+
+  const expertiseIds = data.expertise?.expertiseIds ?? [];
+  const softwareIds = data.expertise?.softwareIds ?? [];
+  const hasExpertise = expertiseIds.length > 0 || softwareIds.length > 0;
+
+  return (
+    <div className="space-y-8">
+      <RegistrationProgress currentStep={5} />
+      <div className="space-y-2">
+        <h2 className="type-h3 font-semibold text-foreground">
+          {registrationCopy.step5Title}
+        </h2>
+        <p className="type-body text-muted-foreground">
+          {registrationCopy.step5Description}
+        </p>
+      </div>
+
+      {/* Expertise summary */}
+      <section
+        className="space-y-3 rounded-lg border border-border bg-surface-muted px-4 py-3"
+        aria-label={registrationCopy.expertiseSummaryLabel}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <p className="type-body-sm font-medium text-foreground">
+            {registrationCopy.expertiseSummaryLabel}
+          </p>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => router.push("/expert-registration/expertise")}
+          >
+            {registrationCopy.backToExpertise}
+          </Button>
+        </div>
+        {hasExpertise ? (
+          <div className="flex flex-wrap gap-2">
+            {expertiseIds.map((id) => (
+              <Badge key={id} variant="secondary">
+                {id}
+              </Badge>
+            ))}
+            {softwareIds.map((id) => (
+              <Badge key={`sw-${id}`} variant="outline">
+                {id}
+              </Badge>
+            ))}
+          </div>
+        ) : (
+          <p className="type-body-sm text-muted-foreground">
+            {registrationCopy.expertiseSummaryEmpty}
+          </p>
+        )}
+      </section>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        className="space-y-6"
+        aria-label={registrationCopy.step5Title}
+      >
+        {/* Avatar */}
+        <Field>
+          <FieldLabel>{registrationCopy.avatarLabel}</FieldLabel>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+            <div className="relative shrink-0">
+              <Avatar size="lg" className="size-20">
+                {avatarPreviewUrl ? (
+                  <AvatarImage
+                    src={avatarPreviewUrl}
+                    alt="پیش‌نمایش تصویر پروفایل"
+                  />
+                ) : null}
+                <AvatarFallback>
+                  <UserIcon
+                    className="size-8 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </AvatarFallback>
+              </Avatar>
+              {avatarFile ? (
+                <button
+                  type="button"
+                  onClick={handleRemoveAvatar}
+                  aria-label={registrationCopy.fileRemoveLabel}
+                  className="absolute -end-1 -top-1 rounded-full bg-danger p-0.5 text-danger-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <XIcon className="size-3.5" aria-hidden="true" />
+                </button>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {avatarFile ? registrationCopy.fileChangeLabel : "انتخاب تصویر"}
+              </Button>
+              {avatarFile ? (
+                <p className="type-caption text-muted-foreground">
+                  {registrationCopy.fileSelected(avatarFile.name)}
+                </p>
+              ) : null}
+              <p className="type-caption text-muted-foreground">
+                {registrationCopy.avatarHelp}
+              </p>
+              {/*
+               * API CONTRACT REQUIRED — avatar upload endpoint does not exist.
+               * File is stored in-memory for now.
+               */}
+              <p className="type-caption text-muted-foreground">
+                {registrationCopy.avatarUploadApiNote}
+              </p>
+            </div>
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/jpg,image/png"
+            aria-label={registrationCopy.avatarLabel}
+            className="sr-only"
+            onChange={handleAvatarChange}
+          />
+          {avatarFormatError ? (
+            <p className="type-body-sm text-danger" role="alert">
+              {avatarFormatError}
+            </p>
+          ) : null}
+        </Field>
+
+        <Field invalid={Boolean(errors.firstName)}>
+          <FieldLabel htmlFor="reg-first-name" required>
+            {registrationCopy.firstNameLabel}
+          </FieldLabel>
+          <Input
+            id="reg-first-name"
+            type="text"
+            autoComplete="given-name"
+            placeholder={registrationCopy.firstNamePlaceholder}
+            aria-invalid={Boolean(errors.firstName)}
+            aria-describedby={
+              errors.firstName ? "reg-first-name-error" : undefined
+            }
+            {...register("firstName")}
+          />
+          <FieldError id="reg-first-name-error">
+            {errors.firstName?.message}
+          </FieldError>
+        </Field>
+
+        <Field invalid={Boolean(errors.lastName)}>
+          <FieldLabel htmlFor="reg-last-name" required>
+            {registrationCopy.lastNameLabel}
+          </FieldLabel>
+          <Input
+            id="reg-last-name"
+            type="text"
+            autoComplete="family-name"
+            placeholder={registrationCopy.lastNamePlaceholder}
+            aria-invalid={Boolean(errors.lastName)}
+            aria-describedby={
+              errors.lastName ? "reg-last-name-error" : undefined
+            }
+            {...register("lastName")}
+          />
+          <FieldError id="reg-last-name-error">
+            {errors.lastName?.message}
+          </FieldError>
+        </Field>
+
+        {/* National ID display — read-only from step 1 */}
+        <Field>
+          <FieldLabel>{registrationCopy.nationalIdDisplayLabel}</FieldLabel>
+          <Input
+            type="text"
+            readOnly
+            value={data.identity?.nationalId ?? ""}
+            aria-readonly="true"
+            className="bg-surface-muted text-muted-foreground"
+          />
+        </Field>
+
+        {/*
+         * Location fields (province/city) omitted per BUSINESS DECISION REQUIRED (P0).
+         * Legacy step5 had province/city but it was duplicated vs step 3 and labeled
+         * inconsistently (birth vs work). Architecture allows adding them when decided.
+         */}
+
+        {apiError ? (
+          <Alert variant="danger">
+            <CircleAlertIcon />
+            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
+            <AlertDescription>{apiError}</AlertDescription>
+          </Alert>
+        ) : null}
+
+        <RegistrationStepNav
+          onBack={handleBack}
+          onContinue={() => {
+            void handleSubmit(onSubmit)();
+          }}
+          isPending={isSubmitting}
+          isContinueDisabled={isSubmitting}
+        />
+      </form>
+    </div>
+  );
+}

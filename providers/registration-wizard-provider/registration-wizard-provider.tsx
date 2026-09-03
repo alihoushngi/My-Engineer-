@@ -8,8 +8,11 @@ import {
   useState,
 } from "react";
 import {
+  type RegistrationEducationData,
+  type RegistrationExpertiseData,
   type RegistrationIdentityData,
   type RegistrationMaxStep,
+  type RegistrationPersonalInfoData,
   type RegistrationServiceAreaData,
   type RegistrationWizardData,
 } from "@/types/store/registration.types";
@@ -20,6 +23,9 @@ type RegistrationWizardContextValue = {
   commitIdentity: (identity: RegistrationIdentityData) => void;
   commitOtpVerified: () => void;
   commitServiceArea: (serviceArea: RegistrationServiceAreaData) => void;
+  commitExpertise: (expertise: RegistrationExpertiseData) => void;
+  commitPersonalInfo: (personalInfo: RegistrationPersonalInfoData) => void;
+  commitEducation: (education: RegistrationEducationData) => void;
   resetFromStep: (step: RegistrationMaxStep) => void;
 };
 
@@ -52,9 +58,12 @@ export function RegistrationWizardProvider({
     setData((prev) => ({
       ...prev,
       identity,
-      // Committing new identity invalidates OTP and service area
+      // New identity invalidates all subsequent steps
       otpVerified: undefined,
       serviceArea: undefined,
+      expertise: undefined,
+      personalInfo: undefined,
+      education: undefined,
     }));
     setMaxStep(2);
   }, []);
@@ -67,6 +76,40 @@ export function RegistrationWizardProvider({
   const commitServiceArea = useCallback(
     (serviceArea: RegistrationServiceAreaData) => {
       setData((prev) => ({ ...prev, serviceArea }));
+      setMaxStep((prev) => (prev < 4 ? 4 : prev));
+    },
+    [],
+  );
+
+  const commitExpertise = useCallback(
+    (expertise: RegistrationExpertiseData) => {
+      setData((prev) => ({
+        ...prev,
+        expertise,
+        // Changing expertise invalidates personal info onward
+        personalInfo: undefined,
+        education: undefined,
+      }));
+      setMaxStep((prev) => (prev < 5 ? 5 : prev));
+    },
+    [],
+  );
+
+  const commitPersonalInfo = useCallback(
+    (personalInfo: RegistrationPersonalInfoData) => {
+      setData((prev) => ({
+        ...prev,
+        personalInfo,
+        education: undefined,
+      }));
+      setMaxStep((prev) => (prev < 6 ? 6 : prev));
+    },
+    [],
+  );
+
+  const commitEducation = useCallback(
+    (education: RegistrationEducationData) => {
+      setData((prev) => ({ ...prev, education }));
     },
     [],
   );
@@ -78,6 +121,24 @@ export function RegistrationWizardProvider({
       setData({});
     } else if (step === 2) {
       setData((prev) => ({ identity: prev.identity }));
+    } else if (step === 3) {
+      setData((prev) => ({
+        identity: prev.identity,
+        otpVerified: prev.otpVerified,
+      }));
+    } else if (step === 4) {
+      setData((prev) => ({
+        identity: prev.identity,
+        otpVerified: prev.otpVerified,
+        serviceArea: prev.serviceArea,
+      }));
+    } else if (step === 5) {
+      setData((prev) => ({
+        identity: prev.identity,
+        otpVerified: prev.otpVerified,
+        serviceArea: prev.serviceArea,
+        expertise: prev.expertise,
+      }));
     }
   }, []);
 
@@ -89,6 +150,9 @@ export function RegistrationWizardProvider({
         commitIdentity,
         commitOtpVerified,
         commitServiceArea,
+        commitExpertise,
+        commitPersonalInfo,
+        commitEducation,
         resetFromStep,
       }}
     >
