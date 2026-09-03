@@ -1,0 +1,288 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleAlertIcon, RefreshCcwIcon } from "lucide-react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert/alert";
+import { Button } from "@/components/ui/button/button";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select/select";
+import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
+import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
+import {
+  serviceAreaStepSchema,
+  type ServiceAreaStepData,
+} from "@/components/store/registration/serviceAreaStep/type/serviceAreaStep.types";
+import { registrationCopy } from "@/config/registration.config/registration.config";
+import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
+import { saveServiceArea } from "@/services/registration-service/registration-service";
+import { useProvinceCities } from "@/hooks/use-province-cities/use-province-cities";
+
+export function ServiceAreaStep() {
+  const router = useRouter();
+  const { commitServiceArea, data } = useRegistrationWizard();
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  const {
+    provinces,
+    cities,
+    isLoadingProvinces,
+    isLoadingCities,
+    provinceError,
+    cityError,
+    retryProvinces,
+    retryCities,
+    selectedProvinceId,
+    setSelectedProvince,
+  } = useProvinceCities();
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<ServiceAreaStepData>({
+    resolver: zodResolver(serviceAreaStepSchema),
+    defaultValues: {
+      provinceId: data.serviceArea?.provinceId ?? "",
+      cityId: data.serviceArea?.cityId ?? "",
+      nearbyCityIds: data.serviceArea?.nearbyCityIds
+        ? [...data.serviceArea.nearbyCityIds]
+        : ([] as string[]),
+    },
+  });
+
+  async function onSubmit(formData: ServiceAreaStepData) {
+    setApiError(null);
+
+    try {
+      await saveServiceArea({
+        provinceId: formData.provinceId,
+        cityId: formData.cityId,
+        nearbyCityIds: formData.nearbyCityIds,
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : registrationCopy.errorGenericDescription;
+      setApiError(message);
+      return;
+    }
+
+    commitServiceArea({
+      provinceId: formData.provinceId,
+      cityId: formData.cityId,
+      nearbyCityIds: formData.nearbyCityIds,
+    });
+
+    // Steps 4–9 are not implemented in Task 08.
+    // When the next route is ready, navigate there.
+    // For now, stay on this page after successful commit.
+    // IMPLEMENTATION NOTE: navigate to /expert-registration/expertise when Task 09+ implements it.
+    router.push("/expert-registration/service-area");
+  }
+
+  function handleBack() {
+    router.push("/expert-registration/otp");
+  }
+
+  return (
+    <div className="space-y-8">
+      <RegistrationProgress currentStep={3} />
+      <div className="space-y-2">
+        <h2 className="type-h3 font-semibold text-foreground">
+          {registrationCopy.step3Title}
+        </h2>
+        <p className="type-body text-muted-foreground">
+          {registrationCopy.step3Description}
+        </p>
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        className="space-y-6"
+        aria-label={registrationCopy.step3Title}
+      >
+        {/* Province selector */}
+        <Field invalid={Boolean(errors.provinceId)}>
+          <FieldLabel htmlFor="reg-province" required>
+            {registrationCopy.provinceLabel}
+          </FieldLabel>
+          {provinceError ? (
+            <div className="flex items-center gap-2">
+              <p className="type-body-sm text-danger">
+                {registrationCopy.provinceErrorMessage}
+              </p>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={retryProvinces}
+                aria-label="تلاش مجدد برای بارگذاری استان‌ها"
+              >
+                <RefreshCcwIcon className="size-4" />
+                {registrationCopy.retryLabel}
+              </Button>
+            </div>
+          ) : (
+            <Controller
+              control={control}
+              name="provinceId"
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setSelectedProvince(value);
+                    // Clear city when province changes
+                    setValue("cityId", "");
+                  }}
+                  disabled={isLoadingProvinces || isSubmitting}
+                >
+                  <SelectTrigger
+                    id="reg-province"
+                    aria-invalid={Boolean(errors.provinceId)}
+                    aria-describedby={
+                      errors.provinceId ? "reg-province-error" : undefined
+                    }
+                  >
+                    <SelectValue
+                      placeholder={
+                        isLoadingProvinces
+                          ? registrationCopy.provinceLoadingMessage
+                          : registrationCopy.provincePlaceholder
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {provinces.map((province) => (
+                      <SelectItem key={province.id} value={province.id}>
+                        {province.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          )}
+          <FieldError id="reg-province-error">
+            {errors.provinceId?.message}
+          </FieldError>
+        </Field>
+
+        {/* City selector */}
+        <Field invalid={Boolean(errors.cityId)}>
+          <FieldLabel htmlFor="reg-city" required>
+            {registrationCopy.cityLabel}
+          </FieldLabel>
+          {cityError ? (
+            <div className="flex items-center gap-2">
+              <p className="type-body-sm text-danger">
+                {registrationCopy.cityErrorMessage}
+              </p>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={retryCities}
+                aria-label="تلاش مجدد برای بارگذاری شهرها"
+              >
+                <RefreshCcwIcon className="size-4" />
+                {registrationCopy.retryLabel}
+              </Button>
+            </div>
+          ) : (
+            <Controller
+              control={control}
+              name="cityId"
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  disabled={
+                    !selectedProvinceId ||
+                    isLoadingCities ||
+                    cities.length === 0 ||
+                    isSubmitting
+                  }
+                >
+                  <SelectTrigger
+                    id="reg-city"
+                    aria-invalid={Boolean(errors.cityId)}
+                    aria-describedby={
+                      errors.cityId ? "reg-city-error" : undefined
+                    }
+                  >
+                    <SelectValue
+                      placeholder={
+                        !selectedProvinceId
+                          ? registrationCopy.cityPlaceholder
+                          : isLoadingCities
+                            ? registrationCopy.cityLoadingMessage
+                            : cities.length === 0
+                              ? registrationCopy.cityEmptyMessage
+                              : registrationCopy.cityPlaceholder
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cities.map((city) => (
+                      <SelectItem key={city.id} value={city.id}>
+                        {city.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          )}
+          <FieldError id="reg-city-error">{errors.cityId?.message}</FieldError>
+        </Field>
+
+        {/* Nearby cities — API CONTRACT REQUIRED
+            Implementation note: the nearby city list requires an API response
+            scoped to the selected city/province (BUSINESS DECISION REQUIRED for radius).
+            The field is rendered as disabled/note until the service is available. */}
+        <Field>
+          <FieldLabel>{registrationCopy.nearbyCitiesLabel}</FieldLabel>
+          <Alert variant="info">
+            <CircleAlertIcon />
+            <AlertDescription>
+              {registrationCopy.nearbyCitiesApiNote}
+            </AlertDescription>
+          </Alert>
+        </Field>
+
+        {apiError ? (
+          <Alert variant="danger">
+            <CircleAlertIcon />
+            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
+            <AlertDescription>{apiError}</AlertDescription>
+          </Alert>
+        ) : null}
+
+        <RegistrationStepNav
+          onBack={handleBack}
+          onContinue={() => {
+            void handleSubmit(onSubmit)();
+          }}
+          isPending={isSubmitting}
+          isContinueDisabled={isSubmitting || isLoadingProvinces}
+        />
+      </form>
+    </div>
+  );
+}
