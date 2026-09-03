@@ -1,0 +1,16 @@
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
+
+export default function KnowledgeCategoryLoading() {
+  return (
+    <div
+      className="container-app flex flex-col gap-6 py-8 sm:py-12"
+      aria-busy="true"
+      aria-live="polite"
+    >
+      <Skeleton className="h-5 w-48 max-w-full" />
+      <Skeleton className="h-10 w-56 max-w-full" />
+      <Skeleton className="h-24 w-full" />
+      <Skeleton className="h-24 w-full" />
+    </div>
+  );
+}

@@ -361,5 +361,6 @@ Registration wizard (Tasks 08–10):
 - **Step 7 ترافیک / شهرسازی.** Discipline options exist in source; qualification options do not. The UI shows an info state and does not invent qualifications.
 - **Step 9 min/max images.** Not defined in source. Images are optional on the client; `accept_rules` is required.
 - **Completion destination.** `/expert-registration/complete` is the in-wizard success screen. Home is offered as a canonical exit. Pending-review vs login vs profile is still **BUSINESS DECISION REQUIRED**.
+- **Articles / FAQ / knowledge.** No content API and no employer copy in this repository. Listing pages render empty states. Unknown category/article slugs call `notFound()`. Do not copy legacy demo UTM cards or invent FAQ/knowledge taxonomies.
 
 Docker usage is documented in [DOCKER.md](DOCKER.md).
