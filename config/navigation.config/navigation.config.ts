@@ -3,6 +3,7 @@ import { serviceCategories } from "@/config/services.config/services.config";
 
 export const storePaths = {
   home: "/",
+  search: "/search",
   articles: "/articles",
   knowledge: "/knowledge",
   faq: "/faq",

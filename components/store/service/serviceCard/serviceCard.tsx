@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type MouseEventHandler, type ReactNode } from "react";
 import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/card/card";
@@ -10,6 +10,7 @@ export type ServiceCardProps = {
   description?: string;
   icon?: ReactNode;
   className?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
 export function ServiceCard({
@@ -18,6 +19,7 @@ export function ServiceCard({
   description,
   icon,
   className,
+  onClick,
 }: ServiceCardProps) {
   return (
     <Link
@@ -27,6 +29,7 @@ export function ServiceCard({
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className,
       )}
+      onClick={onClick}
     >
       <Card className="h-full p-4 transition-colors group-hover:border-border-strong group-hover:bg-accent/40 sm:p-5">
         <CardHeader>
