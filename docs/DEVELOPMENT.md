@@ -362,5 +362,9 @@ Registration wizard (Tasks 08–10):
 - **Step 9 min/max images.** Not defined in source. Images are optional on the client; `accept_rules` is required.
 - **Completion destination.** `/expert-registration/complete` is the in-wizard success screen. Home is offered as a canonical exit. Pending-review vs login vs profile is still **BUSINESS DECISION REQUIRED**.
 - **Articles / FAQ / knowledge.** No content API and no employer copy in this repository. Listing pages render empty states. Unknown category/article slugs call `notFound()`. Do not copy legacy demo UTM cards or invent FAQ/knowledge taxonomies.
+- **Engineering forms (`/engineering-forms`).** Reserved in IA and still **NEEDS CONFIRMATION**. Legacy `knowledge/forms.html` is a stub with no files or metadata. The route is not implemented. Do not invent categories, downloads, or calculators.
+- **Legal / about copy.** `/about`, `/terms`, and `/privacy-policy` use employer text from the legacy about-us HTML. Do not invent statistics, certifications, or extra legal clauses.
+- **Privacy contact.** Source support email is incomplete (`@info-mohandeseman`) and is shown as-is. A complete address is a **legal/business requirement**. Phone and Rasht office address are from the same source.
+- **Legal-implied product surfaces.** Terms/privacy mention accounts, passwords, optional platform fees / «پرداخت امن», complaint intake, account deletion, user panel edit, and cookies. Those product surfaces remain **BUSINESS DECISION REQUIRED** and are not built from this copy.
 
 Docker usage is documented in [DOCKER.md](DOCKER.md).
