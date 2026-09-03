@@ -42,7 +42,7 @@ export function MobileNavigation({
         side="start"
         className="w-full gap-0 p-0 sm:max-w-sm"
       >
-        <SheetHeader className="border-b border-border">
+        <SheetHeader className="border-b border-border pe-14">
           <SheetTitle className="sr-only">منوی اصلی</SheetTitle>
           <SheetDescription className="sr-only">
             پیوندهای فروشگاه مهندس من

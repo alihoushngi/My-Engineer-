@@ -64,7 +64,7 @@ export function ExpertProfilePage({
       ) : null}
       <ExpertProfileHero expert={expert} />
       <ExpertQuickFacts expert={expert} />
-      {expert.about !== undefined ? <ExpertAbout about={expert.about} /> : null}
+      {hasText(expert.about) ? <ExpertAbout about={expert.about} /> : null}
       {hasItems(expert.specialties) ? (
         <ExpertSpecialties specialties={expert.specialties} />
       ) : null}
@@ -86,10 +86,10 @@ export function ExpertProfilePage({
           items={expert.software}
         />
       ) : null}
-      {expert.portfolio !== undefined ? (
+      {hasItems(expert.portfolio) ? (
         <ExpertPortfolio items={expert.portfolio} />
       ) : null}
-      {expert.reviews !== undefined ||
+      {hasItems(expert.reviews) ||
       typeof expert.rating === "number" ||
       typeof expert.reviewCount === "number" ? (
         <ExpertReviews

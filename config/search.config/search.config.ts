@@ -22,6 +22,8 @@ export const searchCopy = {
   retryLabel: "تلاش دوباره",
   browseServices: "مشاهده خدمات",
   clearFilters: "پاک کردن فیلترها",
+  resultCount: (services: string, experts: string) =>
+    `${services} خدمت و ${experts} متخصص`,
   overlayTitle: "جستجو",
   overlayDescription: "عبارت را وارد کنید یا یکی از خدمات را انتخاب کنید.",
   overlayServices: "خدمات",

@@ -80,7 +80,7 @@ export function Button({
       aria-busy={loading || undefined}
       {...props}
     >
-      {loading ? <Spinner className="size-4" /> : icon}
+      {loading ? <Spinner className="size-4" aria-hidden="true" /> : icon}
       {children}
     </button>
   );

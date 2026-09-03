@@ -1,6 +1,8 @@
+import { UsersIcon } from "lucide-react";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
 import { ServiceCard } from "@/components/store/service/serviceCard/serviceCard";
 import { ServiceIcon } from "@/components/store/service/serviceIcon/serviceIcon";
+import { Empty } from "@/components/ui/empty/empty";
 import { searchCopy } from "@/config/search.config/search.config";
 import { type SearchResultsProps } from "@/components/store/search/searchResults/type/searchResults.types";
 
@@ -42,9 +44,10 @@ export function SearchResults({ services, experts }: SearchResultsProps) {
             ))}
           </ul>
         ) : (
-          <p className="type-body text-muted-foreground">
-            {searchCopy.expertsUnavailable}
-          </p>
+          <Empty
+            icon={<UsersIcon aria-hidden="true" />}
+            title={searchCopy.expertsUnavailable}
+          />
         )}
       </section>
     </div>

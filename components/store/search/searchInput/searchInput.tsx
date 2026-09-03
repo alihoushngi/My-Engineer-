@@ -71,7 +71,7 @@ export function SearchInput({
               autoComplete="off"
               enterKeyHint="search"
               placeholder={searchCopy.placeholder}
-              className="ps-10 pe-11 [&::-webkit-search-cancel-button]:hidden"
+              className="ps-10 pe-12 [&::-webkit-search-cancel-button]:hidden"
               onChange={(event) => {
                 setValue(event.currentTarget.value);
               }}
@@ -81,7 +81,7 @@ export function SearchInput({
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="absolute top-1/2 end-1 size-9 -translate-y-1/2 text-muted-foreground"
+                className="absolute top-1/2 end-1 size-11 -translate-y-1/2 text-muted-foreground"
                 aria-label={searchCopy.clearLabel}
                 onClick={() => {
                   setValue("");

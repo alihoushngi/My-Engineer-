@@ -4,12 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleAlertIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import { Input } from "@/components/ui/input/input";
 import {
@@ -24,6 +18,8 @@ import {
   type OrganizationStepData,
 } from "@/components/store/registration/organizationStep/type/organizationStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { saveOrganization } from "@/services/registration-service/registration-service";
@@ -81,9 +77,7 @@ export function OrganizationStep() {
       });
     } catch (err) {
       setApiError(
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription,
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
       );
       return;
     }
@@ -170,11 +164,12 @@ export function OrganizationStep() {
         ) : null}
 
         {apiError ? (
-          <Alert variant="danger">
-            <CircleAlertIcon />
-            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-            <AlertDescription>{apiError}</AlertDescription>
-          </Alert>
+          <RegistrationError
+            message={apiError}
+            onRetry={() => {
+              void handleSubmit(onSubmit)();
+            }}
+          />
         ) : null}
 
         <RegistrationStepNav

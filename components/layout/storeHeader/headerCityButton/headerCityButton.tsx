@@ -3,13 +3,7 @@
 import { MapPinIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog/dialog";
+import { CityUnavailableDialog } from "@/components/common/cityUnavailableDialog/cityUnavailableDialog";
 import { type HeaderCityButtonProps } from "@/components/layout/storeHeader/headerCityButton/type/headerCityButton.types";
 
 const defaultCityLabel = "انتخاب شهر";
@@ -31,7 +25,7 @@ export function HeaderCityButton({ selectedCityLabel }: HeaderCityButtonProps) {
           setOpen(true);
         }}
       >
-        <MapPinIcon />
+        <MapPinIcon aria-hidden="true" />
         <span className="truncate">{label}</span>
       </Button>
       <Button
@@ -47,18 +41,15 @@ export function HeaderCityButton({ selectedCityLabel }: HeaderCityButtonProps) {
           setOpen(true);
         }}
       >
-        <MapPinIcon />
+        <MapPinIcon aria-hidden="true" />
       </Button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent id="city-selector-surface">
-          <DialogHeader>
-            <DialogTitle>{defaultCityLabel}</DialogTitle>
-            <DialogDescription>
-              انتخاب شهر برای مشاهده متخصصان به‌زودی فعال می‌شود.
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <CityUnavailableDialog
+        id="city-selector-surface"
+        open={open}
+        onOpenChange={setOpen}
+        title={defaultCityLabel}
+        description="انتخاب شهر برای مشاهده متخصصان به‌زودی فعال می‌شود."
+      />
     </>
   );
 }

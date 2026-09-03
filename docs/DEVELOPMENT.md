@@ -366,5 +366,6 @@ Registration wizard (Tasks 08–10):
 - **Legal / about copy.** `/about`, `/terms`, and `/privacy-policy` use employer text from the legacy about-us HTML. Do not invent statistics, certifications, or extra legal clauses.
 - **Privacy contact.** Source support email is incomplete (`@info-mohandeseman`) and is shown as-is. A complete address is a **legal/business requirement**. Phone and Rasht office address are from the same source.
 - **Legal-implied product surfaces.** Terms/privacy mention accounts, passwords, optional platform fees / «پرداخت امن», complaint intake, account deletion, user panel edit, and cookies. Those product surfaces remain **BUSINESS DECISION REQUIRED** and are not built from this copy.
+- **Service listing.** `/services/[slug]` validates known slugs and `notFound()` otherwise. Expert results are empty until a listing API exists. Do not invent specialists to hide that empty state.
 
 Docker usage is documented in [DOCKER.md](DOCKER.md).

@@ -21,7 +21,7 @@ export function HeaderSearchButton() {
           setOpen(true);
         }}
       >
-        <SearchIcon />
+        <SearchIcon aria-hidden="true" />
         جستجو
       </Button>
       <Button
@@ -37,7 +37,7 @@ export function HeaderSearchButton() {
           setOpen(true);
         }}
       >
-        <SearchIcon />
+        <SearchIcon aria-hidden="true" />
       </Button>
       <SearchSurface open={open} onOpenChange={setOpen} />
     </>

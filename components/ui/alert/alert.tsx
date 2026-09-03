@@ -25,10 +25,13 @@ const alertVariants = cva(
 type AlertProps = ComponentProps<"div"> & VariantProps<typeof alertVariants>;
 
 export function Alert({ className, variant = "info", ...props }: AlertProps) {
+  const role =
+    variant === "danger" || variant === "warning" ? "alert" : "status";
+
   return (
     <div
       data-slot="alert"
-      role="alert"
+      role={role}
       className={cn(alertVariants({ variant }), className)}
       {...props}
     />

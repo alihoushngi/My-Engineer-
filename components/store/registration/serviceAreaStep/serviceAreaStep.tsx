@@ -5,11 +5,8 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleAlertIcon, RefreshCcwIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert/alert";
+import { Empty } from "@/components/ui/empty/empty";
 import { Button } from "@/components/ui/button/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import {
@@ -19,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select/select";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import {
@@ -26,6 +24,7 @@ import {
   type ServiceAreaStepData,
 } from "@/components/store/registration/serviceAreaStep/type/serviceAreaStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { saveServiceArea } from "@/services/registration-service/registration-service";
 import { useProvinceCities } from "@/hooks/use-province-cities/use-province-cities";
@@ -74,11 +73,9 @@ export function ServiceAreaStep() {
         nearbyCityIds: formData.nearbyCityIds,
       });
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription;
-      setApiError(message);
+      setApiError(
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
+      );
       return;
     }
 
@@ -248,6 +245,13 @@ export function ServiceAreaStep() {
           <FieldError id="reg-city-error">{errors.cityId?.message}</FieldError>
         </Field>
 
+        {selectedProvinceId &&
+        !isLoadingCities &&
+        !cityError &&
+        cities.length === 0 ? (
+          <Empty title={registrationCopy.cityEmptyMessage} />
+        ) : null}
+
         {/* Nearby cities — API CONTRACT REQUIRED
             Implementation note: the nearby city list requires an API response
             scoped to the selected city/province (BUSINESS DECISION REQUIRED for radius).
@@ -263,11 +267,12 @@ export function ServiceAreaStep() {
         </Field>
 
         {apiError ? (
-          <Alert variant="danger">
-            <CircleAlertIcon />
-            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-            <AlertDescription>{apiError}</AlertDescription>
-          </Alert>
+          <RegistrationError
+            message={apiError}
+            onRetry={() => {
+              void handleSubmit(onSubmit)();
+            }}
+          />
         ) : null}
 
         <RegistrationStepNav

@@ -23,7 +23,7 @@ export function HeaderMenuButton() {
           setOpen(true);
         }}
       >
-        <MenuIcon />
+        <MenuIcon aria-hidden="true" />
       </Button>
       <MobileNavigation open={open} onOpenChange={setOpen} />
     </>

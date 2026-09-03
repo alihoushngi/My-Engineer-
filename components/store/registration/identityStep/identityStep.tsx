@@ -5,12 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleAlertIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
 import { Checkbox } from "@/components/ui/checkbox/checkbox";
 import {
   Field,
@@ -19,6 +13,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field/field";
 import { Input } from "@/components/ui/input/input";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import {
@@ -27,6 +22,7 @@ import {
 } from "@/components/store/registration/identityStep/type/identityStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { storePaths } from "@/config/navigation.config/navigation.config";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { sendOtp } from "@/services/registration-service/registration-service";
 
@@ -58,11 +54,9 @@ export function IdentityStep() {
         nationalId: formData.nationalId,
       });
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription;
-      setApiError(message);
+      setApiError(
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
+      );
       return;
     }
 
@@ -188,11 +182,12 @@ export function IdentityStep() {
         </Field>
 
         {apiError ? (
-          <Alert variant="danger">
-            <CircleAlertIcon />
-            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-            <AlertDescription>{apiError}</AlertDescription>
-          </Alert>
+          <RegistrationError
+            message={apiError}
+            onRetry={() => {
+              void handleSubmit(onSubmit)();
+            }}
+          />
         ) : null}
 
         <RegistrationStepNav

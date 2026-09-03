@@ -55,8 +55,8 @@ export function DialogContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-4 end-4 rounded-md p-1 text-muted-foreground opacity-80 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
-          <XIcon className="size-4" />
+        <DialogPrimitive.Close className="absolute top-3 end-3 flex size-11 items-center justify-center rounded-md text-muted-foreground opacity-80 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
+          <XIcon aria-hidden="true" className="size-4" />
           <span className="sr-only">بستن</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
@@ -68,7 +68,7 @@ export function DialogHeader({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1.5 text-start", className)}
+      className={cn("flex flex-col gap-1.5 pe-12 text-start", className)}
       {...props}
     />
   );

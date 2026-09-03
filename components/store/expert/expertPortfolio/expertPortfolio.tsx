@@ -77,7 +77,29 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
           }
         }}
       >
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent
+          className="sm:max-w-2xl"
+          onKeyDown={(event) => {
+            if (portfolio.length < 2 || openIndex === null) {
+              return;
+            }
+
+            if (event.key === "ArrowRight") {
+              event.preventDefault();
+              setOpenIndex(
+                (current) =>
+                  ((current ?? 0) - 1 + portfolio.length) % portfolio.length,
+              );
+            }
+
+            if (event.key === "ArrowLeft") {
+              event.preventDefault();
+              setOpenIndex(
+                (current) => ((current ?? 0) + 1) % portfolio.length,
+              );
+            }
+          }}
+        >
           {selected ? (
             <>
               <DialogHeader>

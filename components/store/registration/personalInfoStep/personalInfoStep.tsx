@@ -4,12 +4,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleAlertIcon, UserIcon, XIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
+import { UserIcon, XIcon } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -19,6 +14,7 @@ import { Badge } from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import { Input } from "@/components/ui/input/input";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import {
@@ -26,6 +22,7 @@ import {
   type PersonalInfoStepData,
 } from "@/components/store/registration/personalInfoStep/type/personalInfoStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { savePersonalInfo } from "@/services/registration-service/registration-service";
 
@@ -101,11 +98,9 @@ export function PersonalInfoStep() {
         // avatarUploadId: not available until upload API exists
       });
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription;
-      setApiError(message);
+      setApiError(
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
+      );
       return;
     }
 
@@ -311,11 +306,12 @@ export function PersonalInfoStep() {
          */}
 
         {apiError ? (
-          <Alert variant="danger">
-            <CircleAlertIcon />
-            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-            <AlertDescription>{apiError}</AlertDescription>
-          </Alert>
+          <RegistrationError
+            message={apiError}
+            onRetry={() => {
+              void handleSubmit(onSubmit)();
+            }}
+          />
         ) : null}
 
         <RegistrationStepNav

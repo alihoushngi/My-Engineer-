@@ -54,3 +54,14 @@ export const serviceCategories: readonly ServiceCategory[] = [
     description: "امور اداری ساختمان",
   },
 ];
+
+export function getServiceCategory(slug: string): ServiceCategory | undefined {
+  return serviceCategories.find((service) => service.slug === slug);
+}
+
+export const serviceDiscoveryCopy = {
+  breadcrumb: "خدمات",
+  emptyTitle: "متخصصی برای این خدمت پیدا نشد.",
+  emptyDescription: "شهر را تغییر دهید یا یکی از خدمات دیگر را ببینید.",
+  homeCta: "بازگشت به خانه",
+} as const;

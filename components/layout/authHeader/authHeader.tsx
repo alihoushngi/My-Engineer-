@@ -12,8 +12,8 @@ export function AuthHeader() {
           href={siteConfig.homeHref}
           className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-md px-2 type-body-sm text-muted-foreground outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring sm:px-3"
         >
-          <ChevronRightIcon className="size-4 ltr:hidden" />
-          <ChevronLeftIcon className="size-4 rtl:hidden" />
+          <ChevronRightIcon aria-hidden="true" className="size-4 ltr:hidden" />
+          <ChevronLeftIcon aria-hidden="true" className="size-4 rtl:hidden" />
           <span className="sm:hidden">فروشگاه</span>
           <span className="hidden sm:inline">بازگشت به فروشگاه</span>
         </Link>

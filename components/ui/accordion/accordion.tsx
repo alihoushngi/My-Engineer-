@@ -40,7 +40,10 @@ export function AccordionTrigger({
         {...props}
       >
         {children}
-        <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground transition-transform duration-(--duration-normal)" />
+        <ChevronDownIcon
+          aria-hidden="true"
+          className="size-4 shrink-0 text-muted-foreground transition-transform duration-(--duration-normal)"
+        />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );

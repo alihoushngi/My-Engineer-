@@ -4,12 +4,6 @@ import { useRouter } from "next/navigation";
 import { useMemo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleAlertIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
 import { Checkbox } from "@/components/ui/checkbox/checkbox";
 import { Field, FieldError } from "@/components/ui/field/field";
 import { CertificateFields } from "@/components/store/registration/portfolioStep/certificateFields/certificateFields";
@@ -21,6 +15,8 @@ import {
 import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { submitRegistration } from "@/services/registration-service/registration-service";
@@ -131,9 +127,7 @@ export function PortfolioStep() {
       });
     } catch (err) {
       setApiError(
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription,
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
       );
       return;
     }
@@ -231,11 +225,12 @@ export function PortfolioStep() {
         </Field>
 
         {apiError ? (
-          <Alert variant="danger">
-            <CircleAlertIcon />
-            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-            <AlertDescription>{apiError}</AlertDescription>
-          </Alert>
+          <RegistrationError
+            message={apiError}
+            onRetry={() => {
+              void handleSubmit(onSubmit)();
+            }}
+          />
         ) : null}
 
         <RegistrationStepNav

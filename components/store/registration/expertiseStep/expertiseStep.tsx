@@ -11,6 +11,7 @@ import {
   AlertTitle,
 } from "@/components/ui/alert/alert";
 import { Badge } from "@/components/ui/badge/badge";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
 import {
@@ -18,6 +19,7 @@ import {
   type ExpertiseStepData,
 } from "@/components/store/registration/expertiseStep/type/expertiseStep.types";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { saveExpertise } from "@/services/registration-service/registration-service";
 
@@ -69,11 +71,9 @@ export function ExpertiseStep() {
         softwareIds: formData.softwareIds,
       });
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription;
-      setApiError(message);
+      setApiError(
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
+      );
       return;
     }
 
@@ -164,11 +164,12 @@ export function ExpertiseStep() {
       )}
 
       {apiError ? (
-        <Alert variant="danger">
-          <CircleAlertIcon />
-          <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-          <AlertDescription>{apiError}</AlertDescription>
-        </Alert>
+        <RegistrationError
+          message={apiError}
+          onRetry={() => {
+            void handleSubmit(onSubmit)();
+          }}
+        />
       ) : null}
 
       <RegistrationStepNav

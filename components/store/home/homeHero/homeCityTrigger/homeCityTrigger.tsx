@@ -3,13 +3,7 @@
 import { MapPinIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog/dialog";
+import { CityUnavailableDialog } from "@/components/common/cityUnavailableDialog/cityUnavailableDialog";
 import { homeHeroCopy } from "@/config/home.config/home.config";
 import { cn } from "@/lib/utils/cn/cn";
 
@@ -39,16 +33,13 @@ export function HomeCityTrigger({ className }: HomeCityTriggerProps) {
         <MapPinIcon aria-hidden="true" />
         {homeHeroCopy.cityLabel}
       </Button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent id="home-city-selector-surface">
-          <DialogHeader>
-            <DialogTitle>{homeHeroCopy.cityLabel}</DialogTitle>
-            <DialogDescription>
-              انتخاب شهر برای مشاهده متخصصان به‌زودی فعال می‌شود.
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <CityUnavailableDialog
+        id="home-city-selector-surface"
+        open={open}
+        onOpenChange={setOpen}
+        title={homeHeroCopy.cityLabel}
+        description="انتخاب شهر برای مشاهده متخصصان به‌زودی فعال می‌شود."
+      />
     </>
   );
 }

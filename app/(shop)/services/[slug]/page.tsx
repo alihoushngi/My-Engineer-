@@ -1,0 +1,39 @@
+import { type Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ServiceDiscoveryPage } from "@/components/store/service/serviceDiscoveryPage/serviceDiscoveryPage";
+import { siteConfig } from "@/config/site.config/site.config";
+import { getServiceCategory } from "@/config/services.config/services.config";
+
+type ServicePageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: ServicePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const service = getServiceCategory(slug);
+
+  if (!service) {
+    return { title: siteConfig.name };
+  }
+
+  return {
+    title: `${service.label} | ${siteConfig.name}`,
+    description: service.description,
+    alternates: {
+      canonical: service.href,
+    },
+  };
+}
+
+export default async function ServiceRoutePage({ params }: ServicePageProps) {
+  const { slug } = await params;
+  const service = getServiceCategory(slug);
+
+  if (!service) {
+    notFound();
+  }
+
+  return <ServiceDiscoveryPage service={service} />;
+}

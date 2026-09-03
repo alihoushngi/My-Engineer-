@@ -1,5 +1,6 @@
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
 import { ExpertRating } from "@/components/store/expert/expertRating/expertRating";
+import { Empty } from "@/components/ui/empty/empty";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
 import { type ExpertReview } from "@/types/store/review.types";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
@@ -38,9 +39,7 @@ export function ExpertReviews({
           ) : null}
         </div>
         {items.length === 0 ? (
-          <p className="type-body text-muted-foreground">
-            {expertProfileCopy.reviewsEmpty}
-          </p>
+          <Empty title={expertProfileCopy.reviewsEmpty} />
         ) : (
           <ul className="space-y-6">
             {items.map((review) => (

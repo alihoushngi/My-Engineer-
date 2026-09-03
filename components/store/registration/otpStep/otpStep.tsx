@@ -4,12 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleAlertIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
+import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
+import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { Button } from "@/components/ui/button/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import { OtpInput } from "@/components/ui/otpInput/otpInput";
@@ -88,11 +84,9 @@ export function OtpStep() {
       reset();
       setOtpError(null);
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : registrationCopy.errorGenericDescription;
-      setResendError(message);
+      setResendError(
+        toUserErrorMessage(err, registrationCopy.errorGenericDescription),
+      );
     } finally {
       setIsResending(false);
     }
@@ -153,12 +147,17 @@ export function OtpStep() {
         </Field>
 
         {resendError ? (
-          <Alert variant="danger">
-            <CircleAlertIcon />
-            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
-            <AlertDescription>{resendError}</AlertDescription>
-          </Alert>
+          <RegistrationError
+            message={resendError}
+            onRetry={() => {
+              void handleResend();
+            }}
+          />
         ) : null}
+
+        <p className="sr-only" aria-live="polite">
+          {canResend ? registrationCopy.resendLabel : null}
+        </p>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Button

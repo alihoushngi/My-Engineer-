@@ -5,10 +5,13 @@ import { cn } from "@/lib/utils/cn/cn";
 type SpinnerProps = ComponentProps<"svg">;
 
 export function Spinner({ className, ...props }: SpinnerProps) {
+  const isHidden =
+    props["aria-hidden"] === true || props["aria-hidden"] === "true";
+
   return (
     <Loader2Icon
-      role="status"
-      aria-label="در حال بارگذاری"
+      role={isHidden ? undefined : "status"}
+      aria-label={isHidden ? undefined : "در حال بارگذاری"}
       className={cn(
         "size-4 animate-spin motion-reduce:animate-none",
         className,

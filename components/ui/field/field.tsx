@@ -36,9 +36,12 @@ export function FieldLabel({
     <Label data-slot="field-label" className={cn(className)} {...props}>
       {children}
       {required ? (
-        <span className="text-danger" aria-hidden="true">
-          *
-        </span>
+        <>
+          <span className="text-danger" aria-hidden="true">
+            *
+          </span>
+          <span className="sr-only"> الزامی</span>
+        </>
       ) : null}
     </Label>
   );

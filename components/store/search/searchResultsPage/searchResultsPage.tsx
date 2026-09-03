@@ -34,7 +34,11 @@ export function SearchResultsPage({
         ]}
       />
       <SearchHeader initialQuery={q} cities={cities} />
-      <SearchSummary query={q} />
+      <SearchSummary
+        query={q}
+        serviceCount={result.services.length}
+        expertCount={result.experts.length}
+      />
       <ActiveFilters items={[]} clearHref={storePaths.search} />
       {hasQuery && hasResults ? (
         <SearchResults services={result.services} experts={result.experts} />
