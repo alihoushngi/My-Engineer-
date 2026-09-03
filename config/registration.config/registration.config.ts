@@ -142,4 +142,101 @@ export const registrationCopy = {
   fileSelected: (name: string) => `فایل انتخاب‌شده: ${name}`,
   fileRemoveLabel: "حذف فایل",
   fileChangeLabel: "تغییر فایل",
+  // Step 7
+  step7Title: "سازمان نظام مهندسی",
+  step7Description:
+    "اگر عضو سازمان نظام مهندسی هستید، اطلاعات عضویت و پروانه اشتغال را وارد کنید.",
+  isMemberLabel: "آیا عضو سازمان نظام مهندسی هستید؟",
+  yesLabel: "بله",
+  noLabel: "خیر",
+  membershipNumberLabel: "شماره عضویت",
+  membershipNumberPlaceholder: "شماره عضویت",
+  membershipNumberRequired: "شماره عضویت الزامی است.",
+  hasLicenseLabel: "آیا پروانه اشتغال به کار دارید؟",
+  licenseNumberLabel: "شماره پروانه",
+  licenseNumberPlaceholder: "شماره پروانه",
+  licenseNumberRequired: "شماره پروانه الزامی است.",
+  licenseFileLabel: "تصویر یا فایل پروانه (اختیاری تا اتصال سرویس آپلود)",
+  disciplineLabel: "رشته",
+  disciplinePlaceholder: "انتخاب رشته",
+  disciplineRequired: "انتخاب رشته الزامی است.",
+  qualificationsLabel: "صلاحیت‌ها",
+  qualificationsRequired: "حداقل یک صلاحیت انتخاب کنید.",
+  qualificationsUnavailable:
+    "صلاحیت‌های این رشته هنوز از طرف محصول تعریف نشده است و در این مرحله انتخاب نمی‌شود.",
+  licenseUploadApiNote:
+    "آپلود فایل پروانه پس از اتصال سرویس انجام خواهد شد. فایل انتخابی فقط به‌صورت محلی نگه داشته می‌شود.",
+  // Step 8
+  step8Title: "سوابق حرفه‌ای",
+  step8Description: "سابقه کار و شرح فعالیت حرفه‌ای خود را وارد کنید.",
+  experienceYearsLabel: "سال‌های سابقه",
+  experienceYearsPlaceholder: "۰",
+  experienceYearsRequired: "سابقه کار الزامی است.",
+  experienceYearsInvalid: "سابقه کار باید عدد صفر یا بزرگ‌تر باشد.",
+  resumeTextLabel: "شرح سوابق",
+  resumeTextPlaceholder: "خلاصه‌ای از سوابق حرفه‌ای خود بنویسید.",
+  resumeTextRequired: "شرح سوابق باید حداقل ۱۰ نویسه باشد.",
+  resumeTextHelp: "حداقل ۱۰ نویسه.",
+  // Step 9
+  step9Title: "نمونه‌کار و مدارک",
+  step9Description:
+    "تصاویر نمونه‌کار و در صورت تمایل مدارک گواهی را اضافه کنید و قوانین را بپذیرید.",
+  portfolioImagesLabel: "تصاویر نمونه‌کار",
+  portfolioImagesHelp: "فقط تصویر. فایل تکراری اضافه نمی‌شود.",
+  portfolioImageInvalid: "فقط فایل تصویری قابل انتخاب است.",
+  addPortfolioImageLabel: "افزودن تصویر",
+  removePortfolioImageLabel: "حذف تصویر",
+  certificatesLabel: "گواهی‌ها (اختیاری)",
+  certificateTitleLabel: "عنوان گواهی",
+  certificateTitlePlaceholder: "عنوان",
+  certificateFileLabel: "فایل گواهی",
+  addCertificateLabel: "افزودن گواهی",
+  removeCertificateLabel: "حذف گواهی",
+  acceptRulesLabel: "قوانین و شرایط ثبت نمونه‌کار را می‌پذیرم",
+  acceptRulesRequired: "پذیرش قوانین الزامی است.",
+  portfolioUploadApiNote:
+    "آپلود تصاویر و مدارک پس از اتصال سرویس انجام می‌شود. فایل‌ها تا آن زمان فقط به‌صورت محلی انتخاب شده‌اند.",
+  finalSubmitLabel: "ارسال ثبت‌نام",
+  // Complete
+  completeTitle: "درخواست ثبت‌نام دریافت شد",
+  completeDescription:
+    "اطلاعات شما ثبت شد. نتیجه بررسی پس از اتصال فرآیند سرور اعلام می‌شود.",
+  completeHomeCta: "بازگشت به خانه",
+  completeDestinationNote:
+    "مقصد بعدی پس از ثبت‌نام (ورود، پروفایل یا وضعیت بررسی) هنوز از طرف محصول مشخص نشده است.",
 } as const;
+
+/** SOURCE: legacy step7 discipline keys and qualification table. */
+export const ENGINEERING_DISCIPLINES = [
+  { id: "omran", label: "عمران" },
+  { id: "bargh", label: "برق" },
+  { id: "mechanic", label: "مکانیک" },
+  { id: "memari", label: "معماری" },
+  { id: "naghshe", label: "نقشه" },
+  { id: "traffic", label: "ترافیک" },
+  { id: "shahrsazi", label: "شهرسازی" },
+] as const;
+
+export const ENGINEERING_QUALIFICATIONS = [
+  { id: "design", label: "طراحی" },
+  { id: "supervision", label: "نظارت" },
+  { id: "execution", label: "اجرا" },
+] as const;
+
+/**
+ * SOURCE: omran/bargh/mechanic/memari → طراحی، نظارت، اجرا
+ * naghshe → طراحی، نظارت
+ * traffic/shahrsazi → select exists, no options (BUSINESS DECISION REQUIRED)
+ */
+export const QUALIFICATIONS_BY_DISCIPLINE: Record<
+  (typeof ENGINEERING_DISCIPLINES)[number]["id"],
+  readonly (typeof ENGINEERING_QUALIFICATIONS)[number]["id"][]
+> = {
+  omran: ["design", "supervision", "execution"],
+  bargh: ["design", "supervision", "execution"],
+  mechanic: ["design", "supervision", "execution"],
+  memari: ["design", "supervision", "execution"],
+  naghshe: ["design", "supervision"],
+  traffic: [],
+  shahrsazi: [],
+};

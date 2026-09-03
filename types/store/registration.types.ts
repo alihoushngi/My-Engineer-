@@ -48,6 +48,51 @@ export type RegistrationEducationData = {
   degreeFiles: Partial<Record<DegreeKey, File>>;
 };
 
+/** SOURCE: legacy step7 discipline keys. Do not invent additional disciplines. */
+export type EngineeringDiscipline =
+  | "omran"
+  | "bargh"
+  | "mechanic"
+  | "memari"
+  | "naghshe"
+  | "traffic"
+  | "shahrsazi";
+
+/** SOURCE: طراحی، نظارت، اجرا. naghshe has no اجرا. */
+export type EngineeringQualification = "design" | "supervision" | "execution";
+
+export type RegistrationOrganizationData = {
+  isMember: boolean;
+  membershipNumber?: string;
+  hasLicense?: boolean;
+  licenseNumber?: string;
+  licenseFile?: File;
+  discipline?: EngineeringDiscipline;
+  qualifications?: readonly EngineeringQualification[];
+};
+
+export type RegistrationResumeData = {
+  experienceYears: number;
+  resumeText: string;
+};
+
+export type PortfolioImageEntry = {
+  id: string;
+  file: File;
+};
+
+export type CertificateEntry = {
+  id: string;
+  title: string;
+  file?: File;
+};
+
+export type RegistrationPortfolioData = {
+  images: readonly PortfolioImageEntry[];
+  certificates: readonly CertificateEntry[];
+  acceptRules: true;
+};
+
 /**
  * Aggregated committed registration data.
  * Values are set only after each step succeeds (API or local-schema commit).
@@ -60,7 +105,11 @@ export type RegistrationWizardData = {
   expertise?: RegistrationExpertiseData;
   personalInfo?: RegistrationPersonalInfoData;
   education?: RegistrationEducationData;
+  organization?: RegistrationOrganizationData;
+  resume?: RegistrationResumeData;
+  portfolio?: RegistrationPortfolioData;
+  submitted?: boolean;
 };
 
 /** Maximum step index the user is currently allowed to visit. */
-export type RegistrationMaxStep = 1 | 2 | 3 | 4 | 5 | 6;
+export type RegistrationMaxStep = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;

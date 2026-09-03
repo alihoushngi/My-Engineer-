@@ -90,9 +90,7 @@ export function EducationStep() {
       degrees: formData.degrees as DegreeKey[],
       degreeFiles,
     });
-
-    // Steps 7–9 are not implemented in Task 09.
-    // IMPLEMENTATION NOTE: navigate to /expert-registration/engineering-organization when Task 10+ implements it.
+    router.push("/expert-registration/engineering-organization");
   }
 
   function handleBack() {

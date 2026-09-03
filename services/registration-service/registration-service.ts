@@ -120,3 +120,57 @@ export async function saveEducation(
 ): Promise<void> {
   throw new Error(API_NOT_AVAILABLE_MESSAGE);
 }
+
+export type SaveOrganizationRequest = {
+  isMember: boolean;
+  membershipNumber?: string;
+  hasLicense?: boolean;
+  licenseNumber?: string;
+  licenseUploadId?: string;
+  discipline?: string;
+  qualifications?: readonly string[];
+};
+
+export type SaveResumeRequest = {
+  experienceYears: number;
+  resumeText: string;
+};
+
+export type SubmitRegistrationRequest = {
+  imageCount: number;
+  certificateCount: number;
+  acceptRules: true;
+};
+
+/**
+ * Persists engineering-organization membership and license data.
+ * API CONTRACT REQUIRED.
+ */
+export async function saveOrganization(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _request: SaveOrganizationRequest,
+): Promise<void> {
+  throw new Error(API_NOT_AVAILABLE_MESSAGE);
+}
+
+/**
+ * Persists professional resume text and years.
+ * API CONTRACT REQUIRED.
+ */
+export async function saveResume(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _request: SaveResumeRequest,
+): Promise<void> {
+  throw new Error(API_NOT_AVAILABLE_MESSAGE);
+}
+
+/**
+ * Final registration submit (portfolio + certificates + rules).
+ * API CONTRACT REQUIRED — multipart endpoint is not documented.
+ */
+export async function submitRegistration(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _request: SubmitRegistrationRequest,
+): Promise<void> {
+  throw new Error(API_NOT_AVAILABLE_MESSAGE);
+}

@@ -1,0 +1,258 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleAlertIcon } from "lucide-react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert/alert";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
+import { Input } from "@/components/ui/input/input";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radioGroup/radioGroup";
+import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
+import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
+import { OrganizationLicenseFields } from "@/components/store/registration/organizationStep/organizationLicenseFields/organizationLicenseFields";
+import {
+  organizationStepSchema,
+  type OrganizationStepData,
+} from "@/components/store/registration/organizationStep/type/organizationStep.types";
+import { registrationCopy } from "@/config/registration.config/registration.config";
+import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
+import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
+import { saveOrganization } from "@/services/registration-service/registration-service";
+import {
+  type EngineeringDiscipline,
+  type EngineeringQualification,
+  type RegistrationOrganizationData,
+} from "@/types/store/registration.types";
+
+export function OrganizationStep() {
+  const router = useRouter();
+  const { data, commitOrganization } = useRegistrationWizard();
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [licenseFile, setLicenseFile] = useState<File | undefined>(
+    data.organization?.licenseFile,
+  );
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<OrganizationStepData>({
+    resolver: zodResolver(organizationStepSchema),
+    defaultValues: {
+      isMember: data.organization?.isMember === true ? "yes" : "no",
+      membershipNumber: data.organization?.membershipNumber ?? "",
+      hasLicense: data.organization?.hasLicense === true ? "yes" : "no",
+      licenseNumber: data.organization?.licenseNumber ?? "",
+      discipline: data.organization?.discipline ?? "",
+      qualifications: data.organization?.qualifications
+        ? [...data.organization.qualifications]
+        : [],
+    },
+  });
+
+  const isMember = watch("isMember");
+  const hasLicense = watch("hasLicense");
+  const discipline = watch("discipline");
+  const qualifications = watch("qualifications");
+
+  async function onSubmit(formData: OrganizationStepData) {
+    setApiError(null);
+    const payload = toOrganizationPayload(formData, licenseFile);
+
+    try {
+      await saveOrganization({
+        isMember: payload.isMember,
+        membershipNumber: payload.membershipNumber,
+        hasLicense: payload.hasLicense,
+        licenseNumber: payload.licenseNumber,
+        discipline: payload.discipline,
+        qualifications: payload.qualifications,
+      });
+    } catch (err) {
+      setApiError(
+        err instanceof Error
+          ? err.message
+          : registrationCopy.errorGenericDescription,
+      );
+      return;
+    }
+
+    commitOrganization(payload);
+    router.push(registrationPaths.resume);
+  }
+
+  return (
+    <div className="space-y-8">
+      <RegistrationProgress currentStep={7} />
+      <div className="space-y-2">
+        <h2 className="type-h3 font-semibold text-foreground">
+          {registrationCopy.step7Title}
+        </h2>
+        <p className="type-body text-muted-foreground">
+          {registrationCopy.step7Description}
+        </p>
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        className="space-y-6"
+        aria-label={registrationCopy.step7Title}
+      >
+        <YesNoField
+          id="reg-is-member"
+          label={registrationCopy.isMemberLabel}
+          value={isMember}
+          disabled={isSubmitting}
+          onChange={(value) => {
+            setValue("isMember", value);
+          }}
+        />
+
+        {isMember === "yes" ? (
+          <>
+            <Field invalid={Boolean(errors.membershipNumber)}>
+              <FieldLabel htmlFor="reg-membership-number" required>
+                {registrationCopy.membershipNumberLabel}
+              </FieldLabel>
+              <Controller
+                control={control}
+                name="membershipNumber"
+                render={({ field }) => (
+                  <Input
+                    id="reg-membership-number"
+                    className="ltr-data"
+                    dir="ltr"
+                    autoComplete="off"
+                    placeholder={registrationCopy.membershipNumberPlaceholder}
+                    disabled={isSubmitting}
+                    aria-invalid={Boolean(errors.membershipNumber)}
+                    {...field}
+                  />
+                )}
+              />
+              <FieldError>{errors.membershipNumber?.message}</FieldError>
+            </Field>
+
+            <YesNoField
+              id="reg-has-license"
+              label={registrationCopy.hasLicenseLabel}
+              value={hasLicense}
+              disabled={isSubmitting}
+              onChange={(value) => {
+                setValue("hasLicense", value);
+              }}
+            />
+
+            {hasLicense === "yes" ? (
+              <OrganizationLicenseFields
+                control={control}
+                setValue={setValue}
+                discipline={discipline}
+                qualifications={qualifications}
+                licenseFile={licenseFile}
+                onLicenseFileChange={setLicenseFile}
+                errors={errors}
+                disabled={isSubmitting}
+              />
+            ) : null}
+          </>
+        ) : null}
+
+        {apiError ? (
+          <Alert variant="danger">
+            <CircleAlertIcon />
+            <AlertTitle>{registrationCopy.errorGenericTitle}</AlertTitle>
+            <AlertDescription>{apiError}</AlertDescription>
+          </Alert>
+        ) : null}
+
+        <RegistrationStepNav
+          onBack={() => {
+            router.push(registrationPaths.education);
+          }}
+          onContinue={() => {
+            void handleSubmit(onSubmit)();
+          }}
+          isPending={isSubmitting}
+          isContinueDisabled={isSubmitting}
+        />
+      </form>
+    </div>
+  );
+}
+
+type YesNoFieldProps = {
+  id: string;
+  label: string;
+  value: "yes" | "no";
+  disabled: boolean;
+  onChange: (value: "yes" | "no") => void;
+};
+
+function YesNoField({ id, label, value, disabled, onChange }: YesNoFieldProps) {
+  return (
+    <Field>
+      <FieldLabel id={`${id}-label`}>{label}</FieldLabel>
+      <RadioGroup
+        value={value}
+        disabled={disabled}
+        onValueChange={(next) => {
+          onChange(next === "no" ? "no" : "yes");
+        }}
+        aria-labelledby={`${id}-label`}
+        className="flex flex-col gap-3 sm:flex-row"
+      >
+        <div className="flex items-center gap-2">
+          <RadioGroupItem id={`${id}-yes`} value="yes" />
+          <label htmlFor={`${id}-yes`} className="type-body cursor-pointer">
+            {registrationCopy.yesLabel}
+          </label>
+        </div>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem id={`${id}-no`} value="no" />
+          <label htmlFor={`${id}-no`} className="type-body cursor-pointer">
+            {registrationCopy.noLabel}
+          </label>
+        </div>
+      </RadioGroup>
+    </Field>
+  );
+}
+
+function toOrganizationPayload(
+  formData: OrganizationStepData,
+  licenseFile: File | undefined,
+): RegistrationOrganizationData {
+  if (formData.isMember === "no") {
+    return { isMember: false };
+  }
+
+  if (formData.hasLicense === "no") {
+    return {
+      isMember: true,
+      membershipNumber: formData.membershipNumber.trim(),
+      hasLicense: false,
+    };
+  }
+
+  return {
+    isMember: true,
+    membershipNumber: formData.membershipNumber.trim(),
+    hasLicense: true,
+    licenseNumber: formData.licenseNumber.trim(),
+    licenseFile,
+    discipline: formData.discipline as EngineeringDiscipline,
+    qualifications: formData.qualifications as EngineeringQualification[],
+  };
+}

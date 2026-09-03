@@ -12,7 +12,10 @@ import {
   type RegistrationExpertiseData,
   type RegistrationIdentityData,
   type RegistrationMaxStep,
+  type RegistrationOrganizationData,
   type RegistrationPersonalInfoData,
+  type RegistrationPortfolioData,
+  type RegistrationResumeData,
   type RegistrationServiceAreaData,
   type RegistrationWizardData,
 } from "@/types/store/registration.types";
@@ -26,6 +29,9 @@ type RegistrationWizardContextValue = {
   commitExpertise: (expertise: RegistrationExpertiseData) => void;
   commitPersonalInfo: (personalInfo: RegistrationPersonalInfoData) => void;
   commitEducation: (education: RegistrationEducationData) => void;
+  commitOrganization: (organization: RegistrationOrganizationData) => void;
+  commitResume: (resume: RegistrationResumeData) => void;
+  commitSubmitted: (portfolio: RegistrationPortfolioData) => void;
   resetFromStep: (step: RegistrationMaxStep) => void;
 };
 
@@ -48,6 +54,13 @@ type RegistrationWizardProviderProps = {
   children: ReactNode;
 };
 
+function raiseMaxStep(
+  prev: RegistrationMaxStep,
+  next: RegistrationMaxStep,
+): RegistrationMaxStep {
+  return prev < next ? next : prev;
+}
+
 export function RegistrationWizardProvider({
   children,
 }: RegistrationWizardProviderProps) {
@@ -55,16 +68,7 @@ export function RegistrationWizardProvider({
   const [maxStep, setMaxStep] = useState<RegistrationMaxStep>(1);
 
   const commitIdentity = useCallback((identity: RegistrationIdentityData) => {
-    setData((prev) => ({
-      ...prev,
-      identity,
-      // New identity invalidates all subsequent steps
-      otpVerified: undefined,
-      serviceArea: undefined,
-      expertise: undefined,
-      personalInfo: undefined,
-      education: undefined,
-    }));
+    setData({ identity });
     setMaxStep(2);
   }, []);
 
@@ -76,7 +80,7 @@ export function RegistrationWizardProvider({
   const commitServiceArea = useCallback(
     (serviceArea: RegistrationServiceAreaData) => {
       setData((prev) => ({ ...prev, serviceArea }));
-      setMaxStep((prev) => (prev < 4 ? 4 : prev));
+      setMaxStep((prev) => raiseMaxStep(prev, 4));
     },
     [],
   );
@@ -86,11 +90,14 @@ export function RegistrationWizardProvider({
       setData((prev) => ({
         ...prev,
         expertise,
-        // Changing expertise invalidates personal info onward
         personalInfo: undefined,
         education: undefined,
+        organization: undefined,
+        resume: undefined,
+        portfolio: undefined,
+        submitted: undefined,
       }));
-      setMaxStep((prev) => (prev < 5 ? 5 : prev));
+      setMaxStep((prev) => raiseMaxStep(prev, 5));
     },
     [],
   );
@@ -101,15 +108,62 @@ export function RegistrationWizardProvider({
         ...prev,
         personalInfo,
         education: undefined,
+        organization: undefined,
+        resume: undefined,
+        portfolio: undefined,
+        submitted: undefined,
       }));
-      setMaxStep((prev) => (prev < 6 ? 6 : prev));
+      setMaxStep((prev) => raiseMaxStep(prev, 6));
     },
     [],
   );
 
   const commitEducation = useCallback(
     (education: RegistrationEducationData) => {
-      setData((prev) => ({ ...prev, education }));
+      setData((prev) => ({
+        ...prev,
+        education,
+        organization: undefined,
+        resume: undefined,
+        portfolio: undefined,
+        submitted: undefined,
+      }));
+      setMaxStep((prev) => raiseMaxStep(prev, 7));
+    },
+    [],
+  );
+
+  const commitOrganization = useCallback(
+    (organization: RegistrationOrganizationData) => {
+      setData((prev) => ({
+        ...prev,
+        organization,
+        resume: undefined,
+        portfolio: undefined,
+        submitted: undefined,
+      }));
+      setMaxStep((prev) => raiseMaxStep(prev, 8));
+    },
+    [],
+  );
+
+  const commitResume = useCallback((resume: RegistrationResumeData) => {
+    setData((prev) => ({
+      ...prev,
+      resume,
+      portfolio: undefined,
+      submitted: undefined,
+    }));
+    setMaxStep((prev) => raiseMaxStep(prev, 9));
+  }, []);
+
+  const commitSubmitted = useCallback(
+    (portfolio: RegistrationPortfolioData) => {
+      setData((prev) => ({
+        ...prev,
+        portfolio,
+        submitted: true,
+      }));
     },
     [],
   );
@@ -139,6 +193,33 @@ export function RegistrationWizardProvider({
         serviceArea: prev.serviceArea,
         expertise: prev.expertise,
       }));
+    } else if (step === 6) {
+      setData((prev) => ({
+        identity: prev.identity,
+        otpVerified: prev.otpVerified,
+        serviceArea: prev.serviceArea,
+        expertise: prev.expertise,
+        personalInfo: prev.personalInfo,
+      }));
+    } else if (step === 7) {
+      setData((prev) => ({
+        identity: prev.identity,
+        otpVerified: prev.otpVerified,
+        serviceArea: prev.serviceArea,
+        expertise: prev.expertise,
+        personalInfo: prev.personalInfo,
+        education: prev.education,
+      }));
+    } else if (step === 8) {
+      setData((prev) => ({
+        identity: prev.identity,
+        otpVerified: prev.otpVerified,
+        serviceArea: prev.serviceArea,
+        expertise: prev.expertise,
+        personalInfo: prev.personalInfo,
+        education: prev.education,
+        organization: prev.organization,
+      }));
     }
   }, []);
 
@@ -153,6 +234,9 @@ export function RegistrationWizardProvider({
         commitExpertise,
         commitPersonalInfo,
         commitEducation,
+        commitOrganization,
+        commitResume,
+        commitSubmitted,
         resetFromStep,
       }}
     >
