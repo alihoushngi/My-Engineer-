@@ -9,17 +9,23 @@ import {
 } from "@/components/ui/dialog/dialog";
 import { type SearchSurfaceProps } from "@/components/layout/searchSurface/type/searchSurface.types";
 
-export function SearchSurface({ open, onOpenChange }: SearchSurfaceProps) {
+export function SearchSurface({
+  open,
+  onOpenChange,
+  id = "search-surface",
+}: SearchSurfaceProps) {
+  const descriptionId = `${id}-description`;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        id="search-surface"
+        id={id}
         className="sm:max-w-lg"
-        aria-describedby="search-surface-description"
+        aria-describedby={descriptionId}
       >
         <DialogHeader>
           <DialogTitle>جستجو</DialogTitle>
-          <DialogDescription id="search-surface-description">
+          <DialogDescription id={descriptionId}>
             جستجو در خدمات و متخصصین به‌زودی فعال می‌شود.
           </DialogDescription>
         </DialogHeader>
