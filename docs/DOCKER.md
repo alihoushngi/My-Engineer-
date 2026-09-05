@@ -93,6 +93,11 @@ The `Dockerfile` is a multi-stage production build:
 2. Build Next.js with `output: "standalone"`.
 3. Copy the standalone server, static assets, and `public/` into a small Node 22 Alpine image.
 
+This also deploys `/sw.js`, the generated manifest route, PWA icons, and the
+offline page assets. The local `pnpm build` command performs the equivalent asset
+copy inside `.next/standalone/`; Docker keeps its explicit copy steps as a
+deployment safeguard.
+
 The runtime container does not include the full `node_modules` tree.
 
 ## Local pnpm vs Docker

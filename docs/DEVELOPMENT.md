@@ -64,10 +64,13 @@ A development-only design system preview is available at `/dev/design-system`. I
 
 ```bash
 pnpm build
-pnpm start
+HOSTNAME=127.0.0.1 PORT=3000 pnpm start
 ```
 
-`pnpm build` creates an optimized production build. `pnpm start` serves that build.
+`pnpm build` creates the standalone production server and copies `public/` and
+`.next/static/` into `.next/standalone/`. `pnpm start` launches that standalone
+server; it does not use `next start`. See [PWA.md](PWA.md) for service-worker and
+offline validation.
 
 ## Lint
 

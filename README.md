@@ -14,25 +14,27 @@ This is a **Persian, RTL**, API-driven frontend. Development is organized into p
 - Native fetch HTTP client and TanStack Query provider
 - Docker production image and Compose
 - Semantic design tokens and reusable UI primitives
+- Native PWA manifest, conservative offline fallback, and iPhone install guide
 
 Later phases will add product routes, domain UI, and API integration. Do not treat empty folders as implemented features.
 
 ## Technology stack
 
-| Area            | Choice                      |
-| --------------- | --------------------------- |
-| Framework       | Next.js (App Router)        |
-| UI library      | React 19                    |
-| Language        | TypeScript (strict)         |
-| Styling         | Tailwind CSS                |
-| Package manager | pnpm only                   |
-| Server state    | TanStack Query              |
-| Forms           | React Hook Form + Zod / Yup |
-| Icons           | lucide-react                |
-| HTTP            | native fetch                |
-| Linting         | ESLint                      |
-| Formatting      | Prettier                    |
-| Runtime         | Node.js 22, Docker          |
+| Area            | Choice                           |
+| --------------- | -------------------------------- |
+| Framework       | Next.js (App Router)             |
+| UI library      | React 19                         |
+| Language        | TypeScript (strict)              |
+| Styling         | Tailwind CSS                     |
+| Package manager | pnpm only                        |
+| Server state    | TanStack Query                   |
+| Forms           | React Hook Form + Zod            |
+| Icons           | lucide-react                     |
+| HTTP            | native fetch                     |
+| Linting         | ESLint                           |
+| Formatting      | Prettier                         |
+| Runtime         | Node.js 22, Docker               |
+| PWA             | Native manifest + Service Worker |
 
 Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, or Bootstrap. shadcn/ui may be used for accessible primitives; project architecture and Mohandes Man tokens override its defaults.
 
@@ -103,6 +105,12 @@ This value is the API origin only. Do not commit secrets. See [docs/DEVELOPMENT.
 Local engineer registration and login can run without a backend. See
 [docs/MOCK-AUTH.md](docs/MOCK-AUTH.md). Do not enable mock auth in production.
 
+## Production test
+
+`pnpm build` prepares the complete standalone output, including `public/` and
+`.next/static/`. Run it with `HOSTNAME=127.0.0.1 PORT=3000 pnpm start`. PWA
+implementation and browser validation are documented in [docs/PWA.md](docs/PWA.md).
+
 ## Documentation
 
 - [Developer guide](docs/DEVELOPMENT.md)
@@ -115,6 +123,7 @@ Local engineer registration and login can run without a backend. See
 - [Component architecture](docs/COMPONENT-ARCHITECTURE.md)
 - [State matrix](docs/STATE-MATRIX.md)
 - [Docker guide](docs/DOCKER.md)
+- [PWA implementation and test guide](docs/PWA.md)
 - [Engineer panel](docs/ENGINEER-PANEL.md)
 - [Mock authentication (development)](docs/MOCK-AUTH.md)
 - Cursor architecture rules: `.cursor/rules/project-architecture.mdc`

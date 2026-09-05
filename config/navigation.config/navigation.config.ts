@@ -10,6 +10,7 @@ export const storePaths = {
   about: "/about",
   terms: "/terms",
   privacy: "/privacy-policy",
+  iphoneInstall: "/install/iphone",
   expertRegistration: siteConfig.joinHref,
   engineerLogin: "/engineer/login",
   engineerPanel: "/engineer",
@@ -56,6 +57,7 @@ export const contentNavigation: readonly NavigationLink[] = [
 
 export const companyNavigation: readonly NavigationLink[] = [
   { href: storePaths.about, label: "درباره ما" },
+  { href: storePaths.iphoneInstall, label: "نصب روی آیفون" },
 ];
 
 export const footerNavigation: readonly NavigationGroup[] = [

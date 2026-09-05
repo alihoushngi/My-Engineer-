@@ -32,7 +32,7 @@ export function EngineerHeaderActions({
 
   return (
     <div className={cn("hidden items-center gap-2 lg:flex", className)}>
-      <Button asChild variant="ghost">
+      <Button asChild variant="danger">
         <Link href={engineerLoginNavigation.href}>
           {engineerLoginNavigation.label}
         </Link>

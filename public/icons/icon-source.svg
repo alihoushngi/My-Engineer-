@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="نشان مهندس من">
+  <rect width="512" height="512" rx="96" fill="#24313e"/>
+  <path fill="#01bfa6" d="M112 350V162l76-44 68 39 68-39 76 44v188h-64V207l-80 46-80-46v143h-64Z"/>
+  <path fill="#ffffff" fill-opacity=".2" d="M211 263h90v87h-90z"/>
+</svg>
