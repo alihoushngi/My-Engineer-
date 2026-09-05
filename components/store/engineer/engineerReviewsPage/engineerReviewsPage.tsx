@@ -13,13 +13,13 @@ import { type EngineerReview } from "@/types/store/engineer.types";
 type EngineerReviewsPageProps = {
   reviews: readonly EngineerReview[];
   pagination: PaginatedItems<EngineerReview>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function EngineerReviewsPage({
   reviews,
   pagination,
-  pageHref,
+  pathname,
 }: EngineerReviewsPageProps) {
   return (
     <div className="flex flex-col gap-6">
@@ -49,7 +49,7 @@ export function EngineerReviewsPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={engineerPanelCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
           />
         </>
       )}

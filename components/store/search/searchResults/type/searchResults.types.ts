@@ -6,5 +6,6 @@ export type SearchResultsProps = {
   services: readonly ServiceCategory[];
   experts: readonly ExpertCardData[];
   expertPagination?: PaginatedItems<ExpertCardData>;
-  expertPageHref?: (page: number) => string;
+  paginationPathname?: string;
+  paginationQuery?: string;
 };

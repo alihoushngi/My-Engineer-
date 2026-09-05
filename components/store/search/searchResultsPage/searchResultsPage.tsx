@@ -6,6 +6,7 @@ import { SearchResults } from "@/components/store/search/searchResults/searchRes
 import { SearchSummary } from "@/components/store/search/searchSummary/searchSummary";
 import { searchCopy } from "@/config/search.config/search.config";
 import { siteConfig } from "@/config/site.config/site.config";
+import { storePaths } from "@/config/navigation.config/navigation.config";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
 import { buildSearchHref } from "@/lib/search/search-params/search-params";
 import {
@@ -26,6 +27,19 @@ export function SearchResultsPage({
   const hasQuery = q !== "";
   const hasResults = result.services.length > 0 || result.experts.length > 0;
   const expertPagination = paginateItems(result.experts, page);
+  const paginationQuery = new URLSearchParams();
+
+  if (q !== "") {
+    paginationQuery.set("q", q);
+  }
+
+  if (cities.length > 0) {
+    paginationQuery.set("cities", cities.join(","));
+  }
+
+  if (page > 1) {
+    paginationQuery.set("page", String(page));
+  }
 
   return (
     <div className="container-app flex flex-col gap-8 py-page">
@@ -57,9 +71,8 @@ export function SearchResultsPage({
           services={result.services}
           experts={result.experts}
           expertPagination={expertPagination}
-          expertPageHref={(nextPage) =>
-            buildSearchHref({ q, cities, page: nextPage })
-          }
+          paginationPathname={storePaths.search}
+          paginationQuery={paginationQuery.toString()}
         />
       ) : (
         <SearchEmptyState variant={hasQuery ? "no-results" : "no-query"} />

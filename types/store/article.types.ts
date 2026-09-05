@@ -1,6 +1,7 @@
 export type ArticleSlug = string;
 
 export type ArticleCardData = {
+  id: string;
   slug: ArticleSlug;
   href: `/articles/${string}`;
   title: string;
@@ -10,6 +11,8 @@ export type ArticleCardData = {
   publishedAt?: string;
   categorySlug?: string;
   categoryLabel?: string;
+  tags?: readonly string[];
+  featured?: boolean;
 };
 
 export type ArticleFaqItem = {

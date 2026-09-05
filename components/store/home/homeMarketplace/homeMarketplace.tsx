@@ -144,7 +144,9 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
               page={marketplace.pagination.page}
               pageCount={marketplace.pagination.pageCount}
               ariaLabel={homeMarketplaceCopy.paginationLabel}
-              buildHref={marketplace.pageHref}
+              pathname={marketplace.pathname}
+              query={marketplace.query}
+              hash="#home-marketplace"
             />
           </>
         ) : (

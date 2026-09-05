@@ -7,10 +7,7 @@ import {
   type ServiceSlug,
 } from "@/config/services.config/services.config";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
-import {
-  buildPageHref,
-  parsePageParam,
-} from "@/lib/pagination/page-param/page-param";
+import { parsePageParam } from "@/lib/pagination/page-param/page-param";
 import { type ExpertCardData } from "@/types/store/expert.types";
 
 const serviceSlugSet = new Set<string>(
@@ -80,10 +77,6 @@ export function useHomeMarketplace(experts: readonly ExpertCardData[]) {
     });
   }
 
-  function pageHref(nextPage: number) {
-    return `${buildPageHref(pathname, nextPage, query)}#home-marketplace`;
-  }
-
   function toggleService(slug: ServiceSlug) {
     const nextServices = services.includes(slug)
       ? services.filter((item) => item !== slug)
@@ -111,10 +104,11 @@ export function useHomeMarketplace(experts: readonly ExpertCardData[]) {
     filteredExperts,
     pagination,
     hasFilters,
+    pathname,
+    query,
     toggleService,
     changeCity,
     changeExpertise,
-    pageHref,
     reset,
   };
 }

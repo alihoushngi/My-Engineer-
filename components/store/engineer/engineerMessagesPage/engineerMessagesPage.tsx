@@ -12,13 +12,13 @@ import { type EngineerConversation } from "@/types/store/engineer.types";
 type EngineerMessagesPageProps = {
   conversations: readonly EngineerConversation[];
   pagination: PaginatedItems<EngineerConversation>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function EngineerMessagesPage({
   conversations,
   pagination,
-  pageHref,
+  pathname,
 }: EngineerMessagesPageProps) {
   return (
     <div className="flex flex-col gap-6">
@@ -41,7 +41,7 @@ export function EngineerMessagesPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={engineerPanelCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
           />
         </>
       )}

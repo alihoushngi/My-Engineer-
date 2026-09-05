@@ -11,7 +11,8 @@ export function SearchResults({
   services,
   experts,
   expertPagination,
-  expertPageHref,
+  paginationPathname,
+  paginationQuery,
 }: SearchResultsProps) {
   const visibleExperts = expertPagination?.items ?? experts;
 
@@ -52,12 +53,13 @@ export function SearchResults({
                 </li>
               ))}
             </ul>
-            {expertPagination && expertPageHref ? (
+            {expertPagination && paginationPathname ? (
               <Pagination
                 page={expertPagination.page}
                 pageCount={expertPagination.pageCount}
                 ariaLabel={searchCopy.paginationLabel}
-                buildHref={expertPageHref}
+                pathname={paginationPathname}
+                query={paginationQuery}
               />
             ) : null}
           </>

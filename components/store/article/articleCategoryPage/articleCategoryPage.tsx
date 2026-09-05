@@ -4,6 +4,7 @@ import { ContentPageHeader } from "@/components/common/contentPageHeader/content
 import { Pagination } from "@/components/common/pagination/pagination";
 import { StoreBreadcrumb } from "@/components/common/storeBreadcrumb/storeBreadcrumb";
 import { ArticleCard } from "@/components/store/article/articleCard/articleCard";
+import { RelatedArticles } from "@/components/store/article/relatedArticles/relatedArticles";
 import { Empty } from "@/components/ui/empty/empty";
 import { Button } from "@/components/ui/button/button";
 import { articlesCopy } from "@/config/articles.config/articles.config";
@@ -18,15 +19,17 @@ import {
 type ArticleCategoryPageProps = {
   category: ArticleCategory;
   articles: readonly ArticleCardData[];
+  recommended: readonly ArticleCardData[];
   pagination: PaginatedItems<ArticleCardData>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function ArticleCategoryPage({
   category,
   articles,
+  recommended,
   pagination,
-  pageHref,
+  pathname,
 }: ArticleCategoryPageProps) {
   return (
     <div className="container-app flex flex-col gap-10 py-page">
@@ -43,9 +46,9 @@ export function ArticleCategoryPage({
       />
       {pagination.total > 0 ? (
         <>
-          <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
-              <li key={article.slug}>
+              <li key={article.id}>
                 <ArticleCard article={article} />
               </li>
             ))}
@@ -54,7 +57,13 @@ export function ArticleCategoryPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={articlesCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
+          />
+          <RelatedArticles
+            items={recommended}
+            heading={articlesCopy.recommendedHeading}
+            headingId="recommended-articles-heading"
+            description={articlesCopy.recommendedDescription}
           />
         </>
       ) : (

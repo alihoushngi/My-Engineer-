@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  buildPagedHref,
   buildPageHref,
   parsePageParam,
   resetPageParams,
@@ -32,6 +33,13 @@ test("buildPageHref omits page 1 and preserves other query values", () => {
     "/search?q=%D9%85%D9%87%D9%86%D8%AF%D8%B3&cities=rasht&page=2",
   );
   assert.equal(buildPageHref("/search", 1, "q=test&page=4"), "/search?q=test");
+});
+
+test("buildPagedHref appends a section hash after the query", () => {
+  assert.equal(
+    buildPagedHref("/", 2, "cities=rasht", "#home-marketplace"),
+    "/?cities=rasht&page=2#home-marketplace",
+  );
 });
 
 test("resetPageParams drops an invalid leftover page", () => {

@@ -3,13 +3,12 @@ import { notFound } from "next/navigation";
 import { ArticleCategoryPage } from "@/components/store/article/articleCategoryPage/articleCategoryPage";
 import { articlesCopy } from "@/config/articles.config/articles.config";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
+import { recommendArticles } from "@/lib/articles/recommend-articles/recommend-articles";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
-import {
-  buildPageHref,
-  parsePageParam,
-} from "@/lib/pagination/page-param/page-param";
+import { parsePageParam } from "@/lib/pagination/page-param/page-param";
 import {
   getArticleCategory,
+  listArticles,
   listArticlesByCategory,
 } from "@/services/article-service/article-service";
 
@@ -48,18 +47,27 @@ export default async function ArticleCategoryRoutePage({
     notFound();
   }
 
-  const articles = await listArticlesByCategory(slug);
+  const [articles, catalog] = await Promise.all([
+    listArticlesByCategory(slug),
+    listArticles(),
+  ]);
   const pagination = paginateItems(
     articles,
     parsePageParam((await searchParams).page),
   );
+  const recommended = recommendArticles(catalog, {
+    excludeSlugs: pagination.items.map((article) => article.slug),
+    categorySlug: slug,
+    seedTags: pagination.items.flatMap((article) => article.tags ?? []),
+  });
 
   return (
     <ArticleCategoryPage
       category={category}
       articles={pagination.items}
+      recommended={recommended}
       pagination={pagination}
-      pageHref={(page) => buildPageHref(category.href, page)}
+      pathname={category.href}
     />
   );
 }

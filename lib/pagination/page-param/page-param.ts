@@ -33,6 +33,22 @@ export function buildPageHref(
   return serialized === "" ? pathname : `${pathname}?${serialized}`;
 }
 
+export function buildPagedHref(
+  pathname: string,
+  page: number,
+  query?: string,
+  hash?: string,
+): string {
+  const href = buildPageHref(pathname, page, query);
+
+  if (!hash) {
+    return href;
+  }
+
+  const normalized = hash.startsWith("#") ? hash : `#${hash}`;
+  return `${href}${normalized}`;
+}
+
 export function resetPageParams(
   currentParams?: URLSearchParams | string,
 ): URLSearchParams {

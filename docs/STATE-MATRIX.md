@@ -435,18 +435,18 @@ Viewer: Dialog; keyboard next/prev; close restores focus.
 
 `/articles`, `/articles/categories/[slug]`
 
-| State      | Behavior                                                                      |
-| ---------- | ----------------------------------------------------------------------------- |
-| Loading    | Card skeletons                                                                |
-| Success    | Grid of `ArticleCard`                                                         |
-| Empty      | Empty: no articles yet / empty category. Do not repeat the same demo UTM card |
-| Error      | Alert + retry                                                                 |
-| Retry      | Re-fetch                                                                      |
-| Disabled   | Inert search/sort must **not** ship                                           |
-| Validation | Unknown category slug → not found                                             |
-| Partial    | Hub curated sections omitted independently if empty                           |
-| Optimistic | None                                                                          |
-| Mobile     | 1 column                                                                      |
+| State      | Behavior                                                                                                  |
+| ---------- | --------------------------------------------------------------------------------------------------------- |
+| Loading    | Card skeletons                                                                                            |
+| Success    | Category chips; featured lead on page 1; `ArticleCard` grid; recommended block; pagination when total > 9 |
+| Empty      | Empty: no articles yet / empty category. Do not repeat the same demo UTM card                             |
+| Error      | Alert + retry                                                                                             |
+| Retry      | Re-fetch                                                                                                  |
+| Disabled   | Inert search/sort must **not** ship                                                                       |
+| Validation | Unknown category slug → not found                                                                         |
+| Partial    | Hub curated sections omitted independently if empty                                                       |
+| Optimistic | None                                                                                                      |
+| Mobile     | 1 column                                                                                                  |
 
 Content source: **BUSINESS DECISION REQUIRED** / **API CONTRACT REQUIRED**.
 

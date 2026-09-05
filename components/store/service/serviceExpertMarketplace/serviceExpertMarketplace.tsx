@@ -129,7 +129,8 @@ export function ServiceExpertMarketplace({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={serviceFilterCopy.paginationLabel}
-            buildHref={discovery.pageHref}
+            pathname={discovery.pathname}
+            query={discovery.query}
           />
         </>
       ) : (

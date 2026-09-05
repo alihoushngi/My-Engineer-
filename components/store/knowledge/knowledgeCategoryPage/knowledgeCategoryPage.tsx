@@ -19,14 +19,14 @@ type KnowledgeCategoryPageProps = {
   category: KnowledgeCategoryDetail;
   tips: readonly KnowledgeTip[];
   pagination: PaginatedItems<KnowledgeTip>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function KnowledgeCategoryPage({
   category,
   tips,
   pagination,
-  pageHref,
+  pathname,
 }: KnowledgeCategoryPageProps) {
   return (
     <div className="container-narrow flex flex-col gap-8 py-page">
@@ -48,7 +48,7 @@ export function KnowledgeCategoryPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={knowledgeCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
           />
         </>
       ) : (

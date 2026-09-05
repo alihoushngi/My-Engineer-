@@ -120,6 +120,8 @@ export function useServiceDiscovery({
     activeChips,
     draftCount,
     hasFilters: hasActiveServiceFilters(applied, defaultTab),
+    pathname,
+    query: searchParams.toString(),
     setOverlayOpen,
     openOverlay,
     setDraftValue: (key: FilterKey, value: string) => {
@@ -132,11 +134,6 @@ export function useServiceDiscovery({
     changeTab: (tab: string) => {
       setOverlayOpen(false);
       replaceQuery(withTabFilters(applied, tab, definition.tabs), 1);
-    },
-    pageHref: (page: number) => {
-      const params = serializeServiceFilterParams(applied, page, defaultTab);
-      const serialized = params.toString();
-      return serialized === "" ? pathname : `${pathname}?${serialized}`;
     },
     clearChip: (key: FilterKey) => {
       replaceQuery({ ...applied, [key]: ALL_FILTER }, 1);

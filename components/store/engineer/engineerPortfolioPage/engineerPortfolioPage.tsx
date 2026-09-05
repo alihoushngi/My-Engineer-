@@ -14,13 +14,13 @@ import { type EngineerPortfolioItem } from "@/types/store/engineer.types";
 type EngineerPortfolioPageProps = {
   items: readonly EngineerPortfolioItem[];
   pagination: PaginatedItems<EngineerPortfolioItem>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function EngineerPortfolioPage({
   items,
   pagination,
-  pageHref,
+  pathname,
 }: EngineerPortfolioPageProps) {
   return (
     <div className="flex flex-col gap-6">
@@ -67,7 +67,7 @@ export function EngineerPortfolioPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={engineerPanelCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
           />
         </>
       )}

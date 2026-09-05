@@ -165,16 +165,16 @@ Search **results** are Class E under `store/search`, not layout.
 
 Create these only where two or more domains share the responsibility.
 
-| Component           | Responsibility                                       | Server/Client | Used by                                                     |
-| ------------------- | ---------------------------------------------------- | ------------- | ----------------------------------------------------------- |
-| `SectionHeader`     | Title + optional description + optional action       | Server        | Home, listings, profile sections                            |
-| `ResponsiveDialog`  | Desktop Dialog/Sheet, mobile Drawer bottom sheet     | Client        | Search, city, filters, expert overlays, engineer edit       |
-| `Pagination`        | Previous/next, compact page numbers, URL or callback | Client        | Discovery, search, content lists, engineer lists, reviews   |
-| `StoreBreadcrumb`   | Landmark nav trail                                   | Server        | Content, legal, FAQ, knowledge, article, optionally service |
-| `ContentPageHeader` | Title + intro for content/legal                      | Server        | Articles hub, FAQ, knowledge, about, legal                  |
-| `LegalDocument`     | Long-form semantic article                           | Server        | Terms, privacy                                              |
-| `Carousel`          | Pause, next/prev, dots, reduced-motion = no autoplay | Client        | Home banners; knowledge preview **if** those sections ship  |
-| `LoadMoreButton`    | Pending/disabled load-more                           | Client        | Not used for true lists; those use `Pagination`             |
+| Component           | Responsibility                                                    | Server/Client | Used by                                                     |
+| ------------------- | ----------------------------------------------------------------- | ------------- | ----------------------------------------------------------- |
+| `SectionHeader`     | Title + optional description + optional action                    | Server        | Home, listings, profile sections                            |
+| `ResponsiveDialog`  | Desktop Dialog/Sheet, mobile Drawer bottom sheet                  | Client        | Search, city, filters, expert overlays, engineer edit       |
+| `Pagination`        | Previous/next, compact page numbers, serializable URL or callback | Client        | Discovery, search, content lists, engineer lists, reviews   |
+| `StoreBreadcrumb`   | Landmark nav trail                                                | Server        | Content, legal, FAQ, knowledge, article, optionally service |
+| `ContentPageHeader` | Title + intro for content/legal                                   | Server        | Articles hub, FAQ, knowledge, about, legal                  |
+| `LegalDocument`     | Long-form semantic article                                        | Server        | Terms, privacy                                              |
+| `Carousel`          | Pause, next/prev, dots, reduced-motion = no autoplay              | Client        | Home banners; knowledge preview **if** those sections ship  |
+| `LoadMoreButton`    | Pending/disabled load-more                                        | Client        | Not used for true lists; those use `Pagination`             |
 
 **Not created:**
 
@@ -412,7 +412,12 @@ the shell.
 ### 6.7 Articles — `components/store/article`
 
 ```text
-ArticlesPage                      E  hub + list
+ArticlesPage                      E  hub + category chips + list
+├── ArticleCategoryFilter         D  همه + categories from catalog
+├── ArticleFeatured               D  page 1 editorial lead
+├── ArticleCard grid
+├── Pagination
+└── RelatedArticles               D  recommended by tag/category/featured
 ArticleCategoryPage               E
 ArticleDetailPage                 E
 ├── StoreBreadcrumb
@@ -422,10 +427,10 @@ ArticleDetailPage                 E
 ├── article FAQs → Accordion
 ├── RelatedArticles               D  only with real hrefs
 └── related service CTA → Button link
-ArticleCard                       D
+ArticleCard                       D  image, category, title, summary, meta, read-more
 ```
 
-Search/sort controls: omit until content API exists (do not ship inert UI).
+Category chips on `/articles` use `?category=` and reset `page`. Search/sort controls: omit until content API exists (do not ship inert UI).
 
 ### 6.8 FAQ — `components/store/faq`
 

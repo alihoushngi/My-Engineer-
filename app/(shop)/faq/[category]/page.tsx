@@ -3,10 +3,7 @@ import { notFound } from "next/navigation";
 import { FaqCategoryPage } from "@/components/store/faq/faqCategoryPage/faqCategoryPage";
 import { faqCopy } from "@/config/faq.config/faq.config";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
-import {
-  buildPageHref,
-  parsePageParam,
-} from "@/lib/pagination/page-param/page-param";
+import { parsePageParam } from "@/lib/pagination/page-param/page-param";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { getFaqCategory } from "@/services/faq-service/faq-service";
 
@@ -55,7 +52,7 @@ export default async function FaqCategoryRoutePage({
       category={category}
       items={pagination.items}
       pagination={pagination}
-      pageHref={(page) => buildPageHref(category.href, page)}
+      pathname={category.href}
     />
   );
 }

@@ -11,9 +11,16 @@ export const articlesCopy = {
   homeCta: "بازگشت به خانه",
   browseCta: "مشاهده همه مقالات",
   relatedHeading: "مقالات مرتبط",
+  recommendedHeading: "مقالات پیشنهادی",
+  recommendedDescription:
+    "بر اساس موضوع، برچسب و مقالات منتخب از همین مجموعه انتخاب شده‌اند.",
   tocHeading: "فهرست مطالب",
   faqsHeading: "پرسش‌های مقاله",
   serviceCtaPrefix: "مشاهده خدمت مرتبط",
   metadataDescription: "مقالات مهندس من درباره خدمات ساختمانی.",
   paginationLabel: "صفحه‌بندی مقالات",
+  readMoreCta: "مطالعه بیشتر",
+  featuredLabel: "مقاله منتخب",
+  categoryFilterLabel: "فیلتر موضوع مقالات",
+  allCategoriesLabel: "همه",
 } as const;

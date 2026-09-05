@@ -4,10 +4,7 @@ import {
   engineerPanelPaths,
 } from "@/config/engineer-panel.config/engineer-panel.config";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
-import {
-  buildPageHref,
-  parsePageParam,
-} from "@/lib/pagination/page-param/page-param";
+import { parsePageParam } from "@/lib/pagination/page-param/page-param";
 import { engineerPageMetadata } from "@/lib/engineer/private-panel-metadata/private-panel-metadata";
 import { getEngineerWorkspace } from "@/services/engineer-service/engineer-access-service";
 
@@ -35,7 +32,7 @@ export default async function EngineerMessagesRoute({
     <EngineerMessagesPage
       conversations={pagination.items}
       pagination={pagination}
-      pageHref={(page) => buildPageHref(engineerPanelPaths.messages, page)}
+      pathname={engineerPanelPaths.messages}
     />
   );
 }

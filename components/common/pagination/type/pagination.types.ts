@@ -2,6 +2,8 @@ export type PaginationProps = {
   page: number;
   pageCount: number;
   ariaLabel: string;
-  buildHref?: (page: number) => string;
+  pathname?: string;
+  query?: string;
+  hash?: string;
   onPageChange?: (page: number) => void;
 };

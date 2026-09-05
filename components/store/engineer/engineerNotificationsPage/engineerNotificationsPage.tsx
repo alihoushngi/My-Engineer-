@@ -13,13 +13,13 @@ import { cn } from "@/lib/utils/cn/cn";
 type EngineerNotificationsPageProps = {
   notifications: readonly EngineerNotification[];
   pagination: PaginatedItems<EngineerNotification>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function EngineerNotificationsPage({
   notifications,
   pagination,
-  pageHref,
+  pathname,
 }: EngineerNotificationsPageProps) {
   return (
     <div className="flex flex-col gap-6">
@@ -65,7 +65,7 @@ export function EngineerNotificationsPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={engineerPanelCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
           />
         </>
       )}

@@ -4,10 +4,7 @@ import { KnowledgeCategoryPage } from "@/components/store/knowledge/knowledgeCat
 import { knowledgeCopy } from "@/config/knowledge.config/knowledge.config";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
-import {
-  buildPageHref,
-  parsePageParam,
-} from "@/lib/pagination/page-param/page-param";
+import { parsePageParam } from "@/lib/pagination/page-param/page-param";
 import { getKnowledgeCategory } from "@/services/knowledge-service/knowledge-service";
 
 type KnowledgeCategoryRouteProps = {
@@ -55,7 +52,7 @@ export default async function KnowledgeCategoryRoutePage({
       category={category}
       tips={pagination.items}
       pagination={pagination}
-      pageHref={(page) => buildPageHref(category.href, page)}
+      pathname={category.href}
     />
   );
 }

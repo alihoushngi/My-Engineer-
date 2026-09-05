@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button/button";
 import { type PaginationProps } from "@/components/common/pagination/type/pagination.types";
 import { paginationCopy } from "@/config/pagination.config/pagination.config";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
+import { buildPagedHref } from "@/lib/pagination/page-param/page-param";
 import { getVisiblePages } from "@/lib/pagination/visible-pages/visible-pages";
 import { cn } from "@/lib/utils/cn/cn";
 
@@ -12,7 +13,9 @@ export function Pagination({
   page,
   pageCount,
   ariaLabel,
-  buildHref,
+  pathname,
+  query,
+  hash,
   onPageChange,
 }: PaginationProps) {
   if (pageCount <= 1) {
@@ -23,6 +26,8 @@ export function Pagination({
     formatFaNumber(page),
     formatFaNumber(pageCount),
   );
+  const hrefFor = (target: number) =>
+    pathname ? buildPagedHref(pathname, target, query, hash) : undefined;
 
   return (
     <nav
@@ -35,7 +40,7 @@ export function Pagination({
       <PaginationControl
         label={paginationCopy.previousLabel}
         disabled={page <= 1}
-        href={buildHref?.(page - 1)}
+        href={hrefFor(page - 1)}
         onClick={onPageChange ? () => onPageChange(page - 1) : undefined}
       />
       <p className="type-caption text-muted-foreground sm:hidden">{status}</p>
@@ -56,7 +61,7 @@ export function Pagination({
                 label={formatFaNumber(token.page)}
                 ariaLabel={`${paginationCopy.pageNumberLabel} ${formatFaNumber(token.page)}`}
                 current={token.page === page}
-                href={buildHref?.(token.page)}
+                href={hrefFor(token.page)}
                 onClick={
                   onPageChange ? () => onPageChange(token.page) : undefined
                 }
@@ -68,7 +73,7 @@ export function Pagination({
       <PaginationControl
         label={paginationCopy.nextLabel}
         disabled={page >= pageCount}
-        href={buildHref?.(page + 1)}
+        href={hrefFor(page + 1)}
         onClick={onPageChange ? () => onPageChange(page + 1) : undefined}
       />
     </nav>

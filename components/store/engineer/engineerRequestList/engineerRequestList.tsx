@@ -8,10 +8,7 @@ import { EngineerRequestRow } from "@/components/store/engineer/engineerRequestR
 import { Empty } from "@/components/ui/empty/empty";
 import { engineerPanelCopy } from "@/config/engineer-panel.config/engineer-panel.config";
 import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
-import {
-  buildPageHref,
-  parsePageParam,
-} from "@/lib/pagination/page-param/page-param";
+import { parsePageParam } from "@/lib/pagination/page-param/page-param";
 import { type EngineerRequest } from "@/types/store/engineer.types";
 import { cn } from "@/lib/utils/cn/cn";
 
@@ -83,9 +80,8 @@ export function EngineerRequestList({ requests }: EngineerRequestListProps) {
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={engineerPanelCopy.paginationLabel}
-            buildHref={(page) =>
-              buildPageHref(pathname, page, searchParams.toString())
-            }
+            pathname={pathname}
+            query={searchParams.toString()}
           />
         </>
       )}

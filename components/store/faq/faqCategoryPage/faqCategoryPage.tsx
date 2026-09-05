@@ -17,14 +17,14 @@ type FaqCategoryPageProps = {
   category: FaqCategoryDetail;
   items: readonly FaqItem[];
   pagination: PaginatedItems<FaqItem>;
-  pageHref: (page: number) => string;
+  pathname: string;
 };
 
 export function FaqCategoryPage({
   category,
   items,
   pagination,
-  pageHref,
+  pathname,
 }: FaqCategoryPageProps) {
   const related = category.relatedCategories ?? [];
 
@@ -48,7 +48,7 @@ export function FaqCategoryPage({
             page={pagination.page}
             pageCount={pagination.pageCount}
             ariaLabel={faqCopy.paginationLabel}
-            buildHref={pageHref}
+            pathname={pathname}
           />
         </>
       ) : (

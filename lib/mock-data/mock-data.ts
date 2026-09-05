@@ -1,9 +1,5 @@
 import { type ServiceSlug } from "@/config/services.config/services.config";
 import {
-  type Article,
-  type ArticleCategory,
-} from "@/types/store/article.types";
-import {
   type ExpertCardData,
   type ExpertCertificate,
   type ExpertPortfolioItem,
@@ -1325,109 +1321,10 @@ export const mockServiceDetails: readonly ServiceDetailData[] = Object.values(
   ),
 }));
 
-export const mockArticleCategories: readonly ArticleCategory[] = [
-  {
-    slug: "surveying",
-    href: "/articles/categories/surveying",
-    title: "نقشه‌برداری و سند",
-    description: "راهنمای برداشت، نقشه UTM و فرایندهای مرتبط با ملک.",
-  },
-  {
-    slug: "construction",
-    href: "/articles/categories/construction",
-    title: "پیمانکاری و اجرا",
-    description: "نکته‌های انتخاب مجری و مدیریت اجرای ساختمان.",
-  },
-  {
-    slug: "design",
-    href: "/articles/categories/design",
-    title: "طراحی و نقشه",
-    description: "راهنمای طراحی معماری، سازه و فضای داخلی.",
-  },
-];
-
-const extraSurveyingArticles: readonly Article[] = [
-  "مدارک لازم پیش از حضور نقشه‌بردار",
-  "چه زمانی جانمایی پلاک ثبتی ضروری است؟",
-  "تفاوت برداشت توپوگرافی و نقشه UTM",
-  "نقشه ازبیلت در پروژه بازسازی چه کمکی می‌کند؟",
-  "چطور محدوده کار نقشه‌برداری را شفاف کنیم؟",
-  "خروجی مناسب شهرداری و ثبت را چطور مشخص کنیم؟",
-  "نکته‌های دسترسی و ایمنی در برداشت میدانی",
-  "تفکیک آپارتمان؛ چه اطلاعاتی باید آماده باشد؟",
-  "برداشت پهپادی چه زمانی انتخاب درستی است؟",
-  "پس از تحویل نقشه، چه بررسی‌هایی باقی می‌ماند؟",
-].map((title, index) => {
-  const slug = `surveying-guide-${index + 1}`;
-
-  return {
-    slug,
-    href: `/articles/${slug}` as `/articles/${string}`,
-    title,
-    excerpt: "راهنمای کوتاه برای انتخاب درست خدمت نقشه‌برداری پیش از سفارش.",
-    author: "تحریریه مهندس من",
-    publishedAt: `${index + 1} شهریور ۱۴۰۵`,
-    categorySlug: "surveying",
-    categoryLabel: "نقشه‌برداری و سند",
-    body: "نوع خروجی، مرجع درخواست‌کننده و مدارک موجود مسیر خدمت را مشخص می‌کنند. پیش از هماهنگی بازدید، این سه مورد را با متخصص در میان بگذارید تا برداشت و فایل تحویلی با نیاز پرونده هم‌خوان باشد.",
-    relatedServiceHref: "/services/land-surveying",
-    relatedServiceLabel: "نقشه‌برداری",
-  };
-});
-
-export const mockArticles: readonly Article[] = [
-  {
-    slug: "utm-map-difference",
-    href: "/articles/utm-map-difference",
-    title: "تفاوت نقشه UTM و نقشه‌برداری سند چیست؟",
-    excerpt:
-      "دو خروجی نزدیک اما با کاربردهای متفاوت را پیش از سفارش درست بشناسید.",
-    coverSrc: "/images/articles/surveying.jpg",
-    author: "تحریریه مهندس من",
-    publishedAt: "۱۴ شهریور ۱۴۰۵",
-    categorySlug: "surveying",
-    categoryLabel: "نقشه‌برداری و سند",
-    toc: [
-      { id: "utm", label: "نقشه UTM چیست؟" },
-      { id: "deed", label: "نقشه‌برداری سند چیست؟" },
-      { id: "compare", label: "مقایسه کاربردها" },
-    ],
-    body: "نقشه UTM موقعیت و مختصات دقیق ملک را در یک سامانه مشخص ثبت می‌کند. این خروجی در جانمایی، تطبیق موقعیت و بسیاری از پیگیری‌های ثبتی کاربرد دارد.\n\nنقشه‌برداری سند علاوه بر برداشت میدانی می‌تواند به بررسی سوابق، حدود و انطباق اطلاعات ملک با مدارک موجود نیاز داشته باشد.\n\nانتخاب خدمت درست به مسئله اصلی پرونده، مرجع درخواست‌کننده و نوع خروجی مورد نیاز وابسته است. پیش از سفارش، مدارک موجود و هدف استفاده از نقشه را با متخصص در میان بگذارید.",
-    faqs: surveyingFaqs.slice(1, 3),
-    relatedServiceHref: "/services/land-surveying",
-    relatedServiceLabel: "نقشه‌برداری",
-    viewCount: 164,
-  },
-  {
-    slug: "contractor-selection",
-    href: "/articles/contractor-selection",
-    title: "پیش از انتخاب پیمانکار ساختمان چه چیزهایی را بررسی کنیم؟",
-    excerpt: "یک چک‌لیست کوتاه برای مقایسه سابقه، محدوده کار و شیوه همکاری.",
-    author: "تحریریه مهندس من",
-    publishedAt: "۹ شهریور ۱۴۰۵",
-    categorySlug: "construction",
-    categoryLabel: "پیمانکاری و اجرا",
-    body: "نمونه‌کارهای مشابه، تعریف روشن محدوده کار، برنامه زمانی و شیوه گزارش‌دهی چهار نقطه شروع مهم هستند. گفت‌وگوی اولیه باید به پرسش‌های مشخص درباره مسئولیت‌ها و تحویل هر مرحله پاسخ دهد.",
-    relatedServiceHref: "/services/construction-workers",
-    relatedServiceLabel: "استادکار و پیمانکار",
-  },
-  {
-    slug: "interior-design-brief",
-    href: "/articles/interior-design-brief",
-    title: "چطور برای طراحی داخلی یک شرح نیاز خوب آماده کنیم؟",
-    excerpt:
-      "نیازهای فضایی، بودجه و سلیقه را به زبان قابل استفاده برای طراح تبدیل کنید.",
-    coverSrc: "/images/home/interior-design.png",
-    author: "تحریریه مهندس من",
-    publishedAt: "۳ شهریور ۱۴۰۵",
-    categorySlug: "design",
-    categoryLabel: "طراحی و نقشه",
-    body: "فهرست کاربران فضا، فعالیت‌های روزانه، محدودیت بودجه و نمونه‌هایی که دوست دارید یا نمی‌پسندید را ثبت کنید. یک شرح نیاز خوب تصمیم‌ها را سریع‌تر و نتیجه را قابل ارزیابی‌تر می‌کند.",
-    relatedServiceHref: "/services/interior-design",
-    relatedServiceLabel: "طراحی نما و داخلی",
-  },
-  ...extraSurveyingArticles,
-];
+export {
+  mockArticleCategories,
+  mockArticles,
+} from "@/lib/mock-data/articles-mock-data/articles-mock-data";
 
 export const mockFaqCategories: readonly FaqCategoryDetail[] = [
   {
