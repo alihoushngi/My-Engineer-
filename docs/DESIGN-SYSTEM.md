@@ -4,46 +4,53 @@ The visual system for the Persian professional-services marketplace. Architectur
 
 ## Visual direction
 
-A white, content-first marketplace with charcoal text, quiet stone surfaces, and restrained deep teal actions. Engineering precision comes from alignment, clear information hierarchy, and consistent spacing. Color supports tasks rather than decorating every section.
+A Persian, image-led construction marketplace with a deep navy frame, vivid legacy-derived teal actions, steel-blue supporting surfaces, orange moments of emphasis, and warm category tints. Engineering precision comes from alignment, visible taxonomy, clear information hierarchy, and consistent spacing; the varied section composition gives the marketplace an authored editorial rhythm.
 
 - Keep approved Persian content and render only available data.
 - Design for `lang="fa"`, `dir="rtl"`, and local Kalameh FaNum.
-- Prefer open sections, divided lists, and editorial columns over nested cards.
+- Prefer open sections, divided lists, editorial columns, image rails, and purpose-built result cards over generic card grids.
 - Use one primary action in each task context. Supporting navigation is outline or ghost.
-- No gradients, decorative blobs, marketing statistics, fabricated experts, or placeholder testimonials.
-- The house outline beside the wordmark uses Lucide, like other interface icons.
+- Gradients are limited to legibility overlays on photography. Do not use decorative blobs or unsupported marketing statistics.
+- The geometric construction mark is a code-authored SVG; interface icons use Lucide.
+- Central mock fixtures are allowed only when `NEXT_PUBLIC_USE_MOCK_DATA=true`. They must remain realistic, clearly development-oriented, non-sensitive, and replaceable through service modules.
 
 ## Semantic palette
 
 Change colors centrally in `:root`; `.dark` remains a future-theme foundation, not an exposed feature. Tailwind utilities are mapped with `@theme inline`. Do not scatter hex colors, raw palette utilities, or per-component dark overrides.
 
-| Token                                  | Purpose                                                  |
-| -------------------------------------- | -------------------------------------------------------- |
-| `background`                           | White page canvas                                        |
-| `surface`                              | Form, card, header and dialog background                 |
-| `surface-elevated`                     | Menus and popovers                                       |
-| `surface-subtle`                       | Quiet stone bands, empty states, supporting columns      |
-| `surface-muted`                        | Compatibility alias family for quiet fills               |
-| `foreground`                           | Charcoal primary text                                    |
-| `foreground-muted`, `muted-foreground` | Legible supporting copy and metadata                     |
-| `primary`                              | Deep teal task actions and current navigation            |
-| `primary-hover`                        | Explicit darker pressed/hover action state               |
-| `primary-subtle`                       | Light teal selection and identity surfaces               |
-| `primary-foreground`                   | Text on solid primary fills                              |
-| `secondary`, `secondary-foreground`    | Quiet alternative actions                                |
-| `accent`, `accent-foreground`          | Interactive hover/selection                              |
-| `muted`                                | Neutral compatibility fill                               |
-| `border`                               | Low-emphasis separators                                  |
-| `border-strong`                        | Outlined actions and stronger dividers                   |
-| `input`, `input-background`            | Clearly visible control outline and fill                 |
-| `ring`                                 | Keyboard focus                                           |
-| `success`                              | Confirmed status; badges use subtle tinted fills         |
-| `warning`                              | Caution, including explicit development previews         |
-| `danger`, `destructive`                | Validation and destructive actions; aliases share values |
-| `info`                                 | Availability and explanatory messages                    |
-| `overlay`                              | Modal backdrop                                           |
-| `card`, `card-foreground`              | Primitive aliases for surface and foreground             |
-| `popover`, `popover-foreground`        | Elevated primitive aliases                               |
+| Token                                  | Purpose                                                    |
+| -------------------------------------- | ---------------------------------------------------------- |
+| `background`                           | White page canvas                                          |
+| `background-subtle`                    | Cool marketplace bands and result canvases                 |
+| `surface`                              | Form, card, header and dialog background                   |
+| `surface-elevated`                     | Menus and popovers                                         |
+| `surface-subtle`                       | Quiet stone bands, empty states, supporting columns        |
+| `surface-muted`                        | Compatibility alias family for quiet fills                 |
+| `foreground`                           | Charcoal primary text                                      |
+| `foreground-muted`, `muted-foreground` | Legible supporting copy and metadata                       |
+| `primary`                              | Vivid teal task actions and current navigation             |
+| `primary-hover`                        | Explicit darker pressed/hover action state                 |
+| `primary-active`                       | Pressed teal action state                                  |
+| `primary-subtle`                       | Light teal selection and identity surfaces                 |
+| `primary-foreground`                   | Text on solid primary fills                                |
+| `primary-deep`                         | Navy header, footer, hero, and narrative bands             |
+| `secondary`, `secondary-hover`         | Legacy steel-blue supporting actions and identity          |
+| `secondary-subtle`                     | Pale steel-blue content bands                              |
+| `accent`, `accent-hover`               | Orange emphasis and highlighted metadata                   |
+| `accent-subtle`                        | Pale orange supporting surface                             |
+| `muted`                                | Neutral compatibility fill                                 |
+| `border`                               | Low-emphasis separators                                    |
+| `border-strong`                        | Outlined actions and stronger dividers                     |
+| `input`, `input-background`            | Clearly visible control outline and fill                   |
+| `ring`                                 | Keyboard focus                                             |
+| `success`                              | Confirmed status; badges use subtle tinted fills           |
+| `warning`                              | Caution, including explicit development previews           |
+| `danger`, `destructive`                | Validation and destructive actions; aliases share values   |
+| `info`                                 | Availability and explanatory messages                      |
+| `category-*`                           | Teal, blue, orange, violet, green, and rose taxonomy fills |
+| `overlay`                              | Modal backdrop                                             |
+| `card`, `card-foreground`              | Primitive aliases for surface and foreground               |
+| `popover`, `popover-foreground`        | Elevated primitive aliases                                 |
 
 Status foreground pairs remain available for solid status surfaces. Success and verification must come from actual data; do not imply verification with decorative badges. Retained `glass-*` utilities are compatibility primitives; application chrome and forms use opaque surfaces.
 
@@ -83,7 +90,7 @@ Use Tailwind with `cn()`. Shared dimensions remain centralized:
 | Form fields         | 24–28px between groups, 8px label/control gap |
 | Open section groups | 32–40px; dividers where meaningful            |
 
-The registration shell is capped at 56rem and uses a 14rem desktop progress rail. The form remains a focused column with approximately 34rem usable width. At small sizes the rail disappears, leaving the current step, progress bar and actual task.
+The registration shell is capped at 64rem and uses a 17rem navy desktop progress rail. The form remains a focused white column. At small sizes the rail disappears, leaving the current step, progress bar and actual task.
 
 Do not hide layout bugs with page-level horizontal overflow clipping. Use `min-w-0`, wrapping, responsive grids and logical inline spacing. Check 360, 390, 430, 768, 1024, 1280 and 1440px.
 
@@ -101,17 +108,15 @@ Do not hide layout bugs with page-level horizontal overflow clipping. Use `min-w
 
 ### Global chrome
 
-Compact opaque sticky header, wordmark, desktop navigation, discreet search/city entries, outlined specialist join link. Active navigation has a soft fill and stronger text. Mobile uses a labelled full-height RTL sheet, scrollable link area, persistent join action and safe-area padding. Navigation closes after a link is selected. Footer groups use quiet typography and generous link targets.
+Compact navy sticky header, geometric wordmark, desktop navigation, discreet search/city entries, and outlined specialist join link. Active navigation has a translucent light fill and stronger text. Mobile uses a labelled full-height RTL sheet, scrollable link area, persistent join action and safe-area padding. The navy footer groups services, learning, company, and legal destinations with generous link targets.
 
 ### Home
 
-Useful search-led opening with direct query submission and city entry. Six service categories use divided open rows with restrained Lucide icons. Trust information stays unboxed. The existing About process copy explains discovery, comparison and direct contact. Resources use editorial links. The specialist join band is the main solid brand-color moment.
-
-Popular services and drawing consultation stay conditional on approved mappings. Home expert showcase remains absent while there is no approved data source. Never fill these gaps with invented content.
+The home page uses an asymmetric navy/photo hero with a real search form and city entry. Six service categories use the audited legacy illustrations on restrained category-color blocks. The marketplace module is the core: multi-service chips, city and expertise selects, count feedback, expert cards, reset, and an intentional empty state. Popular services form a photographic rail; drawing services use an open four-column consultation strip. A split trust story, navy three-step narrative, editorial learning grid, FAQ entry, and teal specialist CTA complete the page.
 
 ### Discovery
 
-Search preserves URL-driven query and cities behavior. Search controls form one compact task region; real service matches and expert results are separate. Do not add unsupported filters or sorting. All six service routes share one layout: breadcrumb, identity, dominant expert-discovery region, supporting introduction/process column and related service navigation. Existing unavailable city/list states remain honest.
+Search preserves URL-driven query and city behavior and exposes the same city inventory as the marketplace. Search controls form one compact task region; service matches and expert results are separate. All six service routes share one layout: photo-led service hero, accurate scope and specialty modules, city/expertise expert filtering, process, preparation guidance, FAQ, and related-service navigation.
 
 ### Experts
 
@@ -121,15 +126,15 @@ Profiles use an open main column for biography, specialties, professional inform
 
 ### Articles, FAQ and knowledge
 
-Article cards use open media/text layouts, category metadata and clear title hierarchy. Detail pages use a narrow reading column, in-flow contents navigation and generous prose. FAQ uses divided accessible accordions with spacious triggers and readable answers. Knowledge tips are divided editorial entries, not repeated cards. Related service actions require real supplied destinations. Missing entities still return not-found; empty catalogs use the shared empty state.
+The article hub leads with a photographic editorial feature followed by open media/text entries. Detail pages use a narrow reading column, in-flow contents navigation and generous prose. FAQ and knowledge hubs use distinct color-coded category identities; details retain divided accessible accordions and editorial entries. Related service actions require supplied destinations. Missing entities still return not-found; empty catalogs use the shared empty state.
 
 ### About and legal
 
-About uses open narrative sections, an explicit process sequence and domain/service discovery. Legal documents use one reading column, strong section headings, natural paragraphs and lists; never wrap individual paragraphs in cards.
+About opens with a navy/photo story, then moves through an open purpose split, steel-blue origin/process band, domain discovery, and principles. Legal documents use one reading column, strong section headings, natural paragraphs and lists; never wrap individual paragraphs in cards.
 
 ### Registration
 
-All nine steps share the same shell, progress, heading, form rhythm and pending/error presentation. Existing guard rules and service operations remain authoritative. Mobile navigation keeps primary continue and secondary back side by side. Native keyboard types, visible labels, required markers, accessible descriptions and error relationships are preserved.
+All nine steps share the same white workspace, navy desktop progress rail, progress bar, heading, form rhythm, and pending/error presentation. Existing guard rules and service operations remain authoritative. Mobile navigation keeps primary continue and secondary back side by side. Native keyboard types, visible labels, required markers, accessible descriptions and error relationships are preserved.
 
 OTP uses five LTR cells, numeric entry, Persian-digit normalization, paste transformation, a visible active ring, edit-phone action and the existing resend cooldown. No successful API response is simulated. Completion has no automatic redirect and retains the existing explicit home link; internal product-decision notes are not displayed as user-facing success content.
 
@@ -151,6 +156,13 @@ Keep one page H1, section hierarchy, semantic lists/landmarks and a skip link. F
 
 Respect reduced motion globally. No workflow depends on hover, color alone, animation or a pointer. Sticky actions need sufficient scroll space so the final fields remain reachable. Long badges and Persian names wrap; do not truncate critical identity or action labels.
 
+## Data and asset strategy
+
+- `lib/mock-data/mock-data.ts` is the single source of local experts, service scopes, articles, FAQs, knowledge, cities, software, portfolio, and homepage modules.
+- Service modules are the only consumers exposed to route components. Turning `NEXT_PUBLIC_USE_MOCK_DATA` to `false` returns honest empty/unavailable states until backend contracts are supplied.
+- Reused legacy assets live under `public/images/`; generated concept boards live under `docs/design-concepts/` and are not shipped in page UI.
+- `IMAGE-ASSET-PLAN.md` records every reused and still-missing visual with exact dimensions, crop, subject, mood, and Persian alt intent.
+
 ## Validation record
 
-The redesign keeps routes, Server Component boundaries, services, providers and business validation schemas. Browser review includes seven breakpoint widths across major page families, all registration steps using a temporary component review surface, the existing populated/sparse development expert fixtures, query navigation, mobile menu, OTP entry and form validation. Temporary review routes are removed before the production build. Unavailable backend operations remain unavailable; visual verification does not imply backend completion.
+The redesign keeps routes, Server Component boundaries, services, providers, and business validation schemas. Quality gates are `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, and `pnpm build`. Browser review covers the homepage, service discovery, expert detail, editorial hubs, and registration at desktop and mobile widths. Unavailable backend mutations remain unavailable; visual verification does not imply backend completion.

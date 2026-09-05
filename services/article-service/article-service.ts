@@ -8,34 +8,37 @@ import {
   type ArticleCardData,
   type ArticleCategory,
 } from "@/types/store/article.types";
+import { env } from "@/lib/env/env";
+import { mockArticleCategories, mockArticles } from "@/lib/mock-data/mock-data";
 
 export async function listArticles(): Promise<readonly ArticleCardData[]> {
-  return [];
+  return env.useMockData ? mockArticles : [];
 }
 
 export async function listArticleCategories(): Promise<
   readonly ArticleCategory[]
 > {
-  return [];
+  return env.useMockData ? mockArticleCategories : [];
 }
 
 export async function getArticleCategory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _slug: string,
 ): Promise<ArticleCategory | null> {
-  return null;
+  if (!env.useMockData) return null;
+  return (
+    mockArticleCategories.find((category) => category.slug === _slug) ?? null
+  );
 }
 
 export async function listArticlesByCategory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _slug: string,
 ): Promise<readonly ArticleCardData[]> {
-  return [];
+  return env.useMockData
+    ? mockArticles.filter((article) => article.categorySlug === _slug)
+    : [];
 }
 
-export async function getArticleBySlug(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _slug: string,
-): Promise<Article | null> {
-  return null;
+export async function getArticleBySlug(_slug: string): Promise<Article | null> {
+  if (!env.useMockData) return null;
+  return mockArticles.find((article) => article.slug === _slug) ?? null;
 }

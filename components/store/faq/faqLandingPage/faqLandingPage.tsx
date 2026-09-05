@@ -29,9 +29,20 @@ export function FaqLandingPage({ categories }: FaqLandingPageProps) {
       />
       {categories.length > 0 ? (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <li key={category.slug}>
-              <FaqCategoryCard category={category} />
+              <FaqCategoryCard
+                category={category}
+                tone={
+                  [
+                    "bg-category-teal",
+                    "bg-category-orange",
+                    "bg-category-blue",
+                    "bg-category-green",
+                    "bg-category-rose",
+                  ][index % 5] ?? "bg-category-teal"
+                }
+              />
             </li>
           ))}
         </ul>

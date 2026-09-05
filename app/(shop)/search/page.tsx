@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const rawParams = await searchParams;
   const queryState = parseSearchParams(rawParams);
-  const result = await searchCatalog(queryState.q);
+  const result = await searchCatalog(queryState.q, queryState.cities);
 
   return <SearchResultsPage queryState={queryState} result={result} />;
 }

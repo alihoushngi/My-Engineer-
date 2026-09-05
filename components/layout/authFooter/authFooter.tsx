@@ -3,7 +3,7 @@ import { legalNavigation } from "@/config/navigation.config/navigation.config";
 
 export function AuthFooter() {
   return (
-    <footer className="border-t border-border">
+    <footer className="border-t border-border bg-surface">
       <nav
         aria-label="پیوندهای قانونی"
         className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-page py-4"

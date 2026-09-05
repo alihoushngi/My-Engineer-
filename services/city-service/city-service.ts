@@ -7,17 +7,22 @@
 
 import { type City, type Province } from "@/types/store/registration.types";
 import { throwApiUnavailable } from "@/lib/api/throw-api-unavailable/throw-api-unavailable";
+import { env } from "@/lib/env/env";
+import { mockCities, mockProvinces } from "@/lib/mock-data/mock-data";
 
 const API_NOT_AVAILABLE_MESSAGE =
   "فهرست استان‌ها و شهرها پس از اتصال سرویس در دسترس خواهد بود.";
 
 export async function getProvinces(): Promise<readonly Province[]> {
+  if (env.useMockData) return mockProvinces;
   throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
 }
 
 export async function getCitiesByProvince(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _provinceId: string,
 ): Promise<readonly City[]> {
+  if (env.useMockData) {
+    return mockCities.filter((city) => city.provinceId === _provinceId);
+  }
   throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
 }

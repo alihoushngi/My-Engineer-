@@ -7,14 +7,23 @@ import {
   type FaqCategory,
   type FaqCategoryDetail,
 } from "@/types/store/faq.types";
+import { env } from "@/lib/env/env";
+import { mockFaqCategories } from "@/lib/mock-data/mock-data";
 
 export async function listFaqCategories(): Promise<readonly FaqCategory[]> {
-  return [];
+  return env.useMockData ? mockFaqCategories : [];
 }
 
 export async function getFaqCategory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _slug: string,
 ): Promise<FaqCategoryDetail | null> {
-  return null;
+  if (!env.useMockData) return null;
+  const category = mockFaqCategories.find((item) => item.slug === _slug);
+  if (!category) return null;
+  return {
+    ...category,
+    relatedCategories: mockFaqCategories
+      .filter((item) => item.slug !== _slug)
+      .slice(0, 3),
+  };
 }

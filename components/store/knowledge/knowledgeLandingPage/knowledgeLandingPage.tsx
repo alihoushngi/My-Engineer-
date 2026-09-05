@@ -31,9 +31,19 @@ export function KnowledgeLandingPage({
       />
       {categories.length > 0 ? (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <li key={category.slug}>
-              <KnowledgeCategoryCard category={category} />
+              <KnowledgeCategoryCard
+                category={category}
+                tone={
+                  [
+                    "bg-category-blue",
+                    "bg-category-green",
+                    "bg-category-violet",
+                    "bg-category-orange",
+                  ][index % 4] ?? "bg-category-blue"
+                }
+              />
             </li>
           ))}
         </ul>

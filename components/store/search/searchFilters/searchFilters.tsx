@@ -1,9 +1,11 @@
 import { SearchCityTrigger } from "@/components/store/search/searchCityTrigger/searchCityTrigger";
 
-export function SearchFilters() {
+type Props = { cities?: readonly string[] };
+
+export function SearchFilters({ cities }: Props) {
   return (
     <div className="flex w-full shrink-0 sm:w-auto">
-      <SearchCityTrigger />
+      <SearchCityTrigger cities={cities} />
     </div>
   );
 }

@@ -6,16 +6,20 @@ import {
   type KnowledgeCategory,
   type KnowledgeCategoryDetail,
 } from "@/types/store/knowledge.types";
+import { env } from "@/lib/env/env";
+import { mockKnowledgeCategories } from "@/lib/mock-data/mock-data";
 
 export async function listKnowledgeCategories(): Promise<
   readonly KnowledgeCategory[]
 > {
-  return [];
+  return env.useMockData ? mockKnowledgeCategories : [];
 }
 
 export async function getKnowledgeCategory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _slug: string,
 ): Promise<KnowledgeCategoryDetail | null> {
-  return null;
+  if (!env.useMockData) return null;
+  return (
+    mockKnowledgeCategories.find((category) => category.slug === _slug) ?? null
+  );
 }

@@ -6,7 +6,7 @@ import { SearchResults } from "@/components/store/search/searchResults/searchRes
 import { SearchSummary } from "@/components/store/search/searchSummary/searchSummary";
 import { searchCopy } from "@/config/search.config/search.config";
 import { siteConfig } from "@/config/site.config/site.config";
-import { storePaths } from "@/config/navigation.config/navigation.config";
+import { buildSearchHref } from "@/lib/search/search-params/search-params";
 import {
   type SearchCatalogResult,
   type SearchQueryState,
@@ -39,7 +39,17 @@ export function SearchResultsPage({
         serviceCount={result.services.length}
         expertCount={result.experts.length}
       />
-      <ActiveFilters items={[]} clearHref={storePaths.search} />
+      <ActiveFilters
+        items={cities.map((city) => ({
+          id: city,
+          label: city,
+          href: buildSearchHref({
+            q,
+            cities: cities.filter((item) => item !== city),
+          }),
+        }))}
+        clearHref={buildSearchHref({ q })}
+      />
       {hasQuery && hasResults ? (
         <SearchResults services={result.services} experts={result.experts} />
       ) : (

@@ -24,7 +24,7 @@ export function SearchHeader({ initialQuery, cities }: SearchHeaderProps) {
             cities={cities}
           />
         </div>
-        <SearchFilters />
+        <SearchFilters cities={cities} />
       </div>
     </header>
   );

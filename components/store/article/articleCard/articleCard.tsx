@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardHeader } from "@/components/ui/card/card";
 import { type ArticleCardData } from "@/types/store/article.types";
 import { cn } from "@/lib/utils/cn/cn";
@@ -21,11 +22,11 @@ export function ArticleCard({ article, className }: ArticleCardProps) {
       >
         <Card className="h-full overflow-hidden rounded-none border-0 border-b border-border bg-transparent p-0 pb-6">
           {article.coverSrc ? (
-            // Remote hosts are API CONTRACT REQUIRED; native img until domains exist.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={article.coverSrc}
-              alt=""
+              alt={`تصویر مقاله ${article.title}`}
+              width={720}
+              height={450}
               className="aspect-[16/10] w-full rounded-lg object-cover"
             />
           ) : null}

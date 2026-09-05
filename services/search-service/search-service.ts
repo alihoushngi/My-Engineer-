@@ -1,5 +1,8 @@
 import { type SearchCatalogResult } from "@/types/store/search.types";
 import { matchServices } from "@/lib/search/match-services/match-services";
+import { env } from "@/lib/env/env";
+import { mockExpertCards } from "@/lib/mock-data/mock-data";
+import { normalizeSearchText } from "@/lib/search/normalize-search-text/normalize-search-text";
 
 /**
  * Search catalog access.
@@ -11,6 +14,7 @@ import { matchServices } from "@/lib/search/match-services/match-services";
  */
 export async function searchCatalog(
   query: string,
+  cities: readonly string[] = [],
 ): Promise<SearchCatalogResult> {
   const normalizedQuery = query.trim();
 
@@ -25,6 +29,24 @@ export async function searchCatalog(
   return {
     query: normalizedQuery,
     services: matchServices(normalizedQuery),
-    experts: [],
+    experts: env.useMockData
+      ? mockExpertCards.filter((expert) => {
+          const haystack = normalizeSearchText(
+            [
+              expert.name,
+              expert.profession,
+              expert.city,
+              ...(expert.specialties ?? []),
+            ]
+              .filter(Boolean)
+              .join(" "),
+          );
+          return (
+            haystack.includes(normalizeSearchText(normalizedQuery)) &&
+            (cities.length === 0 ||
+              (expert.city ? cities.includes(expert.city) : false))
+          );
+        })
+      : [],
   };
 }

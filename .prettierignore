@@ -8,3 +8,4 @@ pnpm-workspace.yaml
 *.min.js
 *.tsbuildinfo
 next-env.d.ts
+PastDesign/**

@@ -1,4 +1,5 @@
 import { type ExpertReview } from "@/types/store/review.types";
+import { type ServiceSlug } from "@/config/services.config/services.config";
 
 export type ExpertId = string;
 
@@ -53,6 +54,7 @@ export type ExpertCardData = {
   rating?: number;
   reviewCount?: number;
   specialties?: readonly string[];
+  serviceSlugs?: readonly ServiceSlug[];
 };
 
 /**

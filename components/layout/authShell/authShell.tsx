@@ -9,13 +9,13 @@ type AuthShellProps = {
 
 export function AuthShell({ children }: AuthShellProps) {
   return (
-    <div className="flex min-h-dvh flex-col bg-surface-subtle">
+    <div className="flex min-h-dvh flex-col bg-background-subtle">
       <SkipLink />
       <AuthHeader />
       <main
         id="main-content"
         tabIndex={-1}
-        className="flex flex-1 items-start justify-center py-page outline-none"
+        className="flex flex-1 items-start justify-center py-section outline-none"
       >
         <div className="container-app w-full">{children}</div>
       </main>

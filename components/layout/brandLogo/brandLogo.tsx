@@ -1,4 +1,3 @@
-import { HouseIcon } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site.config/site.config";
 import { cn } from "@/lib/utils/cn/cn";
@@ -18,11 +17,17 @@ export function BrandLogo({ className }: BrandLogoProps) {
         className,
       )}
     >
-      <HouseIcon
+      <svg
         aria-hidden="true"
-        className="size-7 shrink-0 text-primary"
-        strokeWidth={1.5}
-      />
+        viewBox="0 0 36 36"
+        className="size-8 shrink-0 text-primary"
+      >
+        <path
+          fill="currentColor"
+          d="M4 27V10l7-4 7 4 7-4 7 4v17h-6V14l-8 4-8-4v13H4Z"
+        />
+        <path fill="currentColor" d="M13 19h10v8H13z" opacity=".55" />
+      </svg>
       <span className="whitespace-nowrap font-bold">{siteConfig.name}</span>
     </Link>
   );

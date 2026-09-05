@@ -21,9 +21,10 @@ import { cn } from "@/lib/utils/cn/cn";
 function navLinkClassName(isActive: boolean) {
   return cn(
     "inline-flex min-h-11 items-center rounded-md px-3 type-body-sm outline-none",
-    "text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
+    "text-primary-foreground/70 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground",
     "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-    isActive && "bg-primary-subtle font-semibold text-primary",
+    isActive &&
+      "bg-primary-foreground/10 font-semibold text-primary-foreground",
   );
 }
 
@@ -58,9 +59,9 @@ export function HeaderNavigation() {
                 type="button"
                 variant="ghost"
                 className={cn(
-                  "px-3 type-body-sm text-muted-foreground",
+                  "px-3 type-body-sm text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground",
                   servicesActive &&
-                    "bg-primary-subtle font-semibold text-primary",
+                    "bg-primary-foreground/10 font-semibold text-primary-foreground",
                 )}
                 aria-current={servicesActive ? "true" : undefined}
               >

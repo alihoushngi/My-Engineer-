@@ -18,9 +18,9 @@ export function MobileNavLink({ href, label, isActive }: MobileNavLinkProps) {
         aria-current={isActive ? "page" : undefined}
         className={cn(
           "flex min-h-11 items-center rounded-md px-3 type-body",
-          "text-foreground transition-colors hover:bg-accent",
+          "text-foreground transition-colors hover:bg-primary-subtle",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-          isActive && "bg-accent font-medium",
+          isActive && "bg-primary-subtle font-medium text-primary",
         )}
       >
         {label}
