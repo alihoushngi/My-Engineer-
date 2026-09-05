@@ -12,8 +12,8 @@ export function HeaderSearchButton() {
     <>
       <Button
         type="button"
-        variant="outline"
-        className="hidden min-w-40 justify-start gap-2 text-muted-foreground lg:inline-flex xl:min-w-48"
+        variant="ghost"
+        className="hidden justify-start gap-2 px-3 text-muted-foreground lg:inline-flex"
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls="search-surface"

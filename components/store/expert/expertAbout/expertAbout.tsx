@@ -19,7 +19,7 @@ export function ExpertAbout({ about }: ExpertAboutProps) {
     return (
       <section
         aria-labelledby="expert-about-heading"
-        className="container-app py-page"
+        className="py-8 first:pt-0"
       >
         <SectionHeader
           titleId="expert-about-heading"
@@ -39,10 +39,7 @@ export function ExpertAbout({ about }: ExpertAboutProps) {
       : `${text.slice(0, COLLAPSE_LENGTH).trim()}…`;
 
   return (
-    <section
-      aria-labelledby="expert-about-heading"
-      className="container-app py-page"
-    >
+    <section aria-labelledby="expert-about-heading" className="py-8 first:pt-0">
       <div className="max-w-3xl space-y-6">
         <SectionHeader
           titleId="expert-about-heading"
@@ -52,7 +49,7 @@ export function ExpertAbout({ about }: ExpertAboutProps) {
           {visibleText.split("\n\n").map((paragraph) => (
             <p
               key={paragraph.slice(0, 24)}
-              className="type-body text-foreground"
+              className="type-body leading-loose text-foreground"
             >
               {paragraph}
             </p>

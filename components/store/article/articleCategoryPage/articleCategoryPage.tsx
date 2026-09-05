@@ -23,7 +23,7 @@ export function ArticleCategoryPage({
   articles,
 }: ArticleCategoryPageProps) {
   return (
-    <div className="container-app flex flex-col gap-8 py-page">
+    <div className="container-app flex flex-col gap-10 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },
@@ -36,7 +36,7 @@ export function ArticleCategoryPage({
         description={category.description}
       />
       {articles.length > 0 ? (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
             <li key={article.slug}>
               <ArticleCard article={article} />

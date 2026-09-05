@@ -55,7 +55,13 @@ export function FileUpload({
       return;
     }
 
-    inputRef.current.files = files;
+    const transfer = new DataTransfer();
+    const selected = props.multiple ? Array.from(files) : [files[0]];
+    selected.forEach((file) => {
+      if (file) transfer.items.add(file);
+    });
+    inputRef.current.files = transfer.files;
+    inputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   return (
@@ -66,7 +72,7 @@ export function FileUpload({
       onDragOver={(event) => event.preventDefault()}
       onDrop={handleDrop}
       className={cn(
-        "flex min-h-32 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-surface-muted px-4 py-6 text-center transition-colors",
+        "flex min-h-32 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-input bg-surface-subtle px-4 py-6 text-center transition-colors",
         !disabled && "hover:border-border-strong hover:bg-accent/60",
         invalid && "border-danger bg-danger/5",
         disabled && "cursor-not-allowed opacity-60",
@@ -78,7 +84,7 @@ export function FileUpload({
         type="button"
         disabled={disabled}
         onClick={openPicker}
-        className="type-body font-medium text-primary underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:no-underline"
+        className="min-h-11 rounded-md px-4 type-button text-primary underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:no-underline"
       >
         {label}
       </button>
@@ -90,6 +96,9 @@ export function FileUpload({
         type="file"
         disabled={disabled}
         aria-invalid={invalid || undefined}
+        aria-label={
+          props["aria-label"] ?? (typeof label === "string" ? label : undefined)
+        }
         className="sr-only"
         onChange={handleChange}
         {...props}

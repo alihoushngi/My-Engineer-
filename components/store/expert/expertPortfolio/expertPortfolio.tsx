@@ -27,11 +27,8 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
   const selected = openIndex === null ? undefined : portfolio[openIndex];
 
   return (
-    <section
-      aria-labelledby="expert-portfolio-heading"
-      className="border-y border-border bg-surface-muted"
-    >
-      <div className="container-app py-page">
+    <section aria-labelledby="expert-portfolio-heading" className="">
+      <div className="py-8 first:pt-0">
         <div className="space-y-8">
           <SectionHeader
             titleId="expert-portfolio-heading"

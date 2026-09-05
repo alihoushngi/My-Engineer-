@@ -11,7 +11,10 @@ export function ArticleToc({ items }: ArticleTocProps) {
   }
 
   return (
-    <nav aria-labelledby="article-toc-heading" className="space-y-3">
+    <nav
+      aria-labelledby="article-toc-heading"
+      className="space-y-4 border-s-2 border-primary bg-surface-subtle p-5 sm:p-6"
+    >
       <h2 id="article-toc-heading" className="type-h4 text-foreground">
         {articlesCopy.tocHeading}
       </h2>
@@ -20,7 +23,7 @@ export function ArticleToc({ items }: ArticleTocProps) {
           <li key={item.id}>
             <a
               href={`#${item.id}`}
-              className="type-body-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              className="inline-flex min-h-11 items-center type-body-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
               {item.label}
             </a>

@@ -7,6 +7,7 @@ export default function ShopLoading() {
       aria-busy="true"
       aria-live="polite"
     >
+      <span className="sr-only">در حال بارگذاری…</span>
       <Skeleton className="h-10 w-48 max-w-full" />
       <Skeleton className="h-20 w-full max-w-xl" />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -19,8 +19,8 @@ export function HomePage() {
       <ServiceCategories />
       <PopularServices items={popularServiceItems} />
       <DrawingConsultation items={drawingConsultationItems} />
-      <HomeNarrative />
       <WhyMohandesMan />
+      <HomeNarrative />
       <ContentHighlights />
       <HomeFaqEntry />
       <JoinCtaSection />

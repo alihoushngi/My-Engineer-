@@ -7,9 +7,9 @@ import { siteConfig } from "@/config/site.config/site.config";
 
 export function RegistrationComplete() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 border-t border-border pt-8">
       <Empty
-        icon={<CheckCircleIcon aria-hidden="true" />}
+        icon={<CheckCircleIcon aria-hidden="true" className="text-success" />}
         title={registrationCopy.completeTitle}
         description={registrationCopy.completeDescription}
         action={
@@ -20,9 +20,6 @@ export function RegistrationComplete() {
           </Button>
         }
       />
-      <p className="text-center type-caption text-muted-foreground">
-        {registrationCopy.completeDestinationNote}
-      </p>
     </div>
   );
 }

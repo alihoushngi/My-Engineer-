@@ -81,8 +81,8 @@ export function PortfolioImageList({
                   variant="ghost"
                   size="icon"
                   disabled={disabled}
-                  className="absolute end-1 top-1 size-9 bg-background/80"
-                  aria-label={registrationCopy.removePortfolioImageLabel}
+                  className="absolute end-1 top-1 size-11 bg-surface"
+                  aria-label={`${registrationCopy.removePortfolioImageLabel}: ${item.file.name}`}
                   onClick={() => {
                     onRemove(item.id);
                   }}

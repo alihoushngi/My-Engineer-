@@ -51,7 +51,11 @@ export function MobileNavigation({
         </SheetHeader>
         <nav
           aria-label="ناوبری موبایل"
-          className="flex flex-1 flex-col overflow-y-auto px-3 py-4"
+          className="flex flex-1 flex-col overflow-y-auto px-4 py-5"
+          onClick={(event) => {
+            if (event.target instanceof Element && event.target.closest("a"))
+              onOpenChange(false);
+          }}
         >
           <ul className="flex flex-col gap-1">
             {homeLink ? (
@@ -113,7 +117,7 @@ export function MobileNavigation({
             ))}
           </ul>
         </nav>
-        <div className="border-t border-border p-4">
+        <div className="border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <JoinLink className="w-full" />
         </div>
       </SheetContent>

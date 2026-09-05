@@ -56,7 +56,7 @@ export function SearchInput({
         >
           {searchCopy.inputLabel}
         </FieldLabel>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="flex items-end gap-2 sm:gap-3">
           <div className="relative min-w-0 flex-1">
             <SearchIcon
               aria-hidden="true"
@@ -95,11 +95,7 @@ export function SearchInput({
               </Button>
             ) : null}
           </div>
-          <Button
-            type="submit"
-            disabled={!canSubmit}
-            className="w-full sm:w-auto"
-          >
+          <Button type="submit" disabled={!canSubmit} className="px-4 sm:px-6">
             {searchCopy.submitLabel}
           </Button>
         </div>

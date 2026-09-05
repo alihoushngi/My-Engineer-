@@ -146,7 +146,7 @@ export function PortfolioStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={9} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step9Title}
         </h2>
         <p className="type-body text-muted-foreground">

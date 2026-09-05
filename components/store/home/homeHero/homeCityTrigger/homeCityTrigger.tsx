@@ -18,9 +18,9 @@ export function HomeCityTrigger({ className }: HomeCityTriggerProps) {
     <>
       <Button
         type="button"
-        variant="outline"
+        variant="ghost"
         className={cn(
-          "h-12 w-full justify-start gap-3 bg-background px-4 text-muted-foreground sm:w-auto",
+          "h-12 w-full justify-start gap-3 bg-transparent px-4 text-muted-foreground sm:w-auto",
           className,
         )}
         aria-haspopup="dialog"

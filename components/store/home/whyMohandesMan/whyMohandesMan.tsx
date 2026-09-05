@@ -14,7 +14,7 @@ export function WhyMohandesMan() {
           titleId="why-mohandes-man-heading"
           title={homeWhyCopy.title}
         />
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
           {homeWhyCopy.items.map((item) => (
             <li key={item.title} className="min-w-0">
               <IconCallout

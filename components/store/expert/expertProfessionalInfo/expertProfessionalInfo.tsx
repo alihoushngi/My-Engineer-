@@ -26,11 +26,8 @@ export function ExpertProfessionalInfo({
   }
 
   return (
-    <section
-      aria-labelledby="expert-professional-heading"
-      className="border-y border-border bg-surface-muted"
-    >
-      <div className="container-app py-page">
+    <section aria-labelledby="expert-professional-heading" className="">
+      <div className="py-8 first:pt-0">
         <div className="max-w-3xl space-y-8">
           <SectionHeader
             titleId="expert-professional-heading"
@@ -47,7 +44,7 @@ export function ExpertProfessionalInfo({
                     {education.map((item) => (
                       <li
                         key={`${item.degree}-${item.field ?? ""}-${item.institution ?? ""}`}
-                        className="type-body text-foreground"
+                        className="type-body leading-loose text-foreground"
                       >
                         <p className="font-medium">{item.degree}</p>
                         {item.field ? (
@@ -76,7 +73,7 @@ export function ExpertProfessionalInfo({
                 <dt className="type-caption text-muted-foreground">
                   {expertProfileCopy.membershipLabel}
                 </dt>
-                <dd className="type-body text-foreground">
+                <dd className="type-body leading-loose text-foreground">
                   {expert.organizationMembership?.label}
                 </dd>
               </div>
@@ -87,7 +84,7 @@ export function ExpertProfessionalInfo({
                   {expertProfileCopy.licenseLabel}
                 </dt>
                 <dd className="space-y-2">
-                  <p className="type-body text-foreground">
+                  <p className="type-body leading-loose text-foreground">
                     {expert.license?.title}
                   </p>
                   {hasItems(competencies) ? (
@@ -103,7 +100,7 @@ export function ExpertProfessionalInfo({
                 <dt className="type-caption text-muted-foreground">
                   {expertProfileCopy.qualificationsLabel}
                 </dt>
-                <dd className="type-body text-foreground">
+                <dd className="type-body leading-loose text-foreground">
                   {qualifications.join("، ")}
                 </dd>
               </div>

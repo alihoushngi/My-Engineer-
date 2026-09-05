@@ -23,7 +23,7 @@ function navLinkClassName(isActive: boolean) {
     "inline-flex min-h-11 items-center rounded-md px-3 type-body-sm outline-none",
     "text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
     "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-    isActive && "bg-accent/70 font-medium text-foreground",
+    isActive && "bg-primary-subtle font-semibold text-primary",
   );
 }
 
@@ -59,12 +59,13 @@ export function HeaderNavigation() {
                 variant="ghost"
                 className={cn(
                   "px-3 type-body-sm text-muted-foreground",
-                  servicesActive && "bg-accent/70 font-medium text-foreground",
+                  servicesActive &&
+                    "bg-primary-subtle font-semibold text-primary",
                 )}
                 aria-current={servicesActive ? "true" : undefined}
               >
                 {servicesNavigation.label}
-                <ChevronDownIcon className="size-4" />
+                <ChevronDownIcon aria-hidden="true" className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-52">

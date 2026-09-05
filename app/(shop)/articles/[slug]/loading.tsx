@@ -7,6 +7,7 @@ export default function ArticleDetailLoading() {
       aria-busy="true"
       aria-live="polite"
     >
+      <span className="sr-only">در حال بارگذاری…</span>
       <Skeleton className="h-5 w-48 max-w-full" />
       <Skeleton className="h-10 w-full max-w-lg" />
       <Skeleton className="h-5 w-40" />

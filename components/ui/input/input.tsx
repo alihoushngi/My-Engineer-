@@ -49,8 +49,8 @@ export function Input({
       value={isControlled ? resolvedValue : undefined}
       defaultValue={isControlled ? undefined : resolvedDefaultValue}
       className={cn(
-        "h-11 w-full min-w-0 rounded-md border border-input bg-input-background px-3 type-body shadow-xs transition-colors duration-(--duration-fast) outline-none placeholder:text-muted-foreground file:inline-flex file:h-8 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground disabled:cursor-not-allowed disabled:opacity-50",
-        "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40",
+        "h-12 w-full min-w-0 rounded-md border border-input bg-input-background px-3 type-body  transition-colors duration-(--duration-fast) outline-none placeholder:text-muted-foreground file:inline-flex file:h-8 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/20",
         "aria-invalid:border-danger aria-invalid:ring-2 aria-invalid:ring-danger/20",
         isPhone && "ltr-data",
         className,

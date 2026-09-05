@@ -19,23 +19,23 @@ export function ArticleCard({ article, className }: ArticleCardProps) {
         href={article.href}
         className="group block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        <Card className="h-full overflow-hidden p-0 transition-colors group-hover:border-border-strong group-hover:bg-accent/40">
+        <Card className="h-full overflow-hidden rounded-none border-0 border-b border-border bg-transparent p-0 pb-6">
           {article.coverSrc ? (
             // Remote hosts are API CONTRACT REQUIRED; native img until domains exist.
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={article.coverSrc}
               alt=""
-              className="aspect-[16/9] w-full object-cover"
+              className="aspect-[16/10] w-full rounded-lg object-cover"
             />
           ) : null}
-          <CardHeader className="p-(--space-card)">
+          <CardHeader className="gap-3 py-4">
             {article.categoryLabel ? (
               <p className="type-caption text-muted-foreground">
                 {article.categoryLabel}
               </p>
             ) : null}
-            <h2 className="break-words type-h4 font-semibold text-card-foreground">
+            <h2 className="break-words type-h3 text-foreground group-hover:text-primary">
               {article.title}
             </h2>
             {article.excerpt ? (

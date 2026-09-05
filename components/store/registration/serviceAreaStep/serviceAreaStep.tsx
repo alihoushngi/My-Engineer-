@@ -98,7 +98,7 @@ export function ServiceAreaStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={3} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step3Title}
         </h2>
         <p className="type-body text-muted-foreground">
@@ -108,7 +108,7 @@ export function ServiceAreaStep() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="space-y-6"
+        className="space-y-7"
         aria-label={registrationCopy.step3Title}
       >
         {/* Province selector */}
@@ -117,7 +117,7 @@ export function ServiceAreaStep() {
             {registrationCopy.provinceLabel}
           </FieldLabel>
           {provinceError ? (
-            <div className="flex items-center gap-2">
+            <div className="flex min-h-12 items-center gap-3 rounded-md border border-border px-4 py-2 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary-subtle">
               <p className="type-body-sm text-danger">
                 {registrationCopy.provinceErrorMessage}
               </p>
@@ -184,7 +184,7 @@ export function ServiceAreaStep() {
             {registrationCopy.cityLabel}
           </FieldLabel>
           {cityError ? (
-            <div className="flex items-center gap-2">
+            <div className="flex min-h-12 items-center gap-3 rounded-md border border-border px-4 py-2 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary-subtle">
               <p className="type-body-sm text-danger">
                 {registrationCopy.cityErrorMessage}
               </p>

@@ -23,7 +23,7 @@ export function ActiveFilters({ items, clearHref }: ActiveFiltersProps) {
             <Badge variant="secondary" asChild>
               <Link
                 href={item.href}
-                className="inline-flex items-center gap-1 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="inline-flex min-h-11 items-center gap-2 px-3 outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {item.label}
                 <XIcon aria-hidden="true" className="size-3" />

@@ -73,7 +73,7 @@ export function IdentityStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={1} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step1Title}
         </h2>
         <p className="type-body text-muted-foreground">
@@ -83,7 +83,7 @@ export function IdentityStep() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="space-y-6"
+        className="space-y-7"
         aria-label={registrationCopy.step1Title}
       >
         <Field invalid={Boolean(errors.phone)}>
@@ -93,7 +93,8 @@ export function IdentityStep() {
           <Input
             id="reg-phone"
             type="tel"
-            autoComplete="tel"
+            autoComplete="tel-national"
+            inputMode="tel"
             placeholder={registrationCopy.mobilePlaceholder}
             aria-invalid={Boolean(errors.phone)}
             aria-describedby={
@@ -113,6 +114,7 @@ export function IdentityStep() {
           </FieldLabel>
           <Input
             id="reg-national-id"
+            dir="ltr"
             type="text"
             inputMode="numeric"
             autoComplete="off"

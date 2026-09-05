@@ -30,7 +30,7 @@ export function ArticleDetailPage({ article }: ArticleDetailPageProps) {
     : undefined;
 
   return (
-    <article className="container-narrow flex flex-col gap-8 py-page">
+    <article className="container-narrow flex flex-col gap-10 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },
@@ -41,7 +41,7 @@ export function ArticleDetailPage({ article }: ArticleDetailPageProps) {
           { label: article.title },
         ]}
       />
-      <header className="space-y-3">
+      <header className="space-y-5 border-b border-border pb-8">
         {article.categoryLabel && categoryHref ? (
           <p className="type-caption text-muted-foreground">
             <Link
@@ -67,7 +67,7 @@ export function ArticleDetailPage({ article }: ArticleDetailPageProps) {
       ) : null}
       <ArticleToc items={toc} />
       {article.body ? (
-        <div className="space-y-4 type-body text-foreground">
+        <div className="prose-reading space-y-5 whitespace-pre-line type-body text-foreground">
           {article.body}
         </div>
       ) : null}

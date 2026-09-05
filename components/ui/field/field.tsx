@@ -62,15 +62,11 @@ export function FieldError({
   children,
   ...props
 }: ComponentProps<"p">) {
-  if (!children) {
-    return null;
-  }
-
   return (
     <p
-      role="alert"
+      role={children ? "alert" : undefined}
       data-slot="field-error"
-      className={cn("type-body-sm text-danger", className)}
+      className={cn("min-h-5 type-caption text-danger", className)}
       {...props}
     >
       {children}

@@ -1,16 +1,15 @@
 import Link from "next/link";
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
 import { Button } from "@/components/ui/button/button";
-import { Card } from "@/components/ui/card/card";
 import { homeFaqCopy } from "@/config/home.config/home.config";
 
 export function HomeFaqEntry() {
   return (
     <section
       aria-labelledby="home-faq-heading"
-      className="container-app py-section"
+      className="container-app pb-section"
     >
-      <Card className="p-6 sm:p-8">
+      <div className="border-t border-border pt-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeader
             titleId="home-faq-heading"
@@ -21,7 +20,7 @@ export function HomeFaqEntry() {
             <Link href={homeFaqCopy.href}>{homeFaqCopy.actionLabel}</Link>
           </Button>
         </div>
-      </Card>
+      </div>
     </section>
   );
 }

@@ -22,7 +22,7 @@ export function ExpertReviews({
   return (
     <section
       aria-labelledby="expert-reviews-heading"
-      className="container-app py-page"
+      className="py-8 first:pt-0"
     >
       <div className="max-w-3xl space-y-8">
         <div className="space-y-3">
@@ -62,7 +62,9 @@ export function ExpertReviews({
                 {typeof review.rating === "number" ? (
                   <ExpertRating rating={review.rating} />
                 ) : null}
-                <p className="type-body text-foreground">{review.text}</p>
+                <p className="type-body leading-loose text-foreground">
+                  {review.text}
+                </p>
                 {review.replyText ? (
                   <div className="rounded-lg bg-surface-muted p-4">
                     <p className="mb-1 type-caption text-muted-foreground">

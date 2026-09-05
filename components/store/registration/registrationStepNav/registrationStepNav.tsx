@@ -24,14 +24,14 @@ export function RegistrationStepNav({
   isContinueDisabled = false,
 }: RegistrationStepNavProps) {
   return (
-    <div className="glass-chrome sticky bottom-0 z-10 mt-2 bleed-page-x border-t border-border py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:static sm:z-auto sm:mt-0 sm:border-0 sm:bg-transparent sm:p-0 sm:[backdrop-filter:none] sm:mx-0 sm:px-0">
-      <div className="flex flex-col gap-3 sm:flex-row">
+    <div className="sticky bottom-0 z-10 mt-8 border-t border-border bg-surface py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:static sm:pt-6">
+      <div className="flex flex-row-reverse gap-3">
         <Button
           type="button"
           onClick={onContinue}
           loading={isPending}
           disabled={isContinueDisabled || isPending}
-          className="flex-1 sm:flex-none sm:min-w-40"
+          className="min-w-0 flex-1 sm:max-w-64"
         >
           {continueLabel}
           <ChevronLeftIcon aria-hidden="true" className="ltr:hidden" />
@@ -43,7 +43,7 @@ export function RegistrationStepNav({
             variant="ghost"
             onClick={onBack}
             disabled={isBackDisabled || isPending}
-            className="flex-1 sm:flex-none"
+            className="shrink-0"
           >
             <ChevronRightIcon aria-hidden="true" className="ltr:hidden" />
             <ChevronLeftIcon aria-hidden="true" className="rtl:hidden" />

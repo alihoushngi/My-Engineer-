@@ -92,7 +92,7 @@ export function OtpStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={2} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step2Title}
         </h2>
         <p className="type-body text-muted-foreground">
@@ -104,7 +104,7 @@ export function OtpStep() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="space-y-6"
+        className="space-y-7"
         aria-label={registrationCopy.step2Title}
       >
         <Field invalid={Boolean(errors.code) || Boolean(verifyError)}>

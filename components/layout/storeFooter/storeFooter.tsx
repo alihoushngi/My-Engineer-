@@ -6,8 +6,8 @@ import { siteConfig } from "@/config/site.config/site.config";
 
 export function StoreFooter() {
   return (
-    <footer className="mt-auto border-t border-border bg-surface">
-      <div className="container-app flex flex-col gap-10 py-page">
+    <footer className="mt-auto border-t border-border bg-surface-subtle">
+      <div className="container-app flex flex-col gap-8 py-section">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-xs space-y-3">
             <BrandLogo />
@@ -21,12 +21,12 @@ export function StoreFooter() {
               {footerNavigation.map((group) => (
                 <div key={group.id} className="min-w-0 space-y-3">
                   <h2 className="type-label text-foreground">{group.label}</h2>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1">
                     {group.items.map((item) => (
                       <li key={item.href}>
                         <Link
                           href={item.href}
-                          className="break-words type-body-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                          className="inline-flex min-h-11 items-center break-words type-body-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                         >
                           {item.label}
                         </Link>
@@ -38,7 +38,9 @@ export function StoreFooter() {
             </div>
           </nav>
         </div>
-        <p className="type-caption text-muted-foreground">{siteConfig.name}</p>
+        <p className="border-t border-border pt-5 type-caption text-muted-foreground">
+          {siteConfig.name}
+        </p>
       </div>
     </footer>
   );

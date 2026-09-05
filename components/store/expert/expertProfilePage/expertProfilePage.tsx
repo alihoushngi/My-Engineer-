@@ -63,43 +63,49 @@ export function ExpertProfilePage({
         </div>
       ) : null}
       <ExpertProfileHero expert={expert} />
-      <ExpertQuickFacts expert={expert} />
-      {hasText(expert.about) ? <ExpertAbout about={expert.about} /> : null}
-      {hasItems(expert.specialties) ? (
-        <ExpertSpecialties specialties={expert.specialties} />
-      ) : null}
-      <ExpertProfessionalInfo expert={expert} />
-      {hasText(expert.history) ? (
-        <ExpertExperience history={expert.history} />
-      ) : null}
-      {hasItems(expert.serviceCities) ? (
-        <ExpertTagSection
-          title={expertProfileCopy.citiesTitle}
-          titleId="expert-cities-heading"
-          items={expert.serviceCities}
-        />
-      ) : null}
-      {hasItems(expert.software) ? (
-        <ExpertTagSection
-          title={expertProfileCopy.softwareTitle}
-          titleId="expert-software-heading"
-          items={expert.software}
-        />
-      ) : null}
-      {hasItems(expert.portfolio) ? (
-        <ExpertPortfolio items={expert.portfolio} />
-      ) : null}
-      {hasItems(expert.reviews) ||
-      typeof expert.rating === "number" ||
-      typeof expert.reviewCount === "number" ? (
-        <ExpertReviews
-          reviews={expert.reviews}
-          rating={expert.rating}
-          reviewCount={expert.reviewCount}
-        />
-      ) : null}
+      <div className="container-app grid items-start gap-10 py-page lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-16">
+        <div className="min-w-0 divide-y divide-border">
+          {hasText(expert.about) ? <ExpertAbout about={expert.about} /> : null}
+          {hasItems(expert.specialties) ? (
+            <ExpertSpecialties specialties={expert.specialties} />
+          ) : null}
+          <ExpertProfessionalInfo expert={expert} />
+          {hasText(expert.history) ? (
+            <ExpertExperience history={expert.history} />
+          ) : null}
+          {hasItems(expert.serviceCities) ? (
+            <ExpertTagSection
+              title={expertProfileCopy.citiesTitle}
+              titleId="expert-cities-heading"
+              items={expert.serviceCities}
+            />
+          ) : null}
+          {hasItems(expert.software) ? (
+            <ExpertTagSection
+              title={expertProfileCopy.softwareTitle}
+              titleId="expert-software-heading"
+              items={expert.software}
+            />
+          ) : null}
+          {hasItems(expert.portfolio) ? (
+            <ExpertPortfolio items={expert.portfolio} />
+          ) : null}
+          {hasItems(expert.reviews) ||
+          typeof expert.rating === "number" ||
+          typeof expert.reviewCount === "number" ? (
+            <ExpertReviews
+              reviews={expert.reviews}
+              rating={expert.rating}
+              reviewCount={expert.reviewCount}
+            />
+          ) : null}
+        </div>
+        <aside className="min-w-0 space-y-8 rounded-lg bg-surface-subtle p-6 lg:sticky lg:top-24">
+          <ExpertQuickFacts expert={expert} />
+          <ExpertContactCta expert={expert} />
+        </aside>
+      </div>
       <RelatedExperts experts={expert.relatedExperts} excludeId={expert.id} />
-      <ExpertContactCta expert={expert} />
       <ExpertStickyContactBar expert={expert} />
     </div>
   );

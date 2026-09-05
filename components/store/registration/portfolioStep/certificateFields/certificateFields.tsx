@@ -29,7 +29,7 @@ export function CertificateFields({
       className="space-y-4"
       aria-label={registrationCopy.certificatesLabel}
     >
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h3 className="type-h4 text-foreground">
           {registrationCopy.certificatesLabel}
         </h3>
@@ -48,7 +48,7 @@ export function CertificateFields({
           {items.map((item) => (
             <li
               key={item.id}
-              className="space-y-3 rounded-lg border border-border p-4"
+              className="space-y-5 border-s-2 border-border ps-4 py-4"
             >
               <Field>
                 <FieldLabel htmlFor={`reg-cert-title-${item.id}`}>
@@ -65,8 +65,12 @@ export function CertificateFields({
                 />
               </Field>
               <Field>
-                <FieldLabel>{registrationCopy.certificateFileLabel}</FieldLabel>
+                <FieldLabel htmlFor={`reg-cert-file-${item.id}`}>
+                  {registrationCopy.certificateFileLabel}
+                </FieldLabel>
                 <FileUpload
+                  id={`reg-cert-file-${item.id}`}
+                  aria-label={registrationCopy.certificateFileLabel}
                   disabled={disabled}
                   label={
                     item.file ? registrationCopy.fileChangeLabel : "انتخاب فایل"

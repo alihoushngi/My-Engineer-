@@ -18,7 +18,7 @@ export function KnowledgeCategoryPage({
   category,
 }: KnowledgeCategoryPageProps) {
   return (
-    <div className="container-app flex flex-col gap-8 py-page">
+    <div className="container-narrow flex flex-col gap-8 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },

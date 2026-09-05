@@ -26,7 +26,7 @@ export function SearchResultsPage({
   const hasResults = result.services.length > 0 || result.experts.length > 0;
 
   return (
-    <div className="container-wide flex flex-col gap-8 py-page">
+    <div className="container-app flex flex-col gap-8 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },

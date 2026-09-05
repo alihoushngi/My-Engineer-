@@ -20,11 +20,11 @@ export function ExpertContactCta({ expert }: ExpertContactCtaProps) {
       aria-labelledby="expert-contact-cta-heading"
       className="border-t border-border"
     >
-      <div className="container-narrow flex flex-col items-start gap-5 py-section">
+      <div className="flex flex-col gap-5 pt-6">
         <div className="space-y-2">
           <h2
             id="expert-contact-cta-heading"
-            className="type-h2 text-foreground"
+            className="type-h3 text-foreground"
           >
             {canContact
               ? expertProfileCopy.ctaTitle
@@ -42,7 +42,7 @@ export function ExpertContactCta({ expert }: ExpertContactCtaProps) {
             phone={getPublicPhone(expert.contact)}
             sms={getPublicSms(expert.contact)}
             trigger={
-              <Button type="button" size="lg">
+              <Button type="button" size="lg" className="w-full">
                 {expertProfileCopy.contactLabel}
               </Button>
             }

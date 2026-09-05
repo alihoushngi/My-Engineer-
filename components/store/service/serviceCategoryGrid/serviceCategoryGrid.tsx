@@ -12,7 +12,7 @@ export function ServiceCategoryGrid({
   hideDescription = false,
 }: ServiceCategoryGridProps) {
   return (
-    <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
       {serviceCategories.map((service) => (
         <li key={service.slug} className="min-w-0">
           <ServiceCard

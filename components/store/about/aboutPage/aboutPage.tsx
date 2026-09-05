@@ -10,7 +10,7 @@ import { siteConfig } from "@/config/site.config/site.config";
 export function AboutPage() {
   return (
     <div className="flex flex-col pb-section">
-      <div className="container-narrow flex flex-col gap-10 py-page">
+      <div className="container-app flex flex-col gap-10 py-page">
         <StoreBreadcrumb
           items={[
             { label: "خانه", href: siteConfig.homeHref },
@@ -21,28 +21,44 @@ export function AboutPage() {
           title={aboutCopy.title}
           description={aboutCopy.tagline}
         />
-        <section className="space-y-3" aria-labelledby="about-why-heading">
+        <section
+          className="max-w-3xl space-y-4 border-t border-border pt-8"
+          aria-labelledby="about-why-heading"
+        >
           <h2 id="about-why-heading" className="type-h2 text-foreground">
             {aboutCopy.whyTitle}
           </h2>
           {aboutCopy.whyParagraphs.map((paragraph) => (
-            <p key={paragraph} className="type-body text-foreground">
+            <p
+              key={paragraph}
+              className="type-body leading-loose text-foreground"
+            >
               {paragraph}
             </p>
           ))}
         </section>
-        <section className="space-y-3" aria-labelledby="about-story-heading">
+        <section
+          className="max-w-3xl space-y-4 border-t border-border pt-8"
+          aria-labelledby="about-story-heading"
+        >
           <h2 id="about-story-heading" className="type-h2 text-foreground">
             {aboutCopy.storyTitle}
           </h2>
-          <p className="type-body text-foreground">{aboutCopy.storyBody}</p>
+          <p className="type-body leading-loose text-foreground">
+            {aboutCopy.storyBody}
+          </p>
         </section>
-        <section className="space-y-4" aria-labelledby="about-how-heading">
+        <section
+          className="space-y-6 border-t border-border pt-8"
+          aria-labelledby="about-how-heading"
+        >
           <h2 id="about-how-heading" className="type-h2 text-foreground">
             {aboutCopy.howTitle}
           </h2>
-          <p className="type-body text-foreground">{aboutCopy.howIntro}</p>
-          <ol className="space-y-4">
+          <p className="type-body leading-loose text-foreground">
+            {aboutCopy.howIntro}
+          </p>
+          <ol className="grid gap-8 md:grid-cols-3">
             {aboutCopy.howSteps.map((step, index) => (
               <li key={step.title} className="flex gap-3">
                 <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-secondary type-label text-secondary-foreground">
@@ -62,7 +78,7 @@ export function AboutPage() {
       <AboutServicesSection />
       <section
         aria-labelledby="about-values-heading"
-        className="container-narrow space-y-8 pt-section"
+        className="container-app space-y-8 pt-section"
       >
         <SectionHeader
           titleId="about-values-heading"

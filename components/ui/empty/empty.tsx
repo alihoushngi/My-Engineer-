@@ -21,20 +21,20 @@ export function Empty({
       data-slot="empty"
       role="status"
       className={cn(
-        "flex w-full flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border px-6 py-12 text-center",
+        "flex w-full flex-col items-center justify-center gap-5 rounded-lg bg-surface-subtle px-5 py-12 sm:py-16 text-center",
         className,
       )}
     >
       {icon ? (
         <div
           data-slot="empty-icon"
-          className="flex size-12 items-center justify-center rounded-lg bg-muted text-muted-foreground [&_svg]:size-6"
+          className="flex size-14 items-center justify-center rounded-full bg-surface text-primary [&_svg]:size-6"
         >
           {icon}
         </div>
       ) : null}
-      <div className="flex max-w-sm flex-col items-center gap-1.5">
-        <h2 className="type-h4 font-medium text-foreground">{title}</h2>
+      <div className="flex max-w-md flex-col items-center gap-3">
+        <h2 className="type-h3 font-semibold text-foreground">{title}</h2>
         {description ? (
           <p className="type-body-sm text-muted-foreground">{description}</p>
         ) : null}

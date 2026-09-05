@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils/cn/cn";
 
 export function LegalDocument({ document }: LegalDocumentProps) {
   return (
-    <article className="space-y-8">
+    <article className="prose-reading space-y-10">
       {document.sections.map((section) => (
         <section
           key={section.id}
-          className="space-y-3"
+          className="space-y-4"
           aria-labelledby={section.id}
         >
           <h2 id={section.id} className="type-h3 text-foreground">
@@ -40,7 +40,7 @@ export function LegalDocument({ document }: LegalDocumentProps) {
         </section>
       ))}
       {document.contact ? (
-        <section className="space-y-3" aria-labelledby="legal-contact-heading">
+        <section className="space-y-4" aria-labelledby="legal-contact-heading">
           <h2 id="legal-contact-heading" className="type-h3 text-foreground">
             {document.contact.heading}
           </h2>

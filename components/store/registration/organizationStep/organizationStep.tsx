@@ -92,7 +92,7 @@ export function OrganizationStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={7} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step7Title}
         </h2>
         <p className="type-body text-muted-foreground">
@@ -102,7 +102,7 @@ export function OrganizationStep() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="space-y-6"
+        className="space-y-7"
         aria-label={registrationCopy.step7Title}
       >
         <YesNoField
@@ -210,15 +210,21 @@ function YesNoField({ id, label, value, disabled, onChange }: YesNoFieldProps) {
         aria-labelledby={`${id}-label`}
         className="flex flex-col gap-3 sm:flex-row"
       >
-        <div className="flex items-center gap-2">
+        <div className="flex min-h-12 items-center gap-3 rounded-md border border-border px-4 py-2 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary-subtle">
           <RadioGroupItem id={`${id}-yes`} value="yes" />
-          <label htmlFor={`${id}-yes`} className="type-body cursor-pointer">
+          <label
+            htmlFor={`${id}-yes`}
+            className="min-h-11 content-center type-body cursor-pointer"
+          >
             {registrationCopy.yesLabel}
           </label>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex min-h-12 items-center gap-3 rounded-md border border-border px-4 py-2 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary-subtle">
           <RadioGroupItem id={`${id}-no`} value="no" />
-          <label htmlFor={`${id}-no`} className="type-body cursor-pointer">
+          <label
+            htmlFor={`${id}-no`}
+            className="min-h-11 content-center type-body cursor-pointer"
+          >
             {registrationCopy.noLabel}
           </label>
         </div>

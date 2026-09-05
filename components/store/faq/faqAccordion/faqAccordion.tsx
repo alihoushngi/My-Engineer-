@@ -18,7 +18,11 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
   }
 
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full border-t border-border"
+    >
       {items.map((item) => (
         <AccordionItem key={item.id} value={item.id}>
           <AccordionTrigger>{item.question}</AccordionTrigger>

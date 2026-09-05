@@ -47,10 +47,10 @@ export function ExpertQuickFacts({ expert }: ExpertQuickFactsProps) {
   }
 
   return (
-    <section aria-label="خلاصه اطلاعات" className="container-app py-page">
-      <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <section aria-label="خلاصه اطلاعات" className="">
+      <dl className="grid grid-cols-2 gap-x-5 gap-y-6 lg:grid-cols-1">
         {facts.map((fact) => (
-          <div key={fact.label} className="space-y-1">
+          <div key={fact.label} className="space-y-2">
             <dt className="type-caption text-muted-foreground">{fact.label}</dt>
             <dd className="type-body font-medium text-foreground">
               {fact.value}

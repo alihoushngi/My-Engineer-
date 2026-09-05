@@ -14,7 +14,7 @@ export function ExpertExperience({ history }: ExpertExperienceProps) {
   return (
     <section
       aria-labelledby="expert-experience-heading"
-      className="container-app py-page"
+      className="py-8 first:pt-0"
     >
       <div className="max-w-3xl space-y-6">
         <SectionHeader
@@ -25,7 +25,7 @@ export function ExpertExperience({ history }: ExpertExperienceProps) {
           {history.split("\n\n").map((paragraph) => (
             <p
               key={paragraph.slice(0, 24)}
-              className="type-body text-foreground"
+              className="type-body leading-loose text-foreground"
             >
               {paragraph}
             </p>

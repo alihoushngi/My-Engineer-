@@ -14,7 +14,7 @@ export function LegalPage({
   relatedLabel,
 }: LegalPageProps) {
   return (
-    <div className="container-narrow flex flex-col gap-8 py-page">
+    <div className="container-narrow flex flex-col gap-10 py-page">
       <StoreBreadcrumb
         items={[
           { label: "خانه", href: siteConfig.homeHref },
@@ -26,7 +26,7 @@ export function LegalPage({
       <nav aria-label="اسناد مرتبط" className="border-t border-border pt-6">
         <Link
           href={relatedHref}
-          className="rounded-md text-primary underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex min-h-11 items-center rounded-md text-primary underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
         >
           {relatedLabel}
         </Link>

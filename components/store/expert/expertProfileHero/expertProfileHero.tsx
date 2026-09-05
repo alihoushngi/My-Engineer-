@@ -31,15 +31,17 @@ export function ExpertProfileHero({ expert }: ExpertProfileHeroProps) {
   const reviewCount = getReviewCount(expert);
 
   return (
-    <header className="border-b border-border bg-surface-muted">
+    <header className="border-b border-border bg-surface">
       <div className="container-app py-page">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex min-w-0 flex-col gap-5 sm:flex-row sm:items-start">
-            <Avatar className="size-24 sm:size-28">
+            <Avatar className="size-24 rounded-lg ring-4 ring-surface-subtle sm:size-28">
               {expert.avatarSrc ? (
                 <AvatarImage src={expert.avatarSrc} alt="" />
               ) : null}
-              <AvatarFallback className="type-h3">{initials}</AvatarFallback>
+              <AvatarFallback className="rounded-lg bg-primary-subtle type-h3 text-primary">
+                {initials}
+              </AvatarFallback>
             </Avatar>
             <div className="min-w-0 space-y-4">
               <div className="space-y-2">

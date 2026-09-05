@@ -48,7 +48,7 @@ export function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-h-[min(90dvh,40rem)] max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-x-hidden overflow-y-auto rounded-lg border border-border bg-surface p-(--space-card) shadow-md outline-none sm:max-w-lg",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-h-[min(90dvh,40rem)] max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 overflow-x-hidden overflow-y-auto rounded-lg border border-border bg-surface p-(--space-card) shadow-md outline-none sm:max-w-lg",
           "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
           className,
         )}
@@ -68,7 +68,7 @@ export function DialogHeader({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1.5 pe-12 text-start", className)}
+      className={cn("flex flex-col gap-3 pe-12 text-start", className)}
       {...props}
     />
   );
@@ -94,7 +94,7 @@ export function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn("type-h4 font-semibold", className)}
+      className={cn("type-h3", className)}
       {...props}
     />
   );

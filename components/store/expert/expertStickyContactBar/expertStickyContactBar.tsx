@@ -21,7 +21,7 @@ export function ExpertStickyContactBar({
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-30 lg:hidden">
-      <div className="glass-chrome border-t border-border px-page pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      <div className="bg-surface border-t border-border px-page pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <ExpertContactDrawer
           expertName={expert.name}
           phone={getPublicPhone(expert.contact)}

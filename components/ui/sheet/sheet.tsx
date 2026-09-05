@@ -76,7 +76,7 @@ export function SheetHeader({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="sheet-header"
-      className={cn("flex flex-col gap-1.5 p-4", className)}
+      className={cn("flex flex-col gap-3 p-5", className)}
       {...props}
     />
   );
@@ -99,7 +99,7 @@ export function SheetTitle({
   return (
     <SheetPrimitive.Title
       data-slot="sheet-title"
-      className={cn("font-semibold text-foreground", className)}
+      className={cn("type-h3 text-foreground", className)}
       {...props}
     />
   );

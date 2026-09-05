@@ -126,7 +126,7 @@ export function PersonalInfoStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={5} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step5Title}
         </h2>
         <p className="type-body text-muted-foreground">
@@ -136,10 +136,10 @@ export function PersonalInfoStep() {
 
       {/* Expertise summary */}
       <section
-        className="space-y-3 rounded-lg border border-border bg-surface-muted px-4 py-3"
+        className="space-y-3 border-s-2 border-primary bg-surface-subtle px-4 py-3"
         aria-label={registrationCopy.expertiseSummaryLabel}
       >
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
           <p className="type-body-sm font-medium text-foreground">
             {registrationCopy.expertiseSummaryLabel}
           </p>
@@ -175,7 +175,7 @@ export function PersonalInfoStep() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="space-y-6"
+        className="space-y-7"
         aria-label={registrationCopy.step5Title}
       >
         {/* Avatar */}
@@ -202,7 +202,7 @@ export function PersonalInfoStep() {
                   type="button"
                   onClick={handleRemoveAvatar}
                   aria-label={registrationCopy.fileRemoveLabel}
-                  className="absolute -end-1 -top-1 inline-flex size-8 items-center justify-center rounded-full bg-danger text-danger-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="absolute -end-1 -top-1 inline-flex size-11 items-center justify-center rounded-full bg-danger text-danger-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <XIcon className="size-3.5" aria-hidden="true" />
                 </button>
@@ -291,9 +291,13 @@ export function PersonalInfoStep() {
 
         {/* National ID display — read-only from step 1 */}
         <Field>
-          <FieldLabel>{registrationCopy.nationalIdDisplayLabel}</FieldLabel>
+          <FieldLabel htmlFor="reg-national-id-display">
+            {registrationCopy.nationalIdDisplayLabel}
+          </FieldLabel>
           <Input
             type="text"
+            id="reg-national-id-display"
+            dir="ltr"
             readOnly
             value={data.identity?.nationalId ?? ""}
             aria-readonly="true"

@@ -20,7 +20,7 @@ export function SearchCityTrigger({ className }: SearchCityTriggerProps) {
         type="button"
         variant="outline"
         className={cn(
-          "h-11 w-full justify-start gap-2 text-muted-foreground sm:w-auto",
+          "h-12 w-full justify-start gap-2 text-muted-foreground sm:w-auto",
           className,
         )}
         aria-haspopup="dialog"

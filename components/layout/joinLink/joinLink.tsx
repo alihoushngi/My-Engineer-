@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils/cn/cn";
 
 type JoinLinkProps = {
   className?: string;
-  variant?: "primary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
 };
 

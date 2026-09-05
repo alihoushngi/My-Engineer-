@@ -59,7 +59,7 @@ export function OrganizationLicenseFields({
       : [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       <Field invalid={Boolean(errors.licenseNumber)}>
         <FieldLabel htmlFor="reg-license-number" required>
           {registrationCopy.licenseNumberLabel}
@@ -89,8 +89,12 @@ export function OrganizationLicenseFields({
       </Field>
 
       <Field>
-        <FieldLabel>{registrationCopy.licenseFileLabel}</FieldLabel>
+        <FieldLabel htmlFor="reg-license-file">
+          {registrationCopy.licenseFileLabel}
+        </FieldLabel>
         <FileUpload
+          id="reg-license-file"
+          aria-label={registrationCopy.licenseFileLabel}
           disabled={disabled}
           label={licenseFile ? registrationCopy.fileChangeLabel : "انتخاب فایل"}
           description={
@@ -122,6 +126,9 @@ export function OrganizationLicenseFields({
             >
               <SelectTrigger
                 id="reg-discipline"
+                aria-describedby={
+                  errors.discipline ? "reg-discipline-error" : undefined
+                }
                 aria-invalid={Boolean(errors.discipline)}
               >
                 <SelectValue
@@ -138,7 +145,9 @@ export function OrganizationLicenseFields({
             </Select>
           )}
         />
-        <FieldError>{errors.discipline?.message}</FieldError>
+        <FieldError id="reg-discipline-error">
+          {errors.discipline?.message}
+        </FieldError>
       </Field>
 
       {discipline !== "" && qualificationOptions.length === 0 ? (
@@ -158,6 +167,9 @@ export function OrganizationLicenseFields({
           <div
             role="group"
             aria-labelledby="reg-qualifications-label"
+            aria-describedby={
+              errors.qualifications ? "reg-qualifications-error" : undefined
+            }
             className="flex flex-col gap-3"
           >
             {ENGINEERING_QUALIFICATIONS.filter((item) =>
@@ -184,14 +196,16 @@ export function OrganizationLicenseFields({
                 />
                 <label
                   htmlFor={`reg-qualification-${item.id}`}
-                  className="type-body cursor-pointer"
+                  className="min-h-11 content-center type-body cursor-pointer"
                 >
                   {item.label}
                 </label>
               </div>
             ))}
           </div>
-          <FieldError>{errors.qualifications?.message}</FieldError>
+          <FieldError id="reg-qualifications-error">
+            {errors.qualifications?.message}
+          </FieldError>
         </Field>
       ) : null}
     </div>

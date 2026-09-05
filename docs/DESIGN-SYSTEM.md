@@ -1,203 +1,156 @@
 # Mohandes Man Design System
 
-Visual language, semantic tokens, and reusable UI primitives for the Mohandes Man frontend.
+The visual system for the Persian professional-services marketplace. Architecture and API boundaries remain defined in [ARCHITECTURE.md](ARCHITECTURE.md). Tokens in `css/globals.css` are the source of truth.
 
-This document is the source of truth for appearance. Architecture, routing, and data rules remain in [ARCHITECTURE.md](ARCHITECTURE.md).
+## Visual direction
 
-## Design Principles
+A white, content-first marketplace with charcoal text, quiet stone surfaces, and restrained deep teal actions. Engineering precision comes from alignment, clear information hierarchy, and consistent spacing. Color supports tasks rather than decorating every section.
 
-The interface is modern, minimal, premium, and calm. It should feel trustworthy for a professional platform that connects customers, engineers, contractors, and specialists.
+- Keep approved Persian content and render only available data.
+- Design for `lang="fa"`, `dir="rtl"`, and local Kalameh FaNum.
+- Prefer open sections, divided lists, and editorial columns over nested cards.
+- Use one primary action in each task context. Supporting navigation is outline or ghost.
+- No gradients, decorative blobs, marketing statistics, fabricated experts, or placeholder testimonials.
+- The house outline beside the wordmark uses Lucide, like other interface icons.
 
-- **Persian-first and RTL-first.** Kalameh (FaNum), comfortable line heights, and logical CSS (`start` / `end`, `ps` / `pe`, `ms` / `me`) are the default.
-- **Mobile-first.** Touch targets, readable type, and sheets/drawers are designed for small screens first.
-- **Whitespace and hierarchy.** Prefer spacing, type, and contrast over decoration.
-- **Restrained surfaces.** Cards use a light border, not heavy shadows. Pills are for tags, chips, badges, and selected filters — not generic cards.
-- **Restrained glassmorphism.** Frosted surfaces are allowed only for floating search, sticky navigation, selected overlays, hero overlays, and modal/sheet treatment. Do not apply glass to every card, form, section, or button.
+## Semantic palette
 
-## Tokens
+Change colors centrally in `:root`; `.dark` remains a future-theme foundation, not an exposed feature. Tailwind utilities are mapped with `@theme inline`. Do not scatter hex colors, raw palette utilities, or per-component dark overrides.
 
-All important visual decisions live in `css/globals.css` as CSS custom properties, then mapped into Tailwind through `@theme inline`.
+| Token                                  | Purpose                                                  |
+| -------------------------------------- | -------------------------------------------------------- |
+| `background`                           | White page canvas                                        |
+| `surface`                              | Form, card, header and dialog background                 |
+| `surface-elevated`                     | Menus and popovers                                       |
+| `surface-subtle`                       | Quiet stone bands, empty states, supporting columns      |
+| `surface-muted`                        | Compatibility alias family for quiet fills               |
+| `foreground`                           | Charcoal primary text                                    |
+| `foreground-muted`, `muted-foreground` | Legible supporting copy and metadata                     |
+| `primary`                              | Deep teal task actions and current navigation            |
+| `primary-hover`                        | Explicit darker pressed/hover action state               |
+| `primary-subtle`                       | Light teal selection and identity surfaces               |
+| `primary-foreground`                   | Text on solid primary fills                              |
+| `secondary`, `secondary-foreground`    | Quiet alternative actions                                |
+| `accent`, `accent-foreground`          | Interactive hover/selection                              |
+| `muted`                                | Neutral compatibility fill                               |
+| `border`                               | Low-emphasis separators                                  |
+| `border-strong`                        | Outlined actions and stronger dividers                   |
+| `input`, `input-background`            | Clearly visible control outline and fill                 |
+| `ring`                                 | Keyboard focus                                           |
+| `success`                              | Confirmed status; badges use subtle tinted fills         |
+| `warning`                              | Caution, including explicit development previews         |
+| `danger`, `destructive`                | Validation and destructive actions; aliases share values |
+| `info`                                 | Availability and explanatory messages                    |
+| `overlay`                              | Modal backdrop                                           |
+| `card`, `card-foreground`              | Primitive aliases for surface and foreground             |
+| `popover`, `popover-foreground`        | Elevated primitive aliases                               |
 
-Components must use semantic utilities such as `bg-primary`, `text-muted-foreground`, and `border-border`. Do not style product UI with raw palette classes such as `bg-blue-500` or `text-gray-600`.
-
-### Background and text
-
-| Token          | Responsibility |
-| -------------- | -------------- |
-| `--background` | Page canvas    |
-| `--foreground` | Default text   |
-
-### Surfaces
-
-| Token                | Responsibility              |
-| -------------------- | --------------------------- |
-| `--surface`          | Default raised surface      |
-| `--surface-elevated` | Overlay/popover surface     |
-| `--surface-muted`    | Subtle inset or empty areas |
-
-### Brand and interaction
-
-| Token                                    | Responsibility                       |
-| ---------------------------------------- | ------------------------------------ |
-| `--primary` / `--primary-foreground`     | Primary actions and emphasis         |
-| `--secondary` / `--secondary-foreground` | Quiet alternative actions            |
-| `--accent` / `--accent-foreground`       | Hover, selected, and highlight fills |
-| `--muted` / `--muted-foreground`         | Secondary text and quiet fills       |
-| `--ring`                                 | Focus ring                           |
-
-### Borders and inputs
-
-| Token                | Responsibility                  |
-| -------------------- | ------------------------------- |
-| `--border`           | Default separators and outlines |
-| `--border-strong`    | Stronger division when needed   |
-| `--input`            | Input border                    |
-| `--input-background` | Input fill                      |
-
-### Status
-
-| Token                                | Responsibility                 |
-| ------------------------------------ | ------------------------------ |
-| `--success` / `--success-foreground` | Positive status                |
-| `--warning` / `--warning-foreground` | Caution                        |
-| `--danger` / `--danger-foreground`   | Errors and destructive actions |
-| `--info` / `--info-foreground`       | Neutral informational status   |
-
-### Overlay and glass
-
-| Token                          | Responsibility       |
-| ------------------------------ | -------------------- |
-| `--card` / `--card-foreground` | Card surface         |
-| `--overlay`                    | Modal/sheet backdrop |
-| `--glass-background`           | Frosted fill         |
-| `--glass-border`               | Frosted edge         |
-| `--glass-shadow`               | Frosted elevation    |
-
-`--destructive` aliases `--danger` so shared primitive internals stay on the same semantic color.
-
-Dark values exist on `.dark` for a future theme. Dark mode is not a product feature yet. Do not scatter `dark:` color overrides inside primitives.
-
-## Changing Brand Colors
-
-Change brand appearance in **one place**: the `:root` (and later `.dark`) block in `css/globals.css`.
-
-1. Edit `--primary`, `--primary-foreground`, `--accent`, and related semantic tokens.
-2. Do not edit individual components to retheme the app.
-3. Tailwind color utilities (`bg-primary`, `text-primary-foreground`, …) read those variables through `@theme inline`.
-
-If a component needs a raw color class to look correct, the component is wrong — move the value into a token.
+Status foreground pairs remain available for solid status surfaces. Success and verification must come from actual data; do not imply verification with decorative badges. Retained `glass-*` utilities are compatibility primitives; application chrome and forms use opaque surfaces.
 
 ## Typography
 
-Kalameh (FaNum) is the application font, loaded from `fonts/_Woff2` via `next/font/local`. It includes Persian digits. Only the weights used by the type scale (400, 500, 600, 700) are registered. Named roles are enough; do not invent a large font-size utility set. Do not load Vazirmatn or other webfonts from Google.
+Keep the existing `next/font/local` Kalameh architecture, using weights 400, 500, 600 and 700. Use `type-*` utilities, not custom `text-*` typography names next to text colors: the latter can be merged incorrectly by `cn()`.
 
-Use `type-*` utilities for the type scale (`type-body`, `type-h1`, …). Do not use `text-body` or `text-h1` next to color classes such as `text-primary-foreground`. Both share the `text-` prefix, so `cn()` / `tailwind-merge` can drop the color.
+| Role       | Utility        | Mobile / larger viewports | Use                                     |
+| ---------- | -------------- | ------------------------- | --------------------------------------- |
+| Display    | `type-display` | 30 / 36 / 42px            | Short home heading, 1.5 line height     |
+| H1         | `type-h1`      | 28 / 30px                 | Page identity, 1.5 line height          |
+| H2         | `type-h2`      | 22 / 24px                 | Major sections and wizard task heading  |
+| H3         | `type-h3`      | 20px                      | Profile identity cards and sub-sections |
+| H4         | `type-h4`      | 18px                      | Service titles and small groups         |
+| Large body | `type-body-lg` | 18px                      | Short introductions                     |
+| Body       | `type-body`    | 16px                      | Reading and input text                  |
+| Small body | `type-body-sm` | 15px                      | Supporting interface copy               |
+| Caption    | `type-caption` | 13px                      | Metadata and compact validation         |
+| Label      | `type-label`   | 15px, medium              | Persistent field labels                 |
+| Button     | `type-button`  | 15px, semibold            | Actions at all sizes                    |
 
-Display, h1, and h2 scale from `:root` at `640px` and `1024px`. Do not add per-page `lg:type-display` overrides unless a heading needs a different role.
+Headings should wrap naturally and use restrained weight. Body line height is 1.75–1.8; `prose-reading` gives legal and editorial content a 2.1 reading rhythm, heading spacing, list formatting and anchor offset below the header. Avoid tight or justified Persian paragraphs. Use `ltr-data`, `dir="ltr"`, and tabular numbers for codes, phone numbers and numerical facts.
 
-| Role    | Utility        | Notes                       |
-| ------- | -------------- | --------------------------- |
-| display | `type-display` | Hero/display headings       |
-| h1      | `type-h1`      | Page titles                 |
-| h2      | `type-h2`      | Section titles              |
-| h3      | `type-h3`      | Subsections                 |
-| h4      | `type-h4`      | Card and dialog titles      |
-| body-lg | `type-body-lg` | Introductions               |
-| body    | `type-body`    | Default reading text (16px) |
-| body-sm | `type-body-sm` | Supporting text (15px)      |
-| caption | `type-caption` | Metadata (13px minimum)     |
-| label   | `type-label`   | Form labels                 |
+## Layout and spacing
 
-Persian body text should stay at 16px or above. Avoid 12px UI copy. Numbers, phone numbers, and codes can use `ltr-data` as a nested LTR island.
+Use Tailwind with `cn()`. Shared dimensions remain centralized:
 
-## Spacing
+| Utility / token     | Size or rule                                  |
+| ------------------- | --------------------------------------------- |
+| `container-app`     | 76rem maximum, including gutters              |
+| `container-wide`    | 80rem, reserved for dense surfaces            |
+| `container-narrow`  | 46rem for reading                             |
+| `container-form`    | 36rem for isolated form surfaces              |
+| Page gutters        | 16px mobile, 24px from 640px                  |
+| `py-page`           | 32px mobile, 48px larger                      |
+| `py-section`        | 48px mobile, 72px larger                      |
+| Form fields         | 24–28px between groups, 8px label/control gap |
+| Open section groups | 32–40px; dividers where meaningful            |
 
-Use Tailwind spacing. Prefer the 4px rhythm. Avoid arbitrary values unless a layout truly needs them.
+The registration shell is capped at 56rem and uses a 14rem desktop progress rail. The form remains a focused column with approximately 34rem usable width. At small sizes the rail disappears, leaving the current step, progress bar and actual task.
 
-| Context             | Default                                                        |
-| ------------------- | -------------------------------------------------------------- |
-| Page inline padding | `--space-page-x` / `px-page`                                   |
-| Content page block  | `--space-page-y` / `py-page`                                   |
-| Marketing sections  | `--space-section-y` / `py-section`, `pt-section`, `pb-section` |
-| Full-bleed sticky   | `bleed-page-x`                                                 |
-| Card padding        | `--space-card` on the Card primitive                           |
-| Label to control    | `gap-2`                                                        |
-| Fields in a form    | `gap-4`                                                        |
+Do not hide layout bugs with page-level horizontal overflow clipping. Use `min-w-0`, wrapping, responsive grids and logical inline spacing. Check 360, 390, 430, 768, 1024, 1280 and 1440px.
 
-## Containers
+## Radius and elevation
 
-Do not invent a new max-width per page.
+- Small details: `rounded-sm` (6px).
+- Buttons, inputs, list interactions: `rounded-md` (8px).
+- Expert cards, media, forms, empty-state regions: `rounded-lg` (12px).
+- Larger optional surfaces: `rounded-xl` (16px).
+- Circles/pills are reserved for avatars, step markers, compact badges and tags.
+- No default input or card shadows. Separation comes from spacing and borders.
+- `shadow-md` / `shadow-lg` are for dialogs, menus and overlays.
 
-| Utility            | Use                         |
-| ------------------ | --------------------------- |
-| `container-app`    | Standard application pages  |
-| `container-narrow` | Long-form reading           |
-| `container-form`   | Auth and registration forms |
-| `container-wide`   | Dense listings              |
+## Page patterns
 
-## Radius
+### Global chrome
 
-| Token           | Use                                         |
-| --------------- | ------------------------------------------- |
-| `--radius-sm`   | Controls, badges inner details              |
-| `--radius-md`   | Buttons, inputs, small surfaces             |
-| `--radius-lg`   | Cards, dialogs, sheets                      |
-| `--radius-xl`   | Large marketing surfaces                    |
-| `--radius-full` | Tags, chips, selected filters, small badges |
+Compact opaque sticky header, wordmark, desktop navigation, discreet search/city entries, outlined specialist join link. Active navigation has a soft fill and stronger text. Mobile uses a labelled full-height RTL sheet, scrollable link area, persistent join action and safe-area padding. Navigation closes after a link is selected. Footer groups use quiet typography and generous link targets.
 
-Do not make every card a pill.
+### Home
 
-## Elevation
+Useful search-led opening with direct query submission and city entry. Six service categories use divided open rows with restrained Lucide icons. Trust information stays unboxed. The existing About process copy explains discovery, comparison and direct contact. Resources use editorial links. The specialist join band is the main solid brand-color moment.
 
-Prefer `border + shadow-xs/sm`. Use `shadow-md` / `shadow-lg` for dialogs, sheets, floating surfaces, and overlays.
+Popular services and drawing consultation stay conditional on approved mappings. Home expert showcase remains absent while there is no approved data source. Never fill these gaps with invented content.
 
-## Glassmorphism
+### Discovery
 
-Use `.glass-surface` only for floating or overlay treatments listed in Design Principles (search, overlays, hero search). Use `.glass-chrome` for sticky header and bottom bars — frosted fill without an extra border or shadow. Glass is prohibited as the default look of cards, forms, sections, or buttons.
+Search preserves URL-driven query and cities behavior. Search controls form one compact task region; real service matches and expert results are separate. Do not add unsupported filters or sorting. All six service routes share one layout: breadcrumb, identity, dominant expert-discovery region, supporting introduction/process column and related service navigation. Existing unavailable city/list states remain honest.
 
-## Motion
+### Experts
 
-Motion communicates state: hover, focus, open/close, expand/collapse. Timing tokens are `--duration-fast`, `--duration-normal`, `--duration-slow`, and `--ease-standard`. `prefers-reduced-motion` is respected globally.
+Expert cards prioritize identity, profession, verification, location/experience, rating when available, a short specialties preview, and one profile action. At most three specialties appear in a result card; the remainder is counted, with full content on the profile.
 
-## Components
+Profiles use an open main column for biography, specialties, professional information, history, service cities, software, portfolio and reviews. Only populated sections render. A supporting column holds quick facts and contact availability. Mobile contact uses an opaque safe-area bottom action only when a valid public contact exists. Preserve gallery keyboard behavior and share support. Do not fabricate ratings, credentials, saved state or contact numbers.
 
-Primitives live in `components/ui/<componentName>/<componentName>.tsx`.
+### Articles, FAQ and knowledge
 
-| Primitive                               | Intended use                                                                                                                                         |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Button                                  | Primary actions, secondary, outline, ghost, danger, link                                                                                             |
-| Input / Textarea / Label                | Form controls. `type="tel"` converts Persian/Arabic digits to Latin.                                                                                 |
-| Checkbox / RadioGroup / Select / Switch | Choice controls                                                                                                                                      |
-| Field                                   | Label, required mark, description, hint, error                                                                                                       |
-| OtpInput                                | One-time code. Pass `length` at the call site. Fill and delete are always left-to-right. Persian/Arabic digits are converted to Latin before submit. |
-| FileUpload                              | Generic file picker visual; no upload API                                                                                                            |
-| Badge                                   | Status, verification, metadata                                                                                                                       |
-| Avatar                                  | Image with fallback initials                                                                                                                         |
-| Card                                    | Light composable surface                                                                                                                             |
-| Separator                               | Visual division                                                                                                                                      |
-| Skeleton / Spinner / Progress           | Loading and completion                                                                                                                               |
-| Alert                                   | Info, success, warning, error                                                                                                                        |
-| Empty                                   | Generic empty result with optional action                                                                                                            |
-| Dialog                                  | Accessible modal                                                                                                                                     |
-| Sheet                                   | Side surface                                                                                                                                         |
-| Drawer                                  | Mobile bottom sheet                                                                                                                                  |
-| Accordion                               | Progressive disclosure                                                                                                                               |
-| Tabs                                    | In-page panels                                                                                                                                       |
-| Tooltip                                 | Short labeling for icon-only controls                                                                                                                |
-| Popover                                 | Lightweight anchored content                                                                                                                         |
-| DropdownMenu                            | Action menus                                                                                                                                         |
+Article cards use open media/text layouts, category metadata and clear title hierarchy. Detail pages use a narrow reading column, in-flow contents navigation and generous prose. FAQ uses divided accessible accordions with spacious triggers and readable answers. Knowledge tips are divided editorial entries, not repeated cards. Related service actions require real supplied destinations. Missing entities still return not-found; empty catalogs use the shared empty state.
 
-## Component Rules
+### About and legal
 
-- Use semantic tokens. No raw brand colors in reusable components.
-- `components/ui` contains primitives only. No domain cards, headers, wizards, or page sections.
-- Keep accessibility: semantic HTML, keyboard support, `focus-visible`, disabled and invalid states, labels, and 44px-class touch targets on default controls.
-- RTL-first: logical properties, DirectionProvider at the app root, LTR islands only for codes/numbers/OTP.
-- Mobile-first: default sizes are usable with a thumb.
-- Variants stay small. Prefer composition over new visual variants.
-- shadcn/ui may supply accessible behavior. Project folder naming and Mohandes Man tokens override shadcn defaults. Do not add every shadcn component. Review generated source before keeping it.
-- Do not install another complete UI framework.
+About uses open narrative sections, an explicit process sequence and domain/service discovery. Legal documents use one reading column, strong section headings, natural paragraphs and lists; never wrap individual paragraphs in cards.
 
-## Development preview
+### Registration
 
-In local development, `/dev/design-system` showcases tokens and primitives with neutral sample content. The route is not linked in product navigation and returns 404 in production builds.
+All nine steps share the same shell, progress, heading, form rhythm and pending/error presentation. Existing guard rules and service operations remain authoritative. Mobile navigation keeps primary continue and secondary back side by side. Native keyboard types, visible labels, required markers, accessible descriptions and error relationships are preserved.
+
+OTP uses five LTR cells, numeric entry, Persian-digit normalization, paste transformation, a visible active ring, edit-phone action and the existing resend cooldown. No successful API response is simulated. Completion has no automatic redirect and retains the existing explicit home link; internal product-decision notes are not displayed as user-facing success content.
+
+## Primitives and interaction states
+
+- `Button`: primary, secondary, outline, ghost, danger, link. Small and icon controls have at least 44px targets; normal controls are 48px, large actions 52px. Pending state preserves the button label and prevents duplicate submission.
+- `Input`, `Textarea`, `Select`: visible input border, white fill, 16px input type, focus ring, disabled treatment and textual errors. Labels stay visible; placeholders are supplementary.
+- `FieldError`: reserves a short line before validation and announces actual errors using `role="alert"`. Longer messages may wrap. Connect errors via `aria-describedby`.
+- `Checkbox`, `RadioGroup`: label-sized targets, outlined controls, explicit selected state. Form selection rows may use a soft primary fill; color is not the only signal.
+- `FileUpload`: native file picker plus drag/drop, clear label, selected-file description, disabled and error treatments. Drops notify the same form change handler and respect single/multiple selection. Accept/validation rules belong to the step. Local selection is never described as successful server upload.
+- `Empty`: quiet surface, optional restrained icon, meaningful title/description and one next task. No dashed placeholder box.
+- `Alert`: semantic status with title and recovery action when applicable.
+- `Skeleton`: follows the page family; loading boundaries include a readable loading announcement.
+- `Dialog`, `Sheet`, `Drawer`: retain accessible primitive focus trapping, title/description, dismiss behavior and focus restoration. Content scrolls inside viewport bounds; bottom actions include safe-area padding.
+
+## Accessibility and RTL
+
+Keep one page H1, section hierarchy, semantic lists/landmarks and a skip link. Focus-visible rings must remain visible on all controls and links. Use Lucide with consistent 16–24px sizing; decorative icons are `aria-hidden`. Use logical `start`, `end`, `ps`, `pe`, `ms`, `me`; LTR islands are intentional for codes and phone numbers. Forward navigation arrows point left in RTL.
+
+Respect reduced motion globally. No workflow depends on hover, color alone, animation or a pointer. Sticky actions need sufficient scroll space so the final fields remain reachable. Long badges and Persian names wrap; do not truncate critical identity or action labels.
+
+## Validation record
+
+The redesign keeps routes, Server Component boundaries, services, providers and business validation schemas. Browser review includes seven breakpoint widths across major page families, all registration steps using a temporary component review surface, the existing populated/sparse development expert fixtures, query navigation, mobile menu, OTP entry and form validation. Temporary review routes are removed before the production build. Unavailable backend operations remain unavailable; visual verification does not imply backend completion.

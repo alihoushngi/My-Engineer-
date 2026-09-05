@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleAlertIcon, FileIcon, XIcon } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert/alert";
 import { Button } from "@/components/ui/button/button";
+import { FileUpload } from "@/components/ui/fileUpload/fileUpload";
 import { Checkbox } from "@/components/ui/checkbox/checkbox";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import {
@@ -104,7 +105,7 @@ export function EducationStep() {
     <div className="space-y-8">
       <RegistrationProgress currentStep={6} />
       <div className="space-y-2">
-        <h2 className="type-h3 font-semibold text-foreground">
+        <h2 className="type-h2 text-foreground">
           {registrationCopy.step6Title}
         </h2>
         <p className="type-body text-muted-foreground">
@@ -115,7 +116,7 @@ export function EducationStep() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="space-y-6"
+        className="space-y-7"
         aria-label={registrationCopy.step6Title}
       >
         {/* Education level branch */}
@@ -133,20 +134,20 @@ export function EducationStep() {
                 aria-labelledby="reg-edu-level-label"
                 className="flex flex-col gap-3 sm:flex-row"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex min-h-12 items-center gap-3 rounded-md border border-border px-4 py-2 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary-subtle">
                   <RadioGroupItem id="reg-edu-above" value="aboveDiploma" />
                   <label
                     htmlFor="reg-edu-above"
-                    className="type-body cursor-pointer"
+                    className="min-h-11 content-center type-body cursor-pointer"
                   >
                     {registrationCopy.educationLevelAboveDiploma}
                   </label>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex min-h-12 items-center gap-3 rounded-md border border-border px-4 py-2 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary-subtle">
                   <RadioGroupItem id="reg-edu-diploma" value="diplomaOrLower" />
                   <label
                     htmlFor="reg-edu-diploma"
-                    className="type-body cursor-pointer"
+                    className="min-h-11 content-center type-body cursor-pointer"
                   >
                     {registrationCopy.educationLevelDiplomaOrLower}
                   </label>
@@ -196,7 +197,7 @@ export function EducationStep() {
                       />
                       <label
                         htmlFor={`reg-edu-degree-${key}`}
-                        className="type-body cursor-pointer"
+                        className="min-h-11 content-center type-body cursor-pointer"
                       >
                         {label}
                       </label>
@@ -343,24 +344,15 @@ function DegreeFileCard({
             <XIcon className="size-4" aria-hidden="true" />
           </Button>
         </div>
-      ) : (
-        <label
-          htmlFor={inputId}
-          className="flex cursor-pointer items-center gap-2 type-body-sm text-primary underline-offset-4 hover:underline"
-        >
-          انتخاب فایل
-          <span className="type-caption text-muted-foreground">
-            ({registrationCopy.uploadDegreeDescription})
-          </span>
-        </label>
-      )}
-      <input
+      ) : null}
+      <FileUpload
+        key={file?.name ?? "empty"}
         id={inputId}
-        type="file"
         accept={registrationCopy.uploadDegreeAccept}
         disabled={disabled}
-        className="sr-only"
         aria-label={registrationCopy.uploadDegreeLabel(label)}
+        label={file ? registrationCopy.fileChangeLabel : "انتخاب فایل"}
+        description={registrationCopy.uploadDegreeDescription}
         onChange={handleChange}
       />
     </div>

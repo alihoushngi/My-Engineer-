@@ -17,7 +17,7 @@ export function ExpertTagSection({
   }
 
   return (
-    <section aria-labelledby={titleId} className="container-app py-page">
+    <section aria-labelledby={titleId} className="py-8 first:pt-0">
       <div className="space-y-6">
         <SectionHeader titleId={titleId} title={title} />
         <ul className="flex flex-wrap gap-2">
