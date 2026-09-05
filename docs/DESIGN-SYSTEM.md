@@ -119,10 +119,11 @@ second visual identity.
 - **Chrome:** navy top bar (same `primary-deep` as the public header), white
   desktop sidebar with teal active state, labelled icons, and a five-item
   mobile bottom navigation plus a bottom sheet for secondary destinations.
-  The desktop shell is `min-h-dvh` with a self-stretching sidebar so the
-  sidebar background reaches the viewport bottom when main content is short.
-  Sticky sidebar navigation remains `max-h-dvh` for long pages. Do not put
-  the public search/city/join header inside the panel.
+  The desktop shell owns `min-h-dvh` via a two-column grid whose row is
+  `minmax(100dvh, auto)`, so the sidebar surface fills the viewport when main
+  content is short and grows with long pages. Sticky sidebar navigation stays
+  `max-h-dvh`. Do not put the public search/city/join header inside the panel.
+  Do not apply this desktop column height to the mobile bottom navigation.
 - **Dense lists:** requests, conversations, reviews, and notifications are
   stacked rows with wrapping Persian metadata. Do not force desktop-only tables.
 - **Reviews:** `/engineer/reviews` is a linked list; `/engineer/reviews/[id]`

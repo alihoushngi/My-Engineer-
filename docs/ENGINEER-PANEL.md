@@ -127,10 +127,11 @@ Read-only list at `/engineer/reviews`. Each item links to
 Engineer reply is not implemented; existing `replyText` may render if the
 data source supplies it.
 
-Desktop sidebar: the panel shell is at least `100dvh` tall. The sidebar
-stretches with the layout so its background reaches the viewport bottom when
-main content is short, and stays sticky within `max-h-dvh` when content is
-long. Mobile keeps the five-item bottom navigation.
+Desktop sidebar: the panel shell is a two-column grid with a
+`minmax(100dvh, auto)` row. The sidebar surface fills that row (viewport
+minimum, then content height). Navigation inside the sidebar may stay sticky
+within `max-h-dvh`. Mobile keeps the five-item bottom navigation and must not
+inherit the desktop column height.
 
 ### Notifications
 
