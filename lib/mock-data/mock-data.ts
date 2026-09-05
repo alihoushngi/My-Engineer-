@@ -787,3 +787,12 @@ export const mockDrawingServices = [
 ] as const;
 
 export const mockExpertCards = expertCards;
+
+export {
+  mockEngineerConversations,
+  mockEngineerCredentials,
+  mockEngineerMessagesByConversation,
+  mockEngineerNotifications,
+  mockEngineerPublicExpertId,
+  mockEngineerRequests,
+} from "@/lib/mock-data/engineer-workspace-mock-data";

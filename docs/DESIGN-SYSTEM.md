@@ -104,6 +104,30 @@ Do not hide layout bugs with page-level horizontal overflow clipping. Use `min-w
 - No default input or card shadows. Separation comes from spacing and borders.
 - `shadow-md` / `shadow-lg` are for dialogs, menus and overlays.
 
+## Engineer Workspace Patterns
+
+The specialist workspace at `/engineer` uses the same tokens, primitives, and
+typography as the public storefront. It is a denser task environment, not a
+second visual identity.
+
+- **Chrome:** navy top bar (same `primary-deep` as the public header), white
+  desktop sidebar with teal active state, labelled icons, and a five-item
+  mobile bottom navigation plus a bottom sheet for secondary destinations.
+  Do not put the public search/city/join header inside the panel.
+- **Dense lists:** requests, conversations, and notifications are stacked rows
+  with wrapping Persian metadata. Do not force desktop-only tables.
+- **Status:** use existing Badge variants (`success`, `warning`, `danger`,
+  `info`, `outline`). Completion uses `Progress` plus a derived percent from
+  registration fields, not invented analytics.
+- **Management forms:** section display plus focused `Dialog` edit. Mutations
+  stay pending/error/retry and never claim server success without an API.
+- **Messages:** separate list and conversation routes on mobile. Composer is
+  sticky with safe-area padding. No realtime transport.
+- **Safe area:** top bar uses `pt-[env(safe-area-inset-top)]`; bottom nav and
+  message composer include `pb-[env(safe-area-inset-bottom)]`.
+
+Private panel HTML is never cached by the service worker.
+
 ## Page patterns
 
 ### Global chrome
@@ -158,7 +182,7 @@ Respect reduced motion globally. No workflow depends on hover, color alone, anim
 
 ## Data and asset strategy
 
-- `lib/mock-data/mock-data.ts` is the single source of local experts, service scopes, articles, FAQs, knowledge, cities, software, portfolio, and homepage modules.
+- `lib/mock-data/mock-data.ts` is the single source of local experts, service scopes, articles, FAQs, knowledge, cities, software, portfolio, homepage modules, and engineer-workspace display fixtures (via `lib/mock-data/engineer-workspace-mock-data.ts`).
 - Service modules are the only consumers exposed to route components. Turning `NEXT_PUBLIC_USE_MOCK_DATA` to `false` returns honest empty/unavailable states until backend contracts are supplied.
 - Reused legacy assets live under `public/images/`; generated concept boards live under `docs/design-concepts/` and are not shipped in page UI.
 - `IMAGE-ASSET-PLAN.md` records every reused and still-missing visual with exact dimensions, crop, subject, mood, and Persian alt intent.

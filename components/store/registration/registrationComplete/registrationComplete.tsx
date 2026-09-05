@@ -3,6 +3,7 @@ import { CheckCircleIcon } from "lucide-react";
 import { Empty } from "@/components/ui/empty/empty";
 import { Button } from "@/components/ui/button/button";
 import { registrationCopy } from "@/config/registration.config/registration.config";
+import { engineerPanelPaths } from "@/config/engineer-panel.config/engineer-panel.config";
 import { siteConfig } from "@/config/site.config/site.config";
 
 export function RegistrationComplete() {
@@ -13,11 +14,18 @@ export function RegistrationComplete() {
         title={registrationCopy.completeTitle}
         description={registrationCopy.completeDescription}
         action={
-          <Button asChild>
-            <Link href={siteConfig.homeHref}>
-              {registrationCopy.completeHomeCta}
-            </Link>
-          </Button>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href={siteConfig.homeHref}>
+                {registrationCopy.completeHomeCta}
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href={engineerPanelPaths.dashboard}>
+                {registrationCopy.completeWorkspaceCta}
+              </Link>
+            </Button>
+          </div>
         }
       />
     </div>

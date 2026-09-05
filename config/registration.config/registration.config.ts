@@ -202,6 +202,7 @@ export const registrationCopy = {
   completeDescription:
     "اطلاعات شما ثبت شد. نتیجه بررسی پس از اتصال فرآیند سرور اعلام می‌شود.",
   completeHomeCta: "بازگشت به خانه",
+  completeWorkspaceCta: "مشاهده فضای کاری متخصص",
   completeDestinationNote:
     "مقصد بعدی پس از ثبت‌نام (ورود، پروفایل یا وضعیت بررسی) هنوز از طرف محصول مشخص نشده است.",
 } as const;
