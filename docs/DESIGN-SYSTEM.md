@@ -56,7 +56,7 @@ Change colors centrally in `:root`; `.dark` remains a future-theme foundation, n
 | `card`, `card-foreground`                     | Primitive aliases for surface and foreground               |
 | `popover`, `popover-foreground`               | Elevated primitive aliases                                 |
 
-Status foreground pairs remain available for solid status surfaces. Strong yellow, amber, orange, navy, and near-black surfaces must use a near-white foreground pair: `accent` / `accent-foreground`, `warning` / `warning-foreground`, `warning-strong` / `warning-strong-foreground`, `primary-deep` / `primary-deep-foreground`, and `dark-surface` / `dark-surface-foreground`. If a yellow or amber fill is too light for white text, darken the surface rather than keeping dark-gray copy on a strong color. Pale tints (`accent-subtle`, `category-*`) keep charcoal text. Success and verification must come from actual data; do not imply verification with decorative badges. Retained `glass-*` utilities are compatibility primitives; application chrome and forms use opaque surfaces.
+Status foreground pairs remain available for solid status surfaces. Strong yellow, amber, orange, navy, and near-black surfaces must use a near-white foreground pair: `accent` / `accent-foreground`, `warning` / `warning-foreground`, `warning-strong` / `warning-strong-foreground`, `primary-deep` / `primary-deep-foreground`, and `dark-surface` / `dark-surface-foreground`. If a yellow or amber fill is too light for white text, darken the surface rather than keeping dark-gray copy on a strong color. Pale tints (`accent-subtle`, `category-*`) keep charcoal text. Success and verification must come from actual data; do not imply verification with decorative badges. `glass-surface` remains for chrome, overlays, and hero treatments. Home and About service-category tiles use the restrained `glass-card` utility: translucent white, light blur, and category color only on the icon.
 
 ## Typography
 
@@ -148,7 +148,7 @@ Compact navy sticky header, geometric wordmark, desktop navigation, discreet sea
 
 ### Home
 
-The home page uses an asymmetric navy/photo hero with a real search form and city entry. Six service categories use the audited legacy illustrations on restrained category-color blocks. The marketplace module is the core: multi-service chips, city and expertise selects, count feedback, expert cards, reset, and an intentional empty state. Popular services form a photographic rail; drawing services use an open four-column consultation strip. A split trust story, navy three-step narrative, editorial learning grid, FAQ entry, and teal specialist CTA complete the page.
+The home page opens with a navy discovery hero and a Swiper image slider instead of one static photograph. Search, city, and specialist-join remain in the first section. Six service categories share a translucent white `glass-card` tile with About, using category color only on the icon well. The marketplace module stays the core: multi-service chips, city and expertise selects, count feedback, expert cards, client pagination when more than nine results, reset, and an intentional empty state. Popular services form a photographic grid of mapped destinations; drawing services use an open four-column consultation strip. A four-point trust band, navy “what is” narrative, specialist CTA, a single preserved testimonial, knowledge-tip slider, editorial learning grid, and FAQ category entry complete the page.
 
 ### Discovery
 

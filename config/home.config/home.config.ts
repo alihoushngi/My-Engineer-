@@ -1,44 +1,70 @@
 import { storePaths } from "@/config/navigation.config/navigation.config";
 
+export { homeHeroSlides } from "@/lib/home/hero-slides/hero-slides";
+
+export const HOME_DISCOVERY_PAGE_SIZE = 9;
+
 export const homeHeroCopy = {
   title: "پلتفرم جامع خدمات ساختمانی در سراسر کشور",
-  description: "متخصص ساختمانی پیدا کنید و به‌صورت رایگان با او در تماس باشید.",
+  description: "ارتباط رایگان با مهندسان، پیمانکاران و متخصصان ساخت‌وساز",
+  supporting:
+    "از نقشه‌برداری و طراحی تا اخذ مجوز و اجرای پروژه در کنار شما هستیم",
   searchLabel: "جستجو در خدمات و متخصصین",
   cityLabel: "انتخاب شهر",
+  joinCta: "شما هم یکی از هزاران عضو سایت مهندس من شوید",
+  startCta: "شروع جستجو",
+  sliderLabel: "بنرهای معرفی خدمات مهندس من",
 } as const;
 
 export const homeServicesCopy = {
   title: "به‌دنبال چه خدمتی هستید؟",
-  description: "یکی از خدمات را انتخاب کنید تا متخصصان همان حوزه را ببینید.",
+  description: "بهترین مهندسان و متخصصان خدمات ساختمانی در مهندس من!",
+  faqLabel: "سوالات متداول",
+} as const;
+
+export const homeMarketplaceCopy = {
+  eyebrow: "متخصصین ما",
+  title: "متخصص مناسب پروژه را پیدا کنید",
+  description:
+    "تخصص، شهر و سابقه حرفه‌ای را مقایسه کنید و با انتخاب آگاهانه وارد پروفایل متخصص شوید.",
+  foundSuffix: "متخصص یافت شد",
+  emptyTitle: "متخصصی با این ترکیب فیلتر پیدا نشد",
+  emptyDescription:
+    "یک شهر یا تخصص دیگر را امتحان کنید، یا همه فیلترها را پاک کنید.",
+  resetLabel: "نمایش همه متخصصان",
+  clearFiltersLabel: "پاک‌کردن فیلترها",
+  serviceFilterLabel: "فیلتر گروه خدمات",
+  paginationLabel: "صفحه‌بندی متخصصان",
+  previousLabel: "قبلی",
+  nextLabel: "بعدی",
 } as const;
 
 export const homeNarrativeCopy = {
   title: "مهندس من چیست؟",
   description:
-    "مهندس من بستری برای پیدا کردن مهندسان، پیمانکاران و متخصصان ساختمان و ارتباط مستقیم با آن‌هاست.",
+    "«مهندس من» یک پلتفرم جامع آنلاین است که به کاربران امکان می‌دهد به‌راحتی مهندسان، کارشناسان و متخصصان تایید شده حوزه ساختمان را پیدا کنند و رایگان با آن‌ها تماس بگیرند.",
 } as const;
 
 export const homeWhyCopy = {
   title: "چرا مهندس من؟",
+  intro:
+    "سایت مهندس من با هدف ایجاد یک مرجع اختصاصی از مهندسان و متخصصان حوزه ساخت‌وساز در کشور در کنار شما همواره خواهد بود.",
   items: [
     {
-      title: "خدمات متنوع ساختمانی",
-      description:
-        "از نقشه‌برداری تا خدمات اداری، مسیر ورود به هر خدمت مشخص است.",
+      title: "خدمات جامع ساختمانی",
+      description: "از نقشه‌برداری تا پیمانکاری",
     },
     {
-      title: "دسترسی رایگان و مستقیم",
-      description:
-        "می‌توانید متخصص را پیدا کنید و بدون واسطه با او تماس بگیرید.",
+      title: "دسترسی سریع و رایگان",
+      description: "مهندس دلخواهت را بدون هزینه پیدا کن",
     },
     {
-      title: "شفافیت اطلاعات",
-      description:
-        "سوابق و اطلاعات حرفه‌ای در پروفایل متخصص نمایش داده می‌شود.",
+      title: "شفافیت و اعتماد",
+      description: "مشاهده سوابق و امتیاز متخصصان",
     },
     {
-      title: "جستجو بر اساس شهر",
-      description: "با انتخاب شهر، متخصصان همان محدوده را بررسی می‌کنید.",
+      title: "تایید صلاحیت",
+      description: "فقط افراد تایید صلاحیت شده فعالیت می‌کنند",
     },
   ],
 } as const;
@@ -68,22 +94,40 @@ export const homeContentCopy = {
 
 export const homeFaqCopy = {
   title: "سوالات متداول",
-  description: "پاسخ پرسش‌های رایج را در بخش سوالات متداول ببینید.",
-  actionLabel: "مشاهده سوالات متداول",
+  description:
+    "با انتخاب هر موضوع به پرسش‌های همان بخش بروید تا با اطلاعات کامل‌تر خدمت مناسب را انتخاب کنید.",
+  actionLabel: "مشاهده همه سوالات متداول",
   href: storePaths.faq,
 } as const;
 
 export const homeJoinCopy = {
-  title: "متخصص هستید؟",
+  title: "پیوستن متخصصان",
   description:
-    "اگر متخصص ساختمان هستید، ثبت‌نام کنید تا در فهرست خدمات دیده شوید.",
+    "اگر در حوزه ساخت‌وساز اعم از مهندسی و استادکاری تخصص دارید، به مجموعه بزرگ مهندس من بپیوندید.",
 } as const;
 
-export type MappedHomeLink = {
-  label: string;
-  href: string;
-};
+export const homeKnowledgeCopy = {
+  title: "پایگاه دانش مهندس من",
+  didYouKnow: "آیا می‌دانستید؟",
+  sliderLabel: "نکته‌های پایگاه دانش",
+} as const;
 
-export const popularServiceItems: readonly MappedHomeLink[] = [];
+export const homeTestimonialCopy = {
+  title: "نظر کاربران",
+  quote:
+    "جامع‌ترین خدمات مهندسی و بهترین مهندسان ایران بدون شک در اینجا جمع هستند و من واقعاً با این سایت مشکلاتم حل شده.",
+  author: "آقای ماهان کرامتی",
+  role: "رییس هیت مدیره شرکت برق آسا",
+  submitNote: "ارسال نظر پس از اتصال سرویس نظرات و احراز هویت فعال می‌شود.",
+} as const;
 
-export const drawingConsultationItems: readonly MappedHomeLink[] = [];
+export const homePopularCopy = {
+  title: "خدمات پرکاربرد",
+  description: "مسیرهای پرتکرار کاربران، از مسئله ملک تا طراحی و اجرای پروژه.",
+} as const;
+
+export const homeDrawingCopy = {
+  title: "مشاوره ترسیم نقشه",
+  description:
+    "برای هماهنگی بهتر میان رشته‌ها، نوع نقشه مورد نیاز پروژه را انتخاب کنید.",
+} as const;

@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { SlidersHorizontalIcon, UsersIcon, XIcon } from "lucide-react";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
+import { HomeMarketplacePagination } from "@/components/store/home/homeMarketplace/homeMarketplacePagination";
 import { Button } from "@/components/ui/button/button";
 import { Empty } from "@/components/ui/empty/empty";
 import {
@@ -12,10 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select/select";
-import {
-  serviceCategories,
-  type ServiceSlug,
-} from "@/config/services.config/services.config";
+import { homeMarketplaceCopy } from "@/config/home.config/home.config";
+import { serviceCategories } from "@/config/services.config/services.config";
+import { useHomeMarketplace } from "@/hooks/use-home-marketplace/use-home-marketplace";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
 import { cn } from "@/lib/utils/cn/cn";
 import { type ExpertCardData } from "@/types/store/expert.types";
@@ -27,45 +26,7 @@ type HomeMarketplaceProps = {
 };
 
 export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
-  const [services, setServices] = useState<readonly ServiceSlug[]>([]);
-  const [city, setCity] = useState("all");
-  const [expertise, setExpertise] = useState("all");
-
-  const expertiseOptions = useMemo(
-    () => [...new Set(experts.flatMap((expert) => expert.specialties ?? []))],
-    [experts],
-  );
-
-  const filteredExperts = useMemo(
-    () =>
-      experts.filter((expert) => {
-        const serviceMatch =
-          services.length === 0 ||
-          services.some((slug) => expert.serviceSlugs?.includes(slug));
-        const cityMatch = city === "all" || expert.city === city;
-        const expertiseMatch =
-          expertise === "all" || expert.specialties?.includes(expertise);
-        return serviceMatch && cityMatch && expertiseMatch;
-      }),
-    [city, expertise, experts, services],
-  );
-
-  const hasFilters =
-    services.length > 0 || city !== "all" || expertise !== "all";
-
-  function toggleService(slug: ServiceSlug) {
-    setServices((current) =>
-      current.includes(slug)
-        ? current.filter((item) => item !== slug)
-        : [...current, slug],
-    );
-  }
-
-  function reset() {
-    setServices([]);
-    setCity("all");
-    setExpertise("all");
-  }
+  const marketplace = useHomeMarketplace(experts);
 
   return (
     <section
@@ -76,35 +37,36 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
       <div className="container-app space-y-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl space-y-3">
-            <p className="type-label text-primary">بازار متخصصان ساختمان</p>
+            <p className="type-label text-primary">
+              {homeMarketplaceCopy.eyebrow}
+            </p>
             <h2 id="home-marketplace-heading" className="type-h1">
-              متخصص مناسب پروژه را پیدا کنید
+              {homeMarketplaceCopy.title}
             </h2>
             <p className="type-body text-foreground-muted">
-              تخصص، شهر و سابقه حرفه‌ای را مقایسه کنید و با انتخاب آگاهانه وارد
-              پروفایل متخصص شوید.
+              {homeMarketplaceCopy.description}
             </p>
           </div>
           <p aria-live="polite" className="type-body-sm text-foreground-muted">
             <strong className="text-primary">
-              {formatFaNumber(filteredExperts.length)}
+              {formatFaNumber(marketplace.pagination.total)}
             </strong>{" "}
-            متخصص یافت شد
+            {homeMarketplaceCopy.foundSuffix}
           </p>
         </div>
 
         <div className="-mx-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
           <div
             className="flex min-w-max snap-x snap-mandatory gap-2"
-            aria-label="فیلتر گروه خدمات"
+            aria-label={homeMarketplaceCopy.serviceFilterLabel}
           >
             {serviceCategories.map((service) => {
-              const active = services.includes(service.slug);
+              const active = marketplace.services.includes(service.slug);
               return (
                 <button
                   key={service.slug}
                   type="button"
-                  onClick={() => toggleService(service.slug)}
+                  onClick={() => marketplace.toggleService(service.slug)}
                   aria-pressed={active}
                   className={cn(
                     "min-h-11 snap-start rounded-full border px-4 type-button outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
@@ -121,7 +83,10 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
         </div>
 
         <div className="grid gap-3 border-y border-border py-5 md:grid-cols-[1fr_1fr_auto]">
-          <Select value={city} onValueChange={setCity}>
+          <Select
+            value={marketplace.city}
+            onValueChange={marketplace.changeCity}
+          >
             <SelectTrigger aria-label="فیلتر شهر">
               <SelectValue placeholder="همه شهرها" />
             </SelectTrigger>
@@ -134,13 +99,16 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
               ))}
             </SelectContent>
           </Select>
-          <Select value={expertise} onValueChange={setExpertise}>
+          <Select
+            value={marketplace.expertise}
+            onValueChange={marketplace.changeExpertise}
+          >
             <SelectTrigger aria-label="فیلتر تخصص">
               <SelectValue placeholder="همه تخصص‌ها" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">همه تخصص‌ها</SelectItem>
-              {expertiseOptions.map((item) => (
+              {marketplace.expertiseOptions.map((item) => (
                 <SelectItem key={item} value={item}>
                   {item}
                 </SelectItem>
@@ -149,34 +117,45 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
           </Select>
           <Button
             variant="ghost"
-            onClick={reset}
-            disabled={!hasFilters}
+            onClick={marketplace.reset}
+            disabled={!marketplace.hasFilters}
             icon={
-              hasFilters ? (
+              marketplace.hasFilters ? (
                 <XIcon aria-hidden="true" />
               ) : (
                 <SlidersHorizontalIcon aria-hidden="true" />
               )
             }
           >
-            پاک‌کردن فیلترها
+            {homeMarketplaceCopy.clearFiltersLabel}
           </Button>
         </div>
 
-        {filteredExperts.length > 0 ? (
-          <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {filteredExperts.map((expert) => (
-              <li key={expert.id} className="min-w-0">
-                <ExpertCard expert={expert} />
-              </li>
-            ))}
-          </ul>
+        {marketplace.pagination.total > 0 ? (
+          <>
+            <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {marketplace.pagination.items.map((expert) => (
+                <li key={expert.id} className="min-w-0">
+                  <ExpertCard expert={expert} />
+                </li>
+              ))}
+            </ul>
+            <HomeMarketplacePagination
+              page={marketplace.pagination.page}
+              pageCount={marketplace.pagination.pageCount}
+              onPageChange={marketplace.changePage}
+            />
+          </>
         ) : (
           <Empty
             icon={<UsersIcon aria-hidden="true" />}
-            title="متخصصی با این ترکیب فیلتر پیدا نشد"
-            description="یک شهر یا تخصص دیگر را امتحان کنید، یا همه فیلترها را پاک کنید."
-            action={<Button onClick={reset}>نمایش همه متخصصان</Button>}
+            title={homeMarketplaceCopy.emptyTitle}
+            description={homeMarketplaceCopy.emptyDescription}
+            action={
+              <Button onClick={marketplace.reset}>
+                {homeMarketplaceCopy.resetLabel}
+              </Button>
+            }
           />
         )}
       </div>

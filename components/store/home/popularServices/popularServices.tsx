@@ -2,16 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpLeftIcon } from "lucide-react";
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
+import { homePopularCopy } from "@/config/home.config/home.config";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
+import { type HomePopularService } from "@/types/store/home.types";
 
-type PopularService = {
-  id: string;
-  title: string;
-  description: string;
-  href: string;
-  imageSrc: string;
-};
-type PopularServicesProps = { items: readonly PopularService[] };
+type PopularServicesProps = { items: readonly HomePopularService[] };
 
 export function PopularServices({ items }: PopularServicesProps) {
   if (items.length === 0) return null;
@@ -23,21 +18,21 @@ export function PopularServices({ items }: PopularServicesProps) {
       <div className="space-y-8">
         <SectionHeader
           titleId="popular-services-heading"
-          title="خدمات پرکاربرد"
-          description="مسیرهای پرتکرار کاربران، از مسئله ملک تا طراحی و اجرای پروژه."
+          title={homePopularCopy.title}
+          description={homePopularCopy.description}
         />
-        <ul className="grid gap-4 lg:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item, index) => (
             <li key={item.id}>
               <Link
                 href={item.href}
-                className="group relative block min-h-56 overflow-hidden rounded-xl bg-primary-deep text-primary-deep-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-72 lg:min-h-80"
+                className="group relative block min-h-48 overflow-hidden rounded-xl bg-primary-deep text-primary-deep-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-64 lg:min-h-72"
               >
                 <Image
                   src={item.imageSrc}
                   alt=""
                   fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover opacity-65 transition duration-300 group-hover:scale-[1.03] motion-reduce:transform-none"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-primary-deep via-primary-deep/25 to-transparent" />

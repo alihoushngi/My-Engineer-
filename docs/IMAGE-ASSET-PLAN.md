@@ -4,19 +4,19 @@ The redesign reuses project-owned PastDesign imagery when it is suitable and rec
 
 ## Reused local assets
 
-| New public path                            | Legacy source                                                       | Use                                    | Native size      |
-| ------------------------------------------ | ------------------------------------------------------------------- | -------------------------------------- | ---------------- |
-| `public/images/home/hero-construction.png` | `PastDesign/assets/img/banner/bb(1).png`                            | Home hero/editorial construction scene | 960×300          |
-| `public/images/home/project-engineer.png`  | `PastDesign/assets/img/banner/craiyon__Engineer.png`                | Home trust/process band                | 959×299          |
-| `public/images/home/interior-design.png`   | `PastDesign/assets/img/banner/craiyon_143104….png`                  | Interior/editorial service feature     | 961×301          |
-| `public/images/articles/surveying.jpg`     | `PastDesign/assets/img/middle-section/fullyView/surveing.jpg`       | Surveying article/knowledge cover      | 400×250          |
-| `public/images/portfolio/project-01.jpg`   | `PastDesign/assets/img/sample-work/1.jpg`                           | Demo project portfolio                 | 259×194          |
-| `public/images/portfolio/project-02.jpg`   | `PastDesign/assets/img/sample-work/2.jpg`                           | Demo project portfolio                 | 255×198          |
-| `public/images/portfolio/project-03.jpg`   | `PastDesign/assets/img/sample-work/3.jpg`                           | Demo project portfolio                 | 201×251          |
-| `public/images/services/*.png`             | `PastDesign/assets/img/services/*.png`                              | Six category illustrations             | 172–341px square |
-| `public/images/trust/*.png`                | `PastDesign/assets/img/icon-services-auth/icons/icon-why-eng/*.png` | Three trust visuals                    | 172×172          |
+| New public path                            | Legacy source                                                       | Use                                        | Native size      |
+| ------------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------ | ---------------- |
+| `public/images/home/hero-construction.png` | `PastDesign/assets/img/banner/bb(1).png`                            | Home hero Swiper slide 1                   | 960×300          |
+| `public/images/home/project-engineer.png`  | `PastDesign/assets/img/banner/craiyon__Engineer.png`                | Home hero Swiper slide 2 and trust/process | 959×299          |
+| `public/images/home/interior-design.png`   | `PastDesign/assets/img/banner/craiyon_143104….png`                  | Home hero Swiper slide 3                   | 961×301          |
+| `public/images/articles/surveying.jpg`     | `PastDesign/assets/img/middle-section/fullyView/surveing.jpg`       | Surveying article/knowledge cover          | 400×250          |
+| `public/images/portfolio/project-01.jpg`   | `PastDesign/assets/img/sample-work/1.jpg`                           | Demo project portfolio                     | 259×194          |
+| `public/images/portfolio/project-02.jpg`   | `PastDesign/assets/img/sample-work/2.jpg`                           | Demo project portfolio                     | 255×198          |
+| `public/images/portfolio/project-03.jpg`   | `PastDesign/assets/img/sample-work/3.jpg`                           | Demo project portfolio                     | 201×251          |
+| `public/images/services/*.png`             | `PastDesign/assets/img/services/*.png`                              | Six category illustrations                 | 172–341px square |
+| `public/images/trust/*.png`                | `PastDesign/assets/img/icon-services-auth/icons/icon-why-eng/*.png` | Three trust visuals                        | 172×172          |
 
-The legacy celebrity portrait, 50×50 expert thumbnail, generic testimonial portraits, and remote placeholder URLs are deliberately not reused as marketplace identities.
+The legacy celebrity portrait, 50×50 expert thumbnail, generic testimonial portraits, remote placeholder URLs, and the decorative join illustration (`PastDesign/assets/img/join-experts/Frame656.svg`) are deliberately not reused. The modern join CTA is typographic.
 
 ## Missing production images to provide
 

@@ -192,22 +192,21 @@ Client vs Server in trees: **(c)** = Client Component. Unmarked = Server.
 
 ```text
 HomePage                          E
-├── HomeHero                      D  (c) only if search/city triggers need handlers; prefer server + client children
-│   ├── headline / join link
-│   ├── search trigger → SearchSurface
-│   └── city trigger → CitySelector
-├── ServiceCategoryGrid           D  (shared with About)
+├── HomeHero                      D  server shell + client Swiper/search/city children
+│   ├── headline / join link / search
+│   └── HomeHeroSlider            (c) Swiper + pagination
+├── ServiceCategoryGrid           D  (shared with About; glass-card)
+├── HomeMarketplace               D  (c) filters + paginated expert results
+├── HomeNarrative                 D  “مهندس من چیست؟”
 ├── PopularServicesSection        D  mapped tiles only
 ├── DrawingConsultationSection    D  mapped tiles only
-├── HomeBannerCarousel            D  (c) CONTENT SUPPORTING; omit if no assets/URLs
-├── HomeNarrative                 D  “چیست” + “چرا” static — one component, not two
-├── JoinCtaSection                D  simple; keep if it stays a distinct band
-├── KnowledgePreviewSection       D  CONTENT SUPPORTING; omit until tips exist
-└── HomeFaqEntry                  D  link to /faq (not placeholder modal grid)
+├── WhyMohandesMan                D
+├── JoinCtaSection                D
+├── HomeTestimonials              D  unique quote; no OTP form
+├── HomeKnowledgeTips             D  (c) Swiper of catalog tips
+├── ContentHighlights             D
+└── HomeFaqEntry                  D  real FAQ categories + /faq CTA
 ```
-
-**Omit from Phase 1 composition:** `ExpertShowcaseSection`, `HomeTestimonialSection`
-until [PHASE-1-SCOPE.md](PHASE-1-SCOPE.md) confirmation.
 
 | Component                    | Props (conceptual)             | State | Server/Client            | Notes                               |
 | ---------------------------- | ------------------------------ | ----- | ------------------------ | ----------------------------------- |

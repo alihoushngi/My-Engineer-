@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   agentRules: false,
   experimental: {
-    optimizePackageImports: ["lucide-react", "radix-ui"],
+    optimizePackageImports: ["lucide-react", "radix-ui", "swiper"],
   },
   async headers() {
     return [

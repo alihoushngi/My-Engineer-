@@ -71,6 +71,9 @@
   --glass-background: oklch(1 0 0 / 0.72);
   --glass-border: oklch(1 0 0 / 0.42);
   --glass-shadow: 0 8px 30px oklch(0.24 0.02 240 / 0.08);
+  --glass-card-background: oklch(1 0 0 / 0.86);
+  --glass-card-border: oklch(1 0 0 / 0.64);
+  --glass-card-shadow: 0 8px 24px oklch(0.24 0.02 240 / 0.06);
 
   --destructive: var(--danger);
   --destructive-foreground: var(--danger-foreground);
@@ -172,6 +175,9 @@
   --glass-background: oklch(0.24 0.02 240 / 0.72);
   --glass-border: oklch(1 0 0 / 0.12);
   --glass-shadow: 0 8px 30px oklch(0.1 0.02 240 / 0.28);
+  --glass-card-background: oklch(0.27 0.02 240 / 0.82);
+  --glass-card-border: oklch(1 0 0 / 0.14);
+  --glass-card-shadow: 0 8px 24px oklch(0.1 0.02 240 / 0.24);
   --destructive: var(--danger);
   --destructive-foreground: var(--danger-foreground);
 }
@@ -432,6 +438,13 @@
   backdrop-filter: blur(12px);
 }
 
+@utility glass-card {
+  background: var(--glass-card-background);
+  border: 1px solid var(--glass-card-border);
+  box-shadow: var(--glass-card-shadow);
+  backdrop-filter: blur(10px);
+}
+
 @utility p-card {
   padding: var(--space-card);
 }
@@ -519,4 +532,35 @@ button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.home-hero-swiper,
+.home-hero-swiper .swiper-wrapper,
+.home-hero-swiper .swiper-slide {
+  height: 100%;
+}
+
+.home-hero-swiper .swiper-pagination,
+.home-knowledge-swiper .swiper-pagination {
+  inset-inline: 0;
+  bottom: 0.75rem;
+}
+
+.home-hero-swiper .swiper-pagination-bullet,
+.home-knowledge-swiper .swiper-pagination-bullet {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-inline: 0.3rem;
+  background: var(--primary-deep-foreground);
+  opacity: 0.45;
+}
+
+.home-hero-swiper .swiper-pagination-bullet-active,
+.home-knowledge-swiper .swiper-pagination-bullet-active {
+  background: var(--accent);
+  opacity: 1;
+}
+
+.home-knowledge-swiper .swiper-pagination-bullet {
+  background: var(--primary);
 }

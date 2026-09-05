@@ -19,22 +19,24 @@ Every legacy HTML page and meaningful product section is classified below. Statu
 
 ## Home (`PastDesign/index.html` → `/`)
 
-| Legacy section                                                      | Implementation                                                        | Status                                                            |
-| ------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| Search/city hero and construction message                           | `HomeHero` with image-led asymmetric composition                      | MODERNIZE                                                         |
-| Six illustrated categories                                          | `ServiceCategories` / `ServiceCategoryGrid`                           | MODERNIZE                                                         |
-| Marketplace result immediately below categories                     | `HomeMarketplace` with category, city, and expertise filtering        | MIGRATE                                                           |
-| Banner carousel                                                     | a restrained project-services visual band using suitable local images | MERGE — carousel repetition becomes one purposeful visual section |
-| “What is Mohandes Man?”                                             | `HomeNarrative`                                                       | REUSE CONTENT + MODERNIZE                                         |
-| Popular services                                                    | `PopularServices` driven by central display data                      | MIGRATE                                                           |
-| Drawing consultation (architecture/structure/electrical/mechanical) | `DrawingConsultation`                                                 | MIGRATE                                                           |
-| Why/trust benefits                                                  | `WhyMohandesMan`                                                      | REUSE CONTENT + MODERNIZE                                         |
-| Join experts                                                        | `JoinCtaSection`                                                      | MODERNIZE                                                         |
-| Auto-scrolling expert portraits                                     | featured expert rail within marketplace journey                       | MERGE — no forced auto-scroll                                     |
-| Knowledge tip carousel                                              | editorial content band linking to `/knowledge`                        | MERGE                                                             |
-| Article/resource preview                                            | editorial content band linking to `/articles`                         | MIGRATE                                                           |
-| FAQ category modal                                                  | accessible inline FAQ preview + `/faq` CTA                            | MERGE                                                             |
-| Ask-question modal                                                  | none                                                                  | NOT APPLICABLE — no submission API contract                       |
+| Legacy section                                                      | Implementation                                                       | Status                                      |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------- |
+| Search/city hero and construction message                           | `HomeHero` with Swiper visual, search, city, and join                | MODERNIZE                                   |
+| Six illustrated categories                                          | Shared `ServiceCategoryGrid` / `GlassInfoCard` on Home and About     | MODERNIZE                                   |
+| Marketplace result immediately below categories                     | `HomeMarketplace` with category, city, expertise, and page size 9    | MIGRATE                                     |
+| Banner carousel                                                     | Merged into the first-section Swiper (`homeHeroSlides`)              | MERGE                                       |
+| “What is Mohandes Man?”                                             | `HomeNarrative`                                                      | REUSE CONTENT + MODERNIZE                   |
+| Popular services                                                    | `PopularServices` driven by central display data                     | MIGRATE                                     |
+| Drawing consultation (architecture/structure/electrical/mechanical) | `DrawingConsultation`                                                | MIGRATE                                     |
+| Why/trust benefits                                                  | `WhyMohandesMan`                                                     | REUSE CONTENT + MODERNIZE                   |
+| Join experts                                                        | `JoinCtaSection`                                                     | MODERNIZE                                   |
+| Auto-scrolling expert portraits                                     | Featured discovery lives in `HomeMarketplace`; no forced auto-scroll | MERGE                                       |
+| Knowledge tip carousel                                              | `HomeKnowledgeTips` Swiper from catalog tips                         | MERGE                                       |
+| Article/resource preview                                            | `ContentHighlights` linking to `/articles`, `/knowledge`, `/faq`     | MIGRATE                                     |
+| FAQ category modal                                                  | Accessible FAQ category tiles + `/faq` CTA (`HomeFaqEntry`)          | MERGE                                       |
+| Duplicate testimonial slides                                        | One unique quote in `HomeTestimonials`                               | MERGE                                       |
+| Ask-question modal                                                  | none                                                                 | NOT APPLICABLE — no submission API contract |
+| Home review form + OTP                                              | Honest “coming after API” note only                                  | NOT APPLICABLE — no review/OTP API contract |
 
 ## Service pages (all → `/services/[slug]`)
 

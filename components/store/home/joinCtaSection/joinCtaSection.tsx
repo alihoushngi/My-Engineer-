@@ -5,7 +5,7 @@ export function JoinCtaSection() {
   return (
     <section
       aria-labelledby="join-cta-heading"
-      className="container-app pb-section"
+      className="container-app py-section"
     >
       <div className="flex flex-col items-start gap-6 rounded-lg bg-primary px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10">
         <div className="max-w-2xl space-y-3">

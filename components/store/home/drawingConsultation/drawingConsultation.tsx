@@ -7,14 +7,10 @@ import {
   WindIcon,
 } from "lucide-react";
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
+import { homeDrawingCopy } from "@/config/home.config/home.config";
+import { type HomeDrawingService } from "@/types/store/home.types";
 
-type DrawingService = {
-  id: string;
-  title: string;
-  description: string;
-  href: string;
-};
-type DrawingConsultationProps = { items: readonly DrawingService[] };
+type DrawingConsultationProps = { items: readonly HomeDrawingService[] };
 const icons = [
   DraftingCompassIcon,
   Building2Icon,
@@ -32,17 +28,20 @@ export function DrawingConsultation({ items }: DrawingConsultationProps) {
       <div className="container-app space-y-8">
         <SectionHeader
           titleId="drawing-consultation-heading"
-          title="مشاوره ترسیم نقشه"
-          description="برای هماهنگی بهتر میان رشته‌ها، نوع نقشه مورد نیاز پروژه را انتخاب کنید."
+          title={homeDrawingCopy.title}
+          description={homeDrawingCopy.description}
         />
-        <ul className="grid border-y border-border-strong sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-x-reverse lg:divide-border-strong">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => {
             const Icon = icons[index % icons.length] ?? DraftingCompassIcon;
             return (
-              <li key={item.id}>
+              <li
+                key={item.id}
+                className="border-b border-border-strong lg:border-b-0 lg:border-e lg:border-s-0 last:lg:border-e-0"
+              >
                 <Link
                   href={item.href}
-                  className="group flex h-full flex-col gap-5 px-5 py-7 outline-none hover:bg-surface/70 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+                  className="group flex h-full min-h-44 flex-col gap-4 px-4 py-6 outline-none hover:bg-surface/70 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring sm:px-5 sm:py-7"
                 >
                   <Icon
                     aria-hidden="true"
