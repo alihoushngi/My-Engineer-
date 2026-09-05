@@ -152,7 +152,7 @@ The home page opens with a navy discovery hero and a Swiper image slider instead
 
 ### Discovery
 
-Search preserves URL-driven query and city behavior and exposes the same city inventory as the marketplace. Search controls form one compact task region; service matches and expert results are separate. All six service routes share one layout: photo-led service hero, accurate scope and specialty modules, city/expertise expert filtering, process, preparation guidance, FAQ, and related-service navigation.
+Search preserves URL-driven query and city behavior and exposes the same city inventory as the marketplace. Search controls form one compact task region; service matches and expert results are separate. All six service routes share one layout: photo-led service hero, scope and specialty modules, URL-driven expert filters (city, skill, experience, license, discipline, degree, and service tabs where the legacy pages had them), a compact desktop filter sheet, a mobile bottom-sheet with active chips and result count, pagination above nine results, process, preparation guidance, FAQ when real copy exists, and related-service navigation.
 
 ### Experts
 

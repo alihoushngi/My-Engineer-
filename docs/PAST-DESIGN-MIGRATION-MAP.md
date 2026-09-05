@@ -40,20 +40,23 @@ Every legacy HTML page and meaningful product section is classified below. Statu
 
 ## Service pages (all → `/services/[slug]`)
 
-All service pages migrate to one reusable `ServiceDiscoveryPage` architecture with per-service content from the data boundary: hero, specialty rail/tabs, supported filters, result summary, expert results, empty state, process, service information, FAQ, and related services.
+All service pages migrate to one reusable `ServiceDiscoveryPage` architecture with per-service content from the data boundary: hero, specialty modules, URL-driven filters, result summary, paginated expert results, empty state, process, service information, FAQ, and related services.
 
 | Legacy page / section                                                                                          | New slug / implementation                     | Status                                        |
 | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
 | `services/land-surveying.html` / hero, surveying specialties, experts, filters, FAQ, featured experts          | `land-surveying`                              | MIGRATE                                       |
-| `services/construction-workers.html` / craftsperson and contractor tabs/lists                                  | `construction-workers`                        | MIGRATE + MERGE                               |
-| `services/construction-workers.html` / copied surveying FAQ                                                    | none                                          | NOT APPLICABLE — incorrect duplicated content |
-| `services/drawing.html` / architecture, structural, electrical, mechanical tabs and software concepts          | `drawing`                                     | MIGRATE                                       |
+| Shared service filters: city, skill, experience, license, discipline, degree                                   | `service-filters.config` + marketplace sheet  | MIGRATE + MODERNIZE                           |
+| Surveying 3-band vs other 4-band experience radios                                                             | per-slug `experienceBands`                    | MIGRATE                                       |
+| `services/construction-workers.html` / craftsperson and contractor tabs/lists                                  | `construction-workers` tabs                   | MIGRATE + MERGE                               |
+| `services/construction-workers.html` / copied surveying FAQ and skill radios                                   | none; worker specialties from current catalog | NOT APPLICABLE — incorrect duplicated content |
+| `services/drawing.html` / architecture, structural, electrical, mechanical tabs and software concepts          | `drawing` tabs; structure skill radios        | MIGRATE                                       |
 | `services/drawing.html` / repeated surveying descriptions and FAQ                                              | none                                          | NOT APPLICABLE — incorrect duplicated content |
 | `services/interior-design.html` / facade/interior/landscape specialties and education                          | `interior-design`                             | MIGRATE                                       |
-| `services/interior-design.html` / surveying filter items                                                       | none                                          | NOT APPLICABLE — incorrect taxonomy           |
+| `services/interior-design.html` / surveying filter items                                                       | interior specialties from current catalog     | NOT APPLICABLE — incorrect taxonomy           |
 | `services/building-permit.html` / permits, completion, municipal work, required drawings                       | `building-permit`                             | MIGRATE                                       |
-| `services/building-permit.html` / generic surveying filter list                                                | none                                          | NOT APPLICABLE — incorrect taxonomy           |
+| `services/building-permit.html` / generic surveying filter list                                                | permit specialties from current catalog       | NOT APPLICABLE — incorrect taxonomy           |
 | `services/construction-admin-services.html` / registry, municipal, land-use, Housing Foundation administration | `administrative-services`                     | MIGRATE                                       |
+| Legacy unwired “load more” on result lists                                                                     | page-size 9 pagination preserving filters     | MODERNIZE                                     |
 | Legacy route name `construction-admin-services.html`                                                           | canonical `/services/administrative-services` | MERGE                                         |
 
 ## Expert profile (`PastDesign/resume.html` → `/experts/[id]`)

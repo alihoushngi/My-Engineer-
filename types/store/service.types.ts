@@ -27,4 +27,6 @@ export type ServiceDetailData = {
   process: readonly ServiceProcessStep[];
   faqs: readonly FaqItem[];
   experts: readonly ExpertCardData[];
+  scopeItems?: readonly string[];
+  showSuggestedExperts?: boolean;
 };

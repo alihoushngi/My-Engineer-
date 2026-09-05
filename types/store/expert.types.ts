@@ -55,6 +55,10 @@ export type ExpertCardData = {
   reviewCount?: number;
   specialties?: readonly string[];
   serviceSlugs?: readonly ServiceSlug[];
+  discipline?: string;
+  degree?: "associate" | "bachelor" | "master" | "doctorate";
+  hasLicense?: boolean;
+  track?: "craftsman" | "contractor";
 };
 
 /**

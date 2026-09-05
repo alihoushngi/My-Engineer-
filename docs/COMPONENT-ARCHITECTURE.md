@@ -271,31 +271,33 @@ One architecture for all six slugs.
 
 ```text
 ServiceDiscoveryPage              E
-├── ServiceHero                   D  title, intro, city trigger
-├── ServiceSubtypeTabs            D  (c) only if config.tabs.length > 0
-├── ServiceFilterBar              D  (c) chips + open sheet
-│   └── ServiceFilterSheet        D  (c) radios / skill lists
-├── result count (live region)
-├── ServiceExpertList             D
-│   └── ExpertCard                D  (from expert feature)
-├── LoadMoreButton                C
-├── ServiceEmptyState             D  Empty + change-city
-├── ServiceInfoSection            D  accordion/FAQ **only with real copy**
-└── SuggestedExpertsRail          D  NEEDS CONFIRMATION — omit by default
+├── ServiceDiscoveryHero          D  title, intro, jump to experts
+├── ServiceScopeSection           D  specialties + real scope accordion
+├── ServiceSuggestedExperts       D  surveying-only, real profile links
+├── ServiceExpertMarketplace      D  (c)
+│   ├── subtype tabs (URL `tab`)
+│   ├── city select + compact filter trigger
+│   ├── ServiceFilterOverlay      D  (c) Sheet on desktop, Drawer on mobile
+│   ├── ServiceActiveFilters      D  (c) chips, clear, reset
+│   ├── result count (live region)
+│   ├── ExpertCard grid
+│   ├── ServicePagination         D  (c) when more than 9 results
+│   └── Empty + change-city
+├── ServiceProcessSection         D
+├── FaqAccordion                  D  only with real per-service copy
+└── ServiceRelatedSection         D
 ```
 
-| Component              | Responsibility             | Props                                            | Server/Client           | Reuse                          |
-| ---------------------- | -------------------------- | ------------------------------------------------ | ----------------------- | ------------------------------ |
-| `ServiceDiscoveryPage` | Compose listing            | `slug`, searchParams, data                       | Server                  | All six services               |
-| `ServiceHero`          | Identity + city            | title, intro, city label                         | Server                  |                                |
-| `ServiceCategoryGrid`  | Six top-level tiles        | items                                            | Server                  | Home, About, SearchSurface     |
-| `ServiceTile`          | One category/subtype tile  | label, href, icon?                               | Server                  | Grid, popular, drawing, search |
-| `ServiceSubtypeTabs`   | URL `tab`                  | tabs, current                                    | Client                  | Workers, drawing only          |
-| `ServiceFilterBar`     | Applied chips, clear, open | applied filters                                  | Client                  |                                |
-| `ServiceFilterSheet`   | Filter form                | options from **API CONTRACT REQUIRED** or config | Client                  |                                |
-| `ServiceExpertList`    | List/grid of cards         | experts                                          | Server                  |                                |
-| `ServiceEmptyState`    | No hits + city CTA         | onChangeCity                                     | Server + client trigger | Building-permit included       |
-| `ServiceInfoSection`   | Real FAQ/info              | items                                            | Server                  | Omit when copy missing         |
+| Component                  | Responsibility             | Props                    | Server/Client | Reuse                          |
+| -------------------------- | -------------------------- | ------------------------ | ------------- | ------------------------------ |
+| `ServiceDiscoveryPage`     | Compose listing            | service, detail, cities  | Server        | All six services               |
+| `ServiceDiscoveryHero`     | Identity + jump to experts | service, detail          | Server        |                                |
+| `ServiceCategoryGrid`      | Six top-level tiles        | items                    | Server        | Home, About, SearchSurface     |
+| `ServiceTile`              | One category/subtype tile  | label, href, icon?       | Server        | Grid, popular, drawing, search |
+| `ServiceExpertMarketplace` | Tabs, filters, results     | slug, experts, cities    | Client        | All six services               |
+| `ServiceFilterOverlay`     | Filter form                | definition, draft values | Client        | Sheet desktop / Drawer mobile  |
+| `ServiceEmptyState`        | No hits + change-city CTA  | via marketplace Empty    | Client        | Building-permit included       |
+| `ServiceSuggestedExperts`  | Featured surveying experts | experts                  | Server        | Surveying only                 |
 
 **Do not** create `LandSurveyingPage`, `DrawingPage`, etc.
 
@@ -702,21 +704,21 @@ consumer exists.
 
 ## 15. Responsive requirements (components)
 
-| Component                                  | Mobile behavior                                                    |
-| ------------------------------------------ | ------------------------------------------------------------------ |
-| `StoreHeader`                              | 44px-class icon buttons; no truncated unlabelled icons             |
-| `SearchSurface` / `CitySelector` / filters | Drawer; sticky primary action                                      |
-| `ExpertCard`                               | Full-width; specialties wrap; CTA full-width                       |
-| `ExpertProfileHeader`                      | Stack; stats as a simple list                                      |
-| `ExpertContactBar`                         | Position sticky bottom; `padding-bottom` on profile main           |
-| `ExpertPortfolioGallery`                   | 2-col grid; tap to expand                                          |
-| `RegistrationProgress`                     | Text “گام ۳ از ۹” + bar; do not force 9 circles                    |
-| `RegistrationStepNav`                      | Sticky bottom, two buttons, safe-area                              |
-| `ExpertiseCategorySheet`                   | One category at a time; confirm commits; no nested offcanvas stack |
-| `FileUpload`                               | Tap to native picker; preview list with remove                     |
-| `ServiceFilterBar`                         | Horizontal scroll chips; “فیلترها” opens drawer                    |
-| `ServiceSubtypeTabs`                       | Scrollable Tabs list                                               |
-| `ArticleToc`                               | In-flow list, not a sticky unused sidebar                          |
+| Component                                  | Mobile behavior                                                      |
+| ------------------------------------------ | -------------------------------------------------------------------- |
+| `StoreHeader`                              | 44px-class icon buttons; no truncated unlabelled icons               |
+| `SearchSurface` / `CitySelector` / filters | Drawer; sticky primary action                                        |
+| `ExpertCard`                               | Full-width; specialties wrap; CTA full-width                         |
+| `ExpertProfileHeader`                      | Stack; stats as a simple list                                        |
+| `ExpertContactBar`                         | Position sticky bottom; `padding-bottom` on profile main             |
+| `ExpertPortfolioGallery`                   | 2-col grid; tap to expand                                            |
+| `RegistrationProgress`                     | Text “گام ۳ از ۹” + bar; do not force 9 circles                      |
+| `RegistrationStepNav`                      | Sticky bottom, two buttons, safe-area                                |
+| `ExpertiseCategorySheet`                   | One category at a time; confirm commits; no nested offcanvas stack   |
+| `FileUpload`                               | Tap to native picker; preview list with remove                       |
+| `ServiceExpertMarketplace`                 | Sticky city/filter bar; chips wrap; Drawer filters; one-column cards |
+| `ServiceFilterOverlay`                     | Drawer on small screens, start Sheet from `md`                       |
+| `ArticleToc`                               | In-flow list, not a sticky unused sidebar                            |
 
 ---
 

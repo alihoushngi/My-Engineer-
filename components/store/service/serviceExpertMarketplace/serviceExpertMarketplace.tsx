@@ -1,8 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { UsersIcon } from "lucide-react";
+import { MapPinIcon, SlidersHorizontalIcon, UsersIcon } from "lucide-react";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
+import { ServiceActiveFilters } from "@/components/store/service/serviceActiveFilters/serviceActiveFilters";
+import { ServiceFilterOverlay } from "@/components/store/service/serviceFilterOverlay/serviceFilterOverlay";
+import { ServicePagination } from "@/components/store/service/servicePagination/servicePagination";
+import { Button } from "@/components/ui/button/button";
 import { Empty } from "@/components/ui/empty/empty";
 import {
   Select,
@@ -11,86 +14,183 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select/select";
+import { serviceFilterCopy } from "@/config/service-filters.config/service-filters.config";
+import { ALL_FILTER } from "@/lib/service/filter-experts/filter-experts";
+import { type ServiceSlug } from "@/config/services.config/services.config";
+import { useServiceDiscovery } from "@/hooks/use-service-discovery/use-service-discovery";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
 import { type ExpertCardData } from "@/types/store/expert.types";
+import { type City } from "@/types/store/registration.types";
 
-type Props = { experts: readonly ExpertCardData[] };
+type ServiceExpertMarketplaceProps = {
+  slug: ServiceSlug;
+  experts: readonly ExpertCardData[];
+  cities: readonly City[];
+};
 
-export function ServiceExpertMarketplace({ experts }: Props) {
-  const [city, setCity] = useState("all");
-  const [specialty, setSpecialty] = useState("all");
-  const cities = useMemo(
-    () =>
-      [
-        ...new Set(experts.map((item) => item.city).filter(Boolean)),
-      ] as string[],
-    [experts],
-  );
-  const specialties = useMemo(
-    () => [...new Set(experts.flatMap((item) => item.specialties ?? []))],
-    [experts],
-  );
-  const results = experts.filter(
-    (expert) =>
-      (city === "all" || expert.city === city) &&
-      (specialty === "all" || expert.specialties?.includes(specialty)),
-  );
+export function ServiceExpertMarketplace({
+  slug,
+  experts,
+  cities,
+}: ServiceExpertMarketplaceProps) {
+  const discovery = useServiceDiscovery({ slug, experts, cities });
+  const { pagination, definition } = discovery;
 
   return (
-    <section aria-labelledby="service-experts-heading" className="space-y-6">
-      <div className="flex flex-col gap-4 border-b border-border pb-5 md:flex-row md:items-end md:justify-between">
-        <div>
+    <section aria-labelledby="service-experts-heading" className="space-y-5">
+      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div className="min-w-0">
           <h2 id="service-experts-heading" className="type-h2">
-            متخصصان این حوزه
+            {serviceFilterCopy.expertsHeading}
           </h2>
-          <p className="mt-1 type-body-sm text-foreground-muted">
-            {formatFaNumber(results.length)} متخصص متناسب با انتخاب شما
+          <p
+            aria-live="polite"
+            className="mt-1 type-body-sm text-foreground-muted"
+          >
+            {formatFaNumber(pagination.total)} {serviceFilterCopy.foundSuffix}
           </p>
         </div>
-        <div className="grid gap-2 sm:grid-cols-2 md:w-[28rem]">
-          <Select value={city} onValueChange={setCity}>
-            <SelectTrigger aria-label="فیلتر شهر">
-              <SelectValue placeholder="همه شهرها" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">همه شهرها</SelectItem>
-              {cities.map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={specialty} onValueChange={setSpecialty}>
-            <SelectTrigger aria-label="فیلتر تخصص">
-              <SelectValue placeholder="همه تخصص‌ها" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">همه تخصص‌ها</SelectItem>
-              {specialties.map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="hidden items-center gap-2 md:flex">
+          <CitySelect
+            value={discovery.applied.city}
+            cities={cities}
+            onChange={discovery.changeCity}
+          />
+          <Button
+            variant="outline"
+            icon={<SlidersHorizontalIcon aria-hidden="true" />}
+            onClick={discovery.openOverlay}
+          >
+            {serviceFilterCopy.filtersLabel}
+          </Button>
         </div>
       </div>
-      {results.length ? (
-        <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {results.map((expert) => (
-            <li key={expert.id}>
-              <ExpertCard expert={expert} />
-            </li>
+
+      {definition.tabs.length > 0 ? (
+        <div
+          role="tablist"
+          aria-label="زیردسته خدمت"
+          className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
+        >
+          {definition.tabs.map((tab) => (
+            <Button
+              key={tab.id}
+              role="tab"
+              size="sm"
+              variant={discovery.applied.tab === tab.id ? "primary" : "outline"}
+              aria-selected={discovery.applied.tab === tab.id}
+              className="shrink-0"
+              onClick={() => {
+                discovery.changeTab(tab.id);
+              }}
+            >
+              {tab.label}
+            </Button>
           ))}
-        </ul>
+        </div>
+      ) : null}
+
+      <div className="sticky top-[calc(4.25rem+env(safe-area-inset-top))] z-30 -mx-4 flex items-center gap-2 border-y border-border bg-surface/95 px-4 py-3 backdrop-blur-md md:hidden">
+        <CitySelect
+          value={discovery.applied.city}
+          cities={cities}
+          onChange={discovery.changeCity}
+        />
+        <Button
+          variant="outline"
+          size="sm"
+          className="shrink-0"
+          icon={<SlidersHorizontalIcon aria-hidden="true" />}
+          onClick={discovery.openOverlay}
+        >
+          {serviceFilterCopy.filtersLabel}
+        </Button>
+        <p className="ms-auto shrink-0 type-caption text-muted-foreground">
+          {formatFaNumber(pagination.total)}
+        </p>
+      </div>
+
+      <ServiceActiveFilters
+        chips={discovery.activeChips}
+        onClear={discovery.clearChip}
+        onReset={discovery.reset}
+      />
+
+      {pagination.total > 0 ? (
+        <>
+          <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {pagination.items.map((expert) => (
+              <li key={expert.id} className="min-w-0">
+                <ExpertCard expert={expert} />
+              </li>
+            ))}
+          </ul>
+          <ServicePagination
+            page={pagination.page}
+            pageCount={pagination.pageCount}
+            onPageChange={discovery.changePage}
+          />
+        </>
       ) : (
         <Empty
           icon={<UsersIcon aria-hidden="true" />}
-          title="متخصصی با این ترکیب پیدا نشد"
-          description="فیلتر شهر یا تخصص را تغییر دهید."
+          title={serviceFilterCopy.emptyTitle}
+          description={serviceFilterCopy.emptyDescription}
+          action={
+            <Button
+              variant="outline"
+              icon={<MapPinIcon aria-hidden="true" />}
+              onClick={discovery.openOverlay}
+            >
+              {serviceFilterCopy.changeCityLabel}
+            </Button>
+          }
         />
       )}
+
+      <ServiceFilterOverlay
+        open={discovery.overlayOpen}
+        definition={definition}
+        values={discovery.draft}
+        overlayKeys={discovery.overlayKeys}
+        draftCount={discovery.draftCount}
+        onOpenChange={discovery.setOverlayOpen}
+        onChange={discovery.setDraftValue}
+        onApply={discovery.applyDraft}
+        onReset={discovery.reset}
+      />
     </section>
+  );
+}
+
+function CitySelect({
+  value,
+  cities,
+  onChange,
+}: {
+  value: string;
+  cities: readonly City[];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger
+        aria-label={serviceFilterCopy.cityFilterLabel}
+        className="h-12 min-w-0 flex-1 md:w-52"
+      >
+        <MapPinIcon aria-hidden="true" className="size-4" />
+        <SelectValue placeholder={serviceFilterCopy.allCitiesLabel} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value={ALL_FILTER}>
+          {serviceFilterCopy.allCitiesLabel}
+        </SelectItem>
+        {cities.map((city) => (
+          <SelectItem key={city.id} value={city.name}>
+            {city.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

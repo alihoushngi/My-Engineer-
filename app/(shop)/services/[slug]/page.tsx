@@ -3,7 +3,10 @@ import { notFound } from "next/navigation";
 import { ServiceDiscoveryPage } from "@/components/store/service/serviceDiscoveryPage/serviceDiscoveryPage";
 import { getServiceCategory } from "@/config/services.config/services.config";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
-import { getServiceDetail } from "@/services/catalog-service/catalog-service";
+import {
+  getServiceDetail,
+  listCatalogCities,
+} from "@/services/catalog-service/catalog-service";
 
 type ServicePageProps = {
   params: Promise<{ slug: string }>;
@@ -36,11 +39,16 @@ export default async function ServiceRoutePage({ params }: ServicePageProps) {
     notFound();
   }
 
-  const detail = await getServiceDetail(service.slug);
+  const [detail, cities] = await Promise.all([
+    getServiceDetail(service.slug),
+    listCatalogCities(),
+  ]);
 
   if (!detail) {
     notFound();
   }
 
-  return <ServiceDiscoveryPage service={service} detail={detail} />;
+  return (
+    <ServiceDiscoveryPage service={service} detail={detail} cities={cities} />
+  );
 }

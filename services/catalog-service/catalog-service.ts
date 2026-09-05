@@ -11,6 +11,7 @@ import {
   mockServiceDetails,
 } from "@/lib/mock-data/mock-data";
 import { type HomeCatalogData } from "@/types/store/home.types";
+import { type City } from "@/types/store/registration.types";
 import { type ServiceDetailData } from "@/types/store/service.types";
 
 const emptyHomeCatalog: HomeCatalogData = {
@@ -47,4 +48,12 @@ export async function getServiceDetail(
   }
 
   return mockServiceDetails.find((service) => service.slug === slug) ?? null;
+}
+
+export async function listCatalogCities(): Promise<readonly City[]> {
+  if (!env.useMockData) {
+    return [];
+  }
+
+  return mockCities;
 }
