@@ -49,10 +49,15 @@ export function EngineerUnauthorized({ access }: EngineerUnauthorizedProps) {
         </Alert>
         <div className="flex flex-wrap gap-3">
           <Button asChild>
-            <Link href={siteConfig.homeHref}>{engineerPanelCopy.homeCta}</Link>
+            <Link href={siteConfig.engineerLoginHref}>
+              {engineerPanelCopy.loginCta}
+            </Link>
           </Button>
           <Button asChild variant="outline">
             <Link href={siteConfig.joinHref}>{engineerPanelCopy.joinCta}</Link>
+          </Button>
+          <Button asChild variant="ghost">
+            <Link href={siteConfig.homeHref}>{engineerPanelCopy.homeCta}</Link>
           </Button>
         </div>
       </main>

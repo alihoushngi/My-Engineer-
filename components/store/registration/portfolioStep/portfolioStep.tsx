@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMemo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Checkbox } from "@/components/ui/checkbox/checkbox";
 import { Field, FieldError } from "@/components/ui/field/field";
 import { CertificateFields } from "@/components/store/registration/portfolioStep/certificateFields/certificateFields";
@@ -21,6 +21,7 @@ import { RegistrationError } from "@/components/store/registration/registrationE
 import { registrationPaths } from "@/lib/registration/guard-path/guard-path";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
 import { submitRegistration } from "@/services/registration-service/registration-service";
+import { toMockEngineerProfileSnapshot } from "@/lib/auth/registration-profile-snapshot/registration-profile-snapshot";
 import {
   type CertificateEntry,
   type PortfolioImageEntry,
@@ -76,7 +77,7 @@ export function PortfolioStep() {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<PortfolioStepData>({
-    resolver: zodResolver(portfolioStepSchema),
+    resolver: yupResolver(portfolioStepSchema),
     defaultValues: {
       acceptRules: data.portfolio?.acceptRules,
     },
@@ -126,6 +127,14 @@ export function PortfolioStep() {
         imageCount: images.length,
         certificateCount: certificates.length,
         acceptRules: formData.acceptRules,
+        profile: toMockEngineerProfileSnapshot({
+          ...data,
+          portfolio: {
+            images,
+            certificates,
+            acceptRules: true,
+          },
+        }),
       });
     } catch (err) {
       setApiError(

@@ -5,7 +5,8 @@ import {
   type ReactNode,
   useCallback,
   useContext,
-  useState,
+  useEffect,
+  useSyncExternalStore,
 } from "react";
 import {
   type RegistrationEducationData,
@@ -19,6 +20,14 @@ import {
   type RegistrationServiceAreaData,
   type RegistrationWizardData,
 } from "@/types/store/registration.types";
+import {
+  getServerWizardSnapshot,
+  getWizardSnapshot,
+  hydrateWizardFromStorage,
+  patchWizardState,
+  resetWizardStore,
+  subscribeWizard,
+} from "@/lib/registration/mock-wizard-store/mock-wizard-store";
 
 type RegistrationWizardContextValue = {
   data: RegistrationWizardData;
@@ -52,6 +61,7 @@ export function useRegistrationWizard(): RegistrationWizardContextValue {
 
 type RegistrationWizardProviderProps = {
   children: ReactNode;
+  persistMockState?: boolean;
 };
 
 function raiseMaxStep(
@@ -63,171 +73,164 @@ function raiseMaxStep(
 
 export function RegistrationWizardProvider({
   children,
+  persistMockState = false,
 }: RegistrationWizardProviderProps) {
-  const [data, setData] = useState<RegistrationWizardData>({});
-  const [maxStep, setMaxStep] = useState<RegistrationMaxStep>(1);
+  const snapshot = useSyncExternalStore(
+    subscribeWizard,
+    getWizardSnapshot,
+    getServerWizardSnapshot,
+  );
 
-  const commitIdentity = useCallback((identity: RegistrationIdentityData) => {
-    setData({ identity });
-    setMaxStep(2);
-  }, []);
+  useEffect(() => {
+    if (persistMockState) {
+      hydrateWizardFromStorage();
+      return;
+    }
+
+    resetWizardStore();
+  }, [persistMockState]);
+
+  const commitIdentity = useCallback(
+    (identity: RegistrationIdentityData) => {
+      patchWizardState(persistMockState, () => ({
+        data: { identity },
+        maxStep: 2,
+      }));
+    },
+    [persistMockState],
+  );
 
   const commitOtpVerified = useCallback(() => {
-    setData((prev) => ({ ...prev, otpVerified: true }));
-    setMaxStep(3);
-  }, []);
+    patchWizardState(persistMockState, (prev) => ({
+      data: { ...prev.data, otpVerified: true },
+      maxStep: 3,
+    }));
+  }, [persistMockState]);
 
   const commitServiceArea = useCallback(
     (serviceArea: RegistrationServiceAreaData) => {
-      setData((prev) => ({ ...prev, serviceArea }));
-      setMaxStep((prev) => raiseMaxStep(prev, 4));
+      patchWizardState(persistMockState, (prev) => ({
+        data: { ...prev.data, serviceArea },
+        maxStep: raiseMaxStep(prev.maxStep, 4),
+      }));
     },
-    [],
+    [persistMockState],
   );
 
   const commitExpertise = useCallback(
     (expertise: RegistrationExpertiseData) => {
-      setData((prev) => ({
-        ...prev,
-        expertise,
-        personalInfo: undefined,
-        education: undefined,
-        organization: undefined,
-        resume: undefined,
-        portfolio: undefined,
-        submitted: undefined,
+      patchWizardState(persistMockState, (prev) => ({
+        data: {
+          ...prev.data,
+          expertise,
+          personalInfo: undefined,
+          education: undefined,
+          organization: undefined,
+          resume: undefined,
+          portfolio: undefined,
+          submitted: undefined,
+        },
+        maxStep: raiseMaxStep(prev.maxStep, 5),
       }));
-      setMaxStep((prev) => raiseMaxStep(prev, 5));
     },
-    [],
+    [persistMockState],
   );
 
   const commitPersonalInfo = useCallback(
     (personalInfo: RegistrationPersonalInfoData) => {
-      setData((prev) => ({
-        ...prev,
-        personalInfo,
-        education: undefined,
-        organization: undefined,
-        resume: undefined,
-        portfolio: undefined,
-        submitted: undefined,
+      patchWizardState(persistMockState, (prev) => ({
+        data: {
+          ...prev.data,
+          personalInfo,
+          education: undefined,
+          organization: undefined,
+          resume: undefined,
+          portfolio: undefined,
+          submitted: undefined,
+        },
+        maxStep: raiseMaxStep(prev.maxStep, 6),
       }));
-      setMaxStep((prev) => raiseMaxStep(prev, 6));
     },
-    [],
+    [persistMockState],
   );
 
   const commitEducation = useCallback(
     (education: RegistrationEducationData) => {
-      setData((prev) => ({
-        ...prev,
-        education,
-        organization: undefined,
-        resume: undefined,
-        portfolio: undefined,
-        submitted: undefined,
+      patchWizardState(persistMockState, (prev) => ({
+        data: {
+          ...prev.data,
+          education,
+          organization: undefined,
+          resume: undefined,
+          portfolio: undefined,
+          submitted: undefined,
+        },
+        maxStep: raiseMaxStep(prev.maxStep, 7),
       }));
-      setMaxStep((prev) => raiseMaxStep(prev, 7));
     },
-    [],
+    [persistMockState],
   );
 
   const commitOrganization = useCallback(
     (organization: RegistrationOrganizationData) => {
-      setData((prev) => ({
-        ...prev,
-        organization,
-        resume: undefined,
-        portfolio: undefined,
-        submitted: undefined,
+      patchWizardState(persistMockState, (prev) => ({
+        data: {
+          ...prev.data,
+          organization,
+          resume: undefined,
+          portfolio: undefined,
+          submitted: undefined,
+        },
+        maxStep: raiseMaxStep(prev.maxStep, 8),
       }));
-      setMaxStep((prev) => raiseMaxStep(prev, 8));
     },
-    [],
+    [persistMockState],
   );
 
-  const commitResume = useCallback((resume: RegistrationResumeData) => {
-    setData((prev) => ({
-      ...prev,
-      resume,
-      portfolio: undefined,
-      submitted: undefined,
-    }));
-    setMaxStep((prev) => raiseMaxStep(prev, 9));
-  }, []);
+  const commitResume = useCallback(
+    (resume: RegistrationResumeData) => {
+      patchWizardState(persistMockState, (prev) => ({
+        data: {
+          ...prev.data,
+          resume,
+          portfolio: undefined,
+          submitted: undefined,
+        },
+        maxStep: raiseMaxStep(prev.maxStep, 9),
+      }));
+    },
+    [persistMockState],
+  );
 
   const commitSubmitted = useCallback(
     (portfolio: RegistrationPortfolioData) => {
-      setData((prev) => ({
-        ...prev,
-        portfolio,
-        submitted: true,
+      patchWizardState(persistMockState, (prev) => ({
+        data: {
+          ...prev.data,
+          portfolio,
+          submitted: true,
+        },
+        maxStep: prev.maxStep,
       }));
     },
-    [],
+    [persistMockState],
   );
 
-  const resetFromStep = useCallback((step: RegistrationMaxStep) => {
-    setMaxStep(step);
-
-    if (step === 1) {
-      setData({});
-    } else if (step === 2) {
-      setData((prev) => ({ identity: prev.identity }));
-    } else if (step === 3) {
-      setData((prev) => ({
-        identity: prev.identity,
-        otpVerified: prev.otpVerified,
+  const resetFromStep = useCallback(
+    (step: RegistrationMaxStep) => {
+      patchWizardState(persistMockState, (prev) => ({
+        maxStep: step,
+        data: dataAfterReset(prev.data, step),
       }));
-    } else if (step === 4) {
-      setData((prev) => ({
-        identity: prev.identity,
-        otpVerified: prev.otpVerified,
-        serviceArea: prev.serviceArea,
-      }));
-    } else if (step === 5) {
-      setData((prev) => ({
-        identity: prev.identity,
-        otpVerified: prev.otpVerified,
-        serviceArea: prev.serviceArea,
-        expertise: prev.expertise,
-      }));
-    } else if (step === 6) {
-      setData((prev) => ({
-        identity: prev.identity,
-        otpVerified: prev.otpVerified,
-        serviceArea: prev.serviceArea,
-        expertise: prev.expertise,
-        personalInfo: prev.personalInfo,
-      }));
-    } else if (step === 7) {
-      setData((prev) => ({
-        identity: prev.identity,
-        otpVerified: prev.otpVerified,
-        serviceArea: prev.serviceArea,
-        expertise: prev.expertise,
-        personalInfo: prev.personalInfo,
-        education: prev.education,
-      }));
-    } else if (step === 8) {
-      setData((prev) => ({
-        identity: prev.identity,
-        otpVerified: prev.otpVerified,
-        serviceArea: prev.serviceArea,
-        expertise: prev.expertise,
-        personalInfo: prev.personalInfo,
-        education: prev.education,
-        organization: prev.organization,
-      }));
-    }
-  }, []);
+    },
+    [persistMockState],
+  );
 
   return (
     <RegistrationWizardContext.Provider
       value={{
-        data,
-        maxStep,
+        data: snapshot.data,
+        maxStep: snapshot.maxStep,
         commitIdentity,
         commitOtpVerified,
         commitServiceArea,
@@ -243,4 +246,58 @@ export function RegistrationWizardProvider({
       {children}
     </RegistrationWizardContext.Provider>
   );
+}
+
+function dataAfterReset(
+  data: RegistrationWizardData,
+  step: RegistrationMaxStep,
+): RegistrationWizardData {
+  if (step === 1) return {};
+  if (step === 2) return { identity: data.identity };
+  if (step === 3) {
+    return { identity: data.identity, otpVerified: data.otpVerified };
+  }
+  if (step === 4) {
+    return {
+      identity: data.identity,
+      otpVerified: data.otpVerified,
+      serviceArea: data.serviceArea,
+    };
+  }
+  if (step === 5) {
+    return {
+      identity: data.identity,
+      otpVerified: data.otpVerified,
+      serviceArea: data.serviceArea,
+      expertise: data.expertise,
+    };
+  }
+  if (step === 6) {
+    return {
+      identity: data.identity,
+      otpVerified: data.otpVerified,
+      serviceArea: data.serviceArea,
+      expertise: data.expertise,
+      personalInfo: data.personalInfo,
+    };
+  }
+  if (step === 7) {
+    return {
+      identity: data.identity,
+      otpVerified: data.otpVerified,
+      serviceArea: data.serviceArea,
+      expertise: data.expertise,
+      personalInfo: data.personalInfo,
+      education: data.education,
+    };
+  }
+  return {
+    identity: data.identity,
+    otpVerified: data.otpVerified,
+    serviceArea: data.serviceArea,
+    expertise: data.expertise,
+    personalInfo: data.personalInfo,
+    education: data.education,
+    organization: data.organization,
+  };
 }

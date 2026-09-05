@@ -6,7 +6,7 @@ import {
   getEngineerConversation,
   getEngineerMessages,
   getEngineerWorkspace,
-} from "@/services/engineer-service/engineer-service";
+} from "@/services/engineer-service/engineer-access-service";
 
 type EngineerConversationRouteProps = {
   params: Promise<{ id: string }>;

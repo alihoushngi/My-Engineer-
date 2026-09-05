@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { UserIcon, XIcon } from "lucide-react";
 import {
   Avatar,
@@ -48,7 +48,7 @@ export function PersonalInfoStep() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<PersonalInfoStepData>({
-    resolver: zodResolver(personalInfoStepSchema),
+    resolver: yupResolver(personalInfoStepSchema),
     defaultValues: {
       firstName: data.personalInfo?.firstName ?? "",
       lastName: data.personalInfo?.lastName ?? "",

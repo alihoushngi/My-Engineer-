@@ -5,7 +5,13 @@ import { useState } from "react";
 import { MobileNavigation } from "@/components/layout/mobileNavigation/mobileNavigation";
 import { Button } from "@/components/ui/button/button";
 
-export function HeaderMenuButton() {
+type HeaderMenuButtonProps = {
+  isAuthenticated?: boolean;
+};
+
+export function HeaderMenuButton({
+  isAuthenticated = false,
+}: HeaderMenuButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,7 +31,11 @@ export function HeaderMenuButton() {
       >
         <MenuIcon aria-hidden="true" />
       </Button>
-      <MobileNavigation open={open} onOpenChange={setOpen} />
+      <MobileNavigation
+        open={open}
+        onOpenChange={setOpen}
+        isAuthenticated={isAuthenticated}
+      />
     </>
   );
 }

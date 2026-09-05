@@ -1,135 +1,114 @@
 /**
  * Registration service — API integration layer.
  *
- * API CONTRACT REQUIRED for all operations.
- * No documented endpoints exist. Functions throw a typed ApiError instead of
- * inventing URLs or fake success payloads.
+ * Mock registration is explicit (mockRegister.enabled + non-production).
+ * Real APIs remain unavailable when mock mode is off.
+ * Do not fall back to mock success after a real API failure.
  */
 
-import { throwApiUnavailable } from "@/lib/api/throw-api-unavailable/throw-api-unavailable";
+import { ApiError } from "@/lib/api/api-error/api-error";
+import { throwIfMutationFailed } from "@/lib/auth/service-mutation-result/service-mutation-result";
+import {
+  getExpertiseCatalogAction,
+  saveRegistrationStepAction,
+  sendOtpAction,
+  submitRegistrationAction,
+  verifyOtpAction,
+} from "@/services/registration-service/registration-actions";
+import {
+  type ExpertiseCatalogResult,
+  type SaveEducationRequest,
+  type SaveExpertiseRequest,
+  type SaveOrganizationRequest,
+  type SavePersonalInfoRequest,
+  type SaveResumeRequest,
+  type SaveServiceAreaRequest,
+  type SendOtpRequest,
+  type SubmitRegistrationRequest,
+  type VerifyOtpRequest,
+} from "@/services/registration-service/registration-service.types";
 
-export type SendOtpRequest = {
-  phone: string;
-  nationalId: string;
+export type {
+  SaveEducationRequest,
+  SaveExpertiseRequest,
+  SaveOrganizationRequest,
+  SavePersonalInfoRequest,
+  SaveResumeRequest,
+  SaveServiceAreaRequest,
+  SendOtpRequest,
+  SubmitRegistrationRequest,
+  VerifyOtpRequest,
 };
-
-export type VerifyOtpRequest = {
-  phone: string;
-  code: string;
-};
-
-export type SaveServiceAreaRequest = {
-  provinceId: string;
-  cityId: string;
-  nearbyCityIds: readonly string[];
-};
-
-export type SaveExpertiseRequest = {
-  expertiseIds: readonly string[];
-  softwareIds: readonly string[];
-};
-
-export type SavePersonalInfoRequest = {
-  firstName: string;
-  lastName: string;
-  /** Avatar upload handled separately. API CONTRACT REQUIRED. */
-  avatarUploadId?: string;
-};
-
-export type SaveEducationRequest = {
-  level: "diplomaOrLower" | "aboveDiploma";
-  degrees: readonly string[];
-  /** File upload IDs. API CONTRACT REQUIRED. */
-  degreeFileUploadIds: Partial<Record<string, string>>;
-};
-
-export type SaveOrganizationRequest = {
-  isMember: boolean;
-  membershipNumber?: string;
-  hasLicense?: boolean;
-  licenseNumber?: string;
-  licenseUploadId?: string;
-  discipline?: string;
-  qualifications?: readonly string[];
-};
-
-export type SaveResumeRequest = {
-  experienceYears: number;
-  resumeText: string;
-};
-
-export type SubmitRegistrationRequest = {
-  imageCount: number;
-  certificateCount: number;
-  acceptRules: true;
-};
-
-const API_NOT_AVAILABLE_MESSAGE =
-  "این عملیات هنوز از طریق سرور در دسترس نیست. پس از آماده‌شدن API فعال می‌شود.";
 
 export async function sendOtp(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SendOtpRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await sendOtpAction());
 }
 
-export async function verifyOtp(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _request: VerifyOtpRequest,
-): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+export async function verifyOtp(request: VerifyOtpRequest): Promise<void> {
+  throwIfMutationFailed(await verifyOtpAction(request));
 }
 
 export async function saveServiceArea(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SaveServiceAreaRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await saveRegistrationStepAction());
 }
 
 export async function saveExpertise(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SaveExpertiseRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await saveRegistrationStepAction());
 }
 
-export async function getExpertiseCatalog(): Promise<never> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+export async function getExpertiseCatalog(): Promise<ExpertiseCatalogResult> {
+  const result = await getExpertiseCatalogAction();
+
+  if (!result.ok) {
+    throw new ApiError({
+      status: result.status,
+      code: result.code,
+      message: result.message,
+    });
+  }
+
+  return result.catalog;
 }
 
 export async function savePersonalInfo(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SavePersonalInfoRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await saveRegistrationStepAction());
 }
 
 export async function saveEducation(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SaveEducationRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await saveRegistrationStepAction());
 }
 
 export async function saveOrganization(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SaveOrganizationRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await saveRegistrationStepAction());
 }
 
 export async function saveResume(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _request: SaveResumeRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await saveRegistrationStepAction());
 }
 
 export async function submitRegistration(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _request: SubmitRegistrationRequest,
+  request: SubmitRegistrationRequest,
 ): Promise<void> {
-  throwApiUnavailable(API_NOT_AVAILABLE_MESSAGE);
+  throwIfMutationFailed(await submitRegistrationAction(request));
 }

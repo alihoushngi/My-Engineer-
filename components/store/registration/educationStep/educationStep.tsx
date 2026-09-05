@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { CircleAlertIcon, FileIcon, XIcon } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert/alert";
 import { Button } from "@/components/ui/button/button";
@@ -45,7 +45,7 @@ export function EducationStep() {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<EducationStepFormData>({
-    resolver: zodResolver(educationStepSchema),
+    resolver: yupResolver(educationStepSchema),
     defaultValues: {
       level: data.education?.level ?? "aboveDiploma",
       degrees: data.education?.degrees ? [...data.education.degrees] : [],

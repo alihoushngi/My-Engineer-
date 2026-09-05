@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Checkbox } from "@/components/ui/checkbox/checkbox";
 import {
   Field,
@@ -20,6 +20,7 @@ import {
   identityStepSchema,
   type IdentityStepData,
 } from "@/components/store/registration/identityStep/type/identityStep.types";
+import { RegistrationLoginCrossLink } from "@/components/store/registration/registrationLoginCrossLink/registrationLoginCrossLink";
 import { registrationCopy } from "@/config/registration.config/registration.config";
 import { storePaths } from "@/config/navigation.config/navigation.config";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
@@ -39,7 +40,7 @@ export function IdentityStep() {
     control,
     formState: { errors, isSubmitting },
   } = useForm<IdentityStepData>({
-    resolver: zodResolver(identityStepSchema),
+    resolver: yupResolver(identityStepSchema),
     defaultValues: {
       phone: data.identity?.phone ?? "",
       nationalId: data.identity?.nationalId ?? "",
@@ -79,6 +80,7 @@ export function IdentityStep() {
         <p className="type-body text-muted-foreground">
           {registrationCopy.step1Description}
         </p>
+        <RegistrationLoginCrossLink />
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}

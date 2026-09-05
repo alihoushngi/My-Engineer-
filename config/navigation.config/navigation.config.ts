@@ -11,6 +11,8 @@ export const storePaths = {
   terms: "/terms",
   privacy: "/privacy-policy",
   expertRegistration: siteConfig.joinHref,
+  engineerLogin: "/engineer/login",
+  engineerPanel: "/engineer",
 } as const;
 
 export type NavigationLink = {
@@ -86,6 +88,16 @@ export const mobileUtilityNavigation: readonly NavigationLink[] = [
 export const joinNavigation: NavigationLink = {
   href: siteConfig.joinHref,
   label: siteConfig.joinLabel,
+};
+
+export const engineerLoginNavigation: NavigationLink = {
+  href: storePaths.engineerLogin,
+  label: "ورود مهندس",
+};
+
+export const engineerPanelNavigation: NavigationLink = {
+  href: storePaths.engineerPanel,
+  label: "پنل مهندس",
 };
 
 export function isActivePath(pathname: string, href: string): boolean {

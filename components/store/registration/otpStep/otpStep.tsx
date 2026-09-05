@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { Button } from "@/components/ui/button/button";
@@ -15,7 +15,10 @@ import {
   otpStepSchema,
   type OtpStepData,
 } from "@/components/store/registration/otpStep/type/otpStep.types";
-import { registrationCopy } from "@/config/registration.config/registration.config";
+import {
+  OTP_LENGTH,
+  registrationCopy,
+} from "@/config/registration.config/registration.config";
 import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { useOtpTimer } from "@/hooks/use-otp-timer/use-otp-timer";
 import { useRegistrationWizard } from "@/providers/registration-wizard-provider/registration-wizard-provider";
@@ -41,7 +44,7 @@ export function OtpStep() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<OtpStepData>({
-    resolver: zodResolver(otpStepSchema),
+    resolver: yupResolver(otpStepSchema),
     defaultValues: { code: "" },
   });
 
@@ -115,7 +118,7 @@ export function OtpStep() {
             render={({ field }) => (
               <OtpInput
                 id="reg-otp"
-                length={5}
+                length={OTP_LENGTH}
                 value={field.value}
                 onChange={field.onChange}
                 invalid={Boolean(errors.code) || Boolean(verifyError)}

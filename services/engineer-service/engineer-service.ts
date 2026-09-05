@@ -1,81 +1,16 @@
 /**
- * Engineer workspace service.
- *
- * Reads: mock display data when NEXT_PUBLIC_USE_MOCK_DATA is enabled.
- * Mutations: API CONTRACT REQUIRED — throw typed unavailable errors.
- * Do not treat display data as an authenticated session.
+ * Engineer workspace mutations and client-safe catalog reads.
+ * Session access lives in engineer-access-service.ts (server-only).
  */
 
 import { env } from "@/lib/env/env";
 import { throwApiUnavailable } from "@/lib/api/throw-api-unavailable/throw-api-unavailable";
-import { isEngineerAccessGranted } from "@/lib/engineer/access/access";
-import { getMockEngineerWorkspace } from "@/lib/mock-data/build-engineer-workspace/build-engineer-workspace";
 import { mockCities, mockProvinces } from "@/lib/mock-data/mock-data";
-import {
-  type EngineerAccessResult,
-  type EngineerConversation,
-  type EngineerMessage,
-  type EngineerNotification,
-  type EngineerRequest,
-  type EngineerWorkspace,
-} from "@/types/store/engineer.types";
+import { logoutEngineer } from "@/services/engineer-auth-service/engineer-auth-service";
 import { type City, type Province } from "@/types/store/registration.types";
 
 const WRITE_UNAVAILABLE =
   "این عملیات هنوز از طریق سرور در دسترس نیست. پس از آماده‌شدن API فعال می‌شود.";
-const AUTH_UNAVAILABLE = "خروج از حساب پس از اتصال سرویس نشست فعال می‌شود.";
-
-export async function getEngineerAccess(): Promise<EngineerAccessResult> {
-  if (env.useMockData) {
-    return {
-      kind: "visual_review",
-      workspace: getMockEngineerWorkspace(),
-    };
-  }
-
-  return { kind: "unavailable" };
-}
-
-export async function getEngineerWorkspace(): Promise<EngineerWorkspace | null> {
-  const access = await getEngineerAccess();
-
-  if (!isEngineerAccessGranted(access)) {
-    return null;
-  }
-
-  return access.workspace;
-}
-
-export async function getEngineerRequest(
-  id: string,
-): Promise<EngineerRequest | null> {
-  const workspace = await getEngineerWorkspace();
-  return workspace?.requests.find((request) => request.id === id) ?? null;
-}
-
-export async function getEngineerConversation(
-  id: string,
-): Promise<EngineerConversation | null> {
-  const workspace = await getEngineerWorkspace();
-  return (
-    workspace?.conversations.find((conversation) => conversation.id === id) ??
-    null
-  );
-}
-
-export async function getEngineerMessages(
-  conversationId: string,
-): Promise<readonly EngineerMessage[]> {
-  const workspace = await getEngineerWorkspace();
-  return workspace?.messagesByConversationId[conversationId] ?? [];
-}
-
-export async function getEngineerNotifications(): Promise<
-  readonly EngineerNotification[]
-> {
-  const workspace = await getEngineerWorkspace();
-  return workspace?.notifications ?? [];
-}
 
 export type UpdateEngineerProfileRequest = {
   firstName: string;
@@ -155,7 +90,7 @@ export async function markEngineerNotificationRead(
 }
 
 export async function signOutEngineer(): Promise<void> {
-  throwApiUnavailable(AUTH_UNAVAILABLE);
+  await logoutEngineer();
 }
 
 export async function getEngineerLocationCatalog(): Promise<{

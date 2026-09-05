@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import { Input } from "@/components/ui/input/input";
 import {
@@ -46,7 +46,7 @@ export function OrganizationStep() {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<OrganizationStepData>({
-    resolver: zodResolver(organizationStepSchema),
+    resolver: yupResolver(organizationStepSchema),
     defaultValues: {
       isMember: data.organization?.isMember === true ? "yes" : "no",
       membershipNumber: data.organization?.membershipNumber ?? "",
@@ -154,8 +154,8 @@ export function OrganizationStep() {
               <OrganizationLicenseFields
                 control={control}
                 setValue={setValue}
-                discipline={discipline}
-                qualifications={qualifications}
+                discipline={discipline ?? ""}
+                qualifications={qualifications ?? []}
                 licenseFile={licenseFile}
                 onLicenseFileChange={setLicenseFile}
                 errors={errors}
@@ -244,16 +244,16 @@ function toOrganizationPayload(
   if (formData.hasLicense === "no") {
     return {
       isMember: true,
-      membershipNumber: formData.membershipNumber.trim(),
+      membershipNumber: formData.membershipNumber?.trim() ?? "",
       hasLicense: false,
     };
   }
 
   return {
     isMember: true,
-    membershipNumber: formData.membershipNumber.trim(),
+    membershipNumber: formData.membershipNumber?.trim() ?? "",
     hasLicense: true,
-    licenseNumber: formData.licenseNumber.trim(),
+    licenseNumber: formData.licenseNumber?.trim() ?? "",
     licenseFile,
     discipline: formData.discipline as EngineeringDiscipline,
     qualifications: formData.qualifications as EngineeringQualification[],

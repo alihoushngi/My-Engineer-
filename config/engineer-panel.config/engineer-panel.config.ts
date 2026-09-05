@@ -1,5 +1,6 @@
 export const engineerPanelPaths = {
   dashboard: "/engineer",
+  login: "/engineer/login",
   profile: "/engineer/profile",
   services: "/engineer/services",
   serviceAreas: "/engineer/service-areas",
@@ -213,6 +214,9 @@ export const engineerPanelCopy = {
   forbiddenDescription: "این حساب اجازه ورود به فضای کاری متخصص را ندارد.",
   homeCta: "بازگشت به خانه",
   joinCta: "ثبت‌نام متخصص",
+  loginCta: "ورود مهندس",
+  panelCta: "پنل مهندس",
+  mockModeLabel: "حالت آزمایشی",
   retryLabel: "تلاش دوباره",
   saveLabel: "ذخیره",
   cancelLabel: "لغو",
@@ -268,7 +272,7 @@ export const engineerPanelCopy = {
   composerEmptyError: "متن پیام نمی‌تواند خالی باشد.",
   logoutUnavailable: "خروج از حساب پس از اتصال سرویس نشست فعال می‌شود.",
   otpAuthNote:
-    "ورود این محصول بر اساس شماره موبایل و رمز یک‌بارمصرف است. تغییر گذرواژه وجود ندارد.",
+    "ورود این محصول می‌تواند با شماره موبایل و رمز یک‌بارمصرف یا رمز عبور انجام شود.",
   notificationPrefsUnavailable: "تنظیم اعلان‌ها هنوز در محصول تعریف نشده است.",
   accountDeletionUnavailable:
     "حذف یا غیرفعال‌سازی حساب در قرارداد فعلی پشتیبانی نمی‌شود.",
@@ -309,6 +313,14 @@ export const profileCompletionLabels: Record<string, string> = {
 };
 
 export function isEngineerPanelPath(pathname: string): boolean {
+  if (pathname === engineerPanelPaths.login) {
+    return false;
+  }
+
+  if (pathname.startsWith(`${engineerPanelPaths.login}/`)) {
+    return false;
+  }
+
   return (
     pathname === engineerPanelPaths.dashboard ||
     pathname.startsWith(`${engineerPanelPaths.dashboard}/`)

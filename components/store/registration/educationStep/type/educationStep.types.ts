@@ -1,31 +1,9 @@
-import { z } from "zod/v4";
-import {
-  type DegreeKey,
-  type EducationLevel,
-} from "@/types/store/registration.types";
+import { type DegreeKey } from "@/types/store/registration.types";
 
-export const educationStepSchema = z
-  .object({
-    level: z.enum(["diplomaOrLower", "aboveDiploma"] as const),
-    degrees: z.array(z.string()),
-  })
-  .refine(
-    (data) => {
-      if (data.level === "aboveDiploma") {
-        return data.degrees.length > 0;
-      }
-      return true;
-    },
-    {
-      message: "برای سطح بالاتر از دیپلم، حداقل یک مقطع تحصیلی انتخاب کنید.",
-      path: ["degrees"],
-    },
-  );
-
-export type EducationStepFormData = {
-  level: EducationLevel;
-  degrees: string[];
-};
+export {
+  educationStepSchema,
+  type EducationStepFormData,
+} from "@/lib/validation/registration/registration-education.schema";
 
 export const ABOVE_DIPLOMA_DEGREES: readonly {
   key: DegreeKey;

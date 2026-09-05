@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { CircleAlertIcon, RefreshCcwIcon } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert/alert";
 import { Empty } from "@/components/ui/empty/empty";
@@ -55,7 +55,7 @@ export function ServiceAreaStep() {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<ServiceAreaStepData>({
-    resolver: zodResolver(serviceAreaStepSchema),
+    resolver: yupResolver(serviceAreaStepSchema),
     defaultValues: {
       provinceId: data.serviceArea?.provinceId ?? "",
       cityId: data.serviceArea?.cityId ?? "",

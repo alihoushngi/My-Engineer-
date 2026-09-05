@@ -9,7 +9,8 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test lib/auth/can-use-mocks/can-use-mocks.test.ts lib/auth/parse-public-bool/parse-public-bool.test.ts lib/auth/resolve-mock-flag/resolve-mock-flag.test.ts lib/validation/login/login-otp-length.test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -25,6 +26,7 @@
     "react-hook-form": "^7.62.0",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
+    "yup": "^1.7.1",
     "zod": "^4.1.11"
   },
   "devDependencies": {

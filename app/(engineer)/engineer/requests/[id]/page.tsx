@@ -5,7 +5,7 @@ import { engineerPageMetadata } from "@/lib/engineer/private-panel-metadata/priv
 import {
   getEngineerRequest,
   getEngineerWorkspace,
-} from "@/services/engineer-service/engineer-service";
+} from "@/services/engineer-service/engineer-access-service";
 
 type EngineerRequestDetailRouteProps = {
   params: Promise<{ id: string }>;

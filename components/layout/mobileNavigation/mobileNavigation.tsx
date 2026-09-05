@@ -17,9 +17,13 @@ import {
 } from "@/components/ui/sheet/sheet";
 import { BrandLogo } from "@/components/layout/brandLogo/brandLogo";
 import { JoinLink } from "@/components/layout/joinLink/joinLink";
+import { Button } from "@/components/ui/button/button";
+import Link from "next/link";
 import { MobileNavLink } from "@/components/layout/mobileNavigation/mobileNavLink/mobileNavLink";
 import { type MobileNavigationProps } from "@/components/layout/mobileNavigation/type/mobileNavigation.types";
 import {
+  engineerLoginNavigation,
+  engineerPanelNavigation,
   isActivePath,
   isServicesPath,
   mobileUtilityNavigation,
@@ -30,6 +34,7 @@ import {
 export function MobileNavigation({
   open,
   onOpenChange,
+  isAuthenticated = false,
 }: MobileNavigationProps) {
   const pathname = usePathname();
   const homeLink = primaryNavigation[0];
@@ -117,8 +122,23 @@ export function MobileNavigation({
             ))}
           </ul>
         </nav>
-        <div className="border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-          <JoinLink className="w-full" />
+        <div className="space-y-2 border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          {isAuthenticated ? (
+            <Button asChild className="w-full">
+              <Link href={engineerPanelNavigation.href}>
+                {engineerPanelNavigation.label}
+              </Link>
+            </Button>
+          ) : (
+            <>
+              <Button asChild variant="ghost" className="w-full">
+                <Link href={engineerLoginNavigation.href}>
+                  {engineerLoginNavigation.label}
+                </Link>
+              </Button>
+              <JoinLink className="w-full" />
+            </>
+          )}
         </div>
       </SheetContent>
     </Sheet>

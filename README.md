@@ -19,20 +19,20 @@ Later phases will add product routes, domain UI, and API integration. Do not tre
 
 ## Technology stack
 
-| Area            | Choice                |
-| --------------- | --------------------- |
-| Framework       | Next.js (App Router)  |
-| UI library      | React 19              |
-| Language        | TypeScript (strict)   |
-| Styling         | Tailwind CSS          |
-| Package manager | pnpm only             |
-| Server state    | TanStack Query        |
-| Forms           | React Hook Form + Zod |
-| Icons           | lucide-react          |
-| HTTP            | native fetch          |
-| Linting         | ESLint                |
-| Formatting      | Prettier              |
-| Runtime         | Node.js 22, Docker    |
+| Area            | Choice                      |
+| --------------- | --------------------------- |
+| Framework       | Next.js (App Router)        |
+| UI library      | React 19                    |
+| Language        | TypeScript (strict)         |
+| Styling         | Tailwind CSS                |
+| Package manager | pnpm only                   |
+| Server state    | TanStack Query              |
+| Forms           | React Hook Form + Zod / Yup |
+| Icons           | lucide-react                |
+| HTTP            | native fetch                |
+| Linting         | ESLint                      |
+| Formatting      | Prettier                    |
+| Runtime         | Node.js 22, Docker          |
 
 Do not add Redux, Zustand, Material UI, Ant Design, Chakra UI, or Bootstrap. shadcn/ui may be used for accessible primitives; project architecture and Mohandes Man tokens override its defaults.
 
@@ -98,6 +98,11 @@ NEXT_PUBLIC_API_BASE_URL=
 
 This value is the API origin only. Do not commit secrets. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for setup commands.
 
+## Development mock authentication
+
+Local engineer registration and login can run without a backend. See
+[docs/MOCK-AUTH.md](docs/MOCK-AUTH.md). Do not enable mock auth in production.
+
 ## Documentation
 
 - [Developer guide](docs/DEVELOPMENT.md)
@@ -110,4 +115,6 @@ This value is the API origin only. Do not commit secrets. See [docs/DEVELOPMENT.
 - [Component architecture](docs/COMPONENT-ARCHITECTURE.md)
 - [State matrix](docs/STATE-MATRIX.md)
 - [Docker guide](docs/DOCKER.md)
+- [Engineer panel](docs/ENGINEER-PANEL.md)
+- [Mock authentication (development)](docs/MOCK-AUTH.md)
 - Cursor architecture rules: `.cursor/rules/project-architecture.mdc`

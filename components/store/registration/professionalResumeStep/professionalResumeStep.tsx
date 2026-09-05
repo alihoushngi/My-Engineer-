@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Field,
   FieldDescription,
@@ -37,7 +37,7 @@ export function ProfessionalResumeStep() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ResumeStepData>({
-    resolver: zodResolver(resumeStepSchema),
+    resolver: yupResolver(resumeStepSchema),
     defaultValues: {
       experienceYears: data.resume?.experienceYears ?? 0,
       resumeText: data.resume?.resumeText ?? "",

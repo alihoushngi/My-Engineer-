@@ -1,7 +1,7 @@
 import { EngineerDashboard } from "@/components/store/engineer/engineerDashboard/engineerDashboard";
 import { engineerPageMetadata } from "@/lib/engineer/private-panel-metadata/private-panel-metadata";
 import { engineerPageTitles } from "@/config/engineer-panel.config/engineer-panel.config";
-import { getEngineerWorkspace } from "@/services/engineer-service/engineer-service";
+import { getEngineerWorkspace } from "@/services/engineer-service/engineer-access-service";
 
 export const metadata = engineerPageMetadata(engineerPageTitles.dashboard);
 

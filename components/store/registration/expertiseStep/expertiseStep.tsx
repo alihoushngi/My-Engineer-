@@ -3,14 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleAlertIcon, XIcon } from "lucide-react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
-import { Badge } from "@/components/ui/badge/badge";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ExpertiseCatalogPicker } from "@/components/store/registration/expertiseCatalogPicker/expertiseCatalogPicker";
 import { RegistrationError } from "@/components/store/registration/registrationError/registrationError";
 import { RegistrationProgress } from "@/components/store/registration/registrationProgress/registrationProgress";
 import { RegistrationStepNav } from "@/components/store/registration/registrationStepNav/registrationStepNav";
@@ -36,7 +30,7 @@ export function ExpertiseStep() {
     setValue,
     formState: { isSubmitting },
   } = useForm<ExpertiseStepData>({
-    resolver: zodResolver(expertiseStepSchema),
+    resolver: yupResolver(expertiseStepSchema),
     defaultValues: {
       expertiseIds: data.expertise?.expertiseIds
         ? [...data.expertise.expertiseIds]
@@ -49,20 +43,7 @@ export function ExpertiseStep() {
 
   const expertiseIds = watch("expertiseIds");
   const softwareIds = watch("softwareIds");
-
-  function removeExpertise(id: string) {
-    setValue(
-      "expertiseIds",
-      expertiseIds.filter((e) => e !== id),
-    );
-  }
-
-  function removeSoftware(id: string) {
-    setValue(
-      "softwareIds",
-      softwareIds.filter((s) => s !== id),
-    );
-  }
+  const isBusy = isSubmitting || saveMutation.isPending;
 
   async function onSubmit(formData: ExpertiseStepData) {
     setApiError(null);
@@ -86,10 +67,6 @@ export function ExpertiseStep() {
     router.push("/expert-registration/personal-info");
   }
 
-  function handleBack() {
-    router.push("/expert-registration/service-area");
-  }
-
   return (
     <div className="space-y-8">
       <RegistrationProgress currentStep={4} />
@@ -102,74 +79,12 @@ export function ExpertiseStep() {
         </p>
       </div>
 
-      {/*
-       * API CONTRACT REQUIRED — expertise catalog endpoint does not exist yet.
-       * The selection UI (ExpertiseCategorySheet) will be enabled once the catalog
-       * API is documented. Currently shows an integration-status alert.
-       * IMPLEMENTATION NOTE: replace this Alert with ExpertiseCategorySheet triggers
-       * when the catalog API contract is established.
-       */}
-      <Alert variant="info">
-        <CircleAlertIcon />
-        <AlertTitle>{registrationCopy.expertiseCatalogErrorTitle}</AlertTitle>
-        <AlertDescription>
-          {registrationCopy.expertiseCatalogApiNote}
-        </AlertDescription>
-      </Alert>
-
-      {/* Selected expertise chips — shown when selections exist (e.g. after back navigation) */}
-      {expertiseIds.length > 0 || softwareIds.length > 0 ? (
-        <section
-          className="space-y-3"
-          aria-label={registrationCopy.expertiseSelectedLabel}
-        >
-          <p className="type-body-sm font-medium text-foreground">
-            {registrationCopy.expertiseSelectedLabel}
-          </p>
-          <div className="flex flex-wrap gap-2" role="list">
-            {expertiseIds.map((id) => (
-              <div key={id} role="listitem">
-                <Badge
-                  variant="secondary"
-                  className="max-w-full min-w-0 gap-1 pe-0.5 whitespace-normal"
-                >
-                  <span>{id}</span>
-                  <button
-                    type="button"
-                    onClick={() => removeExpertise(id)}
-                    aria-label={registrationCopy.removeExpertiseLabel(id)}
-                    className="inline-flex size-8 items-center justify-center rounded-full hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <XIcon className="size-3" aria-hidden="true" />
-                  </button>
-                </Badge>
-              </div>
-            ))}
-            {softwareIds.map((id) => (
-              <div key={`sw-${id}`} role="listitem">
-                <Badge
-                  variant="outline"
-                  className="max-w-full min-w-0 gap-1 pe-0.5 whitespace-normal"
-                >
-                  <span>{id}</span>
-                  <button
-                    type="button"
-                    onClick={() => removeSoftware(id)}
-                    aria-label={registrationCopy.removeExpertiseLabel(id)}
-                    className="inline-flex size-8 items-center justify-center rounded-full hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <XIcon className="size-3" aria-hidden="true" />
-                  </button>
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : (
-        <p className="type-body-sm text-muted-foreground">
-          {registrationCopy.expertiseNoneSelected}
-        </p>
-      )}
+      <ExpertiseCatalogPicker
+        expertiseIds={expertiseIds}
+        softwareIds={softwareIds}
+        setValue={setValue}
+        disabled={isBusy}
+      />
 
       {apiError ? (
         <RegistrationError
@@ -181,12 +96,14 @@ export function ExpertiseStep() {
       ) : null}
 
       <RegistrationStepNav
-        onBack={handleBack}
+        onBack={() => {
+          router.push("/expert-registration/service-area");
+        }}
         onContinue={() => {
           void handleSubmit(onSubmit)();
         }}
-        isPending={isSubmitting || saveMutation.isPending}
-        isContinueDisabled={isSubmitting || saveMutation.isPending}
+        isPending={isBusy}
+        isContinueDisabled={isBusy}
       />
     </div>
   );

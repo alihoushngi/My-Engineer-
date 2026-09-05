@@ -89,6 +89,7 @@ export const registrationCopy = {
   step4Title: "تخصص‌ها",
   step4Description:
     "حوزه‌های تخصصی خود را انتخاب کنید. می‌توانید چندین تخصص و نرم‌افزار مرتبط را انتخاب کنید.",
+  expertiseCatalogLoading: "در حال بارگذاری تخصص‌ها...",
   expertiseCatalogApiNote:
     "فهرست تخصص‌ها پس از اتصال سرویس در دسترس خواهد بود.",
   expertiseCatalogErrorTitle: "خطا در بارگذاری تخصص‌ها",
@@ -202,9 +203,12 @@ export const registrationCopy = {
   completeDescription:
     "اطلاعات شما ثبت شد. نتیجه بررسی پس از اتصال فرآیند سرور اعلام می‌شود.",
   completeHomeCta: "بازگشت به خانه",
-  completeWorkspaceCta: "مشاهده فضای کاری متخصص",
+  completeWorkspaceCta: "ورود به پنل مهندس",
+  completeRedirecting: "در حال انتقال به پنل مهندس…",
+  loginCrossLinkPrefix: "قبلاً ثبت‌نام کرده‌اید؟",
+  loginCrossLinkAction: "ورود مهندس",
   completeDestinationNote:
-    "مقصد بعدی پس از ثبت‌نام (ورود، پروفایل یا وضعیت بررسی) هنوز از طرف محصول مشخص نشده است.",
+    "پس از ارسال موفق، به فضای کاری متخصص منتقل می‌شوید.",
 } as const;
 
 /** SOURCE: legacy step7 discipline keys and qualification table. */
