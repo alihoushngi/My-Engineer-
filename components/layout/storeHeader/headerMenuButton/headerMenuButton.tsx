@@ -4,14 +4,13 @@ import { MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { MobileNavigation } from "@/components/layout/mobileNavigation/mobileNavigation";
 import { Button } from "@/components/ui/button/button";
+import { type StoreAuthChrome } from "@/types/store/auth.types";
 
 type HeaderMenuButtonProps = {
-  isAuthenticated?: boolean;
+  authChrome: StoreAuthChrome;
 };
 
-export function HeaderMenuButton({
-  isAuthenticated = false,
-}: HeaderMenuButtonProps) {
+export function HeaderMenuButton({ authChrome }: HeaderMenuButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,7 +33,7 @@ export function HeaderMenuButton({
       <MobileNavigation
         open={open}
         onOpenChange={setOpen}
-        isAuthenticated={isAuthenticated}
+        authChrome={authChrome}
       />
     </>
   );

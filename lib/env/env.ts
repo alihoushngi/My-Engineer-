@@ -23,6 +23,12 @@ export const env = {
   mockLoginOverride: parseOptionalPublicBool(
     process.env.NEXT_PUBLIC_ENABLE_MOCK_LOGIN,
   ),
+  mockUserRegisterOverride: parseOptionalPublicBool(
+    process.env.NEXT_PUBLIC_ENABLE_MOCK_USER_REGISTER,
+  ),
+  mockUserLoginOverride: parseOptionalPublicBool(
+    process.env.NEXT_PUBLIC_ENABLE_MOCK_USER_LOGIN,
+  ),
   /** Client-safe approximation for chrome; server still reads mock-auth.config. */
   publicMockRegisterEnabled: parsePublicBool(
     process.env.NEXT_PUBLIC_ENABLE_MOCK_REGISTER,
@@ -30,6 +36,14 @@ export const env = {
   ),
   publicMockLoginEnabled: parsePublicBool(
     process.env.NEXT_PUBLIC_ENABLE_MOCK_LOGIN,
+    true,
+  ),
+  publicMockUserRegisterEnabled: parsePublicBool(
+    process.env.NEXT_PUBLIC_ENABLE_MOCK_USER_REGISTER,
+    true,
+  ),
+  publicMockUserLoginEnabled: parsePublicBool(
+    process.env.NEXT_PUBLIC_ENABLE_MOCK_USER_LOGIN,
     true,
   ),
 } as const;

@@ -5,8 +5,9 @@ import { resolveMockFlag } from "@/lib/auth/resolve-mock-flag/resolve-mock-flag"
 /**
  * Central source of truth for development mock authentication.
  *
- * Toggle `mockRegister.enabled` and `mockLogin.enabled` here.
- * Optional env overrides: NEXT_PUBLIC_ENABLE_MOCK_REGISTER / LOGIN.
+ * Toggle engineer flags (`mockRegister`, `mockLogin`) and customer flags
+ * (`mockUserRegister`, `mockUserLogin`) here.
+ * Optional env overrides cannot enable mocks in production.
  *
  * DO NOT ENABLE MOCK AUTH IN PRODUCTION.
  * `canUseMocks()` is false when NODE_ENV === "production".
@@ -30,6 +31,22 @@ export const mockAuthConfig = {
     delayMs: 300,
     forceError: false,
   },
+  mockUserRegister: {
+    enabled: true,
+    /** Must match LOGIN_OTP_LENGTH (6 digits). */
+    otp: "654321",
+    delayMs: 300,
+    forceError: false,
+  },
+  mockUserLogin: {
+    enabled: true,
+    phone: "09121112233",
+    otp: "654321",
+    password: "user1234",
+    displayName: "سارا مشتری",
+    delayMs: 300,
+    forceError: false,
+  },
 } as const;
 
 export function isMockRegisterEnabled(): boolean {
@@ -50,4 +67,28 @@ export function isMockLoginEnabled(): boolean {
 
 export function isMockAuthEnabled(): boolean {
   return isMockRegisterEnabled() || isMockLoginEnabled();
+}
+
+export function isMockUserRegisterEnabled(): boolean {
+  return resolveMockFlag(
+    canUseMocks(),
+    mockAuthConfig.mockUserRegister.enabled,
+    env.mockUserRegisterOverride,
+  );
+}
+
+export function isMockUserLoginEnabled(): boolean {
+  return resolveMockFlag(
+    canUseMocks(),
+    mockAuthConfig.mockUserLogin.enabled,
+    env.mockUserLoginOverride,
+  );
+}
+
+export function isMockUserAuthEnabled(): boolean {
+  return isMockUserRegisterEnabled() || isMockUserLoginEnabled();
+}
+
+export function isAnyMockAuthEnabled(): boolean {
+  return isMockAuthEnabled() || isMockUserAuthEnabled();
 }

@@ -1,5 +1,7 @@
+import { type StoreAuthChrome } from "@/types/store/auth.types";
+
 export type MobileNavigationProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isAuthenticated?: boolean;
+  authChrome: StoreAuthChrome;
 };

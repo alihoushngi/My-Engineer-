@@ -8,14 +8,10 @@ import { Button } from "@/components/ui/button/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field/field";
 import { Input } from "@/components/ui/input/input";
 import { OtpInput } from "@/components/ui/otpInput/otpInput";
-import { engineerLoginCopy } from "@/config/engineer-login.config/engineer-login.config";
+import { type AuthOtpLoginCopy } from "@/components/store/auth/authOtpLoginForm/type/authOtpLoginForm.types";
 import { toUserErrorMessage } from "@/lib/errors/to-user-error-message/to-user-error-message";
 import { useApiMutation } from "@/hooks/use-api-mutation/use-api-mutation";
 import { useOtpTimer } from "@/hooks/use-otp-timer/use-otp-timer";
-import {
-  loginEngineerWithOtp,
-  requestEngineerLoginOtp,
-} from "@/services/engineer-auth-service/engineer-auth-service";
 import {
   loginOtpSchema,
   type LoginOtpData,
@@ -27,18 +23,28 @@ import {
 import { LOGIN_OTP_LENGTH } from "@/lib/validation/login/login-otp-length";
 import { OTP_RESEND_COOLDOWN_SECONDS } from "@/config/registration.config/registration.config";
 
-type EngineerOtpLoginFormProps = {
+type AuthOtpLoginFormProps = {
   nextPath: string;
+  copy: AuthOtpLoginCopy;
+  idPrefix: string;
+  requestOtp: (phone: string) => Promise<void>;
+  verifyOtp: (phone: string, otp: string) => Promise<void>;
 };
 
-export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
+export function AuthOtpLoginForm({
+  nextPath,
+  copy,
+  idPrefix,
+  requestOtp,
+  verifyOtp,
+}: AuthOtpLoginFormProps) {
   const router = useRouter();
   const [phase, setPhase] = useState<"phone" | "otp">("phone");
   const [phone, setPhone] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
-  const requestMutation = useApiMutation(requestEngineerLoginOtp);
+  const requestMutation = useApiMutation(requestOtp);
   const verifyMutation = useApiMutation(({ otp }: { otp: string }) =>
-    loginEngineerWithOtp(phone, otp),
+    verifyOtp(phone, otp),
   );
   const { secondsLeft, canResend, restartTimer } = useOtpTimer(
     OTP_RESEND_COOLDOWN_SECONDS,
@@ -60,7 +66,7 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
     try {
       await requestMutation.mutateAsync(formData.phone);
     } catch (error) {
-      setAuthError(toUserErrorMessage(error, engineerLoginCopy.description));
+      setAuthError(toUserErrorMessage(error, copy.otpHelp));
       return;
     }
 
@@ -96,7 +102,7 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
       otpForm.reset({ code: "" });
       restartTimer();
     } catch (error) {
-      setAuthError(toUserErrorMessage(error, engineerLoginCopy.description));
+      setAuthError(toUserErrorMessage(error, copy.otpHelp));
     }
   }
 
@@ -112,18 +118,19 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
         noValidate
         className="space-y-6"
         onSubmit={phoneForm.handleSubmit(onRequestOtp)}
-        aria-label={engineerLoginCopy.otpMethod}
+        aria-label={copy.otpMethod}
       >
         <Field invalid={Boolean(phoneForm.formState.errors.phone)}>
-          <FieldLabel htmlFor="login-otp-phone" required>
-            {engineerLoginCopy.phoneLabel}
+          <FieldLabel htmlFor={`${idPrefix}-otp-phone`} required>
+            {copy.phoneLabel}
           </FieldLabel>
           <Input
-            id="login-otp-phone"
+            id={`${idPrefix}-otp-phone`}
             type="tel"
             autoComplete="tel-national"
             inputMode="tel"
-            placeholder={engineerLoginCopy.phonePlaceholder}
+            dir="ltr"
+            placeholder={copy.phonePlaceholder}
             aria-invalid={Boolean(phoneForm.formState.errors.phone)}
             {...phoneForm.register("phone")}
           />
@@ -135,7 +142,7 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
           </p>
         ) : null}
         <Button type="submit" className="w-full" loading={isBusy}>
-          {engineerLoginCopy.requestOtpLabel}
+          {copy.requestOtpLabel}
         </Button>
       </form>
     );
@@ -146,20 +153,20 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
       noValidate
       className="space-y-6"
       onSubmit={otpForm.handleSubmit(onVerify)}
-      aria-label={engineerLoginCopy.otpMethod}
+      aria-label={copy.otpMethod}
     >
       <Field
         invalid={Boolean(otpForm.formState.errors.code) || Boolean(authError)}
       >
-        <FieldLabel htmlFor="login-otp-code">
-          {engineerLoginCopy.otpLabel}
+        <FieldLabel htmlFor={`${idPrefix}-otp-code`}>
+          {copy.otpLabel}
         </FieldLabel>
         <Controller
           control={otpForm.control}
           name="code"
           render={({ field }) => (
             <OtpInput
-              id="login-otp-code"
+              id={`${idPrefix}-otp-code`}
               length={LOGIN_OTP_LENGTH}
               value={field.value}
               onChange={(value) => {
@@ -173,9 +180,7 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
             />
           )}
         />
-        <p className="type-caption text-muted-foreground">
-          {engineerLoginCopy.otpHelp}
-        </p>
+        <p className="type-caption text-muted-foreground">{copy.otpHelp}</p>
         <FieldError>
           {authError ?? otpForm.formState.errors.code?.message}
         </FieldError>
@@ -191,7 +196,7 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
             setAuthError(null);
           }}
         >
-          {engineerLoginCopy.editPhoneLabel}
+          {copy.editPhoneLabel}
         </Button>
         <Button
           type="button"
@@ -203,13 +208,11 @@ export function EngineerOtpLoginForm({ nextPath }: EngineerOtpLoginFormProps) {
             void onResend();
           }}
         >
-          {canResend
-            ? engineerLoginCopy.resendLabel
-            : `ارسال مجدد (${secondsLeft} ثانیه)`}
+          {canResend ? copy.resendLabel : `ارسال مجدد (${secondsLeft} ثانیه)`}
         </Button>
       </div>
       <Button type="submit" className="w-full" loading={isBusy}>
-        {engineerLoginCopy.verifyLabel}
+        {copy.verifyLabel}
       </Button>
     </form>
   );

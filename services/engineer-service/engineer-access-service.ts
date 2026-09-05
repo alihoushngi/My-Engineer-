@@ -7,6 +7,7 @@ import { env } from "@/lib/env/env";
 import { isEngineerAccessGranted } from "@/lib/engineer/access/access";
 import { getMockEngineerWorkspace } from "@/lib/mock-data/build-engineer-workspace/build-engineer-workspace";
 import { getEngineerSession } from "@/lib/auth/engineer-session/engineer-session";
+import { getUserSession } from "@/lib/auth/user-session/user-session";
 import { isMockAuthEnabled } from "@/config/mock-auth.config/mock-auth.config";
 import { buildSessionEngineerWorkspace } from "@/lib/auth/build-session-engineer-workspace/build-session-engineer-workspace";
 import {
@@ -28,6 +29,10 @@ export async function getEngineerAccess(): Promise<EngineerAccessResult> {
       kind: session.source === "registration" ? "pending_review" : "active",
       workspace: buildSessionEngineerWorkspace(session),
     };
+  }
+
+  if (await getUserSession()) {
+    return { kind: "forbidden" };
   }
 
   if (isMockAuthEnabled()) {

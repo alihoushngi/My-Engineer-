@@ -18,6 +18,8 @@ type ExpertReviewsProps = {
   reviews?: readonly ExpertReview[];
   rating?: number;
   reviewCount?: number;
+  isUserAuthenticated?: boolean;
+  loginNextPath?: string;
 };
 
 export function ExpertReviews({
@@ -25,6 +27,8 @@ export function ExpertReviews({
   reviews,
   rating,
   reviewCount,
+  isUserAuthenticated = false,
+  loginNextPath = "/",
 }: ExpertReviewsProps) {
   const [page, setPage] = useState(1);
   const items = reviews ?? [];
@@ -62,6 +66,10 @@ export function ExpertReviews({
             label={expertProfileCopy.reviewSubmitLabel}
             title={expertProfileCopy.reviewSubmitUnavailableTitle}
             description={expertProfileCopy.reviewSubmitUnavailableDescription}
+            auth={{
+              isAuthenticated: isUserAuthenticated,
+              nextPath: loginNextPath,
+            }}
           />
         </div>
         {items.length === 0 ? (

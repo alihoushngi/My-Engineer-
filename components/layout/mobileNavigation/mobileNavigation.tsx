@@ -30,11 +30,15 @@ import {
   primaryNavigation,
   servicesNavigation,
 } from "@/config/navigation.config/navigation.config";
+import {
+  userAuthCopy,
+  userAuthPaths,
+} from "@/config/user-auth.config/user-auth.config";
 
 export function MobileNavigation({
   open,
   onOpenChange,
-  isAuthenticated = false,
+  authChrome,
 }: MobileNavigationProps) {
   const pathname = usePathname();
   const homeLink = primaryNavigation[0];
@@ -123,24 +127,47 @@ export function MobileNavigation({
           </ul>
         </nav>
         <div className="space-y-2 border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-          {isAuthenticated ? (
-            <Button asChild className="w-full">
-              <Link href={engineerPanelNavigation.href}>
-                {engineerPanelNavigation.label}
-              </Link>
-            </Button>
-          ) : (
-            <>
-              <Button asChild variant="ghost" className="w-full">
-                <Link href={engineerLoginNavigation.href}>
-                  {engineerLoginNavigation.label}
-                </Link>
-              </Button>
-              <JoinLink className="w-full" />
-            </>
-          )}
+          <MobileAuthActions chrome={authChrome} />
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+function MobileAuthActions({
+  chrome,
+}: {
+  chrome: MobileNavigationProps["authChrome"];
+}) {
+  if (chrome.status === "user") {
+    return (
+      <Button asChild className="w-full">
+        <Link href={userAuthPaths.account}>{userAuthCopy.accountCta}</Link>
+      </Button>
+    );
+  }
+
+  if (chrome.status === "engineer") {
+    return (
+      <Button asChild className="w-full">
+        <Link href={engineerPanelNavigation.href}>
+          {engineerPanelNavigation.label}
+        </Link>
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      <Button asChild className="w-full">
+        <Link href={userAuthPaths.login}>{userAuthCopy.loginCta}</Link>
+      </Button>
+      <Button asChild variant="ghost" className="w-full">
+        <Link href={engineerLoginNavigation.href}>
+          {engineerLoginNavigation.label}
+        </Link>
+      </Button>
+      <JoinLink variant="outline" className="w-full" />
+    </>
   );
 }

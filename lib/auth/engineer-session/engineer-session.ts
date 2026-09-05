@@ -8,16 +8,12 @@ import {
   MOCK_ENGINEER_PROFILE_COOKIE,
   MOCK_ENGINEER_SESSION_COOKIE,
   MOCK_ENGINEER_SESSION_VALUE,
+  MOCK_SESSION_COOKIE_OPTIONS,
+  MOCK_USER_PROFILE_COOKIE,
+  MOCK_USER_SESSION_COOKIE,
 } from "@/lib/auth/mock-session-cookies/mock-session-cookies";
 import { parseMockEngineerProfileCookie } from "@/lib/auth/mock-engineer-profile-cookie/mock-engineer-profile-cookie";
 import { type EngineerSession } from "@/types/store/engineer-auth.types";
-
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  sameSite: "lax" as const,
-  path: "/",
-  secure: process.env.NODE_ENV === "production",
-};
 
 export async function getEngineerSession(): Promise<EngineerSession | null> {
   if (!isMockAuthEnabled()) {
@@ -50,6 +46,7 @@ export async function getEngineerSession(): Promise<EngineerSession | null> {
 
   return {
     isAuthenticated: true,
+    role: "engineer",
     isMock: true,
     source,
     profile,
@@ -66,17 +63,20 @@ export async function writeMockEngineerSession(input: {
 
   const store = await cookies();
 
+  store.delete(MOCK_USER_SESSION_COOKIE);
+  store.delete(MOCK_USER_PROFILE_COOKIE);
+
   store.set({
     name: MOCK_ENGINEER_SESSION_COOKIE,
     value: MOCK_ENGINEER_SESSION_VALUE,
-    ...COOKIE_OPTIONS,
+    ...MOCK_SESSION_COOKIE_OPTIONS,
   });
 
   if (input.source === "registration" && input.profileCookieValue) {
     store.set({
       name: MOCK_ENGINEER_PROFILE_COOKIE,
       value: input.profileCookieValue,
-      ...COOKIE_OPTIONS,
+      ...MOCK_SESSION_COOKIE_OPTIONS,
     });
     return;
   }

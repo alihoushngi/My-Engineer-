@@ -30,11 +30,13 @@ import {
 type ExpertProfilePageProps = {
   expert: ExpertProfile;
   isDevelopmentPreview?: boolean;
+  isUserAuthenticated?: boolean;
 };
 
 export function ExpertProfilePage({
   expert,
   isDevelopmentPreview = false,
+  isUserAuthenticated = false,
 }: ExpertProfilePageProps) {
   const hasStickyContact = hasPublicContact(expert);
 
@@ -69,7 +71,10 @@ export function ExpertProfilePage({
           </Alert>
         </div>
       ) : null}
-      <ExpertProfileHero expert={expert} />
+      <ExpertProfileHero
+        expert={expert}
+        isUserAuthenticated={isUserAuthenticated}
+      />
       <div className="container-app grid items-start gap-10 py-page lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-16">
         <div className="min-w-0 divide-y divide-border">
           {hasText(expert.about) ? <ExpertAbout about={expert.about} /> : null}
@@ -108,6 +113,8 @@ export function ExpertProfilePage({
               reviews={expert.reviews}
               rating={expert.rating}
               reviewCount={expert.reviewCount}
+              isUserAuthenticated={isUserAuthenticated}
+              loginNextPath={`/experts/${expert.id}`}
             />
           ) : null}
         </div>

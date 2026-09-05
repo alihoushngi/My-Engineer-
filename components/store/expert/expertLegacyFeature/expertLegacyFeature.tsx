@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { AuthRequiredAction } from "@/components/store/auth/authRequiredAction/authRequiredAction";
 import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { Button } from "@/components/ui/button/button";
 
@@ -11,6 +12,10 @@ type ExpertLegacyFeatureProps = {
   variant?: "outline" | "ghost" | "primary";
   icon?: ReactNode;
   className?: string;
+  auth?: {
+    isAuthenticated: boolean;
+    nextPath: string;
+  };
 };
 
 export function ExpertLegacyFeature({
@@ -20,22 +25,39 @@ export function ExpertLegacyFeature({
   variant = "outline",
   icon,
   className,
+  auth,
 }: ExpertLegacyFeatureProps) {
   const [open, setOpen] = useState(false);
 
+  const trigger = auth ? (
+    <AuthRequiredAction
+      isAuthenticated={auth.isAuthenticated}
+      nextPath={auth.nextPath}
+      label={label}
+      variant={variant}
+      icon={icon}
+      className={className}
+      onAuthenticatedClick={() => {
+        setOpen(true);
+      }}
+    />
+  ) : (
+    <Button
+      type="button"
+      variant={variant}
+      className={className}
+      onClick={() => {
+        setOpen(true);
+      }}
+    >
+      {icon}
+      {label}
+    </Button>
+  );
+
   return (
     <>
-      <Button
-        type="button"
-        variant={variant}
-        className={className}
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        {icon}
-        {label}
-      </Button>
+      {trigger}
       <ResponsiveDialog
         open={open}
         title={title}

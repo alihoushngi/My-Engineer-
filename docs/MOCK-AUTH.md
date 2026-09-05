@@ -1,6 +1,7 @@
 # Mock Authentication (Development Only)
 
-Frontend-only mock engineer registration and login for local testing.
+Frontend-only mock **engineer** and **customer** authentication for local
+testing. Customer details live in [USER-AUTH.md](USER-AUTH.md).
 
 **DO NOT ENABLE MOCK AUTH IN PRODUCTION.**
 
@@ -29,13 +30,28 @@ export const mockAuthConfig = {
     delayMs: 300,
     forceError: false,
   },
+  mockUserRegister: {
+    enabled: true,
+    otp: "654321",
+    delayMs: 300,
+    forceError: false,
+  },
+  mockUserLogin: {
+    enabled: true,
+    phone: "09121112233",
+    otp: "654321",
+    password: "user1234",
+    displayName: "سارا مشتری",
+    delayMs: 300,
+    forceError: false,
+  },
 };
 ```
 
 Toggle:
 
-- `mockRegister.enabled`
-- `mockLogin.enabled`
+- `mockRegister.enabled` / `mockLogin.enabled` (engineer)
+- `mockUserRegister.enabled` / `mockUserLogin.enabled` (customer)
 
 ## Optional env overrides
 
@@ -45,6 +61,8 @@ production.
 ```bash
 NEXT_PUBLIC_ENABLE_MOCK_REGISTER=true
 NEXT_PUBLIC_ENABLE_MOCK_LOGIN=true
+NEXT_PUBLIC_ENABLE_MOCK_USER_REGISTER=true
+NEXT_PUBLIC_ENABLE_MOCK_USER_LOGIN=true
 ```
 
 Set either value to `false` to force that mock flow off.
@@ -65,13 +83,15 @@ fallback after a real API error.
 
 ## Test login
 
-Use these values only in development:
+Engineer values (development only):
 
 | Field     | Value         |
 | --------- | ------------- |
 | Phone     | `09115447316` |
 | Login OTP | `123456`      |
 | Password  | `admin1234`   |
+
+Customer values are different. See [USER-AUTH.md](USER-AUTH.md).
 
 Registration OTP is **5 digits** (current registration UI): `12345`.
 
@@ -120,8 +140,8 @@ returns to `/`.
 
 ## How to disable mocks
 
-1. Set `mockRegister.enabled` / `mockLogin.enabled` to `false` in the config, or
-2. Set `NEXT_PUBLIC_ENABLE_MOCK_REGISTER=false` / `NEXT_PUBLIC_ENABLE_MOCK_LOGIN=false`, or
+1. Set the relevant `enabled` flags to `false` in the config, or
+2. Set the matching `NEXT_PUBLIC_ENABLE_MOCK_*` env vars to `false`, or
 3. Build/run with `NODE_ENV=production`.
 
 ## Real API mode

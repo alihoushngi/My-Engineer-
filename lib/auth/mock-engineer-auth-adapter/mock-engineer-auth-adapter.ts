@@ -1,9 +1,9 @@
-import { toLatinDigits } from "@/lib/utils/to-latin-digits/to-latin-digits";
 import {
   isMockLoginEnabled,
   mockAuthConfig,
 } from "@/config/mock-auth.config/mock-auth.config";
 import { wait } from "@/lib/auth/wait/wait";
+import { sameCredential } from "@/lib/auth/same-credential/same-credential";
 import {
   mutationFailed,
   mutationUnauthorized,
@@ -84,8 +84,4 @@ export async function mockLoginWithOtp(input: {
   }
 
   return { ok: true };
-}
-
-function sameCredential(actual: string, expected: string): boolean {
-  return toLatinDigits(actual.trim()) === toLatinDigits(expected.trim());
 }

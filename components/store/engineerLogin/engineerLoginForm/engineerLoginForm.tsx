@@ -1,16 +1,16 @@
 "use client";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs/tabs";
-import { EngineerOtpLoginForm } from "@/components/store/engineerLogin/engineerOtpLoginForm/engineerOtpLoginForm";
-import { EngineerPasswordLoginForm } from "@/components/store/engineerLogin/engineerPasswordLoginForm/engineerPasswordLoginForm";
+import { AuthLoginCard } from "@/components/store/auth/authLoginCard/authLoginCard";
+import { AuthLoginMethods } from "@/components/store/auth/authLoginMethods/authLoginMethods";
+import { AuthOtpLoginForm } from "@/components/store/auth/authOtpLoginForm/authOtpLoginForm";
+import { AuthPasswordLoginForm } from "@/components/store/auth/authPasswordLoginForm/authPasswordLoginForm";
 import { EngineerLoginRegisterCrossLink } from "@/components/store/engineerLogin/engineerLoginRegisterCrossLink/engineerLoginRegisterCrossLink";
-import { MockModeBadge } from "@/components/store/engineerLogin/mockModeBadge/mockModeBadge";
 import { engineerLoginCopy } from "@/config/engineer-login.config/engineer-login.config";
+import {
+  loginEngineerWithOtp,
+  loginEngineerWithPassword,
+  requestEngineerLoginOtp,
+} from "@/services/engineer-auth-service/engineer-auth-service";
 
 type EngineerLoginFormProps = {
   nextPath: string;
@@ -22,40 +22,33 @@ export function EngineerLoginForm({
   isMockMode,
 }: EngineerLoginFormProps) {
   return (
-    <div className="mx-auto w-full max-w-md space-y-8 rounded-xl border border-border bg-surface p-5 shadow-lg sm:p-8">
-      <div className="space-y-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="type-h1 text-foreground">{engineerLoginCopy.title}</h1>
-          <MockModeBadge visible={isMockMode} />
-        </div>
-        <p className="type-body text-muted-foreground">
-          {engineerLoginCopy.description}
-        </p>
-      </div>
-      <Tabs defaultValue="otp" className="gap-5">
-        <TabsList className="grid h-auto w-full grid-cols-2">
-          <TabsTrigger value="otp" className="min-h-11 whitespace-normal">
-            {engineerLoginCopy.otpMethod}
-          </TabsTrigger>
-          <TabsTrigger value="password" className="min-h-11 whitespace-normal">
-            {engineerLoginCopy.passwordMethod}
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="otp">
-          <EngineerOtpLoginForm nextPath={nextPath} />
-        </TabsContent>
-        <TabsContent value="password">
-          <EngineerPasswordLoginForm nextPath={nextPath} />
-        </TabsContent>
-      </Tabs>
-      <div className="space-y-3 border-t border-border pt-5">
-        <EngineerLoginRegisterCrossLink />
-        {isMockMode ? (
-          <p className="type-caption text-center text-muted-foreground">
-            {engineerLoginCopy.mockModeHint}
-          </p>
-        ) : null}
-      </div>
-    </div>
+    <AuthLoginCard
+      title={engineerLoginCopy.title}
+      description={engineerLoginCopy.description}
+      isMockMode={isMockMode}
+      footer={<EngineerLoginRegisterCrossLink />}
+    >
+      <AuthLoginMethods
+        otpLabel={engineerLoginCopy.otpMethod}
+        passwordLabel={engineerLoginCopy.passwordMethod}
+        otp={
+          <AuthOtpLoginForm
+            nextPath={nextPath}
+            idPrefix="engineer-login"
+            copy={engineerLoginCopy}
+            requestOtp={requestEngineerLoginOtp}
+            verifyOtp={loginEngineerWithOtp}
+          />
+        }
+        password={
+          <AuthPasswordLoginForm
+            nextPath={nextPath}
+            idPrefix="engineer-login"
+            copy={engineerLoginCopy}
+            loginWithPassword={loginEngineerWithPassword}
+          />
+        }
+      />
+    </AuthLoginCard>
   );
 }

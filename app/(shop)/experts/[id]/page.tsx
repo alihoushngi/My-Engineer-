@@ -7,6 +7,7 @@ import {
 } from "@/lib/experts/expert-profile/expert-profile";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
 import { getExpertProfile } from "@/services/expert-service/expert-service";
+import { isUserAuthenticated } from "@/services/user-auth-service/user-access-service";
 
 type ExpertPageProps = {
   params: Promise<{ id: string }>;
@@ -33,7 +34,10 @@ export async function generateMetadata({
 
 export default async function ExpertRoutePage({ params }: ExpertPageProps) {
   const { id } = await params;
-  const expert = await getExpertProfile(id);
+  const [expert, userAuthenticated] = await Promise.all([
+    getExpertProfile(id),
+    isUserAuthenticated(),
+  ]);
 
   if (!expert) {
     notFound();
@@ -42,6 +46,7 @@ export default async function ExpertRoutePage({ params }: ExpertPageProps) {
   return (
     <ExpertProfilePage
       expert={expert}
+      isUserAuthenticated={userAuthenticated}
       isDevelopmentPreview={
         process.env.NODE_ENV !== "production" &&
         isDevelopmentExpertPreviewId(id)

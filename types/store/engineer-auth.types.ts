@@ -18,6 +18,7 @@ export type MockEngineerProfileSnapshot = {
 
 export type EngineerSession = {
   isAuthenticated: true;
+  role: "engineer";
   isMock: boolean;
   source: EngineerSessionSource;
   profile?: MockEngineerProfileSnapshot;

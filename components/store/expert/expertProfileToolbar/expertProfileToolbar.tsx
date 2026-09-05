@@ -16,10 +16,15 @@ import { type ExpertProfile } from "@/types/store/expert.types";
 
 type ExpertProfileToolbarProps = {
   expert: ExpertProfile;
+  isUserAuthenticated?: boolean;
 };
 
-export function ExpertProfileToolbar({ expert }: ExpertProfileToolbarProps) {
+export function ExpertProfileToolbar({
+  expert,
+  isUserAuthenticated = false,
+}: ExpertProfileToolbarProps) {
   const canContact = hasPublicContact(expert);
+  const nextPath = toExpertSharePath(expert.id);
 
   return (
     <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap lg:w-auto lg:flex-col">
@@ -41,6 +46,7 @@ export function ExpertProfileToolbar({ expert }: ExpertProfileToolbarProps) {
         description={expertProfileCopy.chatUnavailableDescription}
         icon={<MessageSquareIcon aria-hidden="true" />}
         className="w-full sm:w-auto"
+        auth={{ isAuthenticated: isUserAuthenticated, nextPath }}
       />
       <ExpertShareButton
         title={`${expert.name} | ${expert.profession}`}
@@ -54,6 +60,7 @@ export function ExpertProfileToolbar({ expert }: ExpertProfileToolbarProps) {
         variant="ghost"
         icon={<BookmarkIcon aria-hidden="true" />}
         className="w-full sm:w-auto"
+        auth={{ isAuthenticated: isUserAuthenticated, nextPath }}
       />
     </div>
   );

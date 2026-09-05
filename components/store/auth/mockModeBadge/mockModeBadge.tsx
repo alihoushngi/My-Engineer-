@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge/badge";
-import { engineerPanelCopy } from "@/config/engineer-panel.config/engineer-panel.config";
+import { authUiCopy } from "@/config/auth-ui.config/auth-ui.config";
 
 type MockModeBadgeProps = {
   visible: boolean;
@@ -12,7 +12,7 @@ export function MockModeBadge({ visible }: MockModeBadgeProps) {
 
   return (
     <Badge variant="warning" className="font-normal">
-      {engineerPanelCopy.mockModeLabel}
+      {authUiCopy.mockModeLabel}
     </Badge>
   );
 }

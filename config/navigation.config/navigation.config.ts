@@ -14,6 +14,9 @@ export const storePaths = {
   expertRegistration: siteConfig.joinHref,
   engineerLogin: "/engineer/login",
   engineerPanel: "/engineer",
+  login: "/login",
+  register: "/register",
+  account: "/account",
 } as const;
 
 export type NavigationLink = {
@@ -100,6 +103,16 @@ export const engineerLoginNavigation: NavigationLink = {
 export const engineerPanelNavigation: NavigationLink = {
   href: storePaths.engineerPanel,
   label: "پنل مهندس",
+};
+
+export const userLoginNavigation: NavigationLink = {
+  href: storePaths.login,
+  label: "ورود / ثبت‌نام",
+};
+
+export const userAccountNavigation: NavigationLink = {
+  href: storePaths.account,
+  label: "حساب من",
 };
 
 export function isActivePath(pathname: string, href: string): boolean {

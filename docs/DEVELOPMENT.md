@@ -48,7 +48,8 @@ Leave it empty until the API environment is available. Do not hardcode productio
 `.env.local` is gitignored. `.env.example` is tracked and must not contain secrets.
 
 Development mock engineer login/registration is documented in
-[MOCK-AUTH.md](MOCK-AUTH.md). Do not enable it in production.
+[MOCK-AUTH.md](MOCK-AUTH.md). Customer mock login is documented in
+[USER-AUTH.md](USER-AUTH.md). Do not enable either in production.
 
 ## Development
 

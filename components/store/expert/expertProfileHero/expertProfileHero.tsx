@@ -14,9 +14,13 @@ import { type ExpertProfile } from "@/types/store/expert.types";
 
 type ExpertProfileHeroProps = {
   expert: ExpertProfile;
+  isUserAuthenticated?: boolean;
 };
 
-export function ExpertProfileHero({ expert }: ExpertProfileHeroProps) {
+export function ExpertProfileHero({
+  expert,
+  isUserAuthenticated = false,
+}: ExpertProfileHeroProps) {
   const initials = getExpertInitials(expert.name);
   const reviewCount = getReviewCount(expert);
   const degree = getPrimaryDegree(expert.education);
@@ -93,7 +97,10 @@ export function ExpertProfileHero({ expert }: ExpertProfileHeroProps) {
               <p className="type-body">{expertProfileCopy.freeContactCta}</p>
             </div>
           </div>
-          <ExpertProfileToolbar expert={expert} />
+          <ExpertProfileToolbar
+            expert={expert}
+            isUserAuthenticated={isUserAuthenticated}
+          />
         </div>
       </div>
     </header>
