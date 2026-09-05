@@ -46,9 +46,10 @@ The cache version is declared at the top of `public/sw.js`. Cache names use the
 - `/api/*` is never intercepted or cached.
 - Non-GET requests, range requests, requests with an Authorization header, and
   cross-origin requests are never intercepted or cached.
-- `/expert-registration`, `/engineer`, and every descendant are network-only.
-  If an offline document navigation fails, the worker may display `/offline`,
-  but it never stores private panel, registration, or request responses.
+- `/expert-registration`, `/engineer`, `/account`, and every descendant are
+  network-only. If an offline document navigation fails, the worker may display
+  `/offline`, but it never stores private panel, account, registration, or
+  request responses.
 
 OTP values, mobile numbers, national IDs, uploaded documents, request bodies,
 tokens, and private responses are never persisted by the worker. Background Sync

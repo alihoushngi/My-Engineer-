@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CircleAlertIcon } from "lucide-react";
+import { BrandLogo } from "@/components/layout/brandLogo/brandLogo";
 import {
   Alert,
   AlertDescription,
@@ -23,20 +24,27 @@ type UserUnauthorizedProps = {
 export function UserUnauthorized({ access, nextPath }: UserUnauthorizedProps) {
   if (access.kind === "checking") {
     return (
-      <div
-        className="flex min-h-[50vh] flex-col items-center justify-center gap-4 py-section"
-        aria-busy="true"
-        aria-live="polite"
-      >
-        <Spinner className="size-8" />
-        <div className="space-y-1 text-center">
-          <p className="type-h3 text-foreground">
-            {userAuthCopy.checkingTitle}
-          </p>
-          <p className="type-body text-muted-foreground">
-            {userAuthCopy.checkingDescription}
-          </p>
-        </div>
+      <div className="flex min-h-dvh flex-col bg-background">
+        <header className="border-b border-border bg-surface px-4 py-3">
+          <BrandLogo />
+        </header>
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex flex-1 flex-col items-center justify-center gap-4 py-section outline-none"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          <Spinner className="size-8" />
+          <div className="space-y-1 text-center">
+            <p className="type-h3 text-foreground">
+              {userAuthCopy.checkingTitle}
+            </p>
+            <p className="type-body text-muted-foreground">
+              {userAuthCopy.checkingDescription}
+            </p>
+          </div>
+        </main>
       </div>
     );
   }
@@ -68,30 +76,39 @@ export function UserUnauthorized({ access, nextPath }: UserUnauthorizedProps) {
               };
 
   return (
-    <div className="container-narrow flex min-h-[50vh] flex-col justify-center gap-6 py-section">
-      <Alert variant="danger">
-        <CircleAlertIcon />
-        <AlertTitle>{copy.title}</AlertTitle>
-        <AlertDescription>{copy.description}</AlertDescription>
-      </Alert>
-      <div className="flex flex-wrap gap-3">
-        {access.kind === "engineer_session" ? (
-          <Button asChild>
-            <Link href={siteConfig.engineerPanelHref}>
-              {userAuthCopy.engineerPanelCta}
-            </Link>
+    <div className="flex min-h-dvh flex-col bg-background">
+      <header className="border-b border-border bg-surface px-4 py-3">
+        <BrandLogo />
+      </header>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="container-narrow flex flex-1 flex-col justify-center gap-6 py-section outline-none"
+      >
+        <Alert variant="danger">
+          <CircleAlertIcon />
+          <AlertTitle>{copy.title}</AlertTitle>
+          <AlertDescription>{copy.description}</AlertDescription>
+        </Alert>
+        <div className="flex flex-wrap gap-3">
+          {access.kind === "engineer_session" ? (
+            <Button asChild>
+              <Link href={siteConfig.engineerPanelHref}>
+                {userAuthCopy.engineerPanelCta}
+              </Link>
+            </Button>
+          ) : (
+            <Button asChild>
+              <Link href={userLoginHref(nextPath ?? userAuthPaths.account)}>
+                {userAuthCopy.loginCta}
+              </Link>
+            </Button>
+          )}
+          <Button asChild variant="ghost">
+            <Link href={siteConfig.homeHref}>{userAuthCopy.homeCta}</Link>
           </Button>
-        ) : (
-          <Button asChild>
-            <Link href={userLoginHref(nextPath ?? userAuthPaths.account)}>
-              {userAuthCopy.loginCta}
-            </Link>
-          </Button>
-        )}
-        <Button asChild variant="ghost">
-          <Link href={siteConfig.homeHref}>{userAuthCopy.homeCta}</Link>
-        </Button>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

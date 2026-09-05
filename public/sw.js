@@ -1,5 +1,5 @@
 /* Mohandes Man service worker — public, non-sensitive resources only. */
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const CACHE_PREFIX = "mohandes-man";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
@@ -35,7 +35,11 @@ const PUBLIC_PAGE_PREFIXES = [
   "/services/",
 ];
 
-const SENSITIVE_PATH_PREFIXES = ["/expert-registration", "/engineer"];
+const SENSITIVE_PATH_PREFIXES = [
+  "/expert-registration",
+  "/engineer",
+  "/account",
+];
 
 function isSensitivePath(pathname) {
   return SENSITIVE_PATH_PREFIXES.some(

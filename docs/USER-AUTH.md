@@ -7,6 +7,7 @@ permissions, or session cookies.
 Visual identity follows [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md). Folder rules
 follow [ARCHITECTURE.md](ARCHITECTURE.md). Engineer auth remains documented in
 [MOCK-AUTH.md](MOCK-AUTH.md) and [ENGINEER-PANEL.md](ENGINEER-PANEL.md).
+The private customer workspace is documented in [USER-ACCOUNT.md](USER-ACCOUNT.md).
 
 ---
 
@@ -31,12 +32,12 @@ cookies, and writing an engineer session clears the user mock cookies.
 
 ## Route map
 
-| Path         | Layout               | Access                                                        |
-| ------------ | -------------------- | ------------------------------------------------------------- |
-| `/login`     | Auth (`(auth)`)      | Public. Redirects to a safe `next` when a user session exists |
-| `/register`  | Auth (`(auth)`)      | Public. Same `next` rule                                      |
-| `/account`   | Shop + account guard | User session only                                             |
-| `/account/*` | Shop + account guard | Reserved for future customer surfaces                         |
+| Path         | Layout                | Access                                                        |
+| ------------ | --------------------- | ------------------------------------------------------------- |
+| `/login`     | Auth (`(auth)`)       | Public. Redirects to a safe `next` when a user session exists |
+| `/register`  | Auth (`(auth)`)       | Public. Same `next` rule                                      |
+| `/account`   | Account (`(account)`) | User session only. See [USER-ACCOUNT.md](USER-ACCOUNT.md)     |
+| `/account/*` | Account (`(account)`) | Same guard. Shop chrome is not used                           |
 
 Canonical URLs are `/login` and `/register`. Do not send customers to
 `/engineer/login`.

@@ -1,0 +1,5 @@
+import { AccountPanelLoading } from "@/components/store/userAccount/accountPanelLoading/accountPanelLoading";
+
+export default function AccountReviewsLoading() {
+  return <AccountPanelLoading />;
+}

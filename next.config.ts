@@ -48,6 +48,26 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: "/account",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-store, no-cache, must-revalidate",
+          },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/account/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-store, no-cache, must-revalidate",
+          },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
         source: "/manifest.webmanifest",
         headers: [
           { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },

@@ -151,6 +151,8 @@ If the lockfile is intact, this restores the same dependency tree. Do not delete
 | `app/`               | Routes, layouts, loading/error boundaries, and thin page composition |
 | `app/(auth)/`        | Auth route group                                                     |
 | `app/(shop)/`        | Shop route group                                                     |
+| `app/(engineer)/`    | Private specialist workspace                                         |
+| `app/(account)/`     | Private customer workspace                                           |
 | `app/api/`           | Next.js Route Handlers                                               |
 | `components/ui/`     | Design-system primitives only                                        |
 | `components/layout/` | Header, footer, navigation, search shell, and other chrome           |
@@ -249,7 +251,7 @@ components/store/cartDrawer/type/cartDrawer.types.ts
 
 ### Routes
 
-Routes use kebab-case. Dynamic segments use `[id]`. Route groups are `(auth)` and `(shop)`.
+Routes use kebab-case. Dynamic segments use `[id]`. Route groups are `(auth)`, `(shop)`, `(engineer)`, and `(account)`.
 
 ```text
 app/(auth)/sign-in/page.tsx

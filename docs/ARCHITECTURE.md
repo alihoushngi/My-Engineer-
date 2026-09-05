@@ -70,6 +70,7 @@ Route groups:
 - `(auth)` — authentication and expert-registration routes
 - `(shop)` — storefront routes
 - `(engineer)` — private specialist workspace at `/engineer`
+- `(account)` — private customer workspace at `/account`
 
 Route names are kebab-case. Dynamic segments use `[id]` for opaque identity (experts). Public SEO resources use `[slug]` or `[category]` (services, articles, FAQ, knowledge). See [INFORMATION-ARCHITECTURE.md](INFORMATION-ARCHITECTURE.md).
 

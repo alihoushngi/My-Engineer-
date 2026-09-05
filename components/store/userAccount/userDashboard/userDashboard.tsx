@@ -1,0 +1,36 @@
+import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
+import { UserWelcome } from "@/components/store/userAccount/userWelcome/userWelcome";
+import { UserQuickActions } from "@/components/store/userAccount/userQuickActions/userQuickActions";
+import { UserRecentRequests } from "@/components/store/userAccount/userRecentRequests/userRecentRequests";
+import { UserRecentMessages } from "@/components/store/userAccount/userRecentMessages/userRecentMessages";
+import { UserSavedPreview } from "@/components/store/userAccount/userSavedPreview/userSavedPreview";
+import { UserNotificationSummary } from "@/components/store/userAccount/userNotificationSummary/userNotificationSummary";
+import {
+  userAccountCopy,
+  userAccountPageTitles,
+} from "@/config/user-account.config/user-account.config";
+import { activeRequests } from "@/lib/user-account/workspace-selectors/workspace-selectors";
+import { type UserWorkspace } from "@/types/store/user-account.types";
+
+type UserDashboardProps = {
+  workspace: UserWorkspace;
+};
+
+export function UserDashboard({ workspace }: UserDashboardProps) {
+  return (
+    <div className="flex flex-col gap-6">
+      <AccountPageHeader
+        title={userAccountPageTitles.dashboard}
+        description={userAccountCopy.dashboardDescription}
+      />
+      <UserWelcome workspace={workspace} />
+      <UserQuickActions />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <UserRecentRequests requests={activeRequests(workspace.requests)} />
+        <UserRecentMessages conversations={workspace.conversations} />
+        <UserSavedPreview experts={workspace.savedExperts} />
+        <UserNotificationSummary notifications={workspace.notifications} />
+      </div>
+    </div>
+  );
+}
