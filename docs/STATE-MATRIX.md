@@ -454,15 +454,17 @@ Content source: **BUSINESS DECISION REQUIRED** / **API CONTRACT REQUIRED**.
 
 ## Article detail
 
-| State             | Behavior                             |
-| ----------------- | ------------------------------------ |
-| Loading           | Title + body skeleton                |
-| Success           | Article; TOC; FAQs if present        |
-| Empty related     | Hide related block (do not `#`)      |
-| Error / not found | Error or `notFound()`                |
-| Retry             | Re-fetch                             |
-| Partial           | Missing author/views: omit meta bits |
-| Mobile            | TOC in flow                          |
+| State             | Behavior                                                       |
+| ----------------- | -------------------------------------------------------------- |
+| Loading           | Title + body skeleton                                          |
+| Success           | Article; derived TOC; categories; related by tags; comments    |
+| Empty related     | Hide related block                                             |
+| Empty comments    | Empty + form                                                   |
+| Comment submit    | Mock: local append, honest non-persistence copy. No API: error |
+| Error / not found | Error or `notFound()`                                          |
+| Retry             | Re-fetch                                                       |
+| Partial           | Missing author/views: omit meta bits                           |
+| Mobile            | Accordion TOC in flow                                          |
 
 ---
 

@@ -24,14 +24,13 @@ export type ArticleFaqItem = {
 export type ArticleTocItem = {
   id: string;
   label: string;
+  level: 2 | 3 | 4 | 5;
 };
 
 export type Article = ArticleCardData & {
   body?: string;
   viewCount?: number;
-  toc?: readonly ArticleTocItem[];
   faqs?: readonly ArticleFaqItem[];
-  related?: readonly ArticleCardData[];
   relatedServiceHref?: string;
   relatedServiceLabel?: string;
 };
@@ -41,4 +40,19 @@ export type ArticleCategory = {
   href: `/articles/categories/${string}`;
   title: string;
   description?: string;
+};
+
+export type ArticleComment = {
+  id: string;
+  articleId: string;
+  authorName: string;
+  body: string;
+  createdAtLabel: string;
+};
+
+export type SubmitArticleCommentInput = {
+  articleId: string;
+  authorName: string;
+  phone: string;
+  body: string;
 };

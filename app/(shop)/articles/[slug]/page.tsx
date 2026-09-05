@@ -2,8 +2,14 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleDetailPage } from "@/components/store/article/articleDetailPage/articleDetailPage";
 import { articlesCopy } from "@/config/articles.config/articles.config";
+import { relatedArticlesByTag } from "@/lib/articles/related-articles-by-tag/related-articles-by-tag";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
-import { getArticleBySlug } from "@/services/article-service/article-service";
+import { listArticleComments } from "@/services/article-comment-service/article-comment-service";
+import {
+  getArticleBySlug,
+  listArticleCategories,
+  listArticles,
+} from "@/services/article-service/article-service";
 
 type ArticleDetailRouteProps = {
   params: Promise<{ slug: string }>;
@@ -38,5 +44,18 @@ export default async function ArticleDetailRoutePage({
     notFound();
   }
 
-  return <ArticleDetailPage article={article} />;
+  const [categories, catalog, comments] = await Promise.all([
+    listArticleCategories(),
+    listArticles(),
+    listArticleComments(article.id),
+  ]);
+
+  return (
+    <ArticleDetailPage
+      article={article}
+      categories={categories}
+      related={relatedArticlesByTag(catalog, article)}
+      comments={comments}
+    />
+  );
 }

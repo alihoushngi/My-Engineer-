@@ -364,6 +364,9 @@
   & p {
     margin-block: 1rem;
   }
+  & :is(h2, h3, h4, h5) {
+    scroll-margin-top: calc(5.75rem + env(safe-area-inset-top));
+  }
   & h2 {
     font-size: var(--type-h2);
     font-weight: 600;
@@ -374,8 +377,20 @@
     font-weight: 600;
     margin-block: 2rem 0.75rem;
   }
-  & :is(h2, h3, section[id]) {
-    scroll-margin-top: 7rem;
+  & h4 {
+    font-size: var(--type-h4);
+    font-weight: 600;
+    margin-block: 1.5rem 0.5rem;
+  }
+  & h5 {
+    font-size: var(--type-label);
+    font-weight: 600;
+    margin-block: 1.25rem 0.5rem;
+  }
+  & blockquote {
+    border-inline-start: 2px solid var(--color-primary);
+    padding-inline-start: 1rem;
+    color: var(--muted-foreground);
   }
   & ul {
     list-style: disc;

@@ -421,12 +421,14 @@ ArticlesPage                      E  hub + category chips + list
 ArticleCategoryPage               E
 ArticleDetailPage                 E
 ├── StoreBreadcrumb
-├── article header (title, author, date, views)
-├── body
-├── ArticleToc                    D  (c) if scroll-spy; else Server list of links
+├── ArticleSidebar                D  RTL-right: categories + derived TOC (lg sticky)
+├── article header / cover
+├── ArticleTocMobile              (c) Accordion — not a desktop sidebar
+├── ArticleBody                   D  semantic h2–h5 with stable ids
 ├── article FAQs → Accordion
-├── RelatedArticles               D  only with real hrefs
-└── related service CTA → Button link
+├── related service CTA → Button link
+├── RelatedArticles               D  shared tags, then same category
+└── ArticleComments               (c) list, form, mock-only submit, pagination
 ArticleCard                       D  image, category, title, summary, meta, read-more
 ```
 

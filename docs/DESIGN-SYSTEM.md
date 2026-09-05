@@ -162,7 +162,7 @@ Profiles open with a navy identity band: photo (enlargeable), views, verificatio
 
 ### Articles, FAQ and knowledge
 
-The article hub leads with category chips sourced from catalog data, a photographic editorial feature on a navy surface with light foreground, then `ArticleCard` entries (image, category, title, summary, metadata, and «مطالعه بیشتر»). URL state is `?category=` plus shared pagination (`?page=`, size 9, reset on filter change). A «مقالات پیشنهادی» block is filled from tags, category, and featured status—not described as AI. Detail pages use a narrow reading column, in-flow contents navigation and generous prose. FAQ and knowledge hubs use distinct color-coded category identities; details retain divided accessible accordions and editorial entries. Related service actions require supplied destinations. Missing entities still return not-found; empty catalogs use the shared empty state.
+The article hub leads with category chips sourced from catalog data, a photographic editorial feature on a navy surface with light foreground, then `ArticleCard` entries (image, category, title, summary, metadata, and «مطالعه بیشتر»). URL state is `?category=` plus shared pagination (`?page=`, size 9, reset on filter change). A «مقالات پیشنهادی» block is filled from tags, category, and featured status—not described as AI. Detail pages use an RTL-right sticky sidebar for categories and an automatic table of contents derived from `h2–h5` in the article body; mobile uses a collapsible «آنچه در این مقاله می‌خوانید» accordion. Related articles rank shared tags first. Comments require an Iranian mobile number that is never rendered on the public card; mock mode may append a local comment and must not claim server persistence. FAQ and knowledge hubs use distinct color-coded category identities; details retain divided accessible accordions and editorial entries. Related service actions require supplied destinations. Missing entities still return not-found; empty catalogs use the shared empty state.
 
 ### About and legal
 
@@ -196,7 +196,7 @@ Respect reduced motion globally. No workflow depends on hover, color alone, anim
 
 ## Data and asset strategy
 
-- `lib/mock-data/mock-data.ts` is the single source of local experts, service scopes, articles (via `lib/mock-data/articles-mock-data/articles-mock-data.ts`), FAQs, knowledge, cities, software, portfolio, homepage modules, and engineer-workspace display fixtures (via `lib/mock-data/engineer-workspace-mock-data.ts`).
+- `lib/mock-data/mock-data.ts` is the single source of local experts, service scopes, articles (via `lib/mock-data/articles-mock-data/articles-mock-data.ts`), article comments (via `lib/mock-data/article-comments-mock-data/article-comments-mock-data.ts`), FAQs, knowledge, cities, software, portfolio, homepage modules, and engineer-workspace display fixtures (via `lib/mock-data/engineer-workspace-mock-data.ts`).
 - Service modules are the only consumers exposed to route components. Turning `NEXT_PUBLIC_USE_MOCK_DATA` to `false` returns honest empty/unavailable states until backend contracts are supplied.
 - Reused legacy assets live under `public/images/`; generated concept boards live under `docs/design-concepts/` and are not shipped in page UI.
 - `IMAGE-ASSET-PLAN.md` records every reused and still-missing visual with exact dimensions, crop, subject, mood, and Persian alt intent.

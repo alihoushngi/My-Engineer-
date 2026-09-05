@@ -343,22 +343,22 @@ is missing, omit the info/FAQ block rather than showing wrong content.
 
 ### 7.5 Articles — `/articles`, `/articles/categories/[slug]`, `/articles/[slug]`
 
-| Field           | Specification                                                                                                                                                                         |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Purpose         | Read editorial content; optional CTA into a related service                                                                                                                           |
-| Page type       | Hub / list / long-form                                                                                                                                                                |
-| Access          | Public                                                                                                                                                                                |
-| Layout          | Shop                                                                                                                                                                                  |
-| Phase           | CONTENT SUPPORTING PHASE 1                                                                                                                                                            |
-| Container       | Hub/list: `container-app` or `container-wide`. Detail: `container-narrow`                                                                                                             |
-| Hub `/articles` | Title; category chips from catalog (`?category=`); curated recommended block; `ArticleCard` grid; pagination above nine results. Search/sort stay omitted until a content API exists. |
-| Category        | Banner/title from content; same card grid; breadcrumb                                                                                                                                 |
-| Detail          | Breadcrumb; title; meta; body; TOC; article FAQs; related articles when they exist (no `#`); related service CTA when tagged                                                          |
-| Interactions    | Open detail; category browse; TOC jump; service CTA                                                                                                                                   |
-| Required states | Loading, success, empty (no articles / empty category), error, not found                                                                                                              |
-| Mobile          | TOC as `Accordion` or in-page list, not a desktop sidebar-first layout                                                                                                                |
-| Data            | **API CONTRACT REQUIRED** / content source **BUSINESS DECISION REQUIRED**. Do not invent bodies. Demo duplication must not ship                                                       |
-| API             | Likely                                                                                                                                                                                |
+| Field           | Specification                                                                                                                                                                                           |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Purpose         | Read editorial content; optional CTA into a related service                                                                                                                                             |
+| Page type       | Hub / list / long-form                                                                                                                                                                                  |
+| Access          | Public                                                                                                                                                                                                  |
+| Layout          | Shop                                                                                                                                                                                                    |
+| Phase           | CONTENT SUPPORTING PHASE 1                                                                                                                                                                              |
+| Container       | Hub/list: `container-app` or `container-wide`. Detail: `container-app` with a reading column (`max-w-3xl`) plus RTL-right sidebar on large screens                                                      |
+| Hub `/articles` | Title; category chips from catalog (`?category=`); curated recommended block; `ArticleCard` grid; pagination above nine results. Search/sort stay omitted until a content API exists.                   |
+| Category        | Banner/title from content; same card grid; breadcrumb                                                                                                                                                   |
+| Detail          | Breadcrumb; title; meta; body with `h2–h5` anchors; RTL-right sticky categories + TOC on desktop; mobile TOC accordion; related by tags; comments with required mobile; related service CTA when tagged |
+| Interactions    | Open detail; category browse; TOC jump; service CTA                                                                                                                                                     |
+| Required states | Loading, success, empty (no articles / empty category), error, not found                                                                                                                                |
+| Mobile          | Accordion TOC in flow; no desktop sidebar; readable measure; comments and related stack                                                                                                                 |
+| Data            | **API CONTRACT REQUIRED** / content source **BUSINESS DECISION REQUIRED**. Do not invent bodies. Demo duplication must not ship                                                                         |
+| API             | Likely                                                                                                                                                                                                  |
 
 Search/sort on articles stay unwired until a content API exists. Do not fake them.
 

@@ -3,6 +3,10 @@ import {
   type ArticleCategory,
 } from "@/types/store/article.types";
 
+function md(h2: string, intro: string, h3: string, next: string): string {
+  return `## ${h2}\n\n${intro}\n\n### ${h3}\n\n${next}`;
+}
+
 export const mockArticleCategories: readonly ArticleCategory[] = [
   {
     slug: "surveying",
@@ -24,7 +28,7 @@ export const mockArticleCategories: readonly ArticleCategory[] = [
   },
 ];
 
-export const mockArticles: readonly Article[] = [
+const rawMockArticles: readonly Article[] = [
   {
     id: "art-utm-map-difference",
     slug: "utm-map-difference",
@@ -40,12 +44,42 @@ export const mockArticles: readonly Article[] = [
     tags: ["utm", "سند", "مختصات"],
     featured: true,
     viewCount: 164,
-    toc: [
-      { id: "utm", label: "نقشه UTM چیست؟" },
-      { id: "deed", label: "نقشه‌برداری سند چیست؟" },
-      { id: "compare", label: "مقایسه کاربردها" },
-    ],
-    body: "نقشه UTM موقعیت و مختصات دقیق ملک را در یک سامانه مشخص ثبت می‌کند. این خروجی در جانمایی، تطبیق موقعیت و بسیاری از پیگیری‌های ثبتی کاربرد دارد.\n\nنقشه‌برداری سند علاوه بر برداشت میدانی می‌تواند به بررسی سوابق، حدود و انطباق اطلاعات ملک با مدارک موجود نیاز داشته باشد.\n\nانتخاب خدمت درست به مسئله اصلی پرونده، مرجع درخواست‌کننده و نوع خروجی مورد نیاز وابسته است. پیش از سفارش، مدارک موجود و هدف استفاده از نقشه را با متخصص در میان بگذارید.",
+    body: `## نقشه UTM چیست؟
+
+نقشه UTM موقعیت و مختصات دقیق ملک را در یک سامانه مشخص ثبت می‌کند. این خروجی در جانمایی، تطبیق موقعیت و بسیاری از پیگیری‌های ثبتی کاربرد دارد.
+
+### کاربرد در جانمایی
+
+اگر هدف شما پیدا کردن محل ملک روی زمین یا انطباق سند با موقعیت واقعی است، خروجی UTM معمولاً نقطه شروع است.
+
+- جانمایی پلاک ثبتی
+- تطبیق موقعیت با مدارک
+
+#### سامانه مختصات
+
+سامانه مورد استفاده باید با همان مرجع درخواست‌کننده یکی باشد. تفاوت سامانه، فایل را برای اداره بی‌استفاده می‌کند.
+
+##### دقت برداشت
+
+دقت لازم به نوع پرونده بستگی دارد. پیش از بازدید بپرسید فایل با چه دقتی باید تحویل شود.
+
+> سفارش هم‌زمان هر دو خروجی بدون نیاز مرجع، معمولاً هزینه و زمان اضافه می‌سازد.
+
+## نقشه‌برداری سند چیست؟
+
+نقشه‌برداری سند علاوه بر برداشت میدانی می‌تواند به بررسی سوابق، حدود و انطباق اطلاعات ملک با مدارک موجود نیاز داشته باشد.
+
+### سوابق و حدود
+
+اختلاف دیوار، پرچین یا نشانه قدیمی با متن سند باید قبل از تنظیم خروجی نهایی روشن شود.
+
+## مقایسه کاربردها
+
+انتخاب خدمت درست به مسئله اصلی پرونده، مرجع درخواست‌کننده و نوع خروجی مورد نیاز وابسته است.
+
+### چه زمانی کدام را سفارش دهیم؟
+
+پیش از سفارش، مدارک موجود و هدف استفاده از نقشه را با متخصص در میان بگذارید.`,
     faqs: [
       {
         id: "utm-use",
@@ -459,3 +493,27 @@ export const mockArticles: readonly Article[] = [
     relatedServiceLabel: "پروانه ساخت",
   },
 ];
+
+function withEditorialHeadings(article: Article): Article {
+  if (article.body?.includes("## ")) {
+    return article;
+  }
+
+  const lead = article.body?.trim() ?? "";
+  const heading = article.excerpt?.replace(/[.؟]$/u, "") ?? "مرور مطلب";
+
+  return {
+    ...article,
+    body: `## ${heading}
+
+${lead}
+
+### پیش از اقدام
+
+مدارک موجود، هدف استفاده و مرجع درخواست‌کننده را با متخصص در میان بگذارید.`,
+  };
+}
+
+export const mockArticles: readonly Article[] = rawMockArticles.map(
+  withEditorialHeadings,
+);
