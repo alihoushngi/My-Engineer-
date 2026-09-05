@@ -52,7 +52,7 @@ export function ExpertShareButton({
     <div className={className}>
       <Button
         type="button"
-        variant="outline"
+        variant="ghost"
         className="w-full"
         onClick={() => {
           void shareProfile();

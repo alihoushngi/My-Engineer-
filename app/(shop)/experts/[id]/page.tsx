@@ -5,8 +5,14 @@ import {
   isDevelopmentExpertPreviewId,
   toExpertSharePath,
 } from "@/lib/experts/expert-profile/expert-profile";
+import { toRequestExpertOption } from "@/lib/marketplace/to-request-expert-option/to-request-expert-option";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
-import { getExpertProfile } from "@/services/expert-service/expert-service";
+import { listCatalogCities } from "@/services/catalog-service/catalog-service";
+import {
+  getExpertCardData,
+  getExpertProfile,
+} from "@/services/expert-service/expert-service";
+import { getCurrentSavedExpertIds } from "@/services/user-account-service/user-account-service";
 import { isUserAuthenticated } from "@/services/user-auth-service/user-access-service";
 
 type ExpertPageProps = {
@@ -34,19 +40,37 @@ export async function generateMetadata({
 
 export default async function ExpertRoutePage({ params }: ExpertPageProps) {
   const { id } = await params;
-  const [expert, userAuthenticated] = await Promise.all([
-    getExpertProfile(id),
-    isUserAuthenticated(),
-  ]);
+  const [expert, userAuthenticated, savedIds, cities, card] = await Promise.all(
+    [
+      getExpertProfile(id),
+      isUserAuthenticated(),
+      getCurrentSavedExpertIds(),
+      listCatalogCities(),
+      getExpertCardData(id),
+    ],
+  );
 
   if (!expert) {
     notFound();
   }
 
+  const expertOption = toRequestExpertOption(
+    card ?? {
+      id: expert.id,
+      name: expert.name,
+      href: toExpertSharePath(expert.id),
+      city: expert.city,
+    },
+    cities,
+  );
+
   return (
     <ExpertProfilePage
       expert={expert}
+      expertOption={expertOption}
+      cities={cities}
       isUserAuthenticated={userAuthenticated}
+      isSaved={savedIds.includes(expert.id)}
       isDevelopmentPreview={
         process.env.NODE_ENV !== "production" &&
         isDevelopmentExpertPreviewId(id)

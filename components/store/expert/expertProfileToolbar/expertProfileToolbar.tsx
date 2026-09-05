@@ -1,45 +1,43 @@
 "use client";
 
-import { BookmarkIcon, MessageSquareIcon } from "lucide-react";
-import { ExpertContactDrawer } from "@/components/store/expert/expertContactDrawer/expertContactDrawer";
+import { MessageSquareIcon } from "lucide-react";
 import { ExpertLegacyFeature } from "@/components/store/expert/expertLegacyFeature/expertLegacyFeature";
+import { ExpertSaveButton } from "@/components/store/expert/expertSaveButton/expertSaveButton";
 import { ExpertShareButton } from "@/components/store/expert/expertShareButton/expertShareButton";
-import { Button } from "@/components/ui/button/button";
+import { RequestCreateDialog } from "@/components/store/marketplace/requestCreateDialog/requestCreateDialog";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
-import {
-  getPublicPhone,
-  getPublicSms,
-  hasPublicContact,
-  toExpertSharePath,
-} from "@/lib/experts/expert-profile/expert-profile";
+import { toExpertSharePath } from "@/lib/experts/expert-profile/expert-profile";
 import { type ExpertProfile } from "@/types/store/expert.types";
+import { type City } from "@/types/store/registration.types";
+import { type RequestExpertOption } from "@/types/store/service-request.types";
 
 type ExpertProfileToolbarProps = {
   expert: ExpertProfile;
+  expertOption: RequestExpertOption;
+  cities: readonly City[];
   isUserAuthenticated?: boolean;
+  isSaved?: boolean;
 };
 
 export function ExpertProfileToolbar({
   expert,
+  expertOption,
+  cities,
   isUserAuthenticated = false,
+  isSaved = false,
 }: ExpertProfileToolbarProps) {
-  const canContact = hasPublicContact(expert);
   const nextPath = toExpertSharePath(expert.id);
 
   return (
     <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap lg:w-auto lg:flex-col">
-      {canContact ? (
-        <ExpertContactDrawer
-          expertName={expert.name}
-          phone={getPublicPhone(expert.contact)}
-          sms={getPublicSms(expert.contact)}
-          trigger={
-            <Button type="button" className="w-full sm:w-auto">
-              {expertProfileCopy.contactLabel}
-            </Button>
-          }
-        />
-      ) : null}
+      <RequestCreateDialog
+        experts={[expertOption]}
+        cities={cities}
+        isUserAuthenticated={isUserAuthenticated}
+        nextPath={nextPath}
+        lockedExpertId={expert.id}
+        triggerClassName="w-full sm:w-auto"
+      />
       <ExpertLegacyFeature
         label={expertProfileCopy.chatLabel}
         title={expertProfileCopy.chatUnavailableTitle}
@@ -48,19 +46,17 @@ export function ExpertProfileToolbar({
         className="w-full sm:w-auto"
         auth={{ isAuthenticated: isUserAuthenticated, nextPath }}
       />
-      <ExpertShareButton
-        title={`${expert.name} | ${expert.profession}`}
-        path={toExpertSharePath(expert.id)}
+      <ExpertSaveButton
+        expertId={expert.id}
+        isSaved={isSaved}
+        isUserAuthenticated={isUserAuthenticated}
+        nextPath={nextPath}
         className="w-full sm:w-auto"
       />
-      <ExpertLegacyFeature
-        label={expertProfileCopy.saveLabel}
-        title={expertProfileCopy.saveUnavailableTitle}
-        description={expertProfileCopy.saveUnavailableDescription}
-        variant="ghost"
-        icon={<BookmarkIcon aria-hidden="true" />}
+      <ExpertShareButton
+        title={`${expert.name} | ${expert.profession}`}
+        path={nextPath}
         className="w-full sm:w-auto"
-        auth={{ isAuthenticated: isUserAuthenticated, nextPath }}
       />
     </div>
   );

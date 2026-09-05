@@ -1,76 +1,24 @@
 import { engineerPanelPaths } from "@/config/engineer-panel.config/engineer-panel.config";
+import { toEngineerRequest } from "@/lib/marketplace/request-projections/request-projections";
+import { mockServiceRequests } from "@/lib/mock-data/service-request-mock-data";
 import {
   type EngineerConversation,
   type EngineerCredential,
   type EngineerMessage,
   type EngineerNotification,
-  type EngineerRequest,
 } from "@/types/store/engineer.types";
 
 /** Public expert id used to assemble the engineer workspace display fixture. */
 export const mockEngineerPublicExpertId = "amirhossein-rostami";
 
-export const mockEngineerRequests: readonly EngineerRequest[] = [
-  {
-    id: "req-utm-niavaran",
-    title: "نقشه UTM برای پلاک ثبتی",
-    serviceLabel: "نقشه برداری",
-    city: "تهران",
-    createdAtLabel: "۲ ساعت پیش",
-    summary: "نیاز به نقشه UTM و جانمایی پلاک برای پرونده شهرداری.",
-    description:
-      "برای تشکیل پرونده پروانه، نقشه UTM و جانمایی پلاک ثبتی یک زمین مسکونی در نیاوران لازم است. مدارک مالکیت آماده است.",
-    status: "new",
-    isNew: true,
-    customerDisplayName: "کاربر متقاضی",
-    conversationId: "conv-utm-niavaran",
-  },
-  {
-    id: "req-asbuilt-saadatabad",
-    title: "نقشه ازبیلت واحد مسکونی",
-    serviceLabel: "نقشه برداری",
-    city: "تهران",
-    createdAtLabel: "دیروز",
-    summary: "برداشت وضع موجود یک واحد برای تغییرات داخلی.",
-    description:
-      "واحد ۱۵۰ متری است. کارفرما زمان بازدید را در روزهای میانی هفته اعلام کرده است.",
-    status: "in_review",
-    customerDisplayName: "کاربر متقاضی",
-    conversationId: "conv-asbuilt",
-  },
-  {
-    id: "req-closed-karaj",
-    title: "برداشت محدوده باغ",
-    serviceLabel: "نقشه برداری",
-    city: "کرج",
-    createdAtLabel: "۱۲ روز پیش",
-    summary: "درخواست قبلی که در فهرست به‌صورت بسته‌شده نمایش داده می‌شود.",
-    status: "closed",
-  },
-  ...Array.from({ length: 8 }, (_, index) => {
-    const statuses = ["new", "in_review", "closed"] as const;
-    const status = statuses[index % 3] ?? "in_review";
-
-    return {
-      id: `req-extra-${index + 1}`,
-      title: `بررسی محدوده و خروجی نقشه‌برداری ${index + 4}`,
-      serviceLabel: "نقشه برداری",
-      city: index % 2 === 0 ? "تهران" : "کرج",
-      createdAtLabel: `${index + 3} روز پیش`,
-      summary: "درخواست نمایشی برای بررسی صفحه‌بندی فهرست درخواست‌ها.",
-      description: "این مورد فقط برای نمایش فهرست بلند در فضای کاری متخصص است.",
-      status,
-      isNew: status === "new",
-      customerDisplayName: "کاربر متقاضی",
-      conversationId: `conv-extra-${index + 1}`,
-    };
-  }),
-];
+export const mockEngineerRequests = mockServiceRequests
+  .filter((request) => request.expertId === mockEngineerPublicExpertId)
+  .map(toEngineerRequest);
 
 export const mockEngineerConversations: readonly EngineerConversation[] = [
   {
     id: "conv-utm-niavaran",
-    participantName: "کاربر متقاضی",
+    participantName: "سارا مشتری",
     lastMessagePreview: "مدارک مالکیت را فردا می‌فرستم.",
     lastMessageAtLabel: "۱ ساعت پیش",
     unreadCount: 1,

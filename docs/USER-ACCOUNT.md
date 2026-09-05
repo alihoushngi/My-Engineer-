@@ -95,19 +95,61 @@ The dashboard prioritizes work, not vanity statistics:
 - saved specialists
 - notification summary
 
-Quick actions are real links only: find a specialist (`/`), open messages,
-open saved specialists. There is no fake “create request” form.
+Quick actions: ثبت درخواست (requires a selected specialist, typically from
+saved experts), find a specialist (`/`), open messages, open saved specialists.
+There is no bidding, budget, escrow, or quotation form.
+
+---
+
+## Saved specialists
+
+Route: `/account/saved`. Cards reuse public `ExpertCard`. Each card also has:
+
+- remove from saved
+- open public profile (the card itself)
+- پیام به مهندس (existing conversation, or an honest messaging-soon dialog)
+
+Saving from `/experts/[id]` uses «ذخیره مهندس» with a selected state. Guests
+are sent to `/login?next=` (customer login, never `/engineer/login`).
+
+When the list is longer than 9, shared pagination is used.
+
+---
+
+## Shared request entity
+
+Customer `/account/requests` and engineer `/engineer/requests` are opposite
+views of the same `ServiceRequest` (`types/store/service-request.types.ts`).
+
+Supported create fields: service, city, description, selected engineer.
+Attachments, budget, bidding deadline, escrow, payment, and price quotation
+are **not** in this product.
+
+Statuses are scanning labels only: `sent`, `in_review`, `closed`. Engineer
+list UI maps `sent` → `new`. **API CONTRACT REQUIRED / BUSINESS DECISION
+REQUIRED** for accept, reject, quote, or any richer lifecycle.
+
+Create entry points: expert profile, service page, customer dashboard. A
+request always has a selected engineer (no broadcast-to-all).
+
+If a conversation exists, request detail shows «مشاهده گفتگو». Messaging
+compose is a later task.
 
 ---
 
 ## Mock data
 
-Central file: [`lib/mock-data/user-workspace-mock-data.ts`](../lib/mock-data/user-workspace-mock-data.ts)
+Central files:
+
+- [`lib/mock-data/service-request-mock-data.ts`](../lib/mock-data/service-request-mock-data.ts)
+  — canonical request catalog
+- [`lib/mock-data/user-workspace-mock-data.ts`](../lib/mock-data/user-workspace-mock-data.ts)
+  — customer identity, conversations, reviews, notifications
 
 | Export               | Use                                      |
 | -------------------- | ---------------------------------------- |
 | `currentUser`        | Private identity                         |
-| `userRequests`       | Customer requests                        |
+| `userRequests`       | Derived customer view of shared requests |
 | `userSavedExperts()` | Same `ExpertCardData` as `/experts/[id]` |
 | `userReviews`        | Reviews written by the customer          |
 | `userNotifications`  | Account notifications                    |
@@ -116,7 +158,14 @@ Saved specialists are looked up from `mockExpertCards` by public expert id.
 Do not invent a second expert model.
 
 Session `displayName` / `phoneMasked` overlay `currentUser` in
-`buildUserWorkspace(session)`.
+`buildUserWorkspace(session, overlay)`.
+
+Visual-testing overlays (not production persistence):
+
+- `mm_mock_user_saved` — saved expert ids (defaults when the cookie is absent)
+- `mm_mock_service_requests` — customer-created requests; kept across a
+  customer→engineer role switch in the same browser so the engineer can see
+  the same ids. Cleared saved cookie on user logout / engineer session write.
 
 ---
 
@@ -134,10 +183,11 @@ Installed (standalone) sessions still use the network for these routes.
 Do not invent endpoints in the frontend. A real customer workspace needs:
 
 1. Current-user profile read (name, masked mobile, avatar, city)
-2. List/detail for the user’s requests
-3. List/detail for conversations (composer in a later messaging task)
-4. Saved-expert list using the public Expert entity
-5. Reviews written by the user
-6. Notifications and (later) preference writes
-7. Logout / session revoke
-8. Explicit 401 vs 403 when an engineer token hits `/account/*`
+2. List/detail for the user’s requests (shared entity with engineer requests)
+3. Create request (service, city, description, selected engineer)
+4. Saved-expert list and save/unsave using the public Expert entity
+5. List/detail for conversations (composer in a later messaging task)
+6. Reviews written by the user
+7. Notifications and (later) preference writes
+8. Logout / session revoke
+9. Explicit 401 vs 403 when an engineer token hits `/account/*`

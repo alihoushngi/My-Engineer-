@@ -9,6 +9,7 @@ import {
   MOCK_ENGINEER_SESSION_COOKIE,
   MOCK_SESSION_COOKIE_OPTIONS,
   MOCK_USER_PROFILE_COOKIE,
+  MOCK_USER_SAVED_COOKIE,
   MOCK_USER_SESSION_COOKIE,
   MOCK_USER_SESSION_VALUE,
 } from "@/lib/auth/mock-session-cookies/mock-session-cookies";
@@ -87,6 +88,7 @@ export async function clearMockUserSession(): Promise<void> {
   const store = await cookies();
   store.delete(MOCK_USER_SESSION_COOKIE);
   store.delete(MOCK_USER_PROFILE_COOKIE);
+  store.delete(MOCK_USER_SAVED_COOKIE);
 }
 
 export async function readRawUserSessionCookie(): Promise<string | undefined> {

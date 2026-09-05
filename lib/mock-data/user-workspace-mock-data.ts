@@ -1,4 +1,9 @@
 import { mockExpertCards } from "@/lib/mock-data/mock-data";
+import { toUserRequest } from "@/lib/marketplace/request-projections/request-projections";
+import {
+  MOCK_MARKETPLACE_CUSTOMER_ID,
+  mockServiceRequests,
+} from "@/lib/mock-data/service-request-mock-data";
 import { userAccountPaths } from "@/config/user-account.config/user-account.config";
 import { type ExpertCardData } from "@/types/store/expert.types";
 import {
@@ -6,121 +11,84 @@ import {
   type UserConversation,
   type UserMessage,
   type UserNotification,
-  type UserRequest,
   type UserReviewItem,
 } from "@/types/store/user-account.types";
 
-const SAVED_EXPERT_IDS = ["amirhossein-rostami", "nazanin-farhadi"] as const;
+export const DEFAULT_SAVED_EXPERT_IDS = [
+  "amirhossein-rostami",
+  "nazanin-farhadi",
+] as const;
 
 export const mockCurrentUser: UserAccount = {
-  id: "user-sara",
+  id: MOCK_MARKETPLACE_CUSTOMER_ID,
   displayName: "سارا مشتری",
   mobileDisplay: "۰۹۱۲***۲۲۳۳",
   city: "تهران",
   cityId: "tehran",
 };
 
-export const mockUserRequests: readonly UserRequest[] = [
-  {
-    id: "user-req-utm",
-    title: "نقشه UTM برای پلاک ثبتی",
-    serviceLabel: "نقشه برداری",
-    expertId: "amirhossein-rostami",
-    expertName: "امیرحسین رستمی",
-    expertHref: "/experts/amirhossein-rostami",
-    city: "تهران",
-    createdAtLabel: "۲ ساعت پیش",
-    summary: "نیاز به نقشه UTM و جانمایی پلاک برای پرونده شهرداری.",
-    description:
-      "برای تشکیل پرونده پروانه، نقشه UTM و جانمایی پلاک ثبتی یک زمین مسکونی لازم است. مدارک مالکیت آماده است.",
-    status: "in_review",
-    conversationId: "user-conv-utm",
-  },
-  {
-    id: "user-req-interior",
-    title: "طراحی داخلی واحد مسکونی",
-    serviceLabel: "طراحی نما و داخلی",
-    expertId: "nazanin-farhadi",
-    expertName: "نازنین فرهادی",
-    expertHref: "/experts/nazanin-farhadi",
-    city: "کرج",
-    createdAtLabel: "دیروز",
-    summary: "هماهنگی برای بازدید و طرح اولیه فضای نشیمن.",
-    description:
-      "واحد ۱۲۰ متری است. ترجیح با طرح روشن و استفاده از نور طبیعی است.",
-    status: "sent",
-    conversationId: "user-conv-interior",
-  },
-  {
-    id: "user-req-closed",
-    title: "برداشت محدوده باغ",
-    serviceLabel: "نقشه برداری",
-    expertId: "amirhossein-rostami",
-    expertName: "امیرحسین رستمی",
-    expertHref: "/experts/amirhossein-rostami",
-    city: "کرج",
-    createdAtLabel: "۱۸ روز پیش",
-    summary: "درخواست قبلی که بسته شده است.",
-    status: "closed",
-  },
-];
+export const mockUserRequests = mockServiceRequests
+  .filter((request) => request.customerId === mockCurrentUser.id)
+  .map(toUserRequest);
 
 export const mockUserConversations: readonly UserConversation[] = [
   {
-    id: "user-conv-utm",
+    id: "conv-utm-niavaran",
     participantName: "امیرحسین رستمی",
     lastMessagePreview: "مدارک را دیدم؛ فردا زمان بازدید را هماهنگ می‌کنیم.",
     lastMessageAtLabel: "۱ ساعت پیش",
     unreadCount: 1,
-    relatedRequestId: "user-req-utm",
+    relatedRequestId: "req-utm-niavaran",
+    expertId: "amirhossein-rostami",
   },
   {
-    id: "user-conv-interior",
+    id: "conv-interior",
     participantName: "نازنین فرهادی",
     lastMessagePreview: "طرح اولیه را تا پایان هفته می‌فرستم.",
     lastMessageAtLabel: "دیروز",
     unreadCount: 0,
-    relatedRequestId: "user-req-interior",
+    relatedRequestId: "req-interior",
+    expertId: "nazanin-farhadi",
   },
 ];
 
 export const mockUserMessagesByConversation: Readonly<
   Record<string, readonly UserMessage[]>
 > = {
-  "user-conv-utm": [
+  "conv-utm-niavaran": [
     {
       id: "user-msg-1",
-      conversationId: "user-conv-utm",
+      conversationId: "conv-utm-niavaran",
       body: "سلام، برای پلاک ثبتی به نقشه UTM نیاز دارم.",
       sentAtLabel: "۳ ساعت پیش",
       fromUser: true,
     },
     {
       id: "user-msg-2",
-      conversationId: "user-conv-utm",
+      conversationId: "conv-utm-niavaran",
       body: "سلام، مدارک مالکیت را بفرستید تا مسیر کار را دقیق‌تر بگویم.",
       sentAtLabel: "۲ ساعت پیش",
       fromUser: false,
     },
     {
       id: "user-msg-3",
-      conversationId: "user-conv-utm",
+      conversationId: "conv-utm-niavaran",
       body: "مدارک را دیدم؛ فردا زمان بازدید را هماهنگ می‌کنیم.",
       sentAtLabel: "۱ ساعت پیش",
       fromUser: false,
     },
   ],
-  "user-conv-interior": [
+  "conv-interior": [
     {
       id: "user-msg-4",
-      conversationId: "user-conv-interior",
+      conversationId: "conv-interior",
       body: "برای طراحی نشیمن می‌خواهم از پروفایل شما شروع کنیم.",
       sentAtLabel: "۲ روز پیش",
       fromUser: true,
     },
     {
       id: "user-msg-5",
-      conversationId: "user-conv-interior",
+      conversationId: "conv-interior",
       body: "طرح اولیه را تا پایان هفته می‌فرستم.",
       sentAtLabel: "دیروز",
       fromUser: false,
@@ -148,7 +116,7 @@ export const mockUserNotifications: readonly UserNotification[] = [
     body: "امیرحسین رستمی برای بازدید نقشه UTM پیام داده است.",
     createdAtLabel: "۱ ساعت پیش",
     isRead: false,
-    href: `${userAccountPaths.messages}/user-conv-utm`,
+    href: `${userAccountPaths.messages}/conv-utm-niavaran`,
   },
   {
     id: "user-ntf-2",
@@ -157,7 +125,7 @@ export const mockUserNotifications: readonly UserNotification[] = [
     body: "درخواست نقشه UTM در حال بررسی است.",
     createdAtLabel: "۲ ساعت پیش",
     isRead: false,
-    href: `${userAccountPaths.requests}/user-req-utm`,
+    href: `${userAccountPaths.requests}/req-utm-niavaran`,
   },
   {
     id: "user-ntf-3",
@@ -170,8 +138,10 @@ export const mockUserNotifications: readonly UserNotification[] = [
   },
 ];
 
-export function getMockSavedExperts(): readonly ExpertCardData[] {
-  return SAVED_EXPERT_IDS.flatMap((id) => {
+export function getMockSavedExperts(
+  ids: readonly string[] = DEFAULT_SAVED_EXPERT_IDS,
+): readonly ExpertCardData[] {
+  return ids.flatMap((id) => {
     const card = mockExpertCards.find((expert) => expert.id === id);
     return card ? [card] : [];
   });

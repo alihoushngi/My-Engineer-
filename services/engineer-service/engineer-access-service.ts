@@ -10,6 +10,8 @@ import { getEngineerSession } from "@/lib/auth/engineer-session/engineer-session
 import { getUserSession } from "@/lib/auth/user-session/user-session";
 import { isMockAuthEnabled } from "@/config/mock-auth.config/mock-auth.config";
 import { buildSessionEngineerWorkspace } from "@/lib/auth/build-session-engineer-workspace/build-session-engineer-workspace";
+import { readCreatedRequests } from "@/lib/marketplace/mock-marketplace-overlay/mock-marketplace-overlay";
+import { overlayEngineerRequests } from "@/lib/marketplace/overlay-engineer-requests/overlay-engineer-requests";
 import {
   type EngineerAccessResult,
   type EngineerConversation,
@@ -22,12 +24,16 @@ import {
 import { findEngineerReview } from "@/lib/engineer/find-engineer-review/find-engineer-review";
 
 export async function getEngineerAccess(): Promise<EngineerAccessResult> {
+  const extras = await readCreatedRequests();
   const session = await getEngineerSession();
 
   if (session) {
     return {
       kind: session.source === "registration" ? "pending_review" : "active",
-      workspace: buildSessionEngineerWorkspace(session),
+      workspace: overlayEngineerRequests(
+        buildSessionEngineerWorkspace(session),
+        extras,
+      ),
     };
   }
 
@@ -42,7 +48,7 @@ export async function getEngineerAccess(): Promise<EngineerAccessResult> {
   if (env.useMockData) {
     return {
       kind: "visual_review",
-      workspace: getMockEngineerWorkspace(),
+      workspace: overlayEngineerRequests(getMockEngineerWorkspace(), extras),
     };
   }
 

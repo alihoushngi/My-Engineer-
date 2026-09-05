@@ -10,13 +10,21 @@ import {
   userAccountPageTitles,
 } from "@/config/user-account.config/user-account.config";
 import { activeRequests } from "@/lib/user-account/workspace-selectors/workspace-selectors";
+import { type City } from "@/types/store/registration.types";
+import { type RequestExpertOption } from "@/types/store/service-request.types";
 import { type UserWorkspace } from "@/types/store/user-account.types";
 
 type UserDashboardProps = {
   workspace: UserWorkspace;
+  experts: readonly RequestExpertOption[];
+  cities: readonly City[];
 };
 
-export function UserDashboard({ workspace }: UserDashboardProps) {
+export function UserDashboard({
+  workspace,
+  experts,
+  cities,
+}: UserDashboardProps) {
   return (
     <div className="flex flex-col gap-6">
       <AccountPageHeader
@@ -24,7 +32,11 @@ export function UserDashboard({ workspace }: UserDashboardProps) {
         description={userAccountCopy.dashboardDescription}
       />
       <UserWelcome workspace={workspace} />
-      <UserQuickActions />
+      <UserQuickActions
+        experts={experts}
+        cities={cities}
+        defaultCityId={workspace.account.cityId}
+      />
       <div className="grid gap-6 lg:grid-cols-2">
         <UserRecentRequests requests={activeRequests(workspace.requests)} />
         <UserRecentMessages conversations={workspace.conversations} />

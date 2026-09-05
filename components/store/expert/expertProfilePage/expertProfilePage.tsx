@@ -21,6 +21,8 @@ import { RelatedExperts } from "@/components/store/expert/relatedExperts/related
 import { siteConfig } from "@/config/site.config/site.config";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
 import { type ExpertProfile } from "@/types/store/expert.types";
+import { type City } from "@/types/store/registration.types";
+import { type RequestExpertOption } from "@/types/store/service-request.types";
 import {
   hasItems,
   hasPublicContact,
@@ -29,14 +31,20 @@ import {
 
 type ExpertProfilePageProps = {
   expert: ExpertProfile;
+  expertOption: RequestExpertOption;
+  cities: readonly City[];
   isDevelopmentPreview?: boolean;
   isUserAuthenticated?: boolean;
+  isSaved?: boolean;
 };
 
 export function ExpertProfilePage({
   expert,
+  expertOption,
+  cities,
   isDevelopmentPreview = false,
   isUserAuthenticated = false,
+  isSaved = false,
 }: ExpertProfilePageProps) {
   const hasStickyContact = hasPublicContact(expert);
 
@@ -73,7 +81,10 @@ export function ExpertProfilePage({
       ) : null}
       <ExpertProfileHero
         expert={expert}
+        expertOption={expertOption}
+        cities={cities}
         isUserAuthenticated={isUserAuthenticated}
+        isSaved={isSaved}
       />
       <div className="container-app grid items-start gap-10 py-page lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-16">
         <div className="min-w-0 divide-y divide-border">

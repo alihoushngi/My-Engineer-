@@ -58,6 +58,14 @@ export function UserRequestDetailPage({ request }: UserRequestDetailPageProps) {
             <dt className="type-caption text-muted-foreground">تاریخ</dt>
             <dd className="type-body">{request.createdAtLabel}</dd>
           </div>
+          {request.latestActivityLabel ? (
+            <div>
+              <dt className="type-caption text-muted-foreground">
+                آخرین فعالیت
+              </dt>
+              <dd className="type-body">{request.latestActivityLabel}</dd>
+            </div>
+          ) : null}
         </dl>
         <p className="type-body leading-loose text-foreground">
           {request.description ?? request.summary}

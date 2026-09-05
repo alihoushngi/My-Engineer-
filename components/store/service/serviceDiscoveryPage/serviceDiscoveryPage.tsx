@@ -4,6 +4,7 @@ import { ServiceDiscoveryHero } from "@/components/store/service/serviceDiscover
 import { ServiceExpertMarketplace } from "@/components/store/service/serviceExpertMarketplace/serviceExpertMarketplace";
 import { ServiceProcessSection } from "@/components/store/service/serviceProcessSection/serviceProcessSection";
 import { ServiceRelatedSection } from "@/components/store/service/serviceRelatedSection/serviceRelatedSection";
+import { ServiceRequestCta } from "@/components/store/service/serviceRequestCta/serviceRequestCta";
 import { ServiceScopeSection } from "@/components/store/service/serviceScopeSection/serviceScopeSection";
 import { ServiceSuggestedExperts } from "@/components/store/service/serviceSuggestedExperts/serviceSuggestedExperts";
 import {
@@ -17,12 +18,14 @@ type ServiceDiscoveryPageProps = {
   service: ServiceCategory;
   detail: ServiceDetailData;
   cities: readonly City[];
+  isUserAuthenticated?: boolean;
 };
 
 export function ServiceDiscoveryPage({
   service,
   detail,
   cities,
+  isUserAuthenticated = false,
 }: ServiceDiscoveryPageProps) {
   const suggestedExperts = detail.showSuggestedExperts
     ? detail.experts.filter((expert) => expert.isVerified).slice(0, 3)
@@ -37,6 +40,14 @@ export function ServiceDiscoveryPage({
           {suggestedExperts.length > 0 ? (
             <ServiceSuggestedExperts experts={suggestedExperts} />
           ) : null}
+          <div className="flex justify-end">
+            <ServiceRequestCta
+              slug={service.slug}
+              experts={detail.experts}
+              cities={cities}
+              isUserAuthenticated={isUserAuthenticated}
+            />
+          </div>
           <Suspense
             fallback={
               <p className="type-body-sm text-muted-foreground">

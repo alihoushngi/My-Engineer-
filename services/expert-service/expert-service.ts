@@ -1,7 +1,10 @@
-import { type ExpertProfile } from "@/types/store/expert.types";
+import {
+  type ExpertCardData,
+  type ExpertProfile,
+} from "@/types/store/expert.types";
 import { getDevExpertPreview } from "@/lib/experts/dev-expert-preview/dev-expert-preview";
 import { env } from "@/lib/env/env";
-import { mockExperts } from "@/lib/mock-data/mock-data";
+import { mockExpertCards, mockExperts } from "@/lib/mock-data/mock-data";
 
 /**
  * Public expert profile access.
@@ -22,4 +25,14 @@ export async function getExpertProfile(
   }
 
   return null;
+}
+
+export async function getExpertCardData(
+  id: string,
+): Promise<ExpertCardData | null> {
+  if (!env.useMockData) {
+    return null;
+  }
+
+  return mockExpertCards.find((expert) => expert.id === id) ?? null;
 }

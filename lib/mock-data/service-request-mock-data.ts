@@ -1,0 +1,103 @@
+import { type ServiceRequest } from "@/types/store/service-request.types";
+
+export const MOCK_MARKETPLACE_CUSTOMER_ID = "user-sara";
+export const MOCK_MARKETPLACE_OTHER_CUSTOMER_ID = "user-other";
+
+export const mockServiceRequests: readonly ServiceRequest[] = [
+  {
+    id: "req-utm-niavaran",
+    title: "نقشه UTM برای پلاک ثبتی",
+    serviceSlug: "land-surveying",
+    serviceLabel: "نقشه برداری",
+    city: "تهران",
+    cityId: "tehran",
+    createdAtLabel: "۲ ساعت پیش",
+    summary: "نیاز به نقشه UTM و جانمایی پلاک برای پرونده شهرداری.",
+    description:
+      "برای تشکیل پرونده پروانه، نقشه UTM و جانمایی پلاک ثبتی یک زمین مسکونی در نیاوران لازم است. مدارک مالکیت آماده است.",
+    status: "in_review",
+    expertId: "amirhossein-rostami",
+    expertName: "امیرحسین رستمی",
+    expertHref: "/experts/amirhossein-rostami",
+    customerId: MOCK_MARKETPLACE_CUSTOMER_ID,
+    customerDisplayName: "سارا مشتری",
+    conversationId: "conv-utm-niavaran",
+  },
+  {
+    id: "req-interior",
+    title: "طراحی داخلی واحد مسکونی",
+    serviceSlug: "interior-design",
+    serviceLabel: "طراحی نما و داخلی",
+    city: "کرج",
+    cityId: "karaj",
+    createdAtLabel: "دیروز",
+    summary: "هماهنگی برای بازدید و طرح اولیه فضای نشیمن.",
+    description:
+      "واحد ۱۲۰ متری است. ترجیح با طرح روشن و استفاده از نور طبیعی است.",
+    status: "sent",
+    expertId: "nazanin-farhadi",
+    expertName: "نازنین فرهادی",
+    expertHref: "/experts/nazanin-farhadi",
+    customerId: MOCK_MARKETPLACE_CUSTOMER_ID,
+    customerDisplayName: "سارا مشتری",
+    conversationId: "conv-interior",
+  },
+  {
+    id: "req-closed-karaj",
+    title: "برداشت محدوده باغ",
+    serviceSlug: "land-surveying",
+    serviceLabel: "نقشه برداری",
+    city: "کرج",
+    cityId: "karaj",
+    createdAtLabel: "۱۸ روز پیش",
+    summary: "درخواست قبلی که بسته شده است.",
+    status: "closed",
+    expertId: "amirhossein-rostami",
+    expertName: "امیرحسین رستمی",
+    expertHref: "/experts/amirhossein-rostami",
+    customerId: MOCK_MARKETPLACE_CUSTOMER_ID,
+    customerDisplayName: "سارا مشتری",
+  },
+  {
+    id: "req-asbuilt-saadatabad",
+    title: "نقشه ازبیلت واحد مسکونی",
+    serviceSlug: "land-surveying",
+    serviceLabel: "نقشه برداری",
+    city: "تهران",
+    cityId: "tehran",
+    createdAtLabel: "دیروز",
+    summary: "برداشت وضع موجود یک واحد برای تغییرات داخلی.",
+    description:
+      "واحد ۱۵۰ متری است. کارفرما زمان بازدید را در روزهای میانی هفته اعلام کرده است.",
+    status: "in_review",
+    expertId: "amirhossein-rostami",
+    expertName: "امیرحسین رستمی",
+    expertHref: "/experts/amirhossein-rostami",
+    customerId: MOCK_MARKETPLACE_OTHER_CUSTOMER_ID,
+    customerDisplayName: "کاربر متقاضی",
+    conversationId: "conv-asbuilt",
+  },
+  ...Array.from({ length: 8 }, (_, index) => {
+    const statuses = ["sent", "in_review", "closed"] as const;
+    const status = statuses[index % 3] ?? "in_review";
+
+    return {
+      id: `req-extra-${index + 1}`,
+      title: `بررسی محدوده و خروجی نقشه‌برداری ${index + 4}`,
+      serviceSlug: "land-surveying" as const,
+      serviceLabel: "نقشه برداری",
+      city: index % 2 === 0 ? "تهران" : "کرج",
+      cityId: index % 2 === 0 ? "tehran" : "karaj",
+      createdAtLabel: `${index + 3} روز پیش`,
+      summary: "درخواست نمایشی برای بررسی صفحه‌بندی فهرست درخواست‌ها.",
+      description: "این مورد فقط برای نمایش فهرست بلند در فضای کاری متخصص است.",
+      status,
+      expertId: "amirhossein-rostami",
+      expertName: "امیرحسین رستمی",
+      expertHref: "/experts/amirhossein-rostami" as const,
+      customerId: MOCK_MARKETPLACE_OTHER_CUSTOMER_ID,
+      customerDisplayName: "کاربر متقاضی",
+      conversationId: `conv-extra-${index + 1}`,
+    };
+  }),
+];

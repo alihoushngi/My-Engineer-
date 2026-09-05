@@ -10,6 +10,7 @@ import {
   MOCK_ENGINEER_SESSION_VALUE,
   MOCK_SESSION_COOKIE_OPTIONS,
   MOCK_USER_PROFILE_COOKIE,
+  MOCK_USER_SAVED_COOKIE,
   MOCK_USER_SESSION_COOKIE,
 } from "@/lib/auth/mock-session-cookies/mock-session-cookies";
 import { parseMockEngineerProfileCookie } from "@/lib/auth/mock-engineer-profile-cookie/mock-engineer-profile-cookie";
@@ -65,6 +66,7 @@ export async function writeMockEngineerSession(input: {
 
   store.delete(MOCK_USER_SESSION_COOKIE);
   store.delete(MOCK_USER_PROFILE_COOKIE);
+  store.delete(MOCK_USER_SAVED_COOKIE);
 
   store.set({
     name: MOCK_ENGINEER_SESSION_COOKIE,

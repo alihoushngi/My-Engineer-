@@ -3,8 +3,15 @@
  * Do not import this module from Client Components.
  */
 
-import { getUserAccess } from "@/services/user-auth-service/user-access-service";
+import {
+  getUserAccess,
+  isUserAuthenticated,
+} from "@/services/user-auth-service/user-access-service";
 import { buildUserWorkspace } from "@/lib/user-account/build-user-workspace/build-user-workspace";
+import {
+  readCreatedRequests,
+  readSavedExpertIds,
+} from "@/lib/marketplace/mock-marketplace-overlay/mock-marketplace-overlay";
 import { findById } from "@/lib/user-account/workspace-selectors/workspace-selectors";
 import {
   type UserConversation,
@@ -13,6 +20,14 @@ import {
   type UserWorkspace,
 } from "@/types/store/user-account.types";
 
+export async function getCurrentSavedExpertIds(): Promise<readonly string[]> {
+  if (!(await isUserAuthenticated())) {
+    return [];
+  }
+
+  return readSavedExpertIds();
+}
+
 export async function getUserWorkspace(): Promise<UserWorkspace | null> {
   const access = await getUserAccess();
 
@@ -20,7 +35,10 @@ export async function getUserWorkspace(): Promise<UserWorkspace | null> {
     return null;
   }
 
-  return buildUserWorkspace(access.session);
+  return buildUserWorkspace(access.session, {
+    savedExpertIds: await readSavedExpertIds(),
+    extraRequests: await readCreatedRequests(),
+  });
 }
 
 export async function getUserRequest(id: string): Promise<UserRequest | null> {

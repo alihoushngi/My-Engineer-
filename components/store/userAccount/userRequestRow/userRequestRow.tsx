@@ -21,7 +21,7 @@ export function UserRequestRow({ request }: UserRequestRowProps) {
             request.serviceLabel,
             request.expertName,
             request.city,
-            request.createdAtLabel,
+            request.latestActivityLabel ?? request.createdAtLabel,
           ]
             .filter(Boolean)
             .join(" · ")}

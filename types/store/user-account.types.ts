@@ -23,6 +23,7 @@ export type UserRequest = {
   expertHref: `/experts/${string}`;
   city?: string;
   createdAtLabel: string;
+  latestActivityLabel?: string;
   summary: string;
   description?: string;
   status: UserRequestStatus;
@@ -36,6 +37,7 @@ export type UserConversation = {
   lastMessageAtLabel: string;
   unreadCount: number;
   relatedRequestId?: string;
+  expertId?: string;
 };
 
 export type UserMessage = {

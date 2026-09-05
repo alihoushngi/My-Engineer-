@@ -11,15 +11,23 @@ import {
   getReviewCount,
 } from "@/lib/experts/expert-profile/expert-profile";
 import { type ExpertProfile } from "@/types/store/expert.types";
+import { type City } from "@/types/store/registration.types";
+import { type RequestExpertOption } from "@/types/store/service-request.types";
 
 type ExpertProfileHeroProps = {
   expert: ExpertProfile;
+  expertOption: RequestExpertOption;
+  cities: readonly City[];
   isUserAuthenticated?: boolean;
+  isSaved?: boolean;
 };
 
 export function ExpertProfileHero({
   expert,
+  expertOption,
+  cities,
   isUserAuthenticated = false,
+  isSaved = false,
 }: ExpertProfileHeroProps) {
   const initials = getExpertInitials(expert.name);
   const reviewCount = getReviewCount(expert);
@@ -99,7 +107,10 @@ export function ExpertProfileHero({
           </div>
           <ExpertProfileToolbar
             expert={expert}
+            expertOption={expertOption}
+            cities={cities}
             isUserAuthenticated={isUserAuthenticated}
+            isSaved={isSaved}
           />
         </div>
       </div>

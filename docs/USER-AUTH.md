@@ -138,14 +138,14 @@ If the visitor is not a customer:
 
 Wired today on the public expert profile for:
 
-- پیام دادن به مهندس (chat)
-- ذخیره مهندس (save)
+- ثبت درخواست (create request for that specialist)
+- پیام دادن به مهندس (chat — still an honest unavailable dialog)
+- ذخیره مهندس (save/unsave; selected state when saved)
 - ثبت نظر (review)
 
-ثبت درخواست has no public control yet. Use the same helper when that CTA exists.
-
-After login, authenticated users may still see an honest “not connected yet”
-dialog until those APIs exist.
+Unauthenticated save and request actions use `AuthRequiredAction` and return
+to `/login?next=` (customer login). They never send the visitor to engineer
+login.
 
 ---
 

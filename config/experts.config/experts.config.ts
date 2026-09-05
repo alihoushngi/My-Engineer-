@@ -7,11 +7,11 @@ export const expertProfileCopy = {
   shareCopied: "پیوند کپی شد",
   shareError: "اشتراک‌گذاری انجام نشد. دوباره تلاش کنید.",
   shareRetry: "تلاش دوباره",
-  saveLabel: "ذخیره",
+  saveLabel: "ذخیره مهندس",
   saveUnavailableTitle: "ذخیره پروفایل هنوز فعال نیست",
   saveUnavailableDescription:
     "ذخیره متخصص به حساب کاربری مشتری نیاز دارد و پس از آماده شدن قرارداد حساب در دسترس قرار می‌گیرد.",
-  chatLabel: "چت",
+  chatLabel: "پیام به مهندس",
   chatUnavailableTitle: "گفتگوی درون‌برنامه‌ای هنوز فعال نیست",
   chatUnavailableDescription:
     "ارسال پیام و پیوست فایل در پروفایل عمومی پس از قرارداد گفتگو ممکن می‌شود. تا آن زمان از تماس یا پیامک استفاده کنید.",

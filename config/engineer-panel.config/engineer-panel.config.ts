@@ -269,7 +269,7 @@ export const engineerPanelCopy = {
   portfolioStatus: "وضعیت نمونه‌کار",
   serviceCoverage: "پوشش خدمات",
   viewAll: "مشاهده همه",
-  startConversationCta: "مشاهده گفت‌وگو",
+  startConversationCta: "مشاهده گفتگو",
   composerPlaceholder: "پیام خود را بنویسید…",
   composerEmptyError: "متن پیام نمی‌تواند خالی باشد.",
   logoutUnavailable: "خروج از حساب پس از اتصال سرویس نشست فعال می‌شود.",

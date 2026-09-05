@@ -12,5 +12,10 @@ export default async function AccountSavedRoute() {
     return null;
   }
 
-  return <UserSavedPage experts={workspace.savedExperts} />;
+  return (
+    <UserSavedPage
+      experts={workspace.savedExperts}
+      conversations={workspace.conversations}
+    />
+  );
 }

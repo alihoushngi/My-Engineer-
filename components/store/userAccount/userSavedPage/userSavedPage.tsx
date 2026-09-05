@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
-import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
+import { UserSavedList } from "@/components/store/userAccount/userSavedList/userSavedList";
 import { Empty } from "@/components/ui/empty/empty";
 import { Button } from "@/components/ui/button/button";
 import {
@@ -9,12 +9,22 @@ import {
 } from "@/config/user-account.config/user-account.config";
 import { siteConfig } from "@/config/site.config/site.config";
 import { type ExpertCardData } from "@/types/store/expert.types";
+import { type UserConversation } from "@/types/store/user-account.types";
 
 type UserSavedPageProps = {
   experts: readonly ExpertCardData[];
+  conversations: readonly UserConversation[];
 };
 
-export function UserSavedPage({ experts }: UserSavedPageProps) {
+export function UserSavedPage({ experts, conversations }: UserSavedPageProps) {
+  const conversationIdByExpertId = Object.fromEntries(
+    conversations.flatMap((conversation) =>
+      conversation.expertId
+        ? [[conversation.expertId, conversation.id] as const]
+        : [],
+    ),
+  );
+
   return (
     <div className="flex flex-col gap-6">
       <AccountPageHeader
@@ -34,13 +44,10 @@ export function UserSavedPage({ experts }: UserSavedPageProps) {
           }
         />
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2">
-          {experts.map((expert) => (
-            <li key={expert.id}>
-              <ExpertCard expert={expert} />
-            </li>
-          ))}
-        </ul>
+        <UserSavedList
+          experts={experts}
+          conversationIdByExpertId={conversationIdByExpertId}
+        />
       )}
     </div>
   );

@@ -7,6 +7,7 @@ import {
   getServiceDetail,
   listCatalogCities,
 } from "@/services/catalog-service/catalog-service";
+import { isUserAuthenticated } from "@/services/user-auth-service/user-access-service";
 
 type ServicePageProps = {
   params: Promise<{ slug: string }>;
@@ -39,9 +40,10 @@ export default async function ServiceRoutePage({ params }: ServicePageProps) {
     notFound();
   }
 
-  const [detail, cities] = await Promise.all([
+  const [detail, cities, userAuthenticated] = await Promise.all([
     getServiceDetail(service.slug),
     listCatalogCities(),
+    isUserAuthenticated(),
   ]);
 
   if (!detail) {
@@ -49,6 +51,11 @@ export default async function ServiceRoutePage({ params }: ServicePageProps) {
   }
 
   return (
-    <ServiceDiscoveryPage service={service} detail={detail} cities={cities} />
+    <ServiceDiscoveryPage
+      service={service}
+      detail={detail}
+      cities={cities}
+      isUserAuthenticated={userAuthenticated}
+    />
   );
 }

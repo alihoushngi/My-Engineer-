@@ -92,6 +92,26 @@ areas, portfolio, credentials (at least one document attached).
 
 ---
 
+## Shared requests
+
+`/engineer/requests` is the engineer view of the same `ServiceRequest` entity
+used by `/account/requests`. Shared ids such as `req-utm-niavaran` appear on
+both sides. The engineer sees `customerDisplayName` only — never a mobile
+number or other customer-private fields.
+
+Canonical status values: `sent`, `in_review`, `closed`. The engineer list
+maps `sent` to the existing `new` filter. **API CONTRACT REQUIRED /
+BUSINESS DECISION REQUIRED** for accept, reject, quote, or a richer
+lifecycle. Do not invent bidding.
+
+Created-request mock overlay cookies are visual testing only and are not
+cleared on customer→engineer role switch so the same browser can inspect both
+views. They are not production persistence.
+
+If a conversation is linked, request detail shows «مشاهده گفتگو».
+
+---
+
 ## Feature notes
 
 ### Profile
