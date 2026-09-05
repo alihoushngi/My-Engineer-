@@ -30,15 +30,20 @@ export function EngineerLatestReviews({ reviews }: EngineerLatestReviewsProps) {
       {!latest ? (
         <Empty title={engineerPanelCopy.emptyReviews} className="py-8" />
       ) : (
-        <div className="space-y-3">
+        <Link
+          href={`${engineerPanelPaths.reviews}/${latest.id}`}
+          className="block space-y-3 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
           {typeof latest.rating === "number" ? (
             <ExpertRating rating={latest.rating} />
           ) : null}
-          <p className="type-body text-foreground">{latest.text}</p>
+          <p className="line-clamp-3 type-body text-foreground">
+            {latest.text}
+          </p>
           <p className="type-caption text-muted-foreground">
             {[latest.authorName, latest.dateLabel].filter(Boolean).join(" · ")}
           </p>
-        </div>
+        </Link>
       )}
     </section>
   );

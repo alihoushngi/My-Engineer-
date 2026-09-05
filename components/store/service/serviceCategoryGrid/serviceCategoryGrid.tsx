@@ -51,9 +51,9 @@ export function ServiceCategoryGrid({
             <Link
               href={service.href}
               onClick={onServiceSelect}
-              className={`group flex h-full min-h-52 flex-col overflow-hidden rounded-xl p-4 outline-none transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transform-none ${visual.tone}`}
+              className={`group flex h-full min-h-40 flex-col overflow-hidden rounded-xl p-3 outline-none transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transform-none sm:min-h-52 sm:p-4 ${visual.tone}`}
             >
-              <span className="relative -mx-2 -mt-1 mb-3 h-28">
+              <span className="relative -mx-1 mb-2 h-20 sm:-mx-2 sm:mb-3 sm:h-28">
                 <Image
                   src={visual.image}
                   alt=""
@@ -66,7 +66,7 @@ export function ServiceCategoryGrid({
                 <span>
                   <span className="block type-h4">{service.label}</span>
                   {!hideDescription ? (
-                    <span className="mt-1 block type-caption text-foreground-muted">
+                    <span className="mt-1 hidden type-caption text-foreground-muted sm:block">
                       {service.description}
                     </span>
                   ) : null}

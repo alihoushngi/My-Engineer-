@@ -73,7 +73,7 @@ export function FileUpload({
       onDrop={handleDrop}
       className={cn(
         "flex min-h-32 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-input bg-surface-subtle px-4 py-6 text-center transition-colors",
-        !disabled && "hover:border-border-strong hover:bg-accent/60",
+        !disabled && "hover:border-border-strong hover:bg-accent-subtle",
         invalid && "border-danger bg-danger/5",
         disabled && "cursor-not-allowed opacity-60",
         className,

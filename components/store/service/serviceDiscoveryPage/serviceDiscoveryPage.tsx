@@ -29,8 +29,8 @@ export function ServiceDiscoveryPage({ service, detail }: Props) {
             ]}
           />
         </div>
-        <div className="container-wide grid min-h-[31rem] items-stretch lg:grid-cols-[1fr_.9fr]">
-          <div className="flex flex-col justify-center py-10 lg:pe-14">
+        <div className="container-wide grid items-stretch lg:min-h-[31rem] lg:grid-cols-[1fr_.9fr]">
+          <div className="flex flex-col justify-center py-8 sm:py-10 lg:pe-14">
             <p className="type-label text-primary">{detail.eyebrow}</p>
             <h1 className="mt-4 type-display">{detail.title}</h1>
             <p className="mt-5 max-w-2xl type-body-lg text-primary-foreground/70">
@@ -44,7 +44,7 @@ export function ServiceDiscoveryPage({ service, detail }: Props) {
               <ArrowDownIcon aria-hidden="true" className="size-4" />
             </a>
           </div>
-          <div className="relative -mx-4 min-h-72 sm:-mx-6 lg:mx-0 lg:min-h-full">
+          <div className="relative -mx-4 min-h-52 sm:-mx-6 sm:min-h-64 lg:mx-0 lg:min-h-full">
             <Image
               src={detail.imageSrc}
               alt={detail.imageAlt}
@@ -113,7 +113,10 @@ export function ServiceDiscoveryPage({ service, detail }: Props) {
           </ol>
         </div>
         <div className="rounded-xl bg-primary-deep p-7 text-primary-foreground sm:p-9">
-          <CheckIcon aria-hidden="true" className="size-8 text-primary" />
+          <CheckIcon
+            aria-hidden="true"
+            className="size-8 text-primary-deep-foreground"
+          />
           <h2 className="mt-5 type-h2">پیش از تماس آماده باشید</h2>
           <p className="mt-3 type-body text-primary-foreground/70">
             موقعیت پروژه، مرحله فعلی، مدارک موجود و خروجی مورد انتظار را کوتاه و

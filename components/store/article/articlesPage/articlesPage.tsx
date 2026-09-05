@@ -34,9 +34,9 @@ export function ArticlesPage({ articles }: ArticlesPageProps) {
           {articles[0] ? (
             <Link
               href={articles[0].href}
-              className="group grid overflow-hidden rounded-xl bg-primary-deep text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring lg:grid-cols-[1.1fr_.9fr]"
+              className="group grid overflow-hidden rounded-xl bg-primary-deep text-primary-deep-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring lg:grid-cols-[1.1fr_.9fr]"
             >
-              <div className="relative min-h-72">
+              <div className="relative min-h-52 lg:min-h-72">
                 {articles[0].coverSrc ? (
                   <Image
                     src={articles[0].coverSrc}

@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config/site.config";
 export function StoreFooter() {
   return (
     <footer className="mt-auto border-t border-primary-foreground/10 bg-primary-deep text-primary-foreground">
-      <div className="container-app flex flex-col gap-8 py-section">
+      <div className="container-app flex flex-col gap-8 pt-section pb-[max(var(--space-section-y),env(safe-area-inset-bottom))]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-xs space-y-3">
             <BrandLogo className="text-primary-foreground" />
@@ -15,7 +15,11 @@ export function StoreFooter() {
               بازار تخصصی معرفی و مقایسه متخصصان ساختمان، بر پایه تخصص، شهر و
               سابقه حرفه‌ای.
             </p>
-            <JoinLink size="sm" variant="outline" />
+            <JoinLink
+              size="sm"
+              variant="outline"
+              className="border-primary-foreground/40 bg-transparent text-primary-deep-foreground hover:bg-primary-foreground/10 hover:text-primary-deep-foreground"
+            />
           </div>
           <nav aria-label="پیوندهای پاورقی">
             <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">

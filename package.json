@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test lib/auth/can-use-mocks/can-use-mocks.test.ts lib/auth/parse-public-bool/parse-public-bool.test.ts lib/auth/resolve-mock-flag/resolve-mock-flag.test.ts lib/validation/login/login-otp-length.test.ts"
+    "test": "node --experimental-strip-types --test lib/auth/can-use-mocks/can-use-mocks.test.ts lib/auth/parse-public-bool/parse-public-bool.test.ts lib/auth/resolve-mock-flag/resolve-mock-flag.test.ts lib/validation/login/login-otp-length.test.ts lib/engineer/review-excerpt/review-excerpt.test.ts config/engineer-panel.config/engineer-panel.config.test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

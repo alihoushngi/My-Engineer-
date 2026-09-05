@@ -25,7 +25,7 @@ export function AboutPage() {
             {aboutCopy.tagline}
           </p>
         </div>
-        <div className="relative min-h-80 lg:min-h-[34rem]">
+        <div className="relative min-h-56 lg:min-h-[34rem]">
           <Image
             src="/images/home/project-engineer.png"
             alt="مهندس پروژه در محیط ساختمان"

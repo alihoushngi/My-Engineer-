@@ -12,11 +12,11 @@ export async function StoreHeader({ selectedCityLabel }: StoreHeaderProps) {
   const isAuthenticated = Boolean(session);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-primary-foreground/10 bg-primary-deep pt-[env(safe-area-inset-top)] text-primary-foreground shadow-sm">
+    <header className="sticky top-0 z-40 border-b border-primary-foreground/10 bg-primary-deep pt-[env(safe-area-inset-top)] text-primary-deep-foreground shadow-sm">
       <div className="container-app flex min-w-0 items-center gap-2 py-3 sm:gap-3 lg:gap-6 lg:py-3">
-        <BrandLogo className="min-w-0 max-w-[9.5rem] truncate text-primary-foreground sm:max-w-none" />
+        <BrandLogo className="min-w-0 max-w-[8.5rem] truncate text-primary-deep-foreground sm:max-w-none" />
         <HeaderNavigation />
-        <div className="ms-auto flex items-center gap-1 text-primary-foreground sm:gap-2 [&>button]:text-primary-foreground sm:[&>a]:border-primary-foreground/40 sm:[&>a]:text-primary-foreground">
+        <div className="ms-auto flex items-center gap-1 text-primary-deep-foreground sm:gap-2 [&>button]:text-primary-deep-foreground [&>button]:hover:bg-primary-foreground/10 [&>button]:hover:text-primary-deep-foreground sm:[&>a]:border-primary-foreground/40 sm:[&>a]:text-primary-deep-foreground">
           <HeaderSearchButton />
           <HeaderCityButton selectedCityLabel={selectedCityLabel} />
           <EngineerHeaderActions isAuthenticated={isAuthenticated} />

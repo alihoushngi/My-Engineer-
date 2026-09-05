@@ -26,10 +26,7 @@ export function ExpertRating({
         className,
       )}
     >
-      <StarIcon
-        aria-hidden="true"
-        className="size-4 fill-warning text-warning"
-      />
+      <StarIcon aria-hidden="true" className="size-4 fill-accent text-accent" />
       <span>{label}</span>
     </p>
   );

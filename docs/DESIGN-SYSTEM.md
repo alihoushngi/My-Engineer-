@@ -18,41 +18,45 @@ A Persian, image-led construction marketplace with a deep navy frame, vivid lega
 
 Change colors centrally in `:root`; `.dark` remains a future-theme foundation, not an exposed feature. Tailwind utilities are mapped with `@theme inline`. Do not scatter hex colors, raw palette utilities, or per-component dark overrides.
 
-| Token                                  | Purpose                                                    |
-| -------------------------------------- | ---------------------------------------------------------- |
-| `background`                           | White page canvas                                          |
-| `background-subtle`                    | Cool marketplace bands and result canvases                 |
-| `surface`                              | Form, card, header and dialog background                   |
-| `surface-elevated`                     | Menus and popovers                                         |
-| `surface-subtle`                       | Quiet stone bands, empty states, supporting columns        |
-| `surface-muted`                        | Compatibility alias family for quiet fills                 |
-| `foreground`                           | Charcoal primary text                                      |
-| `foreground-muted`, `muted-foreground` | Legible supporting copy and metadata                       |
-| `primary`                              | Vivid teal task actions and current navigation             |
-| `primary-hover`                        | Explicit darker pressed/hover action state                 |
-| `primary-active`                       | Pressed teal action state                                  |
-| `primary-subtle`                       | Light teal selection and identity surfaces                 |
-| `primary-foreground`                   | Text on solid primary fills                                |
-| `primary-deep`                         | Navy header, footer, hero, and narrative bands             |
-| `secondary`, `secondary-hover`         | Legacy steel-blue supporting actions and identity          |
-| `secondary-subtle`                     | Pale steel-blue content bands                              |
-| `accent`, `accent-hover`               | Orange emphasis and highlighted metadata                   |
-| `accent-subtle`                        | Pale orange supporting surface                             |
-| `muted`                                | Neutral compatibility fill                                 |
-| `border`                               | Low-emphasis separators                                    |
-| `border-strong`                        | Outlined actions and stronger dividers                     |
-| `input`, `input-background`            | Clearly visible control outline and fill                   |
-| `ring`                                 | Keyboard focus                                             |
-| `success`                              | Confirmed status; badges use subtle tinted fills           |
-| `warning`                              | Caution, including explicit development previews           |
-| `danger`, `destructive`                | Validation and destructive actions; aliases share values   |
-| `info`                                 | Availability and explanatory messages                      |
-| `category-*`                           | Teal, blue, orange, violet, green, and rose taxonomy fills |
-| `overlay`                              | Modal backdrop                                             |
-| `card`, `card-foreground`              | Primitive aliases for surface and foreground               |
-| `popover`, `popover-foreground`        | Elevated primitive aliases                                 |
+| Token                                         | Purpose                                                    |
+| --------------------------------------------- | ---------------------------------------------------------- |
+| `background`                                  | White page canvas                                          |
+| `background-subtle`                           | Cool marketplace bands and result canvases                 |
+| `surface`                                     | Form, card, header and dialog background                   |
+| `surface-elevated`                            | Menus and popovers                                         |
+| `surface-subtle`                              | Quiet stone bands, empty states, supporting columns        |
+| `surface-muted`                               | Compatibility alias family for quiet fills                 |
+| `foreground`                                  | Charcoal primary text                                      |
+| `foreground-muted`, `muted-foreground`        | Legible supporting copy and metadata                       |
+| `primary`                                     | Vivid teal task actions and current navigation             |
+| `primary-hover`                               | Explicit darker pressed/hover action state                 |
+| `primary-active`                              | Pressed teal action state                                  |
+| `primary-subtle`                              | Light teal selection and identity surfaces                 |
+| `primary-foreground`                          | Text on solid primary fills                                |
+| `primary-deep`                                | Navy header, footer, hero, and narrative bands             |
+| `primary-deep-foreground`                     | Near-white text and icons on navy surfaces                 |
+| `dark-surface`, `dark-surface-foreground`     | Alias pair for navy/near-black chrome                      |
+| `secondary`, `secondary-hover`                | Legacy steel-blue supporting actions and identity          |
+| `secondary-subtle`                            | Pale steel-blue content bands                              |
+| `accent`, `accent-hover`                      | Strong orange emphasis; white foreground on the solid fill |
+| `accent-subtle`                               | Pale orange supporting surface with charcoal text          |
+| `accent-foreground`                           | Near-white text on solid accent                            |
+| `muted`                                       | Neutral compatibility fill                                 |
+| `border`                                      | Low-emphasis separators                                    |
+| `border-strong`                               | Outlined actions and stronger dividers                     |
+| `input`, `input-background`                   | Clearly visible control outline and fill                   |
+| `ring`                                        | Keyboard focus                                             |
+| `success`                                     | Confirmed status; badges use subtle tinted fills           |
+| `warning`                                     | Caution; solid warning uses white foreground               |
+| `warning-strong`, `warning-strong-foreground` | Alias pair for solid amber/yellow surfaces                 |
+| `danger`, `destructive`                       | Validation and destructive actions; aliases share values   |
+| `info`                                        | Availability and explanatory messages                      |
+| `category-*`                                  | Teal, blue, orange, violet, green, and rose taxonomy fills |
+| `overlay`                                     | Modal backdrop                                             |
+| `card`, `card-foreground`                     | Primitive aliases for surface and foreground               |
+| `popover`, `popover-foreground`               | Elevated primitive aliases                                 |
 
-Status foreground pairs remain available for solid status surfaces. Success and verification must come from actual data; do not imply verification with decorative badges. Retained `glass-*` utilities are compatibility primitives; application chrome and forms use opaque surfaces.
+Status foreground pairs remain available for solid status surfaces. Strong yellow, amber, orange, navy, and near-black surfaces must use a near-white foreground pair: `accent` / `accent-foreground`, `warning` / `warning-foreground`, `warning-strong` / `warning-strong-foreground`, `primary-deep` / `primary-deep-foreground`, and `dark-surface` / `dark-surface-foreground`. If a yellow or amber fill is too light for white text, darken the surface rather than keeping dark-gray copy on a strong color. Pale tints (`accent-subtle`, `category-*`) keep charcoal text. Success and verification must come from actual data; do not imply verification with decorative badges. Retained `glass-*` utilities are compatibility primitives; application chrome and forms use opaque surfaces.
 
 ## Typography
 
@@ -78,17 +82,19 @@ Headings should wrap naturally and use restrained weight. Body line height is 1.
 
 Use Tailwind with `cn()`. Shared dimensions remain centralized:
 
-| Utility / token     | Size or rule                                  |
-| ------------------- | --------------------------------------------- |
-| `container-app`     | 76rem maximum, including gutters              |
-| `container-wide`    | 80rem, reserved for dense surfaces            |
-| `container-narrow`  | 46rem for reading                             |
-| `container-form`    | 36rem for isolated form surfaces              |
-| Page gutters        | 16px mobile, 24px from 640px                  |
-| `py-page`           | 32px mobile, 48px larger                      |
-| `py-section`        | 48px mobile, 72px larger                      |
-| Form fields         | 24–28px between groups, 8px label/control gap |
-| Open section groups | 32–40px; dividers where meaningful            |
+| Utility / token     | Size or rule                                                   |
+| ------------------- | -------------------------------------------------------------- |
+| `container-app`     | 76rem maximum, including gutters                               |
+| `container-wide`    | 80rem, reserved for dense surfaces                             |
+| `container-narrow`  | 46rem for reading                                              |
+| `container-form`    | 36rem for isolated form surfaces                               |
+| Page gutters        | 16px mobile, 24px from 640px (`--space-page-x`)                |
+| `py-page`           | 32px mobile, 48px larger                                       |
+| `py-section`        | 48px mobile, 72px larger                                       |
+| Card padding        | `--space-card`: 20px mobile, 24px from 640px, 28px from 1024px |
+| Touch target        | `--touch-target` 44px minimum; default buttons 48px            |
+| Form fields         | 24–28px between groups, 8px label/control gap                  |
+| Open section groups | 32–40px; dividers where meaningful                             |
 
 The registration shell is capped at 64rem and uses a 17rem navy desktop progress rail. The form remains a focused white column. At small sizes the rail disappears, leaving the current step, progress bar and actual task.
 
@@ -113,16 +119,22 @@ second visual identity.
 - **Chrome:** navy top bar (same `primary-deep` as the public header), white
   desktop sidebar with teal active state, labelled icons, and a five-item
   mobile bottom navigation plus a bottom sheet for secondary destinations.
-  Do not put the public search/city/join header inside the panel.
-- **Dense lists:** requests, conversations, and notifications are stacked rows
-  with wrapping Persian metadata. Do not force desktop-only tables.
+  The desktop shell is `min-h-dvh` with a self-stretching sidebar so the
+  sidebar background reaches the viewport bottom when main content is short.
+  Sticky sidebar navigation remains `max-h-dvh` for long pages. Do not put
+  the public search/city/join header inside the panel.
+- **Dense lists:** requests, conversations, reviews, and notifications are
+  stacked rows with wrapping Persian metadata. Do not force desktop-only tables.
+- **Reviews:** `/engineer/reviews` is a linked list; `/engineer/reviews/[id]`
+  is the read-only detail. Engineer reply is not implemented.
 - **Status:** use existing Badge variants (`success`, `warning`, `danger`,
   `info`, `outline`). Completion uses `Progress` plus a derived percent from
   registration fields, not invented analytics.
 - **Management forms:** section display plus focused `Dialog` edit. Mutations
   stay pending/error/retry and never claim server success without an API.
-- **Messages:** separate list and conversation routes on mobile. Composer is
-  sticky with safe-area padding. No realtime transport.
+- **Messages:** separate list and conversation routes on mobile. The composer
+  stays at the bottom of the conversation pane; panel main already clears the
+  bottom navigation. No realtime transport.
 - **Safe area:** top bar uses `pt-[env(safe-area-inset-top)]`; bottom nav and
   message composer include `pb-[env(safe-area-inset-bottom)]`.
 

@@ -20,13 +20,14 @@ export function KnowledgeCategoryCard({
     >
       <Card
         className={cn(
-          "h-full min-h-56 rounded-xl border-0 px-1 py-5 transition-transform group-hover:-translate-y-1 motion-reduce:transform-none",
+          "h-full min-h-44 rounded-xl border-0 p-4 sm:min-h-52 sm:p-5 lg:p-6",
+          "transition-transform group-hover:-translate-y-1 motion-reduce:transform-none",
           tone ?? "bg-secondary-subtle",
         )}
       >
         <CardHeader>
           <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0 space-y-3">
+            <div className="min-w-0 space-y-2 sm:space-y-3">
               <h2 className="break-words type-h4 font-semibold text-card-foreground">
                 {category.title}
               </h2>
@@ -38,11 +39,11 @@ export function KnowledgeCategoryCard({
             </div>
             <ChevronLeftIcon
               aria-hidden="true"
-              className="mt-1 size-4 shrink-0 text-muted-foreground ltr:hidden"
+              className="mt-1 size-5 shrink-0 text-muted-foreground ltr:hidden"
             />
             <ChevronRightIcon
               aria-hidden="true"
-              className="mt-1 size-4 shrink-0 text-muted-foreground rtl:hidden"
+              className="mt-1 size-5 shrink-0 text-muted-foreground rtl:hidden"
             />
           </div>
         </CardHeader>

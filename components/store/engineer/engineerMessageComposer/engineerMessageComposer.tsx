@@ -41,7 +41,7 @@ export function EngineerMessageComposer({
 
   return (
     <form
-      className="sticky bottom-0 z-10 space-y-3 border-t border-border bg-surface p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
+      className="shrink-0 space-y-3 border-t border-border bg-surface p-4"
       onSubmit={(event) => {
         event.preventDefault();
         void handleSubmit();

@@ -16,7 +16,7 @@ export function JoinCtaSection() {
             {homeJoinCopy.description}
           </p>
         </div>
-        <JoinLink size="lg" variant="secondary" className="w-full sm:w-auto" />
+        <JoinLink size="lg" variant="outline" className="w-full sm:w-auto" />
       </div>
     </section>
   );

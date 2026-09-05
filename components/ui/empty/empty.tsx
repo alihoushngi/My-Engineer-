@@ -21,7 +21,7 @@ export function Empty({
       data-slot="empty"
       role="status"
       className={cn(
-        "flex w-full flex-col items-center justify-center gap-5 rounded-lg bg-surface-subtle px-5 py-12 sm:py-16 text-center",
+        "flex w-full flex-col items-center justify-center gap-4 rounded-lg bg-surface-subtle px-4 py-8 text-center sm:px-5 sm:py-12",
         className,
       )}
     >

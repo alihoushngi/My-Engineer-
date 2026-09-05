@@ -18,7 +18,7 @@ export function KnowledgeTipList({ tips }: KnowledgeTipListProps) {
       <ul className="divide-y divide-border">
         {tips.map((tip) => (
           <li key={tip.id} className="min-w-0">
-            <article className="space-y-3 py-6">
+            <article className="space-y-3 py-5 sm:py-6">
               <h3 className="break-words type-h4 font-semibold text-card-foreground">
                 {tip.title}
               </h3>

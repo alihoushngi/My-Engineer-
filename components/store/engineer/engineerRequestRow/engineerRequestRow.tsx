@@ -14,7 +14,7 @@ export function EngineerRequestRow({ request }: EngineerRequestRowProps) {
   return (
     <Link
       href={`${engineerPanelPaths.requests}/${request.id}`}
-      className="flex flex-col gap-2 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-row sm:items-start sm:justify-between"
+      className="flex min-h-14 flex-col gap-2 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-row sm:items-start sm:justify-between"
     >
       <div className="min-w-0 space-y-1">
         <p className="type-body font-medium text-foreground">{request.title}</p>

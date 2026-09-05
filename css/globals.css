@@ -19,16 +19,19 @@
   --primary-subtle: oklch(0.955 0.035 175);
   --primary-foreground: oklch(0.99 0.005 220);
   --primary-deep: oklch(0.28 0.035 235);
+  --primary-deep-foreground: oklch(0.99 0.005 220);
+  --dark-surface: var(--primary-deep);
+  --dark-surface-foreground: var(--primary-deep-foreground);
 
   --secondary: oklch(0.68 0.075 230);
   --secondary-hover: oklch(0.6 0.075 230);
   --secondary-subtle: oklch(0.95 0.02 230);
   --secondary-foreground: oklch(0.99 0.005 220);
 
-  --accent: oklch(0.75 0.17 70);
-  --accent-hover: oklch(0.68 0.17 65);
+  --accent: oklch(0.55 0.155 58);
+  --accent-hover: oklch(0.48 0.15 55);
   --accent-subtle: oklch(0.96 0.045 75);
-  --accent-foreground: oklch(0.24 0.04 60);
+  --accent-foreground: oklch(0.99 0.01 85);
 
   --muted: var(--surface-muted);
   --muted-foreground: oklch(0.49 0.012 210);
@@ -46,8 +49,10 @@
   --success: oklch(0.46 0.09 155);
   --success-foreground: oklch(0.99 0.01 155);
 
-  --warning: oklch(0.64 0.12 75);
-  --warning-foreground: oklch(0.26 0.05 75);
+  --warning: oklch(0.56 0.14 70);
+  --warning-foreground: oklch(0.99 0.01 85);
+  --warning-strong: var(--warning);
+  --warning-strong-foreground: var(--warning-foreground);
 
   --danger: oklch(0.5 0.14 25);
   --danger-foreground: oklch(0.99 0.01 25);
@@ -103,6 +108,7 @@
   --space-page-y: 2rem;
   --space-section-y: 3rem;
   --space-card: 1.25rem;
+  --touch-target: 2.75rem;
   --space-field: 0.5rem;
   --space-form: 1rem;
 
@@ -133,6 +139,10 @@
   --primary-hover: oklch(0.8 0.06 220);
   --primary-subtle: oklch(0.3 0.025 195);
   --primary-foreground: oklch(0.2 0.03 220);
+  --primary-deep: oklch(0.22 0.03 240);
+  --primary-deep-foreground: oklch(0.97 0.008 240);
+  --dark-surface: var(--primary-deep);
+  --dark-surface-foreground: var(--primary-deep-foreground);
   --secondary: oklch(0.3 0.02 240);
   --secondary-foreground: oklch(0.96 0.008 240);
   --accent: oklch(0.32 0.025 220);
@@ -148,6 +158,8 @@
   --success-foreground: oklch(0.2 0.03 155);
   --warning: oklch(0.78 0.12 75);
   --warning-foreground: oklch(0.24 0.04 75);
+  --warning-strong: var(--warning);
+  --warning-strong-foreground: var(--warning-foreground);
   --danger: oklch(0.7 0.14 25);
   --danger-foreground: oklch(0.2 0.03 25);
   --info: oklch(0.74 0.08 240);
@@ -176,6 +188,9 @@
   --color-primary-active: var(--primary-active);
   --color-primary-subtle: var(--primary-subtle);
   --color-primary-deep: var(--primary-deep);
+  --color-primary-deep-foreground: var(--primary-deep-foreground);
+  --color-dark-surface: var(--dark-surface);
+  --color-dark-surface-foreground: var(--dark-surface-foreground);
   --color-surface-subtle: var(--surface-subtle);
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
@@ -199,6 +214,8 @@
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-warning-strong: var(--warning-strong);
+  --color-warning-strong-foreground: var(--warning-strong-foreground);
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
   --color-info: var(--info);
@@ -415,6 +432,10 @@
   backdrop-filter: blur(12px);
 }
 
+@utility p-card {
+  padding: var(--space-card);
+}
+
 @utility px-page {
   padding-inline: var(--space-page-x);
 }
@@ -482,6 +503,7 @@ button {
 @media (min-width: 1024px) {
   :root {
     --type-display: 2.625rem;
+    --space-card: 1.75rem;
   }
 }
 

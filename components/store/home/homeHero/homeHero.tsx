@@ -8,8 +8,8 @@ import { homeHeroCopy } from "@/config/home.config/home.config";
 export function HomeHero() {
   return (
     <section className="overflow-hidden bg-primary-deep text-primary-foreground">
-      <div className="container-wide grid min-h-[34rem] items-stretch lg:grid-cols-[1.05fr_.95fr]">
-        <div className="relative z-10 flex flex-col justify-center gap-8 py-12 lg:py-16 lg:pe-12">
+      <div className="container-wide grid items-stretch lg:min-h-[34rem] lg:grid-cols-[1.05fr_.95fr]">
+        <div className="relative z-10 flex flex-col justify-center gap-6 py-8 sm:gap-8 sm:py-12 lg:py-16 lg:pe-12">
           <div className="max-w-2xl space-y-5">
             <h1 className="type-display text-primary-foreground">
               {homeHeroCopy.title}
@@ -45,7 +45,7 @@ export function HomeHero() {
             <ArrowDownIcon aria-hidden="true" className="size-4" />
           </Link>
         </div>
-        <div className="relative -mx-4 min-h-72 sm:-mx-6 lg:mx-0 lg:min-h-full">
+        <div className="relative -mx-4 min-h-52 sm:-mx-6 sm:min-h-64 lg:mx-0 lg:min-h-full">
           <Image
             src="/images/home/hero-construction.png"
             alt="مهندسان در حال بررسی نقشه‌های یک پروژه ساختمانی"

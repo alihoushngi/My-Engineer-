@@ -24,7 +24,8 @@ Public product language remains **متخصص / expert**. The URL family is
 | `/engineer/messages/[id]` | Conversation view + composer     |
 | `/engineer/portfolio`     | Public work samples              |
 | `/engineer/credentials`   | Education, licence, documents    |
-| `/engineer/reviews`       | Read-only reviews                |
+| `/engineer/reviews`       | Review list                      |
+| `/engineer/reviews/[id]`  | Review detail                    |
 | `/engineer/notifications` | Notification center              |
 | `/engineer/settings`      | Account display, logout boundary |
 
@@ -121,7 +122,15 @@ an API exists. Sensitive documents are not exposed as public URLs.
 
 ### Reviews
 
-Read-only. Engineer reply is not implemented.
+Read-only list at `/engineer/reviews`. Each item links to
+`/engineer/reviews/[id]`. Unknown ids use the panel `not-found` page.
+Engineer reply is not implemented; existing `replyText` may render if the
+data source supplies it.
+
+Desktop sidebar: the panel shell is at least `100dvh` tall. The sidebar
+stretches with the layout so its background reaches the viewport bottom when
+main content is short, and stays sticky within `max-h-dvh` when content is
+long. Mobile keeps the five-item bottom navigation.
 
 ### Notifications
 

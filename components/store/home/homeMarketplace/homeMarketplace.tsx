@@ -94,7 +94,10 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
         </div>
 
         <div className="-mx-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
-          <div className="flex min-w-max gap-2" aria-label="فیلتر گروه خدمات">
+          <div
+            className="flex min-w-max snap-x snap-mandatory gap-2"
+            aria-label="فیلتر گروه خدمات"
+          >
             {serviceCategories.map((service) => {
               const active = services.includes(service.slug);
               return (
@@ -104,7 +107,7 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
                   onClick={() => toggleService(service.slug)}
                   aria-pressed={active}
                   className={cn(
-                    "min-h-11 rounded-full border px-4 type-button outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+                    "min-h-11 snap-start rounded-full border px-4 type-button outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
                     active
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border-strong bg-surface text-foreground hover:border-primary hover:text-primary",

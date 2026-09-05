@@ -41,7 +41,7 @@ export function EngineerConversationPage({
           { label: engineerPageTitles.conversation },
         ]}
       />
-      <div className="-mx-4 flex min-h-[60dvh] flex-col overflow-hidden rounded-none border-y border-border bg-surface sm:mx-0 sm:rounded-lg sm:border">
+      <div className="-mx-4 flex min-h-80 flex-col overflow-hidden rounded-none border-y border-border bg-surface sm:mx-0 sm:h-[min(70dvh,42rem)] sm:rounded-lg sm:border">
         <ol className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
           {messages.map((message) => (
             <li

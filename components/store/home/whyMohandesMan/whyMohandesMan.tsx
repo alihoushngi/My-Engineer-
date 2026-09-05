@@ -21,7 +21,7 @@ export function WhyMohandesMan() {
       className="container-wide py-section"
     >
       <div className="grid items-stretch overflow-hidden rounded-xl border border-border lg:grid-cols-[.9fr_1.1fr]">
-        <div className="relative min-h-80 lg:min-h-[34rem]">
+        <div className="relative min-h-56 lg:min-h-[34rem]">
           <Image
             src="/images/home/project-engineer.png"
             alt="مهندس پروژه در فضای ساختمانی"
@@ -30,7 +30,7 @@ export function WhyMohandesMan() {
             className="object-cover"
           />
         </div>
-        <div className="flex flex-col justify-center bg-surface px-6 py-10 sm:px-10 lg:px-14">
+        <div className="flex flex-col justify-center bg-surface px-4 py-8 sm:px-10 sm:py-10 lg:px-14">
           <p className="type-label text-primary">
             انتخاب روشن‌تر، همکاری مستقیم‌تر
           </p>

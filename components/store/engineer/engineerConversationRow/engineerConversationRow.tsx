@@ -13,7 +13,7 @@ export function EngineerConversationRow({
   return (
     <Link
       href={`${engineerPanelPaths.messages}/${conversation.id}`}
-      className="flex items-start justify-between gap-3 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="flex min-h-14 items-start justify-between gap-3 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div className="min-w-0 space-y-1">
         <p className="type-body font-medium text-foreground">

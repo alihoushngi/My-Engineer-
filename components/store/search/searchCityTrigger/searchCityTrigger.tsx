@@ -32,7 +32,7 @@ export function SearchCityTrigger({ className, cities = [] }: Props) {
     >
       <SelectTrigger
         aria-label="فیلتر شهر"
-        className={cn("h-12 min-w-40", className)}
+        className={cn("h-12 w-full min-w-0 sm:min-w-40", className)}
       >
         <MapPinIcon aria-hidden="true" className="size-4" />
         <SelectValue placeholder="همه شهرها" />

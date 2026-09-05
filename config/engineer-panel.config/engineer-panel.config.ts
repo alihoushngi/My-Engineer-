@@ -232,6 +232,7 @@ export const engineerPanelCopy = {
   emptyMessages: "هنوز گفت‌وگویی ندارید.",
   emptyPortfolio: "هنوز نمونه‌کاری اضافه نکرده‌اید.",
   emptyReviews: "هنوز نظری برای پروفایل شما ثبت نشده است.",
+  backToReviews: "بازگشت به نظرات",
   emptyNotifications: "اعلانی برای نمایش وجود ندارد.",
   emptyCredentials: "مدرک یا صلاحیت ثبت‌شده‌ای برای نمایش وجود ندارد.",
   emptyServices: "خدمتی به پروفایل شما متصل نشده است.",
@@ -296,6 +297,7 @@ export const engineerPageTitles = {
   portfolio: "نمونه‌کارها",
   credentials: "مدارک و صلاحیت‌ها",
   reviews: "نظرات",
+  reviewDetail: "جزئیات نظر",
   notifications: "اعلان‌ها",
   settings: "تنظیمات",
 } as const;

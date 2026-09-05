@@ -180,6 +180,20 @@ export const mockExperts: readonly ExpertProfile[] = expertCards.map(
         rating: 5,
         text: "پاسخ‌گویی منظم و توضیح روشن مراحل کار، انتخاب متخصص را برای ما ساده‌تر کرد.",
       },
+      {
+        id: `${expert.id}-r2`,
+        authorName: "مالک پروژه",
+        dateLabel: "هفته گذشته",
+        rating: 4,
+        text: "بازدید در زمان وعده‌داده‌شده انجام شد و گزارش کار برای ادامه پرونده قابل استفاده بود.",
+      },
+      {
+        id: `${expert.id}-r3`,
+        authorName: "همکار ساختمانی",
+        dateLabel: "ماه گذشته",
+        rating: 5,
+        text: "توضیح محدوده خدمت شفاف بود و هماهنگی برای برداشت نقشه بدون رفت‌وبرگشت اضافه پیش رفت.",
+      },
     ],
     relatedExperts: expertCards
       .filter(

@@ -24,7 +24,7 @@ export function ExpertCard({ expert, className }: ExpertCardProps) {
     <article className={cn("h-full", className)}>
       <Link
         href={expert.href}
-        className="group flex h-full flex-col gap-5 rounded-lg border border-border bg-surface p-5 outline-none transition-colors hover:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:p-6"
+        className="group flex h-full flex-col gap-4 rounded-lg border border-border bg-surface p-4 outline-none transition-colors hover:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:gap-5 sm:p-5 lg:p-6"
       >
         <div className="flex items-start gap-4">
           <Avatar className="size-16 rounded-lg">

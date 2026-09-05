@@ -37,7 +37,7 @@ export function ContentHighlights() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`group flex min-h-64 flex-col rounded-xl p-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${tone}`}
+                className={`group flex min-h-52 flex-col rounded-xl p-5 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-64 sm:p-6 ${tone}`}
               >
                 <Icon
                   aria-hidden="true"

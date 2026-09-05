@@ -15,8 +15,10 @@ import {
   type EngineerMessage,
   type EngineerNotification,
   type EngineerRequest,
+  type EngineerReview,
   type EngineerWorkspace,
 } from "@/types/store/engineer.types";
+import { findEngineerReview } from "@/lib/engineer/find-engineer-review/find-engineer-review";
 
 export async function getEngineerAccess(): Promise<EngineerAccessResult> {
   const session = await getEngineerSession();
@@ -74,6 +76,13 @@ export async function getEngineerMessages(
 ): Promise<readonly EngineerMessage[]> {
   const workspace = await getEngineerWorkspace();
   return workspace?.messagesByConversationId[conversationId] ?? [];
+}
+
+export async function getEngineerReview(
+  id: string,
+): Promise<EngineerReview | null> {
+  const workspace = await getEngineerWorkspace();
+  return findEngineerReview(workspace?.reviews ?? [], id);
 }
 
 export async function getEngineerNotifications(): Promise<

@@ -38,7 +38,13 @@ export function ExpertProfilePage({
   const hasStickyContact = hasPublicContact(expert);
 
   return (
-    <div className={hasStickyContact ? "pb-24 lg:pb-0" : undefined}>
+    <div
+      className={
+        hasStickyContact
+          ? "pb-[calc(5.75rem+env(safe-area-inset-bottom))] lg:pb-0"
+          : undefined
+      }
+    >
       <div className="container-app pt-6 sm:pt-8">
         <StoreBreadcrumb
           items={[

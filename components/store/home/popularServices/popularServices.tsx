@@ -31,7 +31,7 @@ export function PopularServices({ items }: PopularServicesProps) {
             <li key={item.id}>
               <Link
                 href={item.href}
-                className="group relative block min-h-80 overflow-hidden rounded-xl bg-primary-deep text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="group relative block min-h-56 overflow-hidden rounded-xl bg-primary-deep text-primary-deep-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-72 lg:min-h-80"
               >
                 <Image
                   src={item.imageSrc}
@@ -41,7 +41,7 @@ export function PopularServices({ items }: PopularServicesProps) {
                   className="object-cover opacity-65 transition duration-300 group-hover:scale-[1.03] motion-reduce:transform-none"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-primary-deep via-primary-deep/25 to-transparent" />
-                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-6">
+                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:gap-5 sm:p-6">
                   <span className="space-y-2">
                     <span className="block type-caption text-accent">
                       {formatFaNumber(index + 1).padStart(2, "۰")}

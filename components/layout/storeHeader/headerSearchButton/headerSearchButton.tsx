@@ -13,7 +13,7 @@ export function HeaderSearchButton() {
       <Button
         type="button"
         variant="ghost"
-        className="hidden justify-start gap-2 px-3 text-muted-foreground lg:inline-flex"
+        className="hidden justify-start gap-2 px-3 text-primary-deep-foreground/80 lg:inline-flex"
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls="search-surface"

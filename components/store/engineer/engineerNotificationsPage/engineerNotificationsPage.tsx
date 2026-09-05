@@ -30,7 +30,7 @@ export function EngineerNotificationsPage({
               <Link
                 href={item.href}
                 className={cn(
-                  "flex flex-col gap-1 px-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  "flex min-h-14 flex-col gap-1 px-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   !item.isRead && "bg-primary-subtle/60",
                 )}
               >

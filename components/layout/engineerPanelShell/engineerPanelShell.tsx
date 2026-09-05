@@ -18,7 +18,7 @@ export function EngineerPanelShell({
   return (
     <div className="min-h-dvh bg-background-subtle">
       <SkipLink />
-      <div className="lg:flex">
+      <div className="lg:flex lg:min-h-dvh">
         <EngineerSidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <EngineerTopbar shell={shell} />

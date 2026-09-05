@@ -1,6 +1,11 @@
 import { EngineerPageHeader } from "@/components/store/engineer/engineerPageHeader/engineerPageHeader";
-import { ExpertReviews } from "@/components/store/expert/expertReviews/expertReviews";
-import { engineerPageTitles } from "@/config/engineer-panel.config/engineer-panel.config";
+import { EngineerReviewRow } from "@/components/store/engineer/engineerReviewRow/engineerReviewRow";
+import { Empty } from "@/components/ui/empty/empty";
+import {
+  engineerPageTitles,
+  engineerPanelCopy,
+  engineerPanelPaths,
+} from "@/config/engineer-panel.config/engineer-panel.config";
 import { type EngineerWorkspace } from "@/types/store/engineer.types";
 
 type EngineerReviewsPageProps = {
@@ -13,17 +18,25 @@ export function EngineerReviewsPage({ workspace }: EngineerReviewsPageProps) {
       <EngineerPageHeader
         title={engineerPageTitles.reviews}
         description="نظرهای دریافتی روی پروفایل عمومی. پاسخ متخصص در محصول فعلی پشتیبانی نمی‌شود."
+        breadcrumbs={[
+          {
+            label: engineerPageTitles.dashboard,
+            href: engineerPanelPaths.dashboard,
+          },
+          { label: engineerPageTitles.reviews },
+        ]}
       />
-      <div className="rounded-lg border border-border bg-surface px-(--space-card)">
-        <ExpertReviews
-          reviews={workspace.reviews}
-          rating={
-            workspace.reviews.find((item) => typeof item.rating === "number")
-              ?.rating
-          }
-          reviewCount={workspace.reviews.length}
-        />
-      </div>
+      {workspace.reviews.length === 0 ? (
+        <Empty title={engineerPanelCopy.emptyReviews} />
+      ) : (
+        <ul className="divide-y divide-border rounded-lg border border-border bg-surface px-(--space-card)">
+          {workspace.reviews.map((review) => (
+            <li key={review.id}>
+              <EngineerReviewRow review={review} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
