@@ -37,6 +37,11 @@ export function ExpertReviewCard({ review }: ExpertReviewCardProps) {
           <ExpertRating rating={review.rating} />
         </div>
       ) : null}
+      {review.relatedServiceLabel ? (
+        <p className="type-caption text-muted-foreground">
+          {review.relatedServiceLabel}
+        </p>
+      ) : null}
       <p className="type-body leading-loose text-foreground">{review.text}</p>
       {review.highlights && review.highlights.length > 0 ? (
         <ul className="flex flex-wrap gap-2">

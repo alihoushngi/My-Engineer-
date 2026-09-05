@@ -150,8 +150,9 @@ an API exists. Sensitive documents are not exposed as public URLs.
 
 Read-only list at `/engineer/reviews`. Each item links to
 `/engineer/reviews/[id]`. Unknown ids use the panel `not-found` page.
-Engineer reply is not implemented; existing `replyText` may render if the
-data source supplies it.
+Customer-authored reviews use the same `ServiceReview` entity as
+`/account/reviews` and `/experts/[id]`. Engineer reply is not implemented;
+existing `replyText` may render if the data source supplies it.
 
 Desktop sidebar: the panel shell is a two-column grid with a
 `minmax(100dvh, auto)` row. The sidebar surface fills that row (viewport
@@ -161,7 +162,9 @@ inherit the desktop column height.
 
 ### Notifications
 
-Static list with unread styling and destination links. No push.
+Shared `AppNotification` records filtered by `recipientRole: "engineer"` and
+the public expert id. Unread styling and destination links. Mark-read is
+recipient-scoped. No push.
 
 ### Settings
 
@@ -177,10 +180,15 @@ public expert `amirhossein-rostami` in
 `lib/mock-data/build-engineer-workspace/build-engineer-workspace.ts`.
 
 Allowed: visual review, lists, detail, empty/error UI, mock messaging overlay
-sends (shared with the customer account).
+sends (shared with the customer account), mock review submit from the
+customer account, and mock notification mark-read.
 
 Not allowed: fake profile save success, upload completion, logout success,
 request acceptance.
+
+Review overlay cookie: `mm_mock_reviews`. Notification overlay cookie:
+`mm_mock_notifications`. Both are kept across a customer↔engineer role
+switch so the same browser can inspect both views. Visual testing only.
 
 ---
 
@@ -194,13 +202,14 @@ Do not invent paths. Backend must define:
 - service-area update
 - requests list + detail + real status model
 - request actions if product allows them
-- conversations, messages, send message
+- conversations, messages, send message, mark-read
 - portfolio create/update/delete and upload
 - credential read/update/upload and verification states
-- reviews for the authenticated engineer
-- notifications + read state
+- reviews for the authenticated engineer (same entity as customer reviews)
+- notifications + read state (recipient-scoped)
 - settings and sign-out
 - registration-to-panel access rules
+- review eligibility if engineers should see pending/unpublished items
 
 ---
 

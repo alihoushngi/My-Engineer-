@@ -27,6 +27,7 @@ not used.
 | `/account/messages/[id]`  | Conversation thread + composer               |
 | `/account/saved`          | Saved specialists (`ExpertCard` / same ids)  |
 | `/account/reviews`        | Reviews the user wrote                       |
+| `/account/reviews/[id]`   | Review detail (full text, related request)   |
 | `/account/notifications`  | Notification list                            |
 | `/account/settings`       | Session display and logout                   |
 
@@ -103,21 +104,6 @@ There is no bidding, budget, escrow, or quotation form.
 
 ---
 
-## Saved specialists
-
-Route: `/account/saved`. Cards reuse public `ExpertCard`. Each card also has:
-
-- remove from saved
-- open public profile (the card itself)
-- پیام به مهندس (open existing thread, or `/account/messages/start?expertId=`)
-
-Saving from `/experts/[id]` uses «ذخیره مهندس» with a selected state. Guests
-are sent to `/login?next=` (customer login, never `/engineer/login`).
-
-When the list is longer than 9, shared pagination is used.
-
----
-
 ## Shared request entity
 
 Customer `/account/requests` and engineer `/engineer/requests` are opposite
@@ -138,6 +124,75 @@ If a conversation is linked, request detail shows «مشاهده گفتگو». O
 it offers «پیام به مهندس», which reuses an existing pair thread when one
 exists. See [MESSAGING.md](MESSAGING.md).
 
+Closed requests without a review show «ثبت نظر». After submit, the same
+review id appears on `/account/reviews/[id]`, `/engineer/reviews/[id]`, and
+`/experts/[id]`.
+
+---
+
+## Shared review entity
+
+Canonical record: `ServiceReview` in `types/store/review.types.ts`.
+
+Customer `/account/reviews`, engineer `/engineer/reviews`, and public
+`/experts/[id]` project that same entity. Do not keep three catalogs.
+
+Article comments are a different domain. Engineer reviews do **not** ask for
+a phone number. The article-comment phone rule stays on the article task.
+
+### Eligibility (mock frontend rule)
+
+A customer may submit a review when:
+
+- they are authenticated as a normal user (never via `/engineer/login`)
+- they own a **closed** request with that engineer
+- they have not already reviewed that `relatedRequestId`
+
+Guests do not see a review CTA. Arbitrary users cannot review a random
+engineer. «ثبت نظر» is not in the profile toolbar; it appears on the closed
+request detail and, when eligible, in the public profile reviews section.
+
+**API CONTRACT REQUIRED / BUSINESS DECISION REQUIRED** if production uses a
+different rule (completed job, time window, paid invoice, and so on).
+
+Form fields: rating 1–5 and comment. Min comment length is 10. Failed submit
+keeps the form visible for retry.
+
+---
+
+## Shared notifications
+
+Canonical record: `AppNotification` in `types/store/notification.types.ts`.
+
+Each notification has `recipientRole: "user" | "engineer"` and a
+`recipientId`. Private recipients are never mixed.
+
+Customer kinds shown today: `message`, `request`, `review`, `account`.
+Engineer kinds: `message`, `request`, `review`, `verification`, `credential`.
+
+Route: `/account/notifications`. Desktop storefront header (`lg+`) shows a
+subtle bell for an authenticated customer. Mobile uses account navigation
+(More drawer), not an extra header icon.
+
+---
+
+## Saved specialists
+
+Route: `/account/saved`. Cards reuse public `ExpertCard`. Each card also has:
+
+- remove from saved
+- open public profile (the card itself)
+- پیام به مهندس (open existing thread, or `/account/messages/start?expertId=`)
+
+Saving from `/experts/[id]` uses «ذخیره مهندس» with a selected state. Guests
+are sent to `/login?next=` (customer login, never `/engineer/login`). Save
+state uses one overlay cookie (`mm_mock_user_saved`) across expert profile,
+search, service results, home discovery, and `/account/saved`. `ExpertCard`
+does not expose Save; the profile is the interaction surface.
+
+When the list is longer than 9, shared pagination is used. The same control
+applies to requests, reviews, notifications, and conversation lists.
+
 ---
 
 ## Mock data
@@ -148,17 +203,21 @@ Central files:
   — canonical request catalog
 - [`lib/mock-data/messaging-mock-data.ts`](../lib/mock-data/messaging-mock-data.ts)
   — canonical shared conversations and messages
+- [`lib/mock-data/review-mock-data.ts`](../lib/mock-data/review-mock-data.ts)
+  — canonical customer-authored `ServiceReview` rows
+- [`lib/mock-data/notification-mock-data.ts`](../lib/mock-data/notification-mock-data.ts)
+  — canonical `AppNotification` rows for both recipient roles
 - [`lib/mock-data/user-workspace-mock-data.ts`](../lib/mock-data/user-workspace-mock-data.ts)
-  — customer identity, reviews, notifications; conversations are derived
-  from the shared catalog
+  — customer identity; reviews and notifications are projected from the
+  shared catalogs
 
 | Export               | Use                                      |
 | -------------------- | ---------------------------------------- |
 | `currentUser`        | Private identity                         |
 | `userRequests`       | Derived customer view of shared requests |
 | `userSavedExperts()` | Same `ExpertCardData` as `/experts/[id]` |
-| `userReviews`        | Reviews written by the customer          |
-| `userNotifications`  | Account notifications                    |
+| `userReviews`        | Projected from `ServiceReview`           |
+| `userNotifications`  | Projected from `AppNotification`         |
 
 Saved specialists are looked up from `mockExpertCards` by public expert id.
 Do not invent a second expert model.
@@ -166,14 +225,24 @@ Do not invent a second expert model.
 Session `displayName` / `phoneMasked` overlay `currentUser` in
 `buildUserWorkspace(session, overlay)`.
 
-Visual-testing overlays (not production persistence):
+Visual-testing overlays (not production persistence). They are kept across a
+customer↔engineer role switch in the same browser:
 
 - `mm_mock_user_saved` — saved expert ids (defaults when the cookie is absent)
-- `mm_mock_service_requests` — customer-created requests; kept across a
-  customer→engineer role switch in the same browser so the engineer can see
-  the same ids. Cleared saved cookie on user logout / engineer session write.
-- `mm_mock_conversations` — shared messaging overlay; also kept across a
-  role switch. Visual testing only; not production chat storage.
+- `mm_mock_service_requests` — customer-created requests
+- `mm_mock_conversations` — shared messaging overlay
+- `mm_mock_reviews` — customer-authored reviews overlay
+- `mm_mock_notifications` — notification overlay including mark-read
+
+Saved cookie is cleared on user logout / engineer session write. Review and
+notification cookies are not.
+
+---
+
+## Public actions and login
+
+Logged-out customers who start پیام، ذخیره، or درخواست are sent to
+`/login?next=` (normal user login). They are never sent to `/engineer/login`.
 
 ---
 
@@ -190,12 +259,15 @@ Installed (standalone) sessions still use the network for these routes.
 
 Do not invent endpoints in the frontend. A real customer workspace needs:
 
-1. Current-user profile read (name, masked mobile, avatar, city)
-2. List/detail for the user’s requests (shared entity with engineer requests)
-3. Create request (service, city, description, selected engineer)
-4. Saved-expert list and save/unsave using the public Expert entity
-5. List/detail/send/mark-read for conversations (see [MESSAGING.md](MESSAGING.md))
-6. Reviews written by the user
-7. Notifications and (later) preference writes
-8. Logout / session revoke
-9. Explicit 401 vs 403 when an engineer token hits `/account/*`
+1. Normal-user session (login / register / current user / logout)
+2. Current-user profile read (name, masked mobile, avatar, city)
+3. List/detail for the user’s requests (shared entity with engineer requests)
+4. Create request (service, city, description, selected engineer)
+5. Saved-expert list and save/unsave using the public Expert entity
+6. List/detail/send/mark-read for conversations (see [MESSAGING.md](MESSAGING.md))
+7. User reviews list/detail and review submit
+8. Review eligibility for a customer + engineer + request
+9. Notifications list and mark-read (recipient-scoped; never mixed)
+10. Explicit 401 vs 403 when an engineer token hits `/account/*`
+
+Do not invent endpoint URLs in this frontend.

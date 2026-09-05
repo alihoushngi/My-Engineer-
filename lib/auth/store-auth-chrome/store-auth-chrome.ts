@@ -6,12 +6,14 @@ import { userAuthCopy } from "@/config/user-auth.config/user-auth.config";
 export function toStoreAuthChrome(input: {
   userSession: UserSession | null;
   engineerSession: EngineerSession | null;
+  unreadNotificationCount?: number;
 }): StoreAuthChrome {
   if (input.userSession) {
     return {
       status: "user",
       displayName:
         input.userSession.profile?.displayName ?? userAuthCopy.accountCta,
+      unreadNotificationCount: input.unreadNotificationCount ?? 0,
     };
   }
 

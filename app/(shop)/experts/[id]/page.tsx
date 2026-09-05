@@ -12,7 +12,10 @@ import {
   getExpertCardData,
   getExpertProfile,
 } from "@/services/expert-service/expert-service";
-import { getCurrentSavedExpertIds } from "@/services/user-account-service/user-account-service";
+import {
+  getCurrentSavedExpertIds,
+  getUserWorkspace,
+} from "@/services/user-account-service/user-account-service";
 import { isUserAuthenticated } from "@/services/user-auth-service/user-access-service";
 
 type ExpertPageProps = {
@@ -40,15 +43,15 @@ export async function generateMetadata({
 
 export default async function ExpertRoutePage({ params }: ExpertPageProps) {
   const { id } = await params;
-  const [expert, userAuthenticated, savedIds, cities, card] = await Promise.all(
-    [
+  const [expert, userAuthenticated, savedIds, cities, card, workspace] =
+    await Promise.all([
       getExpertProfile(id),
       isUserAuthenticated(),
       getCurrentSavedExpertIds(),
       listCatalogCities(),
       getExpertCardData(id),
-    ],
-  );
+      getUserWorkspace(),
+    ]);
 
   if (!expert) {
     notFound();
@@ -64,6 +67,13 @@ export default async function ExpertRoutePage({ params }: ExpertPageProps) {
     cities,
   );
 
+  const eligibleReviewRequestId = workspace?.requests.find(
+    (request) =>
+      request.expertId === expert.id &&
+      request.status === "closed" &&
+      !request.reviewId,
+  )?.id;
+
   return (
     <ExpertProfilePage
       expert={expert}
@@ -71,6 +81,7 @@ export default async function ExpertRoutePage({ params }: ExpertPageProps) {
       cities={cities}
       isUserAuthenticated={userAuthenticated}
       isSaved={savedIds.includes(expert.id)}
+      eligibleReviewRequestId={eligibleReviewRequestId}
       isDevelopmentPreview={
         process.env.NODE_ENV !== "production" &&
         isDevelopmentExpertPreviewId(id)

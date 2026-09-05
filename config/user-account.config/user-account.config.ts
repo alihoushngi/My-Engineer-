@@ -109,7 +109,8 @@ export const userAccountCopy = {
     "متن گفتگو. نقش فرستنده از دادهٔ پیام مشخص است، نه از جای حباب.",
   savedDescription: "متخصصانی که برای مراجعه بعدی ذخیره کرده‌اید.",
   reviewsDescription: "نظرهایی که برای متخصصان ثبت کرده‌اید.",
-  notificationsDescription: "اعلان‌های مربوط به درخواست و گفتگو.",
+  notificationsDescription:
+    "اعلان‌های پیام، درخواست، نظر و حساب. فقط دسته‌های پشتیبانی‌شده نمایش داده می‌شود.",
   settingsDescription: "خروج از حساب و اطلاعات نمایشی نشست.",
   welcomeGreeting: "خوش آمدید",
   findExpert: "پیدا کردن مهندس",
@@ -136,6 +137,7 @@ export const userAccountCopy = {
   emptyNotifications: "اعلانی برای نمایش وجود ندارد.",
   requestNotFoundTitle: "درخواست پیدا نشد",
   conversationNotFoundTitle: "گفتگو پیدا نشد",
+  reviewNotFoundTitle: "نظر پیدا نشد",
   filterAll: "همه",
   filterSent: "ارسال‌شده",
   filterInReview: "در حال بررسی",
@@ -163,6 +165,7 @@ export const userAccountPageTitles = {
   conversation: "گفتگو",
   saved: "مهندس‌های ذخیره‌شده",
   reviews: "نظرات من",
+  reviewDetail: "جزئیات نظر",
   notifications: "اعلان‌ها",
   settings: "تنظیمات",
 } as const;

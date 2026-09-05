@@ -29,9 +29,10 @@ export function ExpertSaveButton({
   unsavedLabel = marketplaceCopy.saveEngineerLabel,
 }: ExpertSaveButtonProps) {
   const router = useRouter();
-  const [saved, setSaved] = useState(isSaved);
+  const [optimisticSaved, setOptimisticSaved] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
   const mutation = useApiMutation((id: string) => toggleSavedExpert(id));
+  const saved = optimisticSaved ?? isSaved;
   const label = saved ? savedLabel : unsavedLabel;
 
   return (
@@ -52,13 +53,15 @@ export function ExpertSaveButton({
         }
         onAuthenticatedClick={() => {
           setError(null);
+          setOptimisticSaved(!saved);
           void mutation
             .mutateAsync(expertId)
             .then((result) => {
-              setSaved(result.saved);
+              setOptimisticSaved(result.saved);
               router.refresh();
             })
             .catch((err: unknown) => {
+              setOptimisticSaved(null);
               setError(
                 toUserErrorMessage(err, marketplaceCopy.mutationErrorFallback),
               );

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Pagination } from "@/components/common/pagination/pagination";
+import { NotificationLink } from "@/components/store/notifications/notificationLink/notificationLink";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
 import { Empty } from "@/components/ui/empty/empty";
 import {
@@ -8,7 +8,6 @@ import {
 } from "@/config/user-account.config/user-account.config";
 import { type PaginatedItems } from "@/lib/pagination/paginate-items/paginate-items";
 import { type UserNotification } from "@/types/store/user-account.types";
-import { cn } from "@/lib/utils/cn/cn";
 
 type UserNotificationsPageProps = {
   notifications: readonly UserNotification[];
@@ -34,12 +33,10 @@ export function UserNotificationsPage({
           <ul className="divide-y divide-border rounded-lg border border-border bg-surface">
             {notifications.map((item) => (
               <li key={item.id}>
-                <Link
+                <NotificationLink
+                  id={item.id}
                   href={item.href}
-                  className={cn(
-                    "flex min-h-14 flex-col gap-1 px-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                    !item.isRead && "bg-primary-subtle/60",
-                  )}
+                  isRead={item.isRead}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="type-body font-medium text-foreground">
@@ -57,7 +54,7 @@ export function UserNotificationsPage({
                       {userAccountCopy.unreadLabel}
                     </span>
                   ) : null}
-                </Link>
+                </NotificationLink>
               </li>
             ))}
           </ul>

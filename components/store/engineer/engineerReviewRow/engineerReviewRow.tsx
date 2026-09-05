@@ -27,6 +27,11 @@ export function EngineerReviewRow({ review }: EngineerReviewRowProps) {
             </p>
           ) : null}
         </div>
+        {review.relatedServiceLabel ? (
+          <p className="type-caption text-muted-foreground">
+            {review.relatedServiceLabel}
+          </p>
+        ) : null}
         {typeof review.rating === "number" ? (
           <ExpertRating rating={review.rating} />
         ) : null}

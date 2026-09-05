@@ -2,17 +2,17 @@ import { mockExpertCards } from "@/lib/mock-data/mock-data";
 import { toUserRequest } from "@/lib/marketplace/request-projections/request-projections";
 import { userMessagingViews } from "@/lib/messaging/messaging-projections/messaging-projections";
 import { mockMessagingSeed } from "@/lib/mock-data/messaging-mock-data";
+import { mockAppNotifications } from "@/lib/mock-data/notification-mock-data";
+import { mockServiceReviews } from "@/lib/mock-data/review-mock-data";
+import { notificationsForRecipient } from "@/lib/notifications/notification-store/notification-store";
+import { userNotificationViews } from "@/lib/notifications/notification-projections/notification-projections";
+import { userReviewsForCustomer } from "@/lib/reviews/review-projections/review-projections";
 import {
   MOCK_MARKETPLACE_CUSTOMER_ID,
   mockServiceRequests,
 } from "@/lib/mock-data/service-request-mock-data";
-import { userAccountPaths } from "@/config/user-account.config/user-account.config";
 import { type ExpertCardData } from "@/types/store/expert.types";
-import {
-  type UserAccount,
-  type UserNotification,
-  type UserReviewItem,
-} from "@/types/store/user-account.types";
+import { type UserAccount } from "@/types/store/user-account.types";
 
 export const DEFAULT_SAVED_EXPERT_IDS = [
   "amirhossein-rostami",
@@ -37,47 +37,14 @@ export const mockUserConversations = userMessaging.conversations;
 export const mockUserMessagesByConversation =
   userMessaging.messagesByConversationId;
 
-export const mockUserReviews: readonly UserReviewItem[] = [
-  {
-    id: "user-rev-1",
-    expertId: "amirhossein-rostami",
-    expertName: "امیرحسین رستمی",
-    expertHref: "/experts/amirhossein-rostami",
-    text: "خروجی نقشه دقیق بود و هماهنگی بازدید به‌موقع انجام شد.",
-    rating: 5,
-    dateLabel: "ماه گذشته",
-  },
-];
+export const mockUserReviews = userReviewsForCustomer(
+  mockServiceReviews,
+  mockCurrentUser.id,
+);
 
-export const mockUserNotifications: readonly UserNotification[] = [
-  {
-    id: "user-ntf-1",
-    kind: "message",
-    title: "پیام جدید از متخصص",
-    body: "امیرحسین رستمی برای بازدید نقشه UTM پیام داده است.",
-    createdAtLabel: "۱ ساعت پیش",
-    isRead: false,
-    href: `${userAccountPaths.messages}/conv-utm-niavaran`,
-  },
-  {
-    id: "user-ntf-2",
-    kind: "request",
-    title: "وضعیت درخواست به‌روز شد",
-    body: "درخواست نقشه UTM در حال بررسی است.",
-    createdAtLabel: "۲ ساعت پیش",
-    isRead: false,
-    href: `${userAccountPaths.requests}/req-utm-niavaran`,
-  },
-  {
-    id: "user-ntf-3",
-    kind: "review",
-    title: "نظر شما نمایش داده می‌شود",
-    body: "نظر ثبت‌شده برای پروفایل متخصص در فهرست عمومی آمده است.",
-    createdAtLabel: "ماه گذشته",
-    isRead: true,
-    href: userAccountPaths.reviews,
-  },
-];
+export const mockUserNotifications = userNotificationViews(
+  notificationsForRecipient(mockAppNotifications, "user", mockCurrentUser.id),
+);
 
 export function getMockSavedExperts(
   ids: readonly string[] = DEFAULT_SAVED_EXPERT_IDS,

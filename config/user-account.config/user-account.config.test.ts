@@ -29,7 +29,7 @@ test("dashboard nav is active only on the exact account root", () => {
   );
 });
 
-test("nested request and message routes keep parent navigation active", () => {
+test("nested request, message, and review routes keep parent navigation active", () => {
   assert.equal(
     isUserAccountNavActive(
       "/account/requests/req-1",
@@ -42,6 +42,10 @@ test("nested request and message routes keep parent navigation active", () => {
       "/account/messages/conv-1",
       userAccountPaths.messages,
     ),
+    true,
+  );
+  assert.equal(
+    isUserAccountNavActive("/account/reviews/rev-1", userAccountPaths.reviews),
     true,
   );
   assert.equal(

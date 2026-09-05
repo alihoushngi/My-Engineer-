@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
-import { ExpertRating } from "@/components/store/expert/expertRating/expertRating";
+import { UserReviewRow } from "@/components/store/userAccount/userReviewRow/userReviewRow";
 import { Empty } from "@/components/ui/empty/empty";
 import { Pagination } from "@/components/common/pagination/pagination";
 import {
@@ -33,28 +32,8 @@ export function UserReviewsPage({
         <>
           <ul className="divide-y divide-border rounded-lg border border-border bg-surface px-(--space-card)">
             {reviews.map((review) => (
-              <li key={review.id} className="py-4">
-                <article className="flex flex-col gap-2">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <Link
-                      href={review.expertHref}
-                      className="type-body font-medium text-foreground outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      {review.expertName}
-                    </Link>
-                    {review.dateLabel ? (
-                      <p className="type-caption text-muted-foreground">
-                        {review.dateLabel}
-                      </p>
-                    ) : null}
-                  </div>
-                  {typeof review.rating === "number" ? (
-                    <ExpertRating rating={review.rating} />
-                  ) : null}
-                  <p className="type-body-sm leading-relaxed text-muted-foreground">
-                    {review.text}
-                  </p>
-                </article>
+              <li key={review.id}>
+                <UserReviewRow review={review} />
               </li>
             ))}
           </ul>

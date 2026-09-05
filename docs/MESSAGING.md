@@ -118,6 +118,10 @@ When mock user auth is on, send / mark-read / start succeed against this
 overlay. When mock auth is off, mutations return unavailable. No Socket.IO,
 WebSocket, Supabase realtime, or Firebase.
 
+Reviews and notifications are separate shared domains. See
+[USER-ACCOUNT.md](USER-ACCOUNT.md) and [ENGINEER-PANEL.md](ENGINEER-PANEL.md).
+They must not be mixed with article comments.
+
 Mandatory mock path:
 
 1. Customer login (`09121112233` / OTP `654321` or password `user1234`)

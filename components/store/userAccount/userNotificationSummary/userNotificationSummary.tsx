@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NotificationLink } from "@/components/store/notifications/notificationLink/notificationLink";
 import { Empty } from "@/components/ui/empty/empty";
 import { Button } from "@/components/ui/button/button";
 import { Badge } from "@/components/ui/badge/badge";
@@ -45,9 +46,11 @@ export function UserNotificationSummary({
         <ul className="divide-y divide-border">
           {items.map((item) => (
             <li key={item.id}>
-              <Link
+              <NotificationLink
+                id={item.id}
                 href={item.href}
-                className="flex min-h-14 flex-col gap-1 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                isRead={item.isRead}
+                className="px-0"
               >
                 <p className="type-body font-medium text-foreground">
                   {item.title}
@@ -58,7 +61,7 @@ export function UserNotificationSummary({
                 <p className="type-caption text-muted-foreground">
                   {item.createdAtLabel}
                 </p>
-              </Link>
+              </NotificationLink>
             </li>
           ))}
         </ul>

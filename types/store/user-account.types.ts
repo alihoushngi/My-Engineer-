@@ -3,7 +3,7 @@ import { type ExpertCardData } from "@/types/store/expert.types";
 
 export type UserRequestStatus = "sent" | "in_review" | "closed";
 
-export type UserNotificationKind = "request" | "message" | "review";
+export type UserNotificationKind = "request" | "message" | "review" | "account";
 
 export type UserAccount = {
   id: string;
@@ -29,6 +29,7 @@ export type UserRequest = {
   description?: string;
   status: UserRequestStatus;
   conversationId?: string;
+  reviewId?: string;
 };
 
 export type UserConversation = {
@@ -71,6 +72,10 @@ export type UserReviewItem = {
   text: string;
   rating?: number;
   dateLabel?: string;
+  relatedRequestId?: string;
+  relatedServiceLabel?: string;
+  replyText?: string;
+  href: string;
 };
 
 export type UserWorkspace = {

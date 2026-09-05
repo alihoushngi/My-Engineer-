@@ -5,6 +5,8 @@ import {
 import { getDevExpertPreview } from "@/lib/experts/dev-expert-preview/dev-expert-preview";
 import { env } from "@/lib/env/env";
 import { mockExpertCards, mockExperts } from "@/lib/mock-data/mock-data";
+import { overlayExpertProfileReviews } from "@/lib/reviews/overlay-expert-reviews/overlay-expert-reviews";
+import { readReviewCatalog } from "@/lib/reviews/mock-review-overlay/mock-review-overlay";
 
 /**
  * Public expert profile access.
@@ -17,7 +19,13 @@ export async function getExpertProfile(
   id: string,
 ): Promise<ExpertProfile | null> {
   if (env.useMockData) {
-    return mockExperts.find((expert) => expert.id === id) ?? null;
+    const expert = mockExperts.find((item) => item.id === id) ?? null;
+
+    if (!expert) {
+      return null;
+    }
+
+    return overlayExpertProfileReviews(expert, await readReviewCatalog());
   }
 
   if (process.env.NODE_ENV !== "production") {

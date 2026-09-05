@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Pagination } from "@/components/common/pagination/pagination";
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
-import { ExpertLegacyFeature } from "@/components/store/expert/expertLegacyFeature/expertLegacyFeature";
 import { ExpertRating } from "@/components/store/expert/expertRating/expertRating";
 import { ExpertReviewCard } from "@/components/store/expert/expertReviewCard/expertReviewCard";
 import { ExpertStarRating } from "@/components/store/expert/expertStarRating/expertStarRating";
+import { ReviewSubmitDialog } from "@/components/store/reviews/reviewSubmitDialog/reviewSubmitDialog";
 import { Empty } from "@/components/ui/empty/empty";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
@@ -18,8 +18,7 @@ type ExpertReviewsProps = {
   reviews?: readonly ExpertReview[];
   rating?: number;
   reviewCount?: number;
-  isUserAuthenticated?: boolean;
-  loginNextPath?: string;
+  eligibleRequestId?: string;
 };
 
 export function ExpertReviews({
@@ -27,8 +26,7 @@ export function ExpertReviews({
   reviews,
   rating,
   reviewCount,
-  isUserAuthenticated = false,
-  loginNextPath = "/",
+  eligibleRequestId,
 }: ExpertReviewsProps) {
   const [page, setPage] = useState(1);
   const items = reviews ?? [];
@@ -62,15 +60,9 @@ export function ExpertReviews({
           <p className="type-body-sm leading-loose text-muted-foreground">
             {expertProfileCopy.reviewsIntro}
           </p>
-          <ExpertLegacyFeature
-            label={expertProfileCopy.reviewSubmitLabel}
-            title={expertProfileCopy.reviewSubmitUnavailableTitle}
-            description={expertProfileCopy.reviewSubmitUnavailableDescription}
-            auth={{
-              isAuthenticated: isUserAuthenticated,
-              nextPath: loginNextPath,
-            }}
-          />
+          {eligibleRequestId ? (
+            <ReviewSubmitDialog requestId={eligibleRequestId} />
+          ) : null}
         </div>
         {items.length === 0 ? (
           <Empty title={expertProfileCopy.reviewsEmpty} />

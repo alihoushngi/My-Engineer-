@@ -2,7 +2,9 @@ import Link from "next/link";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
 import { UserRequestStatusBadge } from "@/components/store/userAccount/userRequestStatusBadge/userRequestStatusBadge";
 import { StartConversationButton } from "@/components/store/messaging/startConversationButton/startConversationButton";
+import { ReviewSubmitDialog } from "@/components/store/reviews/reviewSubmitDialog/reviewSubmitDialog";
 import { Button } from "@/components/ui/button/button";
+import { reviewsCopy } from "@/config/reviews.config/reviews.config";
 import {
   userAccountCopy,
   userAccountPaths,
@@ -79,6 +81,13 @@ export function UserRequestDetailPage({ request }: UserRequestDetailPageProps) {
               </Link>
             </Button>
           ) : null}
+          {request.reviewId ? (
+            <Button asChild variant="outline">
+              <Link href={`${userAccountPaths.reviews}/${request.reviewId}`}>
+                {reviewsCopy.viewReview}
+              </Link>
+            </Button>
+          ) : null}
         </div>
       </article>
       {!request.conversationId ? (
@@ -86,6 +95,9 @@ export function UserRequestDetailPage({ request }: UserRequestDetailPageProps) {
           expertId={request.expertId}
           isUserAuthenticated
         />
+      ) : null}
+      {request.status === "closed" && !request.reviewId ? (
+        <ReviewSubmitDialog requestId={request.id} triggerVariant="primary" />
       ) : null}
     </div>
   );

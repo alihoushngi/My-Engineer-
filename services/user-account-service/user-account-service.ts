@@ -13,11 +13,14 @@ import {
   readSavedExpertIds,
 } from "@/lib/marketplace/mock-marketplace-overlay/mock-marketplace-overlay";
 import { readMessagingSnapshot } from "@/lib/messaging/mock-messaging-overlay/mock-messaging-overlay";
+import { readNotificationCatalog } from "@/lib/notifications/mock-notification-overlay/mock-notification-overlay";
+import { readReviewCatalog } from "@/lib/reviews/mock-review-overlay/mock-review-overlay";
 import { findById } from "@/lib/user-account/workspace-selectors/workspace-selectors";
 import {
   type UserConversation,
   type UserMessage,
   type UserRequest,
+  type UserReviewItem,
   type UserWorkspace,
 } from "@/types/store/user-account.types";
 
@@ -40,6 +43,8 @@ export async function getUserWorkspace(): Promise<UserWorkspace | null> {
     savedExpertIds: await readSavedExpertIds(),
     extraRequests: await readCreatedRequests(),
     messaging: await readMessagingSnapshot(),
+    reviews: await readReviewCatalog(),
+    notifications: await readNotificationCatalog(),
   });
 }
 
@@ -60,4 +65,11 @@ export async function getUserMessages(
 ): Promise<readonly UserMessage[]> {
   const workspace = await getUserWorkspace();
   return workspace?.messagesByConversationId[conversationId] ?? [];
+}
+
+export async function getUserReview(
+  id: string,
+): Promise<UserReviewItem | null> {
+  const workspace = await getUserWorkspace();
+  return workspace ? findById(workspace.reviews, id) : null;
 }

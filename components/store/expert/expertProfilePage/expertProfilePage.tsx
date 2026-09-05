@@ -36,6 +36,7 @@ type ExpertProfilePageProps = {
   isDevelopmentPreview?: boolean;
   isUserAuthenticated?: boolean;
   isSaved?: boolean;
+  eligibleReviewRequestId?: string;
 };
 
 export function ExpertProfilePage({
@@ -45,6 +46,7 @@ export function ExpertProfilePage({
   isDevelopmentPreview = false,
   isUserAuthenticated = false,
   isSaved = false,
+  eligibleReviewRequestId,
 }: ExpertProfilePageProps) {
   const hasStickyContact = hasPublicContact(expert);
 
@@ -124,8 +126,7 @@ export function ExpertProfilePage({
               reviews={expert.reviews}
               rating={expert.rating}
               reviewCount={expert.reviewCount}
-              isUserAuthenticated={isUserAuthenticated}
-              loginNextPath={`/experts/${expert.id}`}
+              eligibleRequestId={eligibleReviewRequestId}
             />
           ) : null}
         </div>

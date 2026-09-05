@@ -54,6 +54,11 @@ export function EngineerReviewDetailPage({
         {typeof review.rating === "number" ? (
           <ExpertRating rating={review.rating} />
         ) : null}
+        {review.relatedServiceLabel ? (
+          <p className="type-body-sm text-muted-foreground">
+            {review.relatedServiceLabel}
+          </p>
+        ) : null}
         <p className="type-body leading-loose text-foreground">{review.text}</p>
         {review.replyText ? (
           <div className="rounded-lg bg-surface-muted p-4">

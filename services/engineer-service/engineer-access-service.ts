@@ -15,6 +15,12 @@ import { overlayEngineerRequests } from "@/lib/marketplace/overlay-engineer-requ
 import { overlayEngineerMessaging } from "@/lib/messaging/overlay-engineer-messaging/overlay-engineer-messaging";
 import { readMessagingSnapshot } from "@/lib/messaging/mock-messaging-overlay/mock-messaging-overlay";
 import {
+  overlayEngineerNotifications,
+  overlayEngineerReviews,
+} from "@/lib/engineer/overlay-engineer-engagement/overlay-engineer-engagement";
+import { readReviewCatalog } from "@/lib/reviews/mock-review-overlay/mock-review-overlay";
+import { readRecipientNotifications } from "@/lib/notifications/mock-notification-overlay/mock-notification-overlay";
+import {
   type EngineerAccessResult,
   type EngineerConversation,
   type EngineerMessage,
@@ -28,15 +34,17 @@ import { findEngineerReview } from "@/lib/engineer/find-engineer-review/find-eng
 export async function getEngineerAccess(): Promise<EngineerAccessResult> {
   const extras = await readCreatedRequests();
   const messaging = await readMessagingSnapshot();
+  const reviews = await readReviewCatalog();
   const session = await getEngineerSession();
 
   if (session) {
+    const workspace = overlayEngineerMessaging(
+      overlayEngineerRequests(buildSessionEngineerWorkspace(session), extras),
+      messaging,
+    );
     return {
       kind: session.source === "registration" ? "pending_review" : "active",
-      workspace: overlayEngineerMessaging(
-        overlayEngineerRequests(buildSessionEngineerWorkspace(session), extras),
-        messaging,
-      ),
+      workspace: await withEngineerEngagement(workspace, reviews),
     };
   }
 
@@ -49,16 +57,32 @@ export async function getEngineerAccess(): Promise<EngineerAccessResult> {
   }
 
   if (env.useMockData) {
+    const workspace = overlayEngineerMessaging(
+      overlayEngineerRequests(getMockEngineerWorkspace(), extras),
+      messaging,
+    );
     return {
       kind: "visual_review",
-      workspace: overlayEngineerMessaging(
-        overlayEngineerRequests(getMockEngineerWorkspace(), extras),
-        messaging,
-      ),
+      workspace: await withEngineerEngagement(workspace, reviews),
     };
   }
 
   return { kind: "unavailable" };
+}
+
+async function withEngineerEngagement(
+  workspace: EngineerWorkspace,
+  reviews: Awaited<ReturnType<typeof readReviewCatalog>>,
+): Promise<EngineerWorkspace> {
+  const notifications = await readRecipientNotifications(
+    "engineer",
+    workspace.account.publicExpertId,
+  );
+
+  return overlayEngineerNotifications(
+    overlayEngineerReviews(workspace, reviews),
+    notifications,
+  );
 }
 
 export async function getEngineerWorkspace(): Promise<EngineerWorkspace | null> {

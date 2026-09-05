@@ -1,10 +1,10 @@
 import {
   getMockSavedExperts,
   mockCurrentUser,
-  mockUserNotifications,
-  mockUserReviews,
 } from "@/lib/mock-data/user-workspace-mock-data";
 import { mockServiceRequests } from "@/lib/mock-data/service-request-mock-data";
+import { mockServiceReviews } from "@/lib/mock-data/review-mock-data";
+import { mockAppNotifications } from "@/lib/mock-data/notification-mock-data";
 import { toUserRequest } from "@/lib/marketplace/request-projections/request-projections";
 import { filterRequestsForParty } from "@/lib/marketplace/request-selectors/request-selectors";
 import { type UserSession } from "@/types/store/user-auth.types";
@@ -14,8 +14,13 @@ import {
 } from "@/types/store/user-account.types";
 import { type ServiceRequest } from "@/types/store/service-request.types";
 import { type MessagingSnapshot } from "@/types/store/messaging.types";
+import { type AppNotification } from "@/types/store/notification.types";
+import { type ServiceReview } from "@/types/store/review.types";
 import { userMessagingViews } from "@/lib/messaging/messaging-projections/messaging-projections";
 import { mockMessagingSeed } from "@/lib/mock-data/messaging-mock-data";
+import { userNotificationViews } from "@/lib/notifications/notification-projections/notification-projections";
+import { notificationsForRecipient } from "@/lib/notifications/notification-store/notification-store";
+import { userReviewsForCustomer } from "@/lib/reviews/review-projections/review-projections";
 import {
   unreadCount,
   unreadMessageTotal,
@@ -25,6 +30,8 @@ type UserWorkspaceOverlay = {
   savedExpertIds?: readonly string[];
   extraRequests?: readonly ServiceRequest[];
   messaging?: MessagingSnapshot;
+  reviews?: readonly ServiceReview[];
+  notifications?: readonly AppNotification[];
 };
 
 export function buildUserWorkspace(
@@ -41,15 +48,23 @@ export function buildUserWorkspace(
     mockCurrentUser.id,
   );
   const conversations = messaging.conversations;
+  const reviews = overlay.reviews ?? mockServiceReviews;
+  const notifications = overlay.notifications ?? mockAppNotifications;
   const requests = unique.map((request) => {
     const mapped = toUserRequest(request);
     const conversation = conversations.find(
       (item) => item.relatedRequestId === request.id,
     );
+    const review = reviews.find(
+      (item) =>
+        item.relatedRequestId === request.id &&
+        item.authorCustomerId === mockCurrentUser.id,
+    );
     return {
       ...mapped,
       latestActivityLabel:
         conversation?.lastMessageAtLabel ?? request.createdAtLabel,
+      reviewId: review?.id,
     };
   });
 
@@ -64,8 +79,10 @@ export function buildUserWorkspace(
     conversations,
     messagesByConversationId: messaging.messagesByConversationId,
     savedExperts: getMockSavedExperts(overlay.savedExpertIds),
-    reviews: mockUserReviews,
-    notifications: mockUserNotifications,
+    reviews: userReviewsForCustomer(reviews, mockCurrentUser.id),
+    notifications: userNotificationViews(
+      notificationsForRecipient(notifications, "user", mockCurrentUser.id),
+    ),
   };
 }
 
