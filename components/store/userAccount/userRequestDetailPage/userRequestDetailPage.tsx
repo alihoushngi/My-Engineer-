@@ -1,16 +1,10 @@
 import Link from "next/link";
-import { InfoIcon } from "lucide-react";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
 import { UserRequestStatusBadge } from "@/components/store/userAccount/userRequestStatusBadge/userRequestStatusBadge";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
+import { StartConversationButton } from "@/components/store/messaging/startConversationButton/startConversationButton";
 import { Button } from "@/components/ui/button/button";
 import {
   userAccountCopy,
-  userAccountPageTitles,
   userAccountPaths,
 } from "@/config/user-account.config/user-account.config";
 import { type UserRequest } from "@/types/store/user-account.types";
@@ -88,13 +82,10 @@ export function UserRequestDetailPage({ request }: UserRequestDetailPageProps) {
         </div>
       </article>
       {!request.conversationId ? (
-        <Alert variant="info">
-          <InfoIcon />
-          <AlertTitle>{userAccountPageTitles.messages}</AlertTitle>
-          <AlertDescription>
-            {userAccountCopy.messagingSoonDescription}
-          </AlertDescription>
-        </Alert>
+        <StartConversationButton
+          expertId={request.expertId}
+          isUserAuthenticated
+        />
       ) : null}
     </div>
   );

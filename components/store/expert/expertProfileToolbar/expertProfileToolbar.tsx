@@ -1,11 +1,10 @@
 "use client";
 
 import { MessageSquareIcon } from "lucide-react";
-import { ExpertLegacyFeature } from "@/components/store/expert/expertLegacyFeature/expertLegacyFeature";
 import { ExpertSaveButton } from "@/components/store/expert/expertSaveButton/expertSaveButton";
+import { StartConversationButton } from "@/components/store/messaging/startConversationButton/startConversationButton";
 import { ExpertShareButton } from "@/components/store/expert/expertShareButton/expertShareButton";
 import { RequestCreateDialog } from "@/components/store/marketplace/requestCreateDialog/requestCreateDialog";
-import { expertProfileCopy } from "@/config/experts.config/experts.config";
 import { toExpertSharePath } from "@/lib/experts/expert-profile/expert-profile";
 import { type ExpertProfile } from "@/types/store/expert.types";
 import { type City } from "@/types/store/registration.types";
@@ -38,13 +37,11 @@ export function ExpertProfileToolbar({
         lockedExpertId={expert.id}
         triggerClassName="w-full sm:w-auto"
       />
-      <ExpertLegacyFeature
-        label={expertProfileCopy.chatLabel}
-        title={expertProfileCopy.chatUnavailableTitle}
-        description={expertProfileCopy.chatUnavailableDescription}
-        icon={<MessageSquareIcon aria-hidden="true" />}
+      <StartConversationButton
+        expertId={expert.id}
+        isUserAuthenticated={isUserAuthenticated}
         className="w-full sm:w-auto"
-        auth={{ isAuthenticated: isUserAuthenticated, nextPath }}
+        icon={<MessageSquareIcon aria-hidden="true" />}
       />
       <ExpertSaveButton
         expertId={expert.id}

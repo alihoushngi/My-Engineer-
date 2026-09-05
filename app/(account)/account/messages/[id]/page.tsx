@@ -34,6 +34,10 @@ export default async function AccountConversationRoute({
   const messages = await getUserMessages(id);
 
   return (
-    <UserConversationPage conversation={conversation} messages={messages} />
+    <UserConversationPage
+      conversation={conversation}
+      messages={messages}
+      conversations={workspace.conversations}
+    />
   );
 }

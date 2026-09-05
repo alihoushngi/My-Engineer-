@@ -34,6 +34,10 @@ export default async function EngineerConversationRoute({
   const messages = await getEngineerMessages(id);
 
   return (
-    <EngineerConversationPage conversation={conversation} messages={messages} />
+    <EngineerConversationPage
+      conversation={conversation}
+      messages={messages}
+      conversations={workspace.conversations}
+    />
   );
 }

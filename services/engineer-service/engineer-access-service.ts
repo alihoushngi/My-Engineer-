@@ -12,6 +12,8 @@ import { isMockAuthEnabled } from "@/config/mock-auth.config/mock-auth.config";
 import { buildSessionEngineerWorkspace } from "@/lib/auth/build-session-engineer-workspace/build-session-engineer-workspace";
 import { readCreatedRequests } from "@/lib/marketplace/mock-marketplace-overlay/mock-marketplace-overlay";
 import { overlayEngineerRequests } from "@/lib/marketplace/overlay-engineer-requests/overlay-engineer-requests";
+import { overlayEngineerMessaging } from "@/lib/messaging/overlay-engineer-messaging/overlay-engineer-messaging";
+import { readMessagingSnapshot } from "@/lib/messaging/mock-messaging-overlay/mock-messaging-overlay";
 import {
   type EngineerAccessResult,
   type EngineerConversation,
@@ -25,14 +27,15 @@ import { findEngineerReview } from "@/lib/engineer/find-engineer-review/find-eng
 
 export async function getEngineerAccess(): Promise<EngineerAccessResult> {
   const extras = await readCreatedRequests();
+  const messaging = await readMessagingSnapshot();
   const session = await getEngineerSession();
 
   if (session) {
     return {
       kind: session.source === "registration" ? "pending_review" : "active",
-      workspace: overlayEngineerRequests(
-        buildSessionEngineerWorkspace(session),
-        extras,
+      workspace: overlayEngineerMessaging(
+        overlayEngineerRequests(buildSessionEngineerWorkspace(session), extras),
+        messaging,
       ),
     };
   }
@@ -48,7 +51,10 @@ export async function getEngineerAccess(): Promise<EngineerAccessResult> {
   if (env.useMockData) {
     return {
       kind: "visual_review",
-      workspace: overlayEngineerRequests(getMockEngineerWorkspace(), extras),
+      workspace: overlayEngineerMessaging(
+        overlayEngineerRequests(getMockEngineerWorkspace(), extras),
+        messaging,
+      ),
     };
   }
 

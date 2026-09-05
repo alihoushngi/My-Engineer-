@@ -1,3 +1,4 @@
+import { type ParticipantRole } from "@/types/store/messaging.types";
 import { type ExpertCardData } from "@/types/store/expert.types";
 
 export type UserRequestStatus = "sent" | "in_review" | "closed";
@@ -33,11 +34,14 @@ export type UserRequest = {
 export type UserConversation = {
   id: string;
   participantName: string;
+  participantAvatarSrc?: string;
   lastMessagePreview: string;
   lastMessageAtLabel: string;
   unreadCount: number;
   relatedRequestId?: string;
+  relatedServiceLabel?: string;
   expertId?: string;
+  href: string;
 };
 
 export type UserMessage = {
@@ -46,6 +50,7 @@ export type UserMessage = {
   body: string;
   sentAtLabel: string;
   fromUser: boolean;
+  senderRole: ParticipantRole;
 };
 
 export type UserNotification = {

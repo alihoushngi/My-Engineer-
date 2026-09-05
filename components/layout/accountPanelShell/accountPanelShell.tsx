@@ -3,6 +3,7 @@ import { SkipLink } from "@/components/layout/skipLink/skipLink";
 import { AccountMobileNavigation } from "@/components/layout/accountMobileNavigation/accountMobileNavigation";
 import { AccountSidebar } from "@/components/layout/accountSidebar/accountSidebar";
 import { AccountTopbar } from "@/components/layout/accountTopbar/accountTopbar";
+import { PanelWorkspaceFrame } from "@/components/layout/panelWorkspaceFrame/panelWorkspaceFrame";
 import { type UserShellData } from "@/types/store/user-account.types";
 
 type AccountPanelShellProps = {
@@ -18,18 +19,15 @@ export function AccountPanelShell({ shell, children }: AccountPanelShellProps) {
         <AccountSidebar />
         <div className="flex min-h-0 min-w-0 flex-col lg:min-h-full">
           <AccountTopbar shell={shell} />
-          <main
-            id="main-content"
-            tabIndex={-1}
-            className="flex-1 px-4 py-6 outline-none pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:px-6 lg:pb-8"
+          <PanelWorkspaceFrame
+            panel="account"
+            maxWidthClass="max-w-5xl"
+            navigation={<AccountMobileNavigation />}
           >
-            <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-              {children}
-            </div>
-          </main>
+            {children}
+          </PanelWorkspaceFrame>
         </div>
       </div>
-      <AccountMobileNavigation />
     </div>
   );
 }

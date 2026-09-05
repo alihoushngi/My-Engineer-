@@ -1,21 +1,33 @@
 import Link from "next/link";
+import { ConversationAvatar } from "@/components/store/messaging/conversationAvatar/conversationAvatar";
 import { userAccountPaths } from "@/config/user-account.config/user-account.config";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
+import { cn } from "@/lib/utils/cn/cn";
 import { type UserConversation } from "@/types/store/user-account.types";
 
 type UserConversationRowProps = {
   conversation: UserConversation;
+  active?: boolean;
 };
 
 export function UserConversationRow({
   conversation,
+  active = false,
 }: UserConversationRowProps) {
   return (
     <Link
       href={`${userAccountPaths.messages}/${conversation.id}`}
-      className="flex min-h-14 items-start justify-between gap-3 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "flex min-h-14 items-start gap-3 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        active && "text-primary",
+      )}
     >
-      <div className="min-w-0 space-y-1">
+      <ConversationAvatar
+        name={conversation.participantName}
+        src={conversation.participantAvatarSrc}
+      />
+      <div className="min-w-0 flex-1 space-y-1">
         <p className="type-body font-medium text-foreground">
           {conversation.participantName}
         </p>
@@ -23,7 +35,9 @@ export function UserConversationRow({
           {conversation.lastMessagePreview}
         </p>
         <p className="type-caption text-muted-foreground">
-          {conversation.lastMessageAtLabel}
+          {[conversation.relatedServiceLabel, conversation.lastMessageAtLabel]
+            .filter(Boolean)
+            .join(" · ")}
         </p>
       </div>
       {conversation.unreadCount > 0 ? (

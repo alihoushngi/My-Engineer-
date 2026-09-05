@@ -139,7 +139,8 @@ If the visitor is not a customer:
 Wired today on the public expert profile for:
 
 - ثبت درخواست (create request for that specialist)
-- پیام دادن به مهندس (chat — still an honest unavailable dialog)
+- پیام دادن به مهندس (starts or opens a shared conversation; guests go to
+  `/login?next=/account/messages/start?expertId=`)
 - ذخیره مهندس (save/unsave; selected state when saved)
 - ثبت نظر (review)
 

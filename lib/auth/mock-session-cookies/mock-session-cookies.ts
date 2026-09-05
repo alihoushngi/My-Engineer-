@@ -7,6 +7,7 @@ export const MOCK_USER_SESSION_COOKIE = "mm_mock_user_session";
 export const MOCK_USER_PROFILE_COOKIE = "mm_mock_user_profile";
 export const MOCK_USER_SAVED_COOKIE = "mm_mock_user_saved";
 export const MOCK_CREATED_REQUESTS_COOKIE = "mm_mock_service_requests";
+export const MOCK_MESSAGING_COOKIE = "mm_mock_conversations";
 export const MOCK_USER_SESSION_VALUE = "active";
 
 export const MOCK_SESSION_COOKIE_OPTIONS = {

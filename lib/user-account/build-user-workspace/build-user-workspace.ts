@@ -1,8 +1,6 @@
 import {
   getMockSavedExperts,
   mockCurrentUser,
-  mockUserConversations,
-  mockUserMessagesByConversation,
   mockUserNotifications,
   mockUserReviews,
 } from "@/lib/mock-data/user-workspace-mock-data";
@@ -15,6 +13,9 @@ import {
   type UserWorkspace,
 } from "@/types/store/user-account.types";
 import { type ServiceRequest } from "@/types/store/service-request.types";
+import { type MessagingSnapshot } from "@/types/store/messaging.types";
+import { userMessagingViews } from "@/lib/messaging/messaging-projections/messaging-projections";
+import { mockMessagingSeed } from "@/lib/mock-data/messaging-mock-data";
 import {
   unreadCount,
   unreadMessageTotal,
@@ -23,6 +24,7 @@ import {
 type UserWorkspaceOverlay = {
   savedExpertIds?: readonly string[];
   extraRequests?: readonly ServiceRequest[];
+  messaging?: MessagingSnapshot;
 };
 
 export function buildUserWorkspace(
@@ -34,7 +36,11 @@ export function buildUserWorkspace(
     customerId: mockCurrentUser.id,
   });
   const unique = uniqueById(owned);
-  const conversations = mockUserConversations;
+  const messaging = userMessagingViews(
+    overlay.messaging ?? mockMessagingSeed,
+    mockCurrentUser.id,
+  );
+  const conversations = messaging.conversations;
   const requests = unique.map((request) => {
     const mapped = toUserRequest(request);
     const conversation = conversations.find(
@@ -56,7 +62,7 @@ export function buildUserWorkspace(
     },
     requests,
     conversations,
-    messagesByConversationId: mockUserMessagesByConversation,
+    messagesByConversationId: messaging.messagesByConversationId,
     savedExperts: getMockSavedExperts(overlay.savedExpertIds),
     reviews: mockUserReviews,
     notifications: mockUserNotifications,

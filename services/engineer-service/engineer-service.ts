@@ -7,6 +7,7 @@ import { env } from "@/lib/env/env";
 import { throwApiUnavailable } from "@/lib/api/throw-api-unavailable/throw-api-unavailable";
 import { mockCities, mockProvinces } from "@/lib/mock-data/mock-data";
 import { logoutEngineer } from "@/services/engineer-auth-service/engineer-auth-service";
+import { sendMessage } from "@/services/messaging-service/messaging-service";
 import { type City, type Province } from "@/types/store/registration.types";
 
 const WRITE_UNAVAILABLE =
@@ -62,10 +63,9 @@ export async function updateEngineerServiceArea(
 }
 
 export async function sendEngineerMessage(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _request: SendEngineerMessageRequest,
+  request: SendEngineerMessageRequest,
 ): Promise<void> {
-  throwApiUnavailable(WRITE_UNAVAILABLE);
+  await sendMessage(request);
 }
 
 export async function addEngineerPortfolioItem(

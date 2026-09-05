@@ -16,22 +16,24 @@ Canonical family: `/account`. Layouts live under `app/(account)/account/`.
 The `(account)` group does not appear in the URL. Shop header and footer are
 not used.
 
-| Path                     | Purpose                                      |
-| ------------------------ | -------------------------------------------- |
-| `/account`               | Customer dashboard                           |
-| `/account/profile`       | Private identity (name, masked mobile, city) |
-| `/account/requests`      | Requests the user sent to specialists        |
-| `/account/requests/[id]` | Request detail                               |
-| `/account/messages`      | Conversation list (read-only in this task)   |
-| `/account/messages/[id]` | Conversation thread (no composer yet)        |
-| `/account/saved`         | Saved specialists (`ExpertCard` / same ids)  |
-| `/account/reviews`       | Reviews the user wrote                       |
-| `/account/notifications` | Notification list                            |
-| `/account/settings`      | Session display and logout                   |
+| Path                      | Purpose                                      |
+| ------------------------- | -------------------------------------------- |
+| `/account`                | Customer dashboard                           |
+| `/account/profile`        | Private identity (name, masked mobile, city) |
+| `/account/requests`       | Requests the user sent to specialists        |
+| `/account/requests/[id]`  | Request detail                               |
+| `/account/messages`       | Conversation list                            |
+| `/account/messages/start` | Open or create a thread (`?expertId=`)       |
+| `/account/messages/[id]`  | Conversation thread + composer               |
+| `/account/saved`          | Saved specialists (`ExpertCard` / same ids)  |
+| `/account/reviews`        | Reviews the user wrote                       |
+| `/account/notifications`  | Notification list                            |
+| `/account/settings`       | Session display and logout                   |
 
 Pages are private: `noindex`, `X-Robots-Tag`, `Cache-Control: private,
-no-store`. They are not in the sitemap. Messaging composition is reserved for
-a later messaging task.
+no-store`. They are not in the sitemap. Messaging compose, uniqueness, and
+the shared conversation model are documented in
+[MESSAGING.md](MESSAGING.md).
 
 ---
 
@@ -107,7 +109,7 @@ Route: `/account/saved`. Cards reuse public `ExpertCard`. Each card also has:
 
 - remove from saved
 - open public profile (the card itself)
-- پیام به مهندس (existing conversation, or an honest messaging-soon dialog)
+- پیام به مهندس (open existing thread, or `/account/messages/start?expertId=`)
 
 Saving from `/experts/[id]` uses «ذخیره مهندس» with a selected state. Guests
 are sent to `/login?next=` (customer login, never `/engineer/login`).
@@ -132,8 +134,9 @@ REQUIRED** for accept, reject, quote, or any richer lifecycle.
 Create entry points: expert profile, service page, customer dashboard. A
 request always has a selected engineer (no broadcast-to-all).
 
-If a conversation exists, request detail shows «مشاهده گفتگو». Messaging
-compose is a later task.
+If a conversation is linked, request detail shows «مشاهده گفتگو». Otherwise
+it offers «پیام به مهندس», which reuses an existing pair thread when one
+exists. See [MESSAGING.md](MESSAGING.md).
 
 ---
 
@@ -143,8 +146,11 @@ Central files:
 
 - [`lib/mock-data/service-request-mock-data.ts`](../lib/mock-data/service-request-mock-data.ts)
   — canonical request catalog
+- [`lib/mock-data/messaging-mock-data.ts`](../lib/mock-data/messaging-mock-data.ts)
+  — canonical shared conversations and messages
 - [`lib/mock-data/user-workspace-mock-data.ts`](../lib/mock-data/user-workspace-mock-data.ts)
-  — customer identity, conversations, reviews, notifications
+  — customer identity, reviews, notifications; conversations are derived
+  from the shared catalog
 
 | Export               | Use                                      |
 | -------------------- | ---------------------------------------- |
@@ -166,6 +172,8 @@ Visual-testing overlays (not production persistence):
 - `mm_mock_service_requests` — customer-created requests; kept across a
   customer→engineer role switch in the same browser so the engineer can see
   the same ids. Cleared saved cookie on user logout / engineer session write.
+- `mm_mock_conversations` — shared messaging overlay; also kept across a
+  role switch. Visual testing only; not production chat storage.
 
 ---
 
@@ -186,7 +194,7 @@ Do not invent endpoints in the frontend. A real customer workspace needs:
 2. List/detail for the user’s requests (shared entity with engineer requests)
 3. Create request (service, city, description, selected engineer)
 4. Saved-expert list and save/unsave using the public Expert entity
-5. List/detail for conversations (composer in a later messaging task)
+5. List/detail/send/mark-read for conversations (see [MESSAGING.md](MESSAGING.md))
 6. Reviews written by the user
 7. Notifications and (later) preference writes
 8. Logout / session revoke

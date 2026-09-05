@@ -1,10 +1,10 @@
 import { engineerPanelPaths } from "@/config/engineer-panel.config/engineer-panel.config";
 import { toEngineerRequest } from "@/lib/marketplace/request-projections/request-projections";
+import { engineerMessagingViews } from "@/lib/messaging/messaging-projections/messaging-projections";
+import { mockMessagingSeed } from "@/lib/mock-data/messaging-mock-data";
 import { mockServiceRequests } from "@/lib/mock-data/service-request-mock-data";
 import {
-  type EngineerConversation,
   type EngineerCredential,
-  type EngineerMessage,
   type EngineerNotification,
 } from "@/types/store/engineer.types";
 
@@ -15,97 +15,14 @@ export const mockEngineerRequests = mockServiceRequests
   .filter((request) => request.expertId === mockEngineerPublicExpertId)
   .map(toEngineerRequest);
 
-export const mockEngineerConversations: readonly EngineerConversation[] = [
-  {
-    id: "conv-utm-niavaran",
-    participantName: "سارا مشتری",
-    lastMessagePreview: "مدارک مالکیت را فردا می‌فرستم.",
-    lastMessageAtLabel: "۱ ساعت پیش",
-    unreadCount: 1,
-    relatedRequestId: "req-utm-niavaran",
-    relatedServiceLabel: "نقشه برداری",
-  },
-  {
-    id: "conv-asbuilt",
-    participantName: "کاربر متقاضی",
-    lastMessagePreview: "زمان بازدید چهارشنبه مناسب است؟",
-    lastMessageAtLabel: "دیروز",
-    unreadCount: 0,
-    relatedRequestId: "req-asbuilt-saadatabad",
-    relatedServiceLabel: "نقشه برداری",
-  },
-  ...Array.from({ length: 9 }, (_, index) => ({
-    id: `conv-extra-${index + 1}`,
-    participantName: "کاربر متقاضی",
-    lastMessagePreview: "برای هماهنگی بازدید پیام می‌دهم.",
-    lastMessageAtLabel: `${index + 2} روز پیش`,
-    unreadCount: index % 4 === 0 ? 1 : 0,
-    relatedRequestId: `req-extra-${index + 1}`,
-    relatedServiceLabel: "نقشه برداری",
-  })),
-];
+const engineerMessaging = engineerMessagingViews(
+  mockMessagingSeed,
+  mockEngineerPublicExpertId,
+);
 
-export const mockEngineerMessagesByConversation: Readonly<
-  Record<string, readonly EngineerMessage[]>
-> = {
-  "conv-utm-niavaran": [
-    {
-      id: "msg-1",
-      conversationId: "conv-utm-niavaran",
-      body: "سلام، برای پلاک ثبتی نیاوران به نقشه UTM نیاز دارم.",
-      sentAtLabel: "۳ ساعت پیش",
-      fromEngineer: false,
-    },
-    {
-      id: "msg-2",
-      conversationId: "conv-utm-niavaran",
-      body: "سلام، مدارک مالکیت را بفرستید تا مسیر کار را دقیق‌تر بگویم.",
-      sentAtLabel: "۲ ساعت پیش",
-      fromEngineer: true,
-    },
-    {
-      id: "msg-3",
-      conversationId: "conv-utm-niavaran",
-      body: "مدارک مالکیت را فردا می‌فرستم.",
-      sentAtLabel: "۱ ساعت پیش",
-      fromEngineer: false,
-    },
-  ],
-  "conv-asbuilt": [
-    {
-      id: "msg-4",
-      conversationId: "conv-asbuilt",
-      body: "برای برداشت ازبیلت چه زمانی می‌توانید تشریف بیاورید؟",
-      sentAtLabel: "۲ روز پیش",
-      fromEngineer: false,
-    },
-    {
-      id: "msg-5",
-      conversationId: "conv-asbuilt",
-      body: "چهارشنبه بعدازظهر مناسب است.",
-      sentAtLabel: "دیروز",
-      fromEngineer: true,
-    },
-  ],
-  ...Object.fromEntries(
-    Array.from({ length: 9 }, (_, index) => {
-      const conversationId = `conv-extra-${index + 1}`;
-
-      return [
-        conversationId,
-        [
-          {
-            id: `msg-extra-${index + 1}`,
-            conversationId,
-            body: "سلام، برای هماهنگی بازدید پیام می‌دهم.",
-            sentAtLabel: `${index + 2} روز پیش`,
-            fromEngineer: false,
-          },
-        ],
-      ];
-    }),
-  ),
-};
+export const mockEngineerConversations = engineerMessaging.conversations;
+export const mockEngineerMessagesByConversation =
+  engineerMessaging.messagesByConversationId;
 
 export const mockEngineerCredentials: readonly EngineerCredential[] = [
   {

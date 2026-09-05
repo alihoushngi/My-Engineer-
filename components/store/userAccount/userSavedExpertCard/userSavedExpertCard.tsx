@@ -2,14 +2,11 @@
 
 import Link from "next/link";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
-import { ExpertLegacyFeature } from "@/components/store/expert/expertLegacyFeature/expertLegacyFeature";
 import { ExpertSaveButton } from "@/components/store/expert/expertSaveButton/expertSaveButton";
+import { StartConversationButton } from "@/components/store/messaging/startConversationButton/startConversationButton";
 import { Button } from "@/components/ui/button/button";
 import { marketplaceCopy } from "@/config/marketplace.config/marketplace.config";
-import {
-  userAccountCopy,
-  userAccountPaths,
-} from "@/config/user-account.config/user-account.config";
+import { userAccountPaths } from "@/config/user-account.config/user-account.config";
 import { type ExpertCardData } from "@/types/store/expert.types";
 
 type UserSavedExpertCardProps = {
@@ -41,11 +38,9 @@ export function UserSavedExpertCard({
             </Link>
           </Button>
         ) : (
-          <ExpertLegacyFeature
-            label={marketplaceCopy.messageEngineerLabel}
-            title={userAccountCopy.messagingSoonTitle}
-            description={userAccountCopy.messagingSoonDescription}
-            variant="outline"
+          <StartConversationButton
+            expertId={expert.id}
+            isUserAuthenticated
             className="min-w-0 flex-1"
           />
         )}

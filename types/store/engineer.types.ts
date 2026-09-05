@@ -6,6 +6,7 @@ import {
   type ExpertPortfolioItem,
 } from "@/types/store/expert.types";
 import { type ExpertReview } from "@/types/store/review.types";
+import { type ParticipantRole } from "@/types/store/messaging.types";
 
 /**
  * Private engineer-workspace contracts.
@@ -109,11 +110,13 @@ export type EngineerRequest = {
 export type EngineerConversation = {
   id: string;
   participantName: string;
+  participantAvatarSrc?: string;
   lastMessagePreview: string;
   lastMessageAtLabel: string;
   unreadCount: number;
   relatedRequestId?: string;
   relatedServiceLabel?: string;
+  href: string;
 };
 
 export type EngineerMessage = {
@@ -122,6 +125,7 @@ export type EngineerMessage = {
   body: string;
   sentAtLabel: string;
   fromEngineer: boolean;
+  senderRole: ParticipantRole;
 };
 
 export type EngineerNotification = {

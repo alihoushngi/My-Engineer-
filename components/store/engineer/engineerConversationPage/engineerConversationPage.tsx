@@ -1,6 +1,9 @@
-import { EngineerMessageComposer } from "@/components/store/engineer/engineerMessageComposer/engineerMessageComposer";
+import Link from "next/link";
+import { EngineerConversationRow } from "@/components/store/engineer/engineerConversationRow/engineerConversationRow";
 import { EngineerPageHeader } from "@/components/store/engineer/engineerPageHeader/engineerPageHeader";
-import { cn } from "@/lib/utils/cn/cn";
+import { MessagingConversationPane } from "@/components/store/messaging/messagingConversationPane/messagingConversationPane";
+import { MessagingSplitLayout } from "@/components/store/messaging/messagingSplitLayout/messagingSplitLayout";
+import { Button } from "@/components/ui/button/button";
 import {
   engineerPageTitles,
   engineerPanelPaths,
@@ -13,14 +16,16 @@ import {
 type EngineerConversationPageProps = {
   conversation: EngineerConversation;
   messages: readonly EngineerMessage[];
+  conversations: readonly EngineerConversation[];
 };
 
 export function EngineerConversationPage({
   conversation,
   messages,
+  conversations,
 }: EngineerConversationPageProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
       <EngineerPageHeader
         title={conversation.participantName}
         description={[
@@ -41,27 +46,40 @@ export function EngineerConversationPage({
           { label: engineerPageTitles.conversation },
         ]}
       />
-      <div className="-mx-4 flex min-h-80 flex-col overflow-hidden rounded-none border-y border-border bg-surface sm:mx-0 sm:h-[min(70dvh,42rem)] sm:rounded-lg sm:border">
-        <ol className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
-          {messages.map((message) => (
-            <li
-              key={message.id}
-              className={cn(
-                "max-w-[85%] rounded-lg px-3 py-2",
-                message.fromEngineer
-                  ? "self-start bg-primary-subtle text-foreground"
-                  : "self-end bg-surface-subtle text-foreground",
-              )}
-            >
-              <p className="type-body leading-relaxed">{message.body}</p>
-              <p className="mt-1 type-caption text-muted-foreground">
-                {message.sentAtLabel}
-              </p>
-            </li>
-          ))}
-        </ol>
-        <EngineerMessageComposer conversationId={conversation.id} />
-      </div>
+      <MessagingSplitLayout
+        sidebar={conversations.map((item) => (
+          <li key={item.id}>
+            <EngineerConversationRow
+              conversation={item}
+              active={item.id === conversation.id}
+            />
+          </li>
+        ))}
+      >
+        <MessagingConversationPane
+          conversationId={conversation.id}
+          title={conversation.participantName}
+          meta={[
+            conversation.relatedServiceLabel,
+            conversation.lastMessageAtLabel,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+          relatedLink={
+            conversation.relatedRequestId ? (
+              <Button asChild variant="outline" size="sm">
+                <Link
+                  href={`${engineerPanelPaths.requests}/${conversation.relatedRequestId}`}
+                >
+                  {engineerPageTitles.requestDetail}
+                </Link>
+              </Button>
+            ) : null
+          }
+          messages={messages}
+          viewerRole="engineer"
+        />
+      </MessagingSplitLayout>
     </div>
   );
 }

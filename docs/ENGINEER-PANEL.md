@@ -51,7 +51,9 @@ Frontend states, not invented server session:
 **API CONTRACT REQUIRED:** current engineer session, registration outcome, and
 whether an incomplete wizard may enter the panel.
 
-Display mock data is **not** authentication. Mutations never succeed locally.
+Display mock data is **not** authentication. Profile, portfolio, and request
+mutations still fail locally. Mock messaging overlay sends are the shared
+exception documented in [MESSAGING.md](MESSAGING.md).
 
 ---
 
@@ -108,7 +110,8 @@ Created-request mock overlay cookies are visual testing only and are not
 cleared on customer→engineer role switch so the same browser can inspect both
 views. They are not production persistence.
 
-If a conversation is linked, request detail shows «مشاهده گفتگو».
+If a conversation is linked, request detail shows «مشاهده گفتگو». Messaging
+is the shared domain in [MESSAGING.md](MESSAGING.md).
 
 ---
 
@@ -132,8 +135,11 @@ Accept / reject / quote actions are omitted and documented as unavailable.
 
 ### Messages
 
-List and thread routes. Composer calls the service and surfaces API
-unavailability. No WebSocket, polling, or attachments.
+Shared with the customer account. List and thread routes; desktop detail may
+split list + thread. Composer sends through the shared messaging service.
+No WebSocket, polling, attachments, or fake read-receipts. Bottom navigation
+is hidden on the thread so the composer stays reachable. See
+[MESSAGING.md](MESSAGING.md).
 
 ### Portfolio / credentials
 
@@ -170,10 +176,11 @@ Fixtures: `lib/mock-data/engineer-workspace-mock-data.ts`, assembled with the
 public expert `amirhossein-rostami` in
 `lib/mock-data/build-engineer-workspace/build-engineer-workspace.ts`.
 
-Allowed: visual review, lists, detail, empty/error UI.
+Allowed: visual review, lists, detail, empty/error UI, mock messaging overlay
+sends (shared with the customer account).
 
-Not allowed: fake login, save success, send success, upload completion,
-logout success, request acceptance.
+Not allowed: fake profile save success, upload completion, logout success,
+request acceptance.
 
 ---
 

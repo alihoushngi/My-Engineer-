@@ -12,6 +12,7 @@ import {
   readCreatedRequests,
   readSavedExpertIds,
 } from "@/lib/marketplace/mock-marketplace-overlay/mock-marketplace-overlay";
+import { readMessagingSnapshot } from "@/lib/messaging/mock-messaging-overlay/mock-messaging-overlay";
 import { findById } from "@/lib/user-account/workspace-selectors/workspace-selectors";
 import {
   type UserConversation,
@@ -38,6 +39,7 @@ export async function getUserWorkspace(): Promise<UserWorkspace | null> {
   return buildUserWorkspace(access.session, {
     savedExpertIds: await readSavedExpertIds(),
     extraRequests: await readCreatedRequests(),
+    messaging: await readMessagingSnapshot(),
   });
 }
 

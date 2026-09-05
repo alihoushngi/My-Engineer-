@@ -4,6 +4,7 @@ import { EngineerMobileNavigation } from "@/components/layout/engineerMobileNavi
 import { EngineerSidebar } from "@/components/layout/engineerSidebar/engineerSidebar";
 import { EngineerStatusBanner } from "@/components/layout/engineerStatusBanner/engineerStatusBanner";
 import { EngineerTopbar } from "@/components/layout/engineerTopbar/engineerTopbar";
+import { PanelWorkspaceFrame } from "@/components/layout/panelWorkspaceFrame/panelWorkspaceFrame";
 import { type EngineerShellData } from "@/types/store/engineer.types";
 
 type EngineerPanelShellProps = {
@@ -22,19 +23,16 @@ export function EngineerPanelShell({
         <EngineerSidebar />
         <div className="flex min-h-0 min-w-0 flex-col lg:min-h-full">
           <EngineerTopbar shell={shell} />
-          <main
-            id="main-content"
-            tabIndex={-1}
-            className="flex-1 px-4 py-6 outline-none pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:px-6 lg:pb-8"
+          <PanelWorkspaceFrame
+            panel="engineer"
+            maxWidthClass="max-w-6xl"
+            banner={<EngineerStatusBanner shell={shell} />}
+            navigation={<EngineerMobileNavigation />}
           >
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-              <EngineerStatusBanner shell={shell} />
-              {children}
-            </div>
-          </main>
+            {children}
+          </PanelWorkspaceFrame>
         </div>
       </div>
-      <EngineerMobileNavigation />
     </div>
   );
 }

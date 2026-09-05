@@ -47,6 +47,14 @@ test("getSafeInternalNext rejects external, engineer, and auth-entry paths", () 
     "/search?q=map",
   );
   assert.equal(
+    getSafeInternalNext(
+      "/account/messages/start?expertId=amirhossein-rostami",
+      fallback,
+      reject,
+    ),
+    "/account/messages/start?expertId=amirhossein-rostami",
+  );
+  assert.equal(
     getSafeInternalNext("https://evil.example", fallback, reject),
     fallback,
   );

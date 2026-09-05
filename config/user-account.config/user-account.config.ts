@@ -104,8 +104,9 @@ export const userAccountCopy = {
   requestsDescription: "درخواست‌هایی که برای متخصصان ثبت کرده‌اید.",
   requestDetailDescription: "جزئیات درخواست و وضعیت بررسی.",
   messagesDescription:
-    "فهرست گفتگوها. ارسال پیام در نسخه بعدی فضای پیام‌رسانی کامل می‌شود.",
-  conversationDescription: "متن گفتگو برای مرور. ارسال پیام هنوز فعال نیست.",
+    "گفتگوهای شما با متخصصان. ارسال لحظه‌ای و پیوست فایل در این نسخه وجود ندارد.",
+  conversationDescription:
+    "متن گفتگو. نقش فرستنده از دادهٔ پیام مشخص است، نه از جای حباب.",
   savedDescription: "متخصصانی که برای مراجعه بعدی ذخیره کرده‌اید.",
   reviewsDescription: "نظرهایی که برای متخصصان ثبت کرده‌اید.",
   notificationsDescription: "اعلان‌های مربوط به درخواست و گفتگو.",
@@ -144,9 +145,6 @@ export const userAccountCopy = {
   requestStatusClosed: "بسته‌شده",
   paginationLabel: "صفحه‌بندی فهرست",
   loadingLabel: "در حال بارگذاری حساب…",
-  messagingSoonTitle: "ارسال پیام هنوز فعال نیست",
-  messagingSoonDescription:
-    "مشاهده گفتگو در این نسخه ممکن است. ارسال و پیوست در نسخه پیام‌رسانی تکمیل می‌شود.",
   profilePrivateNote:
     "شماره موبایل کامل، گفتگو و درخواست در صفحات عمومی نمایش داده نمی‌شود.",
   profileEditUnavailable:

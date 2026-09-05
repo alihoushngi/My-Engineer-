@@ -2,12 +2,7 @@ import { Pagination } from "@/components/common/pagination/pagination";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
 import { UserConversationRow } from "@/components/store/userAccount/userConversationRow/userConversationRow";
 import { Empty } from "@/components/ui/empty/empty";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
-import { InfoIcon } from "lucide-react";
+import { messagingCopy } from "@/config/messaging.config/messaging.config";
 import {
   userAccountCopy,
   userAccountPageTitles,
@@ -32,13 +27,9 @@ export function UserMessagesPage({
         title={userAccountPageTitles.messages}
         description={userAccountCopy.messagesDescription}
       />
-      <Alert variant="info">
-        <InfoIcon />
-        <AlertTitle>{userAccountCopy.messagingSoonTitle}</AlertTitle>
-        <AlertDescription>
-          {userAccountCopy.messagingSoonDescription}
-        </AlertDescription>
-      </Alert>
+      <p className="type-caption text-muted-foreground">
+        {messagingCopy.noRealtimeNote}
+      </p>
       {pagination.total === 0 ? (
         <Empty title={userAccountCopy.emptyMessages} />
       ) : (

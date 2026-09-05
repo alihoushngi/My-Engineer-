@@ -1,13 +1,9 @@
 import Link from "next/link";
-import { InfoIcon } from "lucide-react";
 import { AccountPageHeader } from "@/components/store/userAccount/accountPageHeader/accountPageHeader";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert/alert";
+import { UserConversationRow } from "@/components/store/userAccount/userConversationRow/userConversationRow";
+import { MessagingConversationPane } from "@/components/store/messaging/messagingConversationPane/messagingConversationPane";
+import { MessagingSplitLayout } from "@/components/store/messaging/messagingSplitLayout/messagingSplitLayout";
 import { Button } from "@/components/ui/button/button";
-import { cn } from "@/lib/utils/cn/cn";
 import {
   userAccountCopy,
   userAccountPageTitles,
@@ -21,54 +17,54 @@ import {
 type UserConversationPageProps = {
   conversation: UserConversation;
   messages: readonly UserMessage[];
+  conversations: readonly UserConversation[];
 };
 
 export function UserConversationPage({
   conversation,
   messages,
+  conversations,
 }: UserConversationPageProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
       <AccountPageHeader
         title={conversation.participantName}
         description={userAccountCopy.conversationDescription}
       />
-      <Alert variant="info">
-        <InfoIcon />
-        <AlertTitle>{userAccountCopy.messagingSoonTitle}</AlertTitle>
-        <AlertDescription>
-          {userAccountCopy.messagingSoonDescription}
-        </AlertDescription>
-      </Alert>
-      {conversation.relatedRequestId ? (
-        <Button asChild variant="outline" size="sm" className="self-start">
-          <Link
-            href={`${userAccountPaths.requests}/${conversation.relatedRequestId}`}
-          >
-            {userAccountPageTitles.requestDetail}
-          </Link>
-        </Button>
-      ) : null}
-      <div className="-mx-4 flex min-h-80 flex-col overflow-hidden rounded-none border-y border-border bg-surface sm:mx-0 sm:h-[min(70dvh,42rem)] sm:rounded-lg sm:border">
-        <ol className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
-          {messages.map((message) => (
-            <li
-              key={message.id}
-              className={cn(
-                "max-w-[85%] rounded-lg px-3 py-2",
-                message.fromUser
-                  ? "self-start bg-primary-subtle text-foreground"
-                  : "self-end bg-surface-subtle text-foreground",
-              )}
-            >
-              <p className="type-body leading-relaxed">{message.body}</p>
-              <p className="mt-1 type-caption text-muted-foreground">
-                {message.sentAtLabel}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <MessagingSplitLayout
+        sidebar={conversations.map((item) => (
+          <li key={item.id}>
+            <UserConversationRow
+              conversation={item}
+              active={item.id === conversation.id}
+            />
+          </li>
+        ))}
+      >
+        <MessagingConversationPane
+          conversationId={conversation.id}
+          title={conversation.participantName}
+          meta={[
+            conversation.relatedServiceLabel,
+            conversation.lastMessageAtLabel,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+          relatedLink={
+            conversation.relatedRequestId ? (
+              <Button asChild variant="outline" size="sm">
+                <Link
+                  href={`${userAccountPaths.requests}/${conversation.relatedRequestId}`}
+                >
+                  {userAccountPageTitles.requestDetail}
+                </Link>
+              </Button>
+            ) : null
+          }
+          messages={messages}
+          viewerRole="user"
+        />
+      </MessagingSplitLayout>
     </div>
   );
 }

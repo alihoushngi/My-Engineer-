@@ -1,5 +1,7 @@
 import { mockExpertCards } from "@/lib/mock-data/mock-data";
 import { toUserRequest } from "@/lib/marketplace/request-projections/request-projections";
+import { userMessagingViews } from "@/lib/messaging/messaging-projections/messaging-projections";
+import { mockMessagingSeed } from "@/lib/mock-data/messaging-mock-data";
 import {
   MOCK_MARKETPLACE_CUSTOMER_ID,
   mockServiceRequests,
@@ -8,8 +10,6 @@ import { userAccountPaths } from "@/config/user-account.config/user-account.conf
 import { type ExpertCardData } from "@/types/store/expert.types";
 import {
   type UserAccount,
-  type UserConversation,
-  type UserMessage,
   type UserNotification,
   type UserReviewItem,
 } from "@/types/store/user-account.types";
@@ -31,70 +31,11 @@ export const mockUserRequests = mockServiceRequests
   .filter((request) => request.customerId === mockCurrentUser.id)
   .map(toUserRequest);
 
-export const mockUserConversations: readonly UserConversation[] = [
-  {
-    id: "conv-utm-niavaran",
-    participantName: "امیرحسین رستمی",
-    lastMessagePreview: "مدارک را دیدم؛ فردا زمان بازدید را هماهنگ می‌کنیم.",
-    lastMessageAtLabel: "۱ ساعت پیش",
-    unreadCount: 1,
-    relatedRequestId: "req-utm-niavaran",
-    expertId: "amirhossein-rostami",
-  },
-  {
-    id: "conv-interior",
-    participantName: "نازنین فرهادی",
-    lastMessagePreview: "طرح اولیه را تا پایان هفته می‌فرستم.",
-    lastMessageAtLabel: "دیروز",
-    unreadCount: 0,
-    relatedRequestId: "req-interior",
-    expertId: "nazanin-farhadi",
-  },
-];
+const userMessaging = userMessagingViews(mockMessagingSeed, mockCurrentUser.id);
 
-export const mockUserMessagesByConversation: Readonly<
-  Record<string, readonly UserMessage[]>
-> = {
-  "conv-utm-niavaran": [
-    {
-      id: "user-msg-1",
-      conversationId: "conv-utm-niavaran",
-      body: "سلام، برای پلاک ثبتی به نقشه UTM نیاز دارم.",
-      sentAtLabel: "۳ ساعت پیش",
-      fromUser: true,
-    },
-    {
-      id: "user-msg-2",
-      conversationId: "conv-utm-niavaran",
-      body: "سلام، مدارک مالکیت را بفرستید تا مسیر کار را دقیق‌تر بگویم.",
-      sentAtLabel: "۲ ساعت پیش",
-      fromUser: false,
-    },
-    {
-      id: "user-msg-3",
-      conversationId: "conv-utm-niavaran",
-      body: "مدارک را دیدم؛ فردا زمان بازدید را هماهنگ می‌کنیم.",
-      sentAtLabel: "۱ ساعت پیش",
-      fromUser: false,
-    },
-  ],
-  "conv-interior": [
-    {
-      id: "user-msg-4",
-      conversationId: "conv-interior",
-      body: "برای طراحی نشیمن می‌خواهم از پروفایل شما شروع کنیم.",
-      sentAtLabel: "۲ روز پیش",
-      fromUser: true,
-    },
-    {
-      id: "user-msg-5",
-      conversationId: "conv-interior",
-      body: "طرح اولیه را تا پایان هفته می‌فرستم.",
-      sentAtLabel: "دیروز",
-      fromUser: false,
-    },
-  ],
-};
+export const mockUserConversations = userMessaging.conversations;
+export const mockUserMessagesByConversation =
+  userMessaging.messagesByConversationId;
 
 export const mockUserReviews: readonly UserReviewItem[] = [
   {
