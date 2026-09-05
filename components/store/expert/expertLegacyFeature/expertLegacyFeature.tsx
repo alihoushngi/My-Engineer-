@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { ExpertResponsiveOverlay } from "@/components/store/expert/expertResponsiveOverlay/expertResponsiveOverlay";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { Button } from "@/components/ui/button/button";
 
 type ExpertLegacyFeatureProps = {
@@ -36,14 +36,14 @@ export function ExpertLegacyFeature({
         {icon}
         {label}
       </Button>
-      <ExpertResponsiveOverlay
+      <ResponsiveDialog
         open={open}
         title={title}
         description={description}
         onOpenChange={setOpen}
       >
         <p className="type-body leading-loose text-foreground">{description}</p>
-      </ExpertResponsiveOverlay>
+      </ResponsiveDialog>
     </>
   );
 }

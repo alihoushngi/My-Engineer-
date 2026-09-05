@@ -7,12 +7,12 @@ import { MenuIcon } from "lucide-react";
 import { EngineerNavIcon } from "@/components/layout/engineerNavIcon/engineerNavIcon";
 import { EngineerNavLink } from "@/components/layout/engineerNavLink/engineerNavLink";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet/sheet";
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer/drawer";
 import {
   engineerPanelCopy,
   engineerPrimaryNav,
@@ -69,19 +69,15 @@ export function EngineerMobileNavigation() {
           </button>
         </li>
       </ul>
-      <Sheet open={moreOpen} onOpenChange={setMoreOpen}>
-        <SheetContent
-          id="engineer-more-menu"
-          side="bottom"
-          className="max-h-[80dvh] rounded-t-xl pb-[env(safe-area-inset-bottom)]"
-        >
-          <SheetHeader>
-            <SheetTitle>{engineerPanelCopy.moreTitle}</SheetTitle>
-            <SheetDescription className="sr-only">
+      <Drawer open={moreOpen} onOpenChange={setMoreOpen} handleOnly>
+        <DrawerContent id="engineer-more-menu">
+          <DrawerHeader>
+            <DrawerTitle>{engineerPanelCopy.moreTitle}</DrawerTitle>
+            <DrawerDescription className="sr-only">
               بخش‌های دیگر فضای کاری متخصص
-            </SheetDescription>
-          </SheetHeader>
-          <nav className="px-4 pb-6">
+            </DrawerDescription>
+          </DrawerHeader>
+          <nav className="overflow-y-auto px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
             <ul className="flex flex-col gap-1">
               {engineerSecondaryNav.map((item) => (
                 <li key={item.id}>
@@ -93,8 +89,8 @@ export function EngineerMobileNavigation() {
               ))}
             </ul>
           </nav>
-        </SheetContent>
-      </Sheet>
+        </DrawerContent>
+      </Drawer>
     </nav>
   );
 }

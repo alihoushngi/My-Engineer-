@@ -7,7 +7,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar/avatar";
-import { ExpertResponsiveOverlay } from "@/components/store/expert/expertResponsiveOverlay/expertResponsiveOverlay";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
 
 type ExpertAvatarPreviewProps = {
@@ -47,7 +47,7 @@ export function ExpertAvatarPreview({
       >
         {avatar}
       </button>
-      <ExpertResponsiveOverlay
+      <ResponsiveDialog
         open={open}
         title={name}
         description={expertProfileCopy.avatarPreviewLabel}
@@ -62,7 +62,7 @@ export function ExpertAvatarPreview({
             className="object-cover"
           />
         </div>
-      </ExpertResponsiveOverlay>
+      </ResponsiveDialog>
     </>
   );
 }

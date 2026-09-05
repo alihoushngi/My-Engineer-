@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog/dialog";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { SearchInput } from "@/components/store/search/searchInput/searchInput";
 import { ServiceCategoryGrid } from "@/components/store/service/serviceCategoryGrid/serviceCategoryGrid";
 import { searchCopy } from "@/config/search.config/search.config";
@@ -17,43 +11,36 @@ export function SearchSurface({
   onOpenChange,
   id = "search-surface",
 }: SearchSurfaceProps) {
-  const descriptionId = `${id}-description`;
-
   function closeSurface() {
     onOpenChange(false);
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        id={id}
-        className="sm:max-w-2xl"
-        aria-describedby={descriptionId}
-      >
-        <DialogHeader>
-          <DialogTitle>{searchCopy.overlayTitle}</DialogTitle>
-          <DialogDescription id={descriptionId}>
-            {searchCopy.overlayDescription}
-          </DialogDescription>
-        </DialogHeader>
-        {open ? (
-          <SearchInput
-            id={`${id}-query`}
-            initialQuery=""
-            requireQuery
-            navigateOnClear={false}
-            autoFocus
-            labelHidden
-            onSubmitted={closeSurface}
-          />
-        ) : null}
-        <section className="space-y-3" aria-labelledby={`${id}-services`}>
-          <h3 id={`${id}-services`} className="type-h4 text-foreground">
-            {searchCopy.overlayServices}
-          </h3>
-          <ServiceCategoryGrid onServiceSelect={closeSurface} />
-        </section>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      id={id}
+      open={open}
+      onOpenChange={onOpenChange}
+      title={searchCopy.overlayTitle}
+      description={searchCopy.overlayDescription}
+      contentClassName="sm:max-w-2xl"
+    >
+      {open ? (
+        <SearchInput
+          id={`${id}-query`}
+          initialQuery=""
+          requireQuery
+          navigateOnClear={false}
+          autoFocus
+          labelHidden
+          onSubmitted={closeSurface}
+        />
+      ) : null}
+      <section className="space-y-3" aria-labelledby={`${id}-services`}>
+        <h3 id={`${id}-services`} className="type-h4 text-foreground">
+          {searchCopy.overlayServices}
+        </h3>
+        <ServiceCategoryGrid onServiceSelect={closeSurface} />
+      </section>
+    </ResponsiveDialog>
   );
 }

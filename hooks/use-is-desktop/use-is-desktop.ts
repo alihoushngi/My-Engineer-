@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { RESPONSIVE_DIALOG_DESKTOP_QUERY } from "@/lib/ui/responsive-dialog/responsive-dialog";
 
-export function useIsDesktop(query = "(min-width: 768px)"): boolean {
+export function useIsDesktop(query = RESPONSIVE_DIALOG_DESKTOP_QUERY): boolean {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {

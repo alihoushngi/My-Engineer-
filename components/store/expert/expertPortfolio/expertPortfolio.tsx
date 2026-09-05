@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
-import { ExpertResponsiveOverlay } from "@/components/store/expert/expertResponsiveOverlay/expertResponsiveOverlay";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { Button } from "@/components/ui/button/button";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
 import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
@@ -73,10 +73,11 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
           )}
         </div>
       </div>
-      <ExpertResponsiveOverlay
+      <ResponsiveDialog
         open={openIndex !== null}
         title={selected?.title ?? expertProfileCopy.portfolioViewerTitle}
         description={selected?.description ?? expertProfileCopy.portfolioOpen}
+        contentClassName="sm:max-w-3xl"
         onOpenChange={(open) => {
           if (!open) {
             setOpenIndex(null);
@@ -148,7 +149,7 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
             </ul>
           </div>
         ) : null}
-      </ExpertResponsiveOverlay>
+      </ResponsiveDialog>
     </section>
   );
 }

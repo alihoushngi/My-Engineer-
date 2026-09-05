@@ -75,6 +75,7 @@ components/
 │   └── skipLink/
 ├── common/
 │   ├── sectionHeader/
+│   ├── responsiveDialog/
 │   ├── storeBreadcrumb/
 │   ├── carousel/
 │   ├── legalDocument/
@@ -150,7 +151,7 @@ Do not put expert cards or service grids in the header.
 | Inputs          | `open`, `onOpenChange`; optional `initialQuery`                                                          |
 | State           | Draft query (client). Recent queries **UX COMPLETION** (local only unless **API CONTRACT REQUIRED**)     |
 | Server / Client | Client                                                                                                   |
-| Overlay         | Drawer on small screens, Sheet on larger — design-system primitives                                      |
+| Overlay         | `ResponsiveDialog`: Drawer on small screens, Dialog on `md+`                                             |
 | Results         | Not a full page inside the overlay. Submit → `/search?q=`. Category tile → `/services/[slug]`            |
 | Unmapped        | `محاسبات ساختمان` hidden or non-interactive until taxonomy P0                                            |
 | Reuse           | Header + optional home hero trigger                                                                      |
@@ -166,6 +167,7 @@ Create these only where two or more domains share the responsibility.
 | Component           | Responsibility                                       | Server/Client | Used by                                                     |
 | ------------------- | ---------------------------------------------------- | ------------- | ----------------------------------------------------------- |
 | `SectionHeader`     | Title + optional description + optional action       | Server        | Home, listings, profile sections                            |
+| `ResponsiveDialog`  | Desktop Dialog/Sheet, mobile Drawer bottom sheet     | Client        | Search, city, filters, expert overlays, engineer edit       |
 | `StoreBreadcrumb`   | Landmark nav trail                                   | Server        | Content, legal, FAQ, knowledge, article, optionally service |
 | `ContentPageHeader` | Title + intro for content/legal                      | Server        | Articles hub, FAQ, knowledge, about, legal                  |
 | `LegalDocument`     | Long-form semantic article                           | Server        | Terms, privacy                                              |
@@ -277,7 +279,7 @@ ServiceDiscoveryPage              E
 ├── ServiceExpertMarketplace      D  (c)
 │   ├── subtype tabs (URL `tab`)
 │   ├── city select + compact filter trigger
-│   ├── ServiceFilterOverlay      D  (c) Sheet on desktop, Drawer on mobile
+│   ├── ServiceFilterOverlay      D  (c) ResponsiveDialog: Sheet desktop, Drawer mobile
 │   ├── ServiceActiveFilters      D  (c) chips, clear, reset
 │   ├── result count (live region)
 │   ├── ExpertCard grid
@@ -288,16 +290,16 @@ ServiceDiscoveryPage              E
 └── ServiceRelatedSection         D
 ```
 
-| Component                  | Responsibility             | Props                    | Server/Client | Reuse                          |
-| -------------------------- | -------------------------- | ------------------------ | ------------- | ------------------------------ |
-| `ServiceDiscoveryPage`     | Compose listing            | service, detail, cities  | Server        | All six services               |
-| `ServiceDiscoveryHero`     | Identity + jump to experts | service, detail          | Server        |                                |
-| `ServiceCategoryGrid`      | Six top-level tiles        | items                    | Server        | Home, About, SearchSurface     |
-| `ServiceTile`              | One category/subtype tile  | label, href, icon?       | Server        | Grid, popular, drawing, search |
-| `ServiceExpertMarketplace` | Tabs, filters, results     | slug, experts, cities    | Client        | All six services               |
-| `ServiceFilterOverlay`     | Filter form                | definition, draft values | Client        | Sheet desktop / Drawer mobile  |
-| `ServiceEmptyState`        | No hits + change-city CTA  | via marketplace Empty    | Client        | Building-permit included       |
-| `ServiceSuggestedExperts`  | Featured surveying experts | experts                  | Server        | Surveying only                 |
+| Component                  | Responsibility             | Props                    | Server/Client | Reuse                             |
+| -------------------------- | -------------------------- | ------------------------ | ------------- | --------------------------------- |
+| `ServiceDiscoveryPage`     | Compose listing            | service, detail, cities  | Server        | All six services                  |
+| `ServiceDiscoveryHero`     | Identity + jump to experts | service, detail          | Server        |                                   |
+| `ServiceCategoryGrid`      | Six top-level tiles        | items                    | Server        | Home, About, SearchSurface        |
+| `ServiceTile`              | One category/subtype tile  | label, href, icon?       | Server        | Grid, popular, drawing, search    |
+| `ServiceExpertMarketplace` | Tabs, filters, results     | slug, experts, cities    | Client        | All six services                  |
+| `ServiceFilterOverlay`     | Filter form                | definition, draft values | Client        | `ResponsiveDialog` Sheet / Drawer |
+| `ServiceEmptyState`        | No hits + change-city CTA  | via marketplace Empty    | Client        | Building-permit included          |
+| `ServiceSuggestedExperts`  | Featured surveying experts | experts                  | Server        | Surveying only                    |
 
 **Do not** create `LandSurveyingPage`, `DrawingPage`, etc.
 
@@ -319,12 +321,12 @@ ExpertProfilePage                 E
 │   ├── ExpertAvatarPreview       D  (c) enlarge photo
 │   └── ExpertProfileToolbar      D  (c) contact, chat, share, save
 ├── ExpertQuickFacts              D  sidebar
-├── ExpertContactCta              D  (c) Drawer phone/SMS
+├── ExpertContactCta              D  (c) ResponsiveDialog phone/SMS
 ├── ExpertStickyContactBar        D  (c) mobile
 ├── ExpertAbout / Specialties / ProfessionalInfo / Experience
 ├── ExpertCertificates            D  text credentials when present
 ├── ExpertTagSection              D  cities, software
-├── ExpertPortfolio               D  (c) grid + Drawer/Dialog viewer, thumbs
+├── ExpertPortfolio               D  (c) grid + ResponsiveDialog viewer, thumbs
 ├── ExpertReviews                 D  (c) stars, tags, reply, paginate >9, honest submit
 └── RelatedExperts
 ```
@@ -334,12 +336,12 @@ ExpertProfilePage                 E
 | `ExpertCard`             | Listing card                           | Server (link); rating display if data present | CORE                                               |
 | `ExpertProfilePage`      | Profile composition                    | Server                                        | CORE                                               |
 | `ExpertProfileHero`      | Navy identity band                     | Server + client islands                       | CORE                                               |
-| `ExpertContactDrawer`    | Phone & SMS bottom sheet               | Client                                        | CORE                                               |
+| `ExpertContactDrawer`    | Phone & SMS via `ResponsiveDialog`     | Client                                        | CORE                                               |
 | `ExpertProfessionalInfo` | Education / license / membership       | Server                                        | CORE                                               |
 | `ExpertCertificates`     | Named credentials without fake scans   | Server                                        | CORE                                               |
 | `ExpertTagSection`       | Titled chip list; empty → hide section | Server                                        | CORE                                               |
 | `ExpertExperience`       | Prose; empty → hide                    | Server                                        | CORE                                               |
-| `ExpertPortfolio`        | Thumbnails + Drawer/Dialog viewer      | Client                                        | CORE                                               |
+| `ExpertPortfolio`        | Thumbnails + `ResponsiveDialog` viewer | Client                                        | CORE                                               |
 | `ExpertReviews`          | Display list, paginate >9              | Client                                        | Display from catalog; submit is honest unavailable |
 
 **Do not** split Avatar/Badge into domain wrappers. **Do not** create
@@ -686,20 +688,20 @@ consumer exists.
 
 ## 14. Accessibility requirements (components)
 
-| Topic           | Requirement                                                                                                      |
-| --------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Keyboard        | All overlays, tabs, chips, gallery, filters operable without a pointer                                           |
-| Focus           | Open overlay → move focus in; close → restore trigger. Wizard continue errors → focus first invalid field        |
-| Dialogs/drawers | Use primitives; label with `title`. Menu `aria-controls` must match the Sheet id (legacy mismatch is not copied) |
-| Forms           | Visible `Label`; errors in `Field`; required announced; do not rely on placeholder-as-label                      |
-| Headings        | Card names are headings inside `article`; page `h1` once                                                         |
-| Images          | Meaningful alt for portfolio/work; decorative icons `aria-hidden`                                                |
-| Loading         | Skeleton that mirrors layout; `aria-busy` on lists; Spinner has accessible name                                  |
-| Validation      | Text + `aria-describedby`; color not the only signal                                                             |
-| Reduced motion  | Carousel autoplay off; progress/OTP timer still updates                                                          |
-| Contrast        | Semantic tokens only                                                                                             |
-| Screen readers  | Live region for result counts, OTP timer remaining, city confirm count                                           |
-| LTR islands     | OTP, tel, national ID, `ltr-data`                                                                                |
+| Topic           | Requirement                                                                                                                   |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Keyboard        | All overlays, tabs, chips, gallery, filters operable without a pointer                                                        |
+| Focus           | Open overlay → move focus in; close → restore trigger. Wizard continue errors → focus first invalid field                     |
+| Dialogs/drawers | Modal-like UI uses `ResponsiveDialog` (Drawer below `md`). Label with `title`. Menu `aria-controls` must match the overlay id |
+| Forms           | Visible `Label`; errors in `Field`; required announced; do not rely on placeholder-as-label                                   |
+| Headings        | Card names are headings inside `article`; page `h1` once                                                                      |
+| Images          | Meaningful alt for portfolio/work; decorative icons `aria-hidden`                                                             |
+| Loading         | Skeleton that mirrors layout; `aria-busy` on lists; Spinner has accessible name                                               |
+| Validation      | Text + `aria-describedby`; color not the only signal                                                                          |
+| Reduced motion  | Carousel autoplay off; progress/OTP timer still updates                                                                       |
+| Contrast        | Semantic tokens only                                                                                                          |
+| Screen readers  | Live region for result counts, OTP timer remaining, city confirm count                                                        |
+| LTR islands     | OTP, tel, national ID, `ltr-data`                                                                                             |
 
 ---
 
@@ -708,7 +710,7 @@ consumer exists.
 | Component                                  | Mobile behavior                                                      |
 | ------------------------------------------ | -------------------------------------------------------------------- |
 | `StoreHeader`                              | 44px-class icon buttons; no truncated unlabelled icons               |
-| `SearchSurface` / `CitySelector` / filters | Drawer; sticky primary action                                        |
+| `SearchSurface` / `CitySelector` / filters | `ResponsiveDialog` Drawer; sticky primary action                     |
 | `ExpertCard`                               | Full-width; specialties wrap; CTA full-width                         |
 | `ExpertProfileHeader`                      | Stack; stats as a simple list                                        |
 | `ExpertContactBar`                         | Position sticky bottom; `padding-bottom` on profile main             |
@@ -718,7 +720,7 @@ consumer exists.
 | `ExpertiseCategorySheet`                   | One category at a time; confirm commits; no nested offcanvas stack   |
 | `FileUpload`                               | Tap to native picker; preview list with remove                       |
 | `ServiceExpertMarketplace`                 | Sticky city/filter bar; chips wrap; Drawer filters; one-column cards |
-| `ServiceFilterOverlay`                     | Drawer on small screens, start Sheet from `md`                       |
+| `ServiceFilterOverlay`                     | `ResponsiveDialog`: Drawer below `md`, start Sheet from `md`         |
 | `ArticleToc`                               | In-flow list, not a sticky unused sidebar                            |
 
 ---
@@ -742,7 +744,7 @@ No new styling system. No Bootstrap. No extra UI kit.
 ## 17. Quality check
 
 - Domain components are not planned under `components/ui/`.
-- No second Button/Input/Dialog family.
+- No second Button/Input/Dialog family. Modal product UI composes Dialog/Sheet/Drawer through `ResponsiveDialog`.
 - Pages are not planned as `"use client"` roots.
 - No duplicated service page components.
 - Registration covers nine steps + completion with shared shell/nav.

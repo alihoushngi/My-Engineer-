@@ -71,7 +71,7 @@ All service pages migrate to one reusable `ServiceDiscoveryPage` architecture wi
 | Software, education, membership, license, qualifications | `ExpertProfessionalInfo`                        | ALREADY IMPLEMENTED + MODERNIZE                   |
 | Certificates / فنی حرفه‌ای mention                       | `ExpertCertificates` text list                  | MIGRATE                                           |
 | Professional history/about                               | `ExpertExperience`, `ExpertAbout`               | ALREADY IMPLEMENTED + MODERNIZE                   |
-| Portfolio gallery + lightbox, thumbs, count              | `ExpertPortfolio` Drawer/Dialog                 | MODERNIZE                                         |
+| Portfolio gallery + lightbox, thumbs, count              | `ExpertPortfolio` via `ResponsiveDialog`        | MODERNIZE                                         |
 | Reviews, stars, tags, expert reply, load more            | `ExpertReviews` with page size 9                | MIGRATE + MODERNIZE                               |
 | Review submission/auth modal                             | Honest unavailable sheet                        | NOT APPLICABLE — no mutation/auth contract        |
 | Phone/SMS drawer and sticky mobile contact               | `ExpertContactDrawer`, `ExpertStickyContactBar` | ALREADY IMPLEMENTED + MODERNIZE                   |

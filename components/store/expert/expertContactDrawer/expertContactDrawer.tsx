@@ -2,16 +2,8 @@
 
 import { type ReactNode } from "react";
 import { MessageSquareIcon, PhoneIcon } from "lucide-react";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { Button } from "@/components/ui/button/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer/drawer";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
 
 type ExpertContactDrawerProps = {
@@ -35,21 +27,12 @@ export function ExpertContactDrawer({
   }
 
   return (
-    <Drawer>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{expertProfileCopy.contactTitle}</DrawerTitle>
-          <DrawerDescription>
-            {expertProfileCopy.contactDescription} {expertName}
-          </DrawerDescription>
-        </DrawerHeader>
-        <div className="space-y-4 px-5">
-          <p className="type-body-sm leading-loose text-muted-foreground">
-            {expertProfileCopy.contactCaution}
-          </p>
-        </div>
-        <DrawerFooter>
+    <ResponsiveDialog
+      trigger={trigger}
+      title={expertProfileCopy.contactTitle}
+      description={`${expertProfileCopy.contactDescription} ${expertName}`}
+      footer={
+        <>
           {hasPhone ? (
             <Button asChild>
               <a href={`tel:${phone}`} className="ltr-data">
@@ -71,8 +54,12 @@ export function ExpertContactDrawer({
           <p className="text-center type-caption text-muted-foreground">
             {expertProfileCopy.contactPlatformNote}
           </p>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+        </>
+      }
+    >
+      <p className="type-body-sm leading-loose text-muted-foreground">
+        {expertProfileCopy.contactCaution}
+      </p>
+    </ResponsiveDialog>
   );
 }

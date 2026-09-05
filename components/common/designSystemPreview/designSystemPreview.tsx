@@ -16,6 +16,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar/avatar";
 import { Badge } from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import {
   Card,
   CardContent,
@@ -329,6 +330,15 @@ export function DesignSystemPreview() {
               </DrawerHeader>
             </DrawerContent>
           </Drawer>
+          <ResponsiveDialog
+            trigger={<Button variant="outline">گفتگوی واکنش‌گرا</Button>}
+            title="عنوان واکنش‌گرا"
+            description="در موبایل کشوی پایین و در دسکتاپ گفتگوی مرکزی."
+          >
+            <p className="type-body-sm leading-loose text-muted-foreground">
+              الگوی استاندارد مودال‌های محصول.
+            </p>
+          </ResponsiveDialog>
         </div>
         <Tabs defaultValue="one">
           <TabsList>

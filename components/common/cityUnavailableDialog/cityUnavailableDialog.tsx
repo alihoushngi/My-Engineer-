@@ -1,13 +1,7 @@
 "use client";
 
 import { MapPinIcon } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog/dialog";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { Empty } from "@/components/ui/empty/empty";
 
 type CityUnavailableDialogProps = {
@@ -26,19 +20,20 @@ export function CityUnavailableDialog({
   description,
 }: CityUnavailableDialogProps) {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent id={id}>
-        <DialogHeader className="sr-only">
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        <Empty
-          icon={<MapPinIcon aria-hidden="true" />}
-          title={title}
-          description={description}
-          className="pe-10"
-        />
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      id={id}
+      open={open}
+      onOpenChange={onOpenChange}
+      title={title}
+      description={description}
+      headerHidden
+    >
+      <Empty
+        icon={<MapPinIcon aria-hidden="true" />}
+        title={title}
+        description={description}
+        className="pe-10"
+      />
+    </ResponsiveDialog>
   );
 }

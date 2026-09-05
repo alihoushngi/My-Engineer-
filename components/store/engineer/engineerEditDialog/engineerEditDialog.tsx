@@ -1,15 +1,8 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, useId } from "react";
+import { ResponsiveDialog } from "@/components/common/responsiveDialog/responsiveDialog";
 import { Button } from "@/components/ui/button/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog/dialog";
 import { EngineerActionError } from "@/components/layout/engineerLogoutItem/engineerLogoutItem";
 import { engineerPanelCopy } from "@/config/engineer-panel.config/engineer-panel.config";
 
@@ -38,37 +31,46 @@ export function EngineerEditDialog({
   onSubmit,
   onRetry,
 }: EngineerEditDialogProps) {
+  const formId = useId();
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(event) => {
-            event.preventDefault();
-            onSubmit();
-          }}
-        >
-          {children}
-          <EngineerActionError message={error} onRetry={onRetry} />
-          <DialogFooter>
-            <Button type="submit" loading={pending} disabled={!canSubmit}>
-              {engineerPanelCopy.saveLabel}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              disabled={pending}
-              onClick={() => onOpenChange(false)}
-            >
-              {engineerPanelCopy.cancelLabel}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={title}
+      description={description}
+      footer={
+        <>
+          <Button
+            type="submit"
+            form={formId}
+            loading={pending}
+            disabled={!canSubmit}
+          >
+            {engineerPanelCopy.saveLabel}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={pending}
+            onClick={() => onOpenChange(false)}
+          >
+            {engineerPanelCopy.cancelLabel}
+          </Button>
+        </>
+      }
+    >
+      <form
+        id={formId}
+        className="flex flex-col gap-4"
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
+        {children}
+        <EngineerActionError message={error} onRetry={onRetry} />
+      </form>
+    </ResponsiveDialog>
   );
 }

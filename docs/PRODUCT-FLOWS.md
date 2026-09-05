@@ -414,7 +414,7 @@ legacy Bootstrap markup looks different. Do not import legacy CSS/JS.
 
 | Legacy pattern             | Compose from                                         |
 | -------------------------- | ---------------------------------------------------- |
-| Modal / offcanvas          | Dialog / Sheet / Drawer                              |
+| Modal / offcanvas          | `ResponsiveDialog` (Drawer on mobile)                |
 | Form controls              | Field, Input, Textarea, Select, Checkbox, RadioGroup |
 | OTP                        | OtpInput (`length={5}` for registration)             |
 | Uploads                    | FileUpload                                           |

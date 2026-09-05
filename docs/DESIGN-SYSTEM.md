@@ -130,7 +130,7 @@ second visual identity.
 - **Status:** use existing Badge variants (`success`, `warning`, `danger`,
   `info`, `outline`). Completion uses `Progress` plus a derived percent from
   registration fields, not invented analytics.
-- **Management forms:** section display plus focused `Dialog` edit. Mutations
+- **Management forms:** section display plus focused `ResponsiveDialog` edit. Mutations
   stay pending/error/retry and never claim server success without an API.
 - **Messages:** separate list and conversation routes on mobile. The composer
   stays at the bottom of the conversation pane; panel main already clears the
@@ -152,7 +152,7 @@ The home page opens with a navy discovery hero and a Swiper image slider instead
 
 ### Discovery
 
-Search preserves URL-driven query and city behavior and exposes the same city inventory as the marketplace. Search controls form one compact task region; service matches and expert results are separate. All six service routes share one layout: photo-led service hero, scope and specialty modules, URL-driven expert filters (city, skill, experience, license, discipline, degree, and service tabs where the legacy pages had them), a compact desktop filter sheet, a mobile bottom-sheet with active chips and result count, pagination above nine results, process, preparation guidance, FAQ when real copy exists, and related-service navigation.
+Search preserves URL-driven query and city behavior and exposes the same city inventory as the marketplace. Search controls form one compact task region; service matches and expert results are separate. Global search and city-unavailable states use `ResponsiveDialog`. All six service routes share one layout: photo-led service hero, scope and specialty modules, URL-driven expert filters (city, skill, experience, license, discipline, degree, and service tabs where the legacy pages had them), a compact desktop filter sheet, a mobile bottom-sheet with active chips and result count, pagination above nine results, process, preparation guidance, FAQ when real copy exists, and related-service navigation.
 
 ### Experts
 
@@ -185,6 +185,7 @@ OTP uses five LTR cells, numeric entry, Persian-digit normalization, paste trans
 - `Alert`: semantic status with title and recovery action when applicable.
 - `Skeleton`: follows the page family; loading boundaries include a readable loading announcement.
 - `Dialog`, `Sheet`, `Drawer`: retain accessible primitive focus trapping, title/description, dismiss behavior and focus restoration. Content scrolls inside viewport bounds; bottom actions include safe-area padding.
+- Modal-like product UI composes those primitives through `ResponsiveDialog`: a `vaul` bottom sheet below `md`, and Dialog or a side Sheet from `md`. Do not present a centered desktop modal on phones. Tooltips, menus, and compact Selects stay as non-modal overlays.
 
 ## Accessibility and RTL
 
