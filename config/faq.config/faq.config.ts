@@ -12,4 +12,5 @@ export const faqCopy = {
   relatedCategoriesHeading: "دسته‌های دیگر",
   serviceCtaLabel: "مشاهده خدمت مرتبط",
   metadataDescription: "پاسخ پرسش‌های رایج کاربران مهندس من.",
+  paginationLabel: "صفحه‌بندی پرسش‌ها",
 } as const;

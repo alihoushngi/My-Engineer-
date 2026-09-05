@@ -362,6 +362,12 @@ function firstCity(value: string | string[] | undefined): string {
   return city === "" ? ALL_FILTER : city;
 }
 
+function normalizeFilterValue(value: string | string[] | undefined): string {
+  const raw = firstValue(value)?.trim();
+
+  return raw && raw !== "" ? raw : ALL_FILTER;
+}
+
 function parsePage(value: string | string[] | undefined): number {
   const raw = firstValue(value);
   const page = Number.parseInt(raw ?? "", 10);
@@ -371,12 +377,6 @@ function parsePage(value: string | string[] | undefined): number {
   }
 
   return Math.floor(page);
-}
-
-function normalizeFilterValue(value: string | string[] | undefined): string {
-  const raw = firstValue(value)?.trim();
-
-  return raw && raw !== "" ? raw : ALL_FILTER;
 }
 
 export function parseServiceFilterParams(params: {

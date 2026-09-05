@@ -8,6 +8,7 @@ type SearchPageProps = {
   searchParams: Promise<{
     q?: string | string[];
     cities?: string | string[];
+    page?: string | string[];
   }>;
 };
 

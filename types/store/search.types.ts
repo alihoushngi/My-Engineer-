@@ -4,6 +4,7 @@ import { type ServiceCategory } from "@/config/services.config/services.config";
 export type SearchQueryState = {
   q: string;
   cities: readonly string[];
+  page: number;
 };
 
 export type SearchCatalogResult = {

@@ -242,6 +242,7 @@ export const engineerPanelCopy = {
   filterNew: "جدید",
   filterInReview: "در حال بررسی",
   filterClosed: "بسته‌شده",
+  paginationLabel: "صفحه‌بندی فهرست",
   requestStatusNew: "جدید",
   requestStatusInReview: "در حال بررسی",
   requestStatusClosed: "بسته‌شده",

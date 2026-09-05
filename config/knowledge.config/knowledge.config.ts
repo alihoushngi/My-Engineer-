@@ -12,4 +12,5 @@ export const knowledgeCopy = {
   tipsHeading: "نکته‌ها",
   serviceCtaLabel: "مشاهده خدمت مرتبط",
   metadataDescription: "نکته‌ها و راهنمایی‌های کاربردی مهندس من.",
+  paginationLabel: "صفحه‌بندی نکته‌ها",
 } as const;

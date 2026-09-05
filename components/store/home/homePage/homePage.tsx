@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { ContentHighlights } from "@/components/store/home/contentHighlights/contentHighlights";
 import { DrawingConsultation } from "@/components/store/home/drawingConsultation/drawingConsultation";
 import { HomeFaqEntry } from "@/components/store/home/homeFaqEntry/homeFaqEntry";
@@ -19,7 +20,9 @@ export function HomePage({ catalog }: HomePageProps) {
     <>
       <HomeHero />
       <ServiceCategories />
-      <HomeMarketplace experts={catalog.experts} cities={catalog.cities} />
+      <Suspense>
+        <HomeMarketplace experts={catalog.experts} cities={catalog.cities} />
+      </Suspense>
       <HomeNarrative />
       <PopularServices items={catalog.popularServices} />
       <DrawingConsultation items={catalog.drawingServices} />

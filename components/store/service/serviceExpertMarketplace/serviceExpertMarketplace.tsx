@@ -4,7 +4,7 @@ import { MapPinIcon, SlidersHorizontalIcon, UsersIcon } from "lucide-react";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
 import { ServiceActiveFilters } from "@/components/store/service/serviceActiveFilters/serviceActiveFilters";
 import { ServiceFilterOverlay } from "@/components/store/service/serviceFilterOverlay/serviceFilterOverlay";
-import { ServicePagination } from "@/components/store/service/servicePagination/servicePagination";
+import { Pagination } from "@/components/common/pagination/pagination";
 import { Button } from "@/components/ui/button/button";
 import { Empty } from "@/components/ui/empty/empty";
 import {
@@ -125,10 +125,11 @@ export function ServiceExpertMarketplace({
               </li>
             ))}
           </ul>
-          <ServicePagination
+          <Pagination
             page={pagination.page}
             pageCount={pagination.pageCount}
-            onPageChange={discovery.changePage}
+            ariaLabel={serviceFilterCopy.paginationLabel}
+            buildHref={discovery.pageHref}
           />
         </>
       ) : (

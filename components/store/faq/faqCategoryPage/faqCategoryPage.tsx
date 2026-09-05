@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CircleHelpIcon } from "lucide-react";
 import { ContentPageHeader } from "@/components/common/contentPageHeader/contentPageHeader";
+import { Pagination } from "@/components/common/pagination/pagination";
 import { StoreBreadcrumb } from "@/components/common/storeBreadcrumb/storeBreadcrumb";
 import { FaqAccordion } from "@/components/store/faq/faqAccordion/faqAccordion";
 import { FaqCategoryCard } from "@/components/store/faq/faqCategoryCard/faqCategoryCard";
@@ -9,13 +10,22 @@ import { Button } from "@/components/ui/button/button";
 import { faqCopy } from "@/config/faq.config/faq.config";
 import { siteConfig } from "@/config/site.config/site.config";
 import { storePaths } from "@/config/navigation.config/navigation.config";
-import { type FaqCategoryDetail } from "@/types/store/faq.types";
+import { type PaginatedItems } from "@/lib/pagination/paginate-items/paginate-items";
+import { type FaqCategoryDetail, type FaqItem } from "@/types/store/faq.types";
 
 type FaqCategoryPageProps = {
   category: FaqCategoryDetail;
+  items: readonly FaqItem[];
+  pagination: PaginatedItems<FaqItem>;
+  pageHref: (page: number) => string;
 };
 
-export function FaqCategoryPage({ category }: FaqCategoryPageProps) {
+export function FaqCategoryPage({
+  category,
+  items,
+  pagination,
+  pageHref,
+}: FaqCategoryPageProps) {
   const related = category.relatedCategories ?? [];
 
   return (
@@ -31,8 +41,16 @@ export function FaqCategoryPage({ category }: FaqCategoryPageProps) {
         title={category.title}
         description={category.description}
       />
-      {category.items.length > 0 ? (
-        <FaqAccordion items={category.items} />
+      {pagination.total > 0 ? (
+        <>
+          <FaqAccordion items={items} />
+          <Pagination
+            page={pagination.page}
+            pageCount={pagination.pageCount}
+            ariaLabel={faqCopy.paginationLabel}
+            buildHref={pageHref}
+          />
+        </>
       ) : (
         <Empty
           icon={<CircleHelpIcon aria-hidden="true" />}

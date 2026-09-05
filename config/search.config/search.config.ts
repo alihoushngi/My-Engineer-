@@ -28,4 +28,5 @@ export const searchCopy = {
   overlayDescription: "عبارت را وارد کنید یا یکی از خدمات را انتخاب کنید.",
   overlayServices: "خدمات",
   changeSearchLabel: "تغییر جستجو",
+  paginationLabel: "صفحه‌بندی نتایج متخصصان",
 } as const;

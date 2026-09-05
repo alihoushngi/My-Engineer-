@@ -1,3 +1,4 @@
+import { Pagination } from "@/components/common/pagination/pagination";
 import { EngineerConversationRow } from "@/components/store/engineer/engineerConversationRow/engineerConversationRow";
 import { EngineerPageHeader } from "@/components/store/engineer/engineerPageHeader/engineerPageHeader";
 import { Empty } from "@/components/ui/empty/empty";
@@ -5,14 +6,19 @@ import {
   engineerPageTitles,
   engineerPanelCopy,
 } from "@/config/engineer-panel.config/engineer-panel.config";
+import { type PaginatedItems } from "@/lib/pagination/paginate-items/paginate-items";
 import { type EngineerConversation } from "@/types/store/engineer.types";
 
 type EngineerMessagesPageProps = {
   conversations: readonly EngineerConversation[];
+  pagination: PaginatedItems<EngineerConversation>;
+  pageHref: (page: number) => string;
 };
 
 export function EngineerMessagesPage({
   conversations,
+  pagination,
+  pageHref,
 }: EngineerMessagesPageProps) {
   return (
     <div className="flex flex-col gap-6">
@@ -20,16 +26,24 @@ export function EngineerMessagesPage({
         title={engineerPageTitles.messages}
         description="گفت‌وگوهای مرتبط با درخواست‌ها. ارسال لحظه‌ای و پیوست در این نسخه وجود ندارد."
       />
-      {conversations.length === 0 ? (
+      {pagination.total === 0 ? (
         <Empty title={engineerPanelCopy.emptyMessages} />
       ) : (
-        <ul className="divide-y divide-border rounded-lg border border-border bg-surface px-(--space-card)">
-          {conversations.map((conversation) => (
-            <li key={conversation.id}>
-              <EngineerConversationRow conversation={conversation} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="divide-y divide-border rounded-lg border border-border bg-surface px-(--space-card)">
+            {conversations.map((conversation) => (
+              <li key={conversation.id}>
+                <EngineerConversationRow conversation={conversation} />
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            page={pagination.page}
+            pageCount={pagination.pageCount}
+            ariaLabel={engineerPanelCopy.paginationLabel}
+            buildHref={pageHref}
+          />
+        </>
       )}
     </div>
   );

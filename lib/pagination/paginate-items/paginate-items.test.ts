@@ -4,7 +4,7 @@ import { paginateItems } from "./paginate-items.ts";
 
 test("paginateItems hides pagination at the page-size boundary", () => {
   const items = Array.from({ length: 9 }, (_, index) => index + 1);
-  const result = paginateItems(items, 1, 9);
+  const result = paginateItems(items, 1);
 
   assert.deepEqual(result.items, items);
   assert.equal(result.hasPagination, false);
@@ -13,8 +13,8 @@ test("paginateItems hides pagination at the page-size boundary", () => {
 
 test("paginateItems paginates when the result count is greater than 9", () => {
   const items = Array.from({ length: 10 }, (_, index) => index + 1);
-  const firstPage = paginateItems(items, 1, 9);
-  const secondPage = paginateItems(items, 2, 9);
+  const firstPage = paginateItems(items, 1);
+  const secondPage = paginateItems(items, 2);
 
   assert.deepEqual(firstPage.items, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
   assert.deepEqual(secondPage.items, [10]);
@@ -31,7 +31,7 @@ test("paginateItems clamps an out-of-range page", () => {
 });
 
 test("paginateItems returns an empty first page for no results", () => {
-  const result = paginateItems([], 3, 9);
+  const result = paginateItems([], 3);
 
   assert.deepEqual(result.items, []);
   assert.equal(result.page, 1);

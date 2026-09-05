@@ -2,7 +2,7 @@
 
 import { SlidersHorizontalIcon, UsersIcon, XIcon } from "lucide-react";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
-import { HomeMarketplacePagination } from "@/components/store/home/homeMarketplace/homeMarketplacePagination";
+import { Pagination } from "@/components/common/pagination/pagination";
 import { Button } from "@/components/ui/button/button";
 import { Empty } from "@/components/ui/empty/empty";
 import {
@@ -140,10 +140,11 @@ export function HomeMarketplace({ experts, cities }: HomeMarketplaceProps) {
                 </li>
               ))}
             </ul>
-            <HomeMarketplacePagination
+            <Pagination
               page={marketplace.pagination.page}
               pageCount={marketplace.pagination.pageCount}
-              onPageChange={marketplace.changePage}
+              ariaLabel={homeMarketplaceCopy.paginationLabel}
+              buildHref={marketplace.pageHref}
             />
           </>
         ) : (

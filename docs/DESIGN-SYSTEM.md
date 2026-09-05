@@ -148,7 +148,7 @@ Compact navy sticky header, geometric wordmark, desktop navigation, discreet sea
 
 ### Home
 
-The home page opens with a navy discovery hero and a Swiper image slider instead of one static photograph. Search, city, and specialist-join remain in the first section. Six service categories share a translucent white `glass-card` tile with About, using category color only on the icon well. The marketplace module stays the core: multi-service chips, city and expertise selects, count feedback, expert cards, client pagination when more than nine results, reset, and an intentional empty state. Popular services form a photographic grid of mapped destinations; drawing services use an open four-column consultation strip. A four-point trust band, navy “what is” narrative, specialist CTA, a single preserved testimonial, knowledge-tip slider, editorial learning grid, and FAQ category entry complete the page.
+The home page opens with a navy discovery hero and a Swiper image slider instead of one static photograph. Search, city, and specialist-join remain in the first section. Six service categories share a translucent white `glass-card` tile with About, using category color only on the icon well. The marketplace module stays the core: multi-service chips, city and expertise selects, count feedback, expert cards, URL pagination when more than nine results (`?page=` plus current filters), reset, and an intentional empty state. Popular services form a photographic grid of mapped destinations; drawing services use an open four-column consultation strip. A four-point trust band, navy “what is” narrative, specialist CTA, a single preserved testimonial, knowledge-tip slider, editorial learning grid, and FAQ category entry complete the page.
 
 ### Discovery
 
@@ -186,6 +186,7 @@ OTP uses five LTR cells, numeric entry, Persian-digit normalization, paste trans
 - `Skeleton`: follows the page family; loading boundaries include a readable loading announcement.
 - `Dialog`, `Sheet`, `Drawer`: retain accessible primitive focus trapping, title/description, dismiss behavior and focus restoration. Content scrolls inside viewport bounds; bottom actions include safe-area padding.
 - Modal-like product UI composes those primitives through `ResponsiveDialog`: a `vaul` bottom sheet below `md`, and Dialog or a side Sheet from `md`. Do not present a centered desktop modal on phones. Tooltips, menus, and compact Selects stay as non-modal overlays.
+- `Pagination`: one compact RTL control for true lists with more than nine items. Default page size is 9. Routable lists use `?page=` and omit it on page 1; filter changes return to page 1. Mobile shows previous/next plus status text instead of a long run of page buttons.
 
 ## Accessibility and RTL
 

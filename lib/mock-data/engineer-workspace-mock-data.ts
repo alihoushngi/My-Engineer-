@@ -47,6 +47,24 @@ export const mockEngineerRequests: readonly EngineerRequest[] = [
     summary: "درخواست قبلی که در فهرست به‌صورت بسته‌شده نمایش داده می‌شود.",
     status: "closed",
   },
+  ...Array.from({ length: 8 }, (_, index) => {
+    const statuses = ["new", "in_review", "closed"] as const;
+    const status = statuses[index % 3] ?? "in_review";
+
+    return {
+      id: `req-extra-${index + 1}`,
+      title: `بررسی محدوده و خروجی نقشه‌برداری ${index + 4}`,
+      serviceLabel: "نقشه برداری",
+      city: index % 2 === 0 ? "تهران" : "کرج",
+      createdAtLabel: `${index + 3} روز پیش`,
+      summary: "درخواست نمایشی برای بررسی صفحه‌بندی فهرست درخواست‌ها.",
+      description: "این مورد فقط برای نمایش فهرست بلند در فضای کاری متخصص است.",
+      status,
+      isNew: status === "new",
+      customerDisplayName: "کاربر متقاضی",
+      conversationId: `conv-extra-${index + 1}`,
+    };
+  }),
 ];
 
 export const mockEngineerConversations: readonly EngineerConversation[] = [
@@ -68,6 +86,15 @@ export const mockEngineerConversations: readonly EngineerConversation[] = [
     relatedRequestId: "req-asbuilt-saadatabad",
     relatedServiceLabel: "نقشه برداری",
   },
+  ...Array.from({ length: 9 }, (_, index) => ({
+    id: `conv-extra-${index + 1}`,
+    participantName: "کاربر متقاضی",
+    lastMessagePreview: "برای هماهنگی بازدید پیام می‌دهم.",
+    lastMessageAtLabel: `${index + 2} روز پیش`,
+    unreadCount: index % 4 === 0 ? 1 : 0,
+    relatedRequestId: `req-extra-${index + 1}`,
+    relatedServiceLabel: "نقشه برداری",
+  })),
 ];
 
 export const mockEngineerMessagesByConversation: Readonly<
@@ -112,6 +139,24 @@ export const mockEngineerMessagesByConversation: Readonly<
       fromEngineer: true,
     },
   ],
+  ...Object.fromEntries(
+    Array.from({ length: 9 }, (_, index) => {
+      const conversationId = `conv-extra-${index + 1}`;
+
+      return [
+        conversationId,
+        [
+          {
+            id: `msg-extra-${index + 1}`,
+            conversationId,
+            body: "سلام، برای هماهنگی بازدید پیام می‌دهم.",
+            sentAtLabel: `${index + 2} روز پیش`,
+            fromEngineer: false,
+          },
+        ],
+      ];
+    }),
+  ),
 };
 
 export const mockEngineerCredentials: readonly EngineerCredential[] = [
@@ -186,4 +231,13 @@ export const mockEngineerNotifications: readonly EngineerNotification[] = [
     isRead: true,
     href: engineerPanelPaths.credentials,
   },
+  ...Array.from({ length: 6 }, (_, index) => ({
+    id: `ntf-extra-${index + 1}`,
+    kind: "request" as const,
+    title: `اعلان نمایشی ${index + 6}`,
+    body: "این اعلان برای بررسی صفحه‌بندی فهرست اعلان‌ها اضافه شده است.",
+    createdAtLabel: `${index + 4} روز پیش`,
+    isRead: true,
+    href: engineerPanelPaths.requests,
+  })),
 ];

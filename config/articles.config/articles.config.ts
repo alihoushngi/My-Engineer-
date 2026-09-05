@@ -15,4 +15,5 @@ export const articlesCopy = {
   faqsHeading: "پرسش‌های مقاله",
   serviceCtaPrefix: "مشاهده خدمت مرتبط",
   metadataDescription: "مقالات مهندس من درباره خدمات ساختمانی.",
+  paginationLabel: "صفحه‌بندی مقالات",
 } as const;

@@ -1,16 +1,31 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { type ServiceSlug } from "@/config/services.config/services.config";
-import { HOME_DISCOVERY_PAGE_SIZE } from "@/config/home.config/home.config";
-import { paginateItems } from "@/lib/home/paginate-items/paginate-items";
+import { useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  serviceCategories,
+  type ServiceSlug,
+} from "@/config/services.config/services.config";
+import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
+import {
+  buildPageHref,
+  parsePageParam,
+} from "@/lib/pagination/page-param/page-param";
 import { type ExpertCardData } from "@/types/store/expert.types";
 
+const serviceSlugSet = new Set<string>(
+  serviceCategories.map((service) => service.slug),
+);
+
 export function useHomeMarketplace(experts: readonly ExpertCardData[]) {
-  const [services, setServices] = useState<readonly ServiceSlug[]>([]);
-  const [city, setCity] = useState("all");
-  const [expertise, setExpertise] = useState("all");
-  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.toString();
+  const services = parseServiceSlugs(searchParams.get("services"));
+  const city = searchParams.get("cities") || "all";
+  const expertise = searchParams.get("expertise") || "all";
+  const page = parsePageParam(searchParams.get("page"));
 
   const expertiseOptions = useMemo(
     () => [...new Set(experts.flatMap((expert) => expert.specialties ?? []))],
@@ -31,42 +46,61 @@ export function useHomeMarketplace(experts: readonly ExpertCardData[]) {
     [city, expertise, experts, services],
   );
 
-  const pagination = paginateItems(
-    filteredExperts,
-    page,
-    HOME_DISCOVERY_PAGE_SIZE,
-  );
+  const pagination = paginateItems(filteredExperts, page);
   const hasFilters =
     services.length > 0 || city !== "all" || expertise !== "all";
 
-  function resetPage() {
-    setPage(1);
+  function replaceState(next: {
+    services: readonly ServiceSlug[];
+    city: string;
+    expertise: string;
+    page: number;
+  }) {
+    const params = new URLSearchParams();
+
+    if (next.services.length > 0) {
+      params.set("services", next.services.join(","));
+    }
+
+    if (next.city !== "all") {
+      params.set("cities", next.city);
+    }
+
+    if (next.expertise !== "all") {
+      params.set("expertise", next.expertise);
+    }
+
+    if (next.page > 1) {
+      params.set("page", String(next.page));
+    }
+
+    const serialized = params.toString();
+    router.replace(serialized === "" ? pathname : `${pathname}?${serialized}`, {
+      scroll: false,
+    });
+  }
+
+  function pageHref(nextPage: number) {
+    return `${buildPageHref(pathname, nextPage, query)}#home-marketplace`;
   }
 
   function toggleService(slug: ServiceSlug) {
-    resetPage();
-    setServices((current) =>
-      current.includes(slug)
-        ? current.filter((item) => item !== slug)
-        : [...current, slug],
-    );
+    const nextServices = services.includes(slug)
+      ? services.filter((item) => item !== slug)
+      : [...services, slug];
+    replaceState({ services: nextServices, city, expertise, page: 1 });
   }
 
   function changeCity(value: string) {
-    resetPage();
-    setCity(value);
+    replaceState({ services, city: value, expertise, page: 1 });
   }
 
   function changeExpertise(value: string) {
-    resetPage();
-    setExpertise(value);
+    replaceState({ services, city, expertise: value, page: 1 });
   }
 
   function reset() {
-    setServices([]);
-    setCity("all");
-    setExpertise("all");
-    setPage(1);
+    replaceState({ services: [], city: "all", expertise: "all", page: 1 });
   }
 
   return {
@@ -80,7 +114,18 @@ export function useHomeMarketplace(experts: readonly ExpertCardData[]) {
     toggleService,
     changeCity,
     changeExpertise,
-    changePage: setPage,
+    pageHref,
     reset,
   };
+}
+
+function parseServiceSlugs(value: string | null): ServiceSlug[] {
+  if (!value) {
+    return [];
+  }
+
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter((item): item is ServiceSlug => serviceSlugSet.has(item));
 }

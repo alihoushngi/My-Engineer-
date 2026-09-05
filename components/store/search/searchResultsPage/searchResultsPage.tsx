@@ -6,6 +6,7 @@ import { SearchResults } from "@/components/store/search/searchResults/searchRes
 import { SearchSummary } from "@/components/store/search/searchSummary/searchSummary";
 import { searchCopy } from "@/config/search.config/search.config";
 import { siteConfig } from "@/config/site.config/site.config";
+import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
 import { buildSearchHref } from "@/lib/search/search-params/search-params";
 import {
   type SearchCatalogResult,
@@ -21,9 +22,10 @@ export function SearchResultsPage({
   queryState,
   result,
 }: SearchResultsPageProps) {
-  const { q, cities } = queryState;
+  const { q, cities, page } = queryState;
   const hasQuery = q !== "";
   const hasResults = result.services.length > 0 || result.experts.length > 0;
+  const expertPagination = paginateItems(result.experts, page);
 
   return (
     <div className="container-app flex flex-col gap-8 py-page">
@@ -51,7 +53,14 @@ export function SearchResultsPage({
         clearHref={buildSearchHref({ q })}
       />
       {hasQuery && hasResults ? (
-        <SearchResults services={result.services} experts={result.experts} />
+        <SearchResults
+          services={result.services}
+          experts={result.experts}
+          expertPagination={expertPagination}
+          expertPageHref={(nextPage) =>
+            buildSearchHref({ q, cities, page: nextPage })
+          }
+        />
       ) : (
         <SearchEmptyState variant={hasQuery ? "no-results" : "no-query"} />
       )}

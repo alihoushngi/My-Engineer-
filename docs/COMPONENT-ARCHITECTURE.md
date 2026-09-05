@@ -76,6 +76,7 @@ components/
 ├── common/
 │   ├── sectionHeader/
 │   ├── responsiveDialog/
+│   ├── pagination/
 │   ├── storeBreadcrumb/
 │   ├── carousel/
 │   ├── legalDocument/
@@ -168,11 +169,12 @@ Create these only where two or more domains share the responsibility.
 | ------------------- | ---------------------------------------------------- | ------------- | ----------------------------------------------------------- |
 | `SectionHeader`     | Title + optional description + optional action       | Server        | Home, listings, profile sections                            |
 | `ResponsiveDialog`  | Desktop Dialog/Sheet, mobile Drawer bottom sheet     | Client        | Search, city, filters, expert overlays, engineer edit       |
+| `Pagination`        | Previous/next, compact page numbers, URL or callback | Client        | Discovery, search, content lists, engineer lists, reviews   |
 | `StoreBreadcrumb`   | Landmark nav trail                                   | Server        | Content, legal, FAQ, knowledge, article, optionally service |
 | `ContentPageHeader` | Title + intro for content/legal                      | Server        | Articles hub, FAQ, knowledge, about, legal                  |
 | `LegalDocument`     | Long-form semantic article                           | Server        | Terms, privacy                                              |
 | `Carousel`          | Pause, next/prev, dots, reduced-motion = no autoplay | Client        | Home banners; knowledge preview **if** those sections ship  |
-| `LoadMoreButton`    | Pending/disabled load-more                           | Client        | Service list, knowledge, reviews **if** paginated           |
+| `LoadMoreButton`    | Pending/disabled load-more                           | Client        | Not used for true lists; those use `Pagination`             |
 
 **Not created:**
 
@@ -283,7 +285,7 @@ ServiceDiscoveryPage              E
 │   ├── ServiceActiveFilters      D  (c) chips, clear, reset
 │   ├── result count (live region)
 │   ├── ExpertCard grid
-│   ├── ServicePagination         D  (c) when more than 9 results
+│   ├── Pagination                 C  when more than 9 results
 │   └── Empty + change-city
 ├── ServiceProcessSection         D
 ├── FaqAccordion                  D  only with real per-service copy

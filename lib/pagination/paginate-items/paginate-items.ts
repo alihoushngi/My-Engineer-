@@ -9,7 +9,7 @@ export type PaginatedItems<T> = {
 export function paginateItems<T>(
   items: readonly T[],
   page: number,
-  pageSize: number,
+  pageSize: number = 9,
 ): PaginatedItems<T> {
   const total = items.length;
   const safeSize = Math.max(1, pageSize);

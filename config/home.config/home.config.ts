@@ -2,8 +2,6 @@ import { storePaths } from "@/config/navigation.config/navigation.config";
 
 export { homeHeroSlides } from "@/lib/home/hero-slides/hero-slides";
 
-export const HOME_DISCOVERY_PAGE_SIZE = 9;
-
 export const homeHeroCopy = {
   title: "پلتفرم جامع خدمات ساختمانی در سراسر کشور",
   description: "ارتباط رایگان با مهندسان، پیمانکاران و متخصصان ساخت‌وساز",

@@ -3,6 +3,11 @@ import { notFound } from "next/navigation";
 import { ArticleCategoryPage } from "@/components/store/article/articleCategoryPage/articleCategoryPage";
 import { articlesCopy } from "@/config/articles.config/articles.config";
 import { notFoundMetadata } from "@/lib/seo/not-found-metadata/not-found-metadata";
+import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
+import {
+  buildPageHref,
+  parsePageParam,
+} from "@/lib/pagination/page-param/page-param";
 import {
   getArticleCategory,
   listArticlesByCategory,
@@ -10,6 +15,7 @@ import {
 
 type ArticleCategoryRouteProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string | string[] }>;
 };
 
 export async function generateMetadata({
@@ -33,6 +39,7 @@ export async function generateMetadata({
 
 export default async function ArticleCategoryRoutePage({
   params,
+  searchParams,
 }: ArticleCategoryRouteProps) {
   const { slug } = await params;
   const category = await getArticleCategory(slug);
@@ -42,6 +49,17 @@ export default async function ArticleCategoryRoutePage({
   }
 
   const articles = await listArticlesByCategory(slug);
+  const pagination = paginateItems(
+    articles,
+    parsePageParam((await searchParams).page),
+  );
 
-  return <ArticleCategoryPage category={category} articles={articles} />;
+  return (
+    <ArticleCategoryPage
+      category={category}
+      articles={pagination.items}
+      pagination={pagination}
+      pageHref={(page) => buildPageHref(category.href, page)}
+    />
+  );
 }

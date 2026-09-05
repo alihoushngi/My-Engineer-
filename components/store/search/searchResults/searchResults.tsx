@@ -1,4 +1,5 @@
 import { UsersIcon } from "lucide-react";
+import { Pagination } from "@/components/common/pagination/pagination";
 import { ExpertCard } from "@/components/store/expert/expertCard/expertCard";
 import { ServiceCard } from "@/components/store/service/serviceCard/serviceCard";
 import { ServiceIcon } from "@/components/store/service/serviceIcon/serviceIcon";
@@ -6,7 +7,14 @@ import { Empty } from "@/components/ui/empty/empty";
 import { searchCopy } from "@/config/search.config/search.config";
 import { type SearchResultsProps } from "@/components/store/search/searchResults/type/searchResults.types";
 
-export function SearchResults({ services, experts }: SearchResultsProps) {
+export function SearchResults({
+  services,
+  experts,
+  expertPagination,
+  expertPageHref,
+}: SearchResultsProps) {
+  const visibleExperts = expertPagination?.items ?? experts;
+
   return (
     <div className="space-y-10">
       {services.length > 0 ? (
@@ -35,14 +43,24 @@ export function SearchResults({ services, experts }: SearchResultsProps) {
         <h2 id="search-experts-heading" className="type-h3 text-foreground">
           {searchCopy.expertsHeading}
         </h2>
-        {experts.length > 0 ? (
-          <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            {experts.map((expert) => (
-              <li key={expert.id} className="min-w-0">
-                <ExpertCard expert={expert} />
-              </li>
-            ))}
-          </ul>
+        {visibleExperts.length > 0 ? (
+          <>
+            <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {visibleExperts.map((expert) => (
+                <li key={expert.id} className="min-w-0">
+                  <ExpertCard expert={expert} />
+                </li>
+              ))}
+            </ul>
+            {expertPagination && expertPageHref ? (
+              <Pagination
+                page={expertPagination.page}
+                pageCount={expertPagination.pageCount}
+                ariaLabel={searchCopy.paginationLabel}
+                buildHref={expertPageHref}
+              />
+            ) : null}
+          </>
         ) : (
           <Empty
             icon={<UsersIcon aria-hidden="true" />}

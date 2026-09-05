@@ -76,7 +76,15 @@ export function getMockEngineerWorkspace(): EngineerWorkspace {
     requests: mockEngineerRequests,
     conversations: mockEngineerConversations,
     messagesByConversationId: mockEngineerMessagesByConversation,
-    portfolio: expert.portfolio ?? [],
+    portfolio: [
+      ...(expert.portfolio ?? []),
+      ...Array.from({ length: 5 }, (_, index) => ({
+        id: `${expert.id}-manage-p${index + 1}`,
+        title: `نمونه‌کار مدیریتی ${index + 1}`,
+        imageSrc: "/images/portfolio/project-01.jpg",
+        imageAlt: "نمونه پروژه ساختمانی اجراشده",
+      })),
+    ],
     credentials: mockEngineerCredentials,
     reviews: expert.reviews ?? [],
     notifications: mockEngineerNotifications,

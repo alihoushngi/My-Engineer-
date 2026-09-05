@@ -3,14 +3,13 @@
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  SERVICE_DISCOVERY_PAGE_SIZE,
   degreeFilterOptions,
   disciplineFilterOptions,
   getServiceFilterDefinition,
   licenseFilterOptions,
 } from "@/config/service-filters.config/service-filters.config";
 import { type ServiceSlug } from "@/config/services.config/services.config";
-import { paginateItems } from "@/lib/home/paginate-items/paginate-items";
+import { paginateItems } from "@/lib/pagination/paginate-items/paginate-items";
 import {
   ALL_FILTER,
   applyServiceFilterDefaults,
@@ -67,11 +66,7 @@ export function useServiceDiscovery({
     tabs: definition.tabs,
     visibleKeys,
   });
-  const pagination = paginateItems(
-    filteredExperts,
-    applied.page,
-    SERVICE_DISCOVERY_PAGE_SIZE,
-  );
+  const pagination = paginateItems(filteredExperts, applied.page);
   const activeChips = getActiveFilterChips(applied, {
     cities,
     skills: definition.skills,
@@ -138,8 +133,10 @@ export function useServiceDiscovery({
       setOverlayOpen(false);
       replaceQuery(withTabFilters(applied, tab, definition.tabs), 1);
     },
-    changePage: (page: number) => {
-      replaceQuery(applied, page);
+    pageHref: (page: number) => {
+      const params = serializeServiceFilterParams(applied, page, defaultTab);
+      const serialized = params.toString();
+      return serialized === "" ? pathname : `${pathname}?${serialized}`;
     },
     clearChip: (key: FilterKey) => {
       replaceQuery({ ...applied, [key]: ALL_FILTER }, 1);

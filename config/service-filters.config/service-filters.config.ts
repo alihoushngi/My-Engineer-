@@ -6,8 +6,6 @@ import {
   type ServiceTabOption,
 } from "@/lib/service/filter-experts/filter-experts";
 
-export const SERVICE_DISCOVERY_PAGE_SIZE = 9;
-
 export const serviceFilterCopy = {
   expertsHeading: "متخصصان این حوزه",
   foundSuffix: "متخصص متناسب با انتخاب شما",

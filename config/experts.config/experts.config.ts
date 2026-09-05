@@ -1,5 +1,3 @@
-export const EXPERT_REVIEWS_PAGE_SIZE = 9;
-
 export const expertProfileCopy = {
   breadcrumbHome: "خانه",
   breadcrumbExperts: "متخصصان",
