@@ -315,31 +315,32 @@ ExpertCard                        D
   experience, city, CTA → /experts/[id]
 
 ExpertProfilePage                 E
-├── ExpertProfileHeader           D  avatar, name, profession, badges, views, experience, city
-├── ExpertContactBar              D  (c) desktop actions + mobile sticky
-│   └── ExpertContactSheet        D  (c) phone / SMS
-├── ExpertCredentialList          D  degree, license, nezam
-├── ExpertTagSection              D  reuse for specialties / cities / software
-├── ExpertHistory                 D
-├── ExpertPortfolioGallery        D  (c) grid + viewer dialog
-├── ExpertReviewList              D  read-only if ratings exist
-└── (deferred slots, not built)
-    ├── chat
-    ├── save
-    └── share / review form
+├── ExpertProfileHero             D  navy identity: photo, views, badges, degree, license, city, CTA
+│   ├── ExpertAvatarPreview       D  (c) enlarge photo
+│   └── ExpertProfileToolbar      D  (c) contact, chat, share, save
+├── ExpertQuickFacts              D  sidebar
+├── ExpertContactCta              D  (c) Drawer phone/SMS
+├── ExpertStickyContactBar        D  (c) mobile
+├── ExpertAbout / Specialties / ProfessionalInfo / Experience
+├── ExpertCertificates            D  text credentials when present
+├── ExpertTagSection              D  cities, software
+├── ExpertPortfolio               D  (c) grid + Drawer/Dialog viewer, thumbs
+├── ExpertReviews                 D  (c) stars, tags, reply, paginate >9, honest submit
+└── RelatedExperts
 ```
 
-| Component                    | Responsibility                         | Server/Client                                 | Phase 1                                                      |
-| ---------------------------- | -------------------------------------- | --------------------------------------------- | ------------------------------------------------------------ |
-| `ExpertCard`                 | Listing card                           | Server (link); rating display if data present | CORE                                                         |
-| `ExpertProfilePage`          | Profile composition                    | Server                                        | CORE                                                         |
-| `ExpertProfileHeader`        | Identity band                          | Server                                        | CORE                                                         |
-| `ExpertContactBar` / `Sheet` | Phone & SMS only                       | Client                                        | CORE                                                         |
-| `ExpertCredentialList`       | Education / license / membership       | Server                                        | CORE                                                         |
-| `ExpertTagSection`           | Titled chip list; empty → hide section | Server                                        | CORE                                                         |
-| `ExpertHistory`              | Prose; empty → hide                    | Server                                        | CORE                                                         |
-| `ExpertPortfolioGallery`     | Thumbnails + Dialog viewer             | Client viewer                                 | CORE                                                         |
-| `ExpertReviewList`           | Display samples/list                   | Server                                        | Display **if API returns**; submit is **NEEDS CONFIRMATION** |
+| Component                | Responsibility                         | Server/Client                                 | Phase 1                                            |
+| ------------------------ | -------------------------------------- | --------------------------------------------- | -------------------------------------------------- |
+| `ExpertCard`             | Listing card                           | Server (link); rating display if data present | CORE                                               |
+| `ExpertProfilePage`      | Profile composition                    | Server                                        | CORE                                               |
+| `ExpertProfileHero`      | Navy identity band                     | Server + client islands                       | CORE                                               |
+| `ExpertContactDrawer`    | Phone & SMS bottom sheet               | Client                                        | CORE                                               |
+| `ExpertProfessionalInfo` | Education / license / membership       | Server                                        | CORE                                               |
+| `ExpertCertificates`     | Named credentials without fake scans   | Server                                        | CORE                                               |
+| `ExpertTagSection`       | Titled chip list; empty → hide section | Server                                        | CORE                                               |
+| `ExpertExperience`       | Prose; empty → hide                    | Server                                        | CORE                                               |
+| `ExpertPortfolio`        | Thumbnails + Drawer/Dialog viewer      | Client                                        | CORE                                               |
+| `ExpertReviews`          | Display list, paginate >9              | Client                                        | Display from catalog; submit is honest unavailable |
 
 **Do not** split Avatar/Badge into domain wrappers. **Do not** create
 `SuggestedExpertCard` — use `ExpertCard` with a compact variant if the rail is

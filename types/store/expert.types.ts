@@ -27,6 +27,12 @@ export type ExpertPortfolioItem = {
   imageAlt?: string;
 };
 
+export type ExpertCertificate = {
+  id: string;
+  title: string;
+  issuer?: string;
+};
+
 /**
  * Public contact channels for a profile.
  * Phone/SMS values must come from a real API contract — never placeholders.
@@ -86,6 +92,7 @@ export type ExpertProfile = {
   organizationMembership?: ExpertOrganizationMembership;
   license?: ExpertLicense;
   qualifications?: readonly string[];
+  certificates?: readonly ExpertCertificate[];
   history?: string;
   portfolio?: readonly ExpertPortfolioItem[];
   rating?: number;

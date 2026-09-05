@@ -4,15 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { SectionHeader } from "@/components/common/sectionHeader/sectionHeader";
+import { ExpertResponsiveOverlay } from "@/components/store/expert/expertResponsiveOverlay/expertResponsiveOverlay";
 import { Button } from "@/components/ui/button/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog/dialog";
 import { expertProfileCopy } from "@/config/experts.config/experts.config";
+import { formatFaNumber } from "@/lib/format/format-fa-number/format-fa-number";
 import { type ExpertPortfolioItem } from "@/types/store/expert.types";
 import { hasItems } from "@/lib/experts/expert-profile/expert-profile";
 import { cn } from "@/lib/utils/cn/cn";
@@ -26,14 +21,32 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
   const portfolio = items ?? [];
   const selected = openIndex === null ? undefined : portfolio[openIndex];
 
+  function move(delta: number) {
+    setOpenIndex((current) => {
+      if (current === null || portfolio.length === 0) {
+        return current;
+      }
+
+      return (current + delta + portfolio.length) % portfolio.length;
+    });
+  }
+
   return (
-    <section aria-labelledby="expert-portfolio-heading" className="">
+    <section aria-labelledby="expert-portfolio-heading">
       <div className="py-8 first:pt-0">
         <div className="space-y-8">
-          <SectionHeader
-            titleId="expert-portfolio-heading"
-            title={expertProfileCopy.portfolioTitle}
-          />
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <SectionHeader
+              titleId="expert-portfolio-heading"
+              title={expertProfileCopy.portfolioTitle}
+            />
+            {hasItems(portfolio) ? (
+              <p className="type-caption text-muted-foreground">
+                {formatFaNumber(portfolio.length)}{" "}
+                {expertProfileCopy.portfolioCountLabel}
+              </p>
+            ) : null}
+          </div>
           {hasItems(portfolio) ? (
             <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
               {portfolio.map((item, index) => (
@@ -45,19 +58,10 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
                       setOpenIndex(index);
                     }}
                   >
-                    <PortfolioMedia
-                      item={item}
-                      className="aspect-[4/3] w-full"
-                    />
-                    {item.title ? (
-                      <span className="block p-3 type-body-sm font-medium text-card-foreground">
-                        {item.title}
-                      </span>
-                    ) : (
-                      <span className="block p-3 type-body-sm font-medium text-card-foreground">
-                        {expertProfileCopy.portfolioOpen}
-                      </span>
-                    )}
+                    <PortfolioMedia item={item} className="aspect-4/3 w-full" />
+                    <span className="block p-3 type-body-sm font-medium text-card-foreground">
+                      {item.title ?? expertProfileCopy.portfolioOpen}
+                    </span>
                   </button>
                 </li>
               ))}
@@ -69,103 +73,82 @@ export function ExpertPortfolio({ items }: ExpertPortfolioProps) {
           )}
         </div>
       </div>
-      <Dialog
+      <ExpertResponsiveOverlay
         open={openIndex !== null}
+        title={selected?.title ?? expertProfileCopy.portfolioViewerTitle}
+        description={selected?.description ?? expertProfileCopy.portfolioOpen}
         onOpenChange={(open) => {
           if (!open) {
             setOpenIndex(null);
           }
         }}
       >
-        <DialogContent
-          className="sm:max-w-2xl"
-          onKeyDown={(event) => {
-            if (portfolio.length < 2 || openIndex === null) {
-              return;
-            }
+        {selected ? (
+          <div
+            className="space-y-4"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (portfolio.length < 2) {
+                return;
+              }
 
-            if (event.key === "ArrowRight") {
-              event.preventDefault();
-              setOpenIndex(
-                (current) =>
-                  ((current ?? 0) - 1 + portfolio.length) % portfolio.length,
-              );
-            }
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                move(-1);
+              }
 
-            if (event.key === "ArrowLeft") {
-              event.preventDefault();
-              setOpenIndex(
-                (current) => ((current ?? 0) + 1) % portfolio.length,
-              );
-            }
-          }}
-        >
-          {selected ? (
-            <>
-              <DialogHeader>
-                <DialogTitle>
-                  {selected.title ?? expertProfileCopy.portfolioTitle}
-                </DialogTitle>
-                {selected.description ? (
-                  <DialogDescription>{selected.description}</DialogDescription>
-                ) : (
-                  <DialogDescription className="sr-only">
-                    {expertProfileCopy.portfolioOpen}
-                  </DialogDescription>
-                )}
-              </DialogHeader>
-              <PortfolioMedia
-                item={selected}
-                className="aspect-[16/9] w-full"
-              />
-              {portfolio.length > 1 ? (
-                <div className="flex justify-between gap-3">
-                  <Button
+              if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                move(1);
+              }
+            }}
+          >
+            <PortfolioMedia
+              item={selected}
+              className="aspect-video w-full rounded-lg"
+            />
+            {portfolio.length > 1 ? (
+              <div className="flex justify-between gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => move(-1)}
+                >
+                  <ChevronRightIcon aria-hidden="true" className="ltr:hidden" />
+                  <ChevronLeftIcon aria-hidden="true" className="rtl:hidden" />
+                  {expertProfileCopy.portfolioPrevious}
+                </Button>
+                <Button type="button" variant="outline" onClick={() => move(1)}>
+                  {expertProfileCopy.portfolioNext}
+                  <ChevronLeftIcon aria-hidden="true" className="ltr:hidden" />
+                  <ChevronRightIcon aria-hidden="true" className="rtl:hidden" />
+                </Button>
+              </div>
+            ) : null}
+            <ul className="grid grid-cols-4 gap-2 sm:grid-cols-6">
+              {portfolio.map((item, index) => (
+                <li key={`${item.id}-thumb`}>
+                  <button
                     type="button"
-                    variant="outline"
+                    aria-current={index === openIndex ? "true" : undefined}
+                    className={cn(
+                      "overflow-hidden rounded-md border outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                      index === openIndex
+                        ? "border-primary"
+                        : "border-transparent",
+                    )}
                     onClick={() => {
-                      setOpenIndex((current) =>
-                        current === null
-                          ? 0
-                          : (current - 1 + portfolio.length) % portfolio.length,
-                      );
+                      setOpenIndex(index);
                     }}
                   >
-                    <ChevronRightIcon
-                      aria-hidden="true"
-                      className="ltr:hidden"
-                    />
-                    <ChevronLeftIcon
-                      aria-hidden="true"
-                      className="rtl:hidden"
-                    />
-                    {expertProfileCopy.portfolioPrevious}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      setOpenIndex((current) =>
-                        current === null ? 0 : (current + 1) % portfolio.length,
-                      );
-                    }}
-                  >
-                    {expertProfileCopy.portfolioNext}
-                    <ChevronLeftIcon
-                      aria-hidden="true"
-                      className="ltr:hidden"
-                    />
-                    <ChevronRightIcon
-                      aria-hidden="true"
-                      className="rtl:hidden"
-                    />
-                  </Button>
-                </div>
-              ) : null}
-            </>
-          ) : null}
-        </DialogContent>
-      </Dialog>
+                    <PortfolioMedia item={item} className="aspect-square" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </ExpertResponsiveOverlay>
     </section>
   );
 }

@@ -44,12 +44,18 @@ export function ExpertContactDrawer({
             {expertProfileCopy.contactDescription} {expertName}
           </DrawerDescription>
         </DrawerHeader>
+        <div className="space-y-4 px-5">
+          <p className="type-body-sm leading-loose text-muted-foreground">
+            {expertProfileCopy.contactCaution}
+          </p>
+        </div>
         <DrawerFooter>
           {hasPhone ? (
             <Button asChild>
               <a href={`tel:${phone}`} className="ltr-data">
                 <PhoneIcon aria-hidden="true" />
                 {expertProfileCopy.callLabel}
+                <span className="ltr-data type-body-sm">{phone}</span>
               </a>
             </Button>
           ) : null}
@@ -58,9 +64,13 @@ export function ExpertContactDrawer({
               <a href={`sms:${sms}`} className="ltr-data">
                 <MessageSquareIcon aria-hidden="true" />
                 {expertProfileCopy.smsLabel}
+                <span className="ltr-data type-body-sm">{sms}</span>
               </a>
             </Button>
           ) : null}
+          <p className="text-center type-caption text-muted-foreground">
+            {expertProfileCopy.contactPlatformNote}
+          </p>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

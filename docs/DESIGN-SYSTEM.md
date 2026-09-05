@@ -158,7 +158,7 @@ Search preserves URL-driven query and city behavior and exposes the same city in
 
 Expert cards prioritize identity, profession, verification, location/experience, rating when available, a short specialties preview, and one profile action. At most three specialties appear in a result card; the remainder is counted, with full content on the profile.
 
-Profiles use an open main column for biography, specialties, professional information, history, service cities, software, portfolio and reviews. Only populated sections render. A supporting column holds quick facts and contact availability. Mobile contact uses an opaque safe-area bottom action only when a valid public contact exists. Preserve gallery keyboard behavior and share support. Do not fabricate ratings, credentials, saved state or contact numbers.
+Profiles open with a navy identity band: photo (enlargeable), views, verification, profession and degree, license competencies, organization membership, city/experience, rating, a free-contact line, then contact / chat / share / save actions. Chat, save, and review submission stay visible as honest unavailable sheets because those APIs do not exist. The main column keeps biography, specialties, professional information, history, certificates, service cities, software, a usable portfolio gallery (count, thumbs, previous/next, Drawer on mobile), and reviews with tags, expert replies, and pagination above nine items. A supporting column holds quick facts and contact availability. Mobile contact uses an opaque safe-area bottom action only when a valid public contact exists. Do not fabricate phone numbers or pretend a review was sent.
 
 ### Articles, FAQ and knowledge
 

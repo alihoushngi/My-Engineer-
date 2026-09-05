@@ -61,21 +61,22 @@ All service pages migrate to one reusable `ServiceDiscoveryPage` architecture wi
 
 ## Expert profile (`PastDesign/resume.html` → `/experts/[id]`)
 
-| Legacy section                                           | Implementation                                      | Status                                            |
-| -------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
-| Portrait, name, profession, city, verified/active        | `ExpertProfileHero`, `ExpertStatusBadges`           | MODERNIZE                                         |
-| Views and rating                                         | `ExpertQuickFacts`, `ExpertRating` when data exists | ALREADY IMPLEMENTED + MODERNIZE                   |
-| Share                                                    | `ExpertShareButton`                                 | ALREADY IMPLEMENTED                               |
-| Bookmark                                                 | none                                                | NOT APPLICABLE — no account/saved-expert contract |
-| Specialties and service cities                           | `ExpertSpecialties`, `ExpertTagSection`             | ALREADY IMPLEMENTED + MODERNIZE                   |
-| Software, education, membership, license, qualifications | `ExpertProfessionalInfo`                            | ALREADY IMPLEMENTED + MODERNIZE                   |
-| Professional history/about                               | `ExpertExperience`, `ExpertAbout`                   | ALREADY IMPLEMENTED + MODERNIZE                   |
-| Portfolio gallery                                        | `ExpertPortfolio`                                   | MODERNIZE                                         |
-| Reviews and expert reply                                 | `ExpertReviews`                                     | MODERNIZE                                         |
-| Review submission/auth modal                             | none                                                | NOT APPLICABLE — no mutation/auth contract        |
-| Phone/SMS drawer and sticky mobile contact               | `ExpertContactDrawer`, `ExpertStickyContactBar`     | ALREADY IMPLEMENTED + MODERNIZE                   |
-| Chat and file attachment                                 | none                                                | NOT APPLICABLE — no chat/auth/upload API contract |
-| Related experts                                          | `RelatedExperts`                                    | MIGRATE                                           |
+| Legacy section                                           | Implementation                                  | Status                                            |
+| -------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------- |
+| Portrait, name, profession, city, verified/active        | `ExpertProfileHero`, `ExpertStatusBadges`       | MODERNIZE                                         |
+| Views, experience, degree, license competencies          | Hero + `ExpertQuickFacts`                       | MIGRATE + MODERNIZE                               |
+| Share                                                    | `ExpertShareButton`                             | ALREADY IMPLEMENTED                               |
+| Bookmark                                                 | `ExpertLegacyFeature` honest unavailable        | MODERNIZE — no customer-account contract          |
+| Specialties and service cities                           | `ExpertSpecialties`, `ExpertTagSection`         | ALREADY IMPLEMENTED + MODERNIZE                   |
+| Software, education, membership, license, qualifications | `ExpertProfessionalInfo`                        | ALREADY IMPLEMENTED + MODERNIZE                   |
+| Certificates / فنی حرفه‌ای mention                       | `ExpertCertificates` text list                  | MIGRATE                                           |
+| Professional history/about                               | `ExpertExperience`, `ExpertAbout`               | ALREADY IMPLEMENTED + MODERNIZE                   |
+| Portfolio gallery + lightbox, thumbs, count              | `ExpertPortfolio` Drawer/Dialog                 | MODERNIZE                                         |
+| Reviews, stars, tags, expert reply, load more            | `ExpertReviews` with page size 9                | MIGRATE + MODERNIZE                               |
+| Review submission/auth modal                             | Honest unavailable sheet                        | NOT APPLICABLE — no mutation/auth contract        |
+| Phone/SMS drawer and sticky mobile contact               | `ExpertContactDrawer`, `ExpertStickyContactBar` | ALREADY IMPLEMENTED + MODERNIZE                   |
+| Chat and file attachment                                 | Honest unavailable sheet                        | NOT APPLICABLE — no chat/auth/upload API contract |
+| Related experts                                          | `RelatedExperts`                                | MIGRATE                                           |
 
 ## Registration (`PastDesign/auth/step1.html` … `step9.html`)
 

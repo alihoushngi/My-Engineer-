@@ -5,8 +5,11 @@ import {
 } from "@/types/store/article.types";
 import {
   type ExpertCardData,
+  type ExpertCertificate,
+  type ExpertPortfolioItem,
   type ExpertProfile,
 } from "@/types/store/expert.types";
+import { type ExpertReview } from "@/types/store/review.types";
 import { type FaqCategoryDetail } from "@/types/store/faq.types";
 import { type KnowledgeCategoryDetail } from "@/types/store/knowledge.types";
 import { type City, type Province } from "@/types/store/registration.types";
@@ -655,89 +658,292 @@ const disciplineLabels: Record<string, string> = {
   other: "سایر",
 };
 
-export const mockExperts: readonly ExpertProfile[] = expertCards.map(
-  (expert) => ({
-    ...expert,
-    shortIntroduction: `${expert.primarySpecialty ?? expert.profession}؛ آماده بررسی نیاز پروژه و ارائه مسیر اجرایی روشن.`,
-    about:
-      "این پروفایل نمایشی برای بررسی تجربه کاربری بازار متخصصان مهندس من است. اطلاعات واقعی متخصصان پس از اتصال سرویس عمومی پروفایل نمایش داده خواهد شد.",
-    discipline: expert.discipline
-      ? (disciplineLabels[expert.discipline] ?? expert.discipline)
-      : expert.profession.includes("معماری")
-        ? "معماری"
-        : "عمران",
-    serviceCities: expert.city ? [expert.city] : [],
-    software:
-      expert.id === "nazanin-farhadi"
-        ? ["AutoCAD", "Revit", "SketchUp", "Lumion"]
-        : ["AutoCAD", "Civil 3D"],
-    education: [
-      {
-        degree: expert.degree
-          ? (degreeLabels[expert.degree] ?? "کارشناسی")
-          : "کارشناسی",
-        field: expert.profession,
-      },
+const organizationByCity: Record<string, string> = {
+  تهران: "عضو سازمان نظام مهندسی استان تهران",
+  کرج: "عضو سازمان نظام مهندسی استان البرز",
+  رشت: "عضو سازمان نظام مهندسی استان گیلان",
+  "بندر انزلی": "عضو سازمان نظام مهندسی استان گیلان",
+  اصفهان: "عضو سازمان نظام مهندسی استان اصفهان",
+  شیراز: "عضو سازمان نظام مهندسی استان فارس",
+};
+
+const portfolioAssets = [
+  {
+    src: "/images/portfolio/project-01.jpg",
+    alt: "نمونه پروژه ساختمانی اجراشده",
+  },
+  {
+    src: "/images/portfolio/project-02.jpg",
+    alt: "نمونه مستندات یک پروژه مهندسی",
+  },
+  {
+    src: "/images/portfolio/project-03.jpg",
+    alt: "جزئیات نمونه‌کار مهندسی",
+  },
+  {
+    src: "/images/portfolio/project-04.jpg",
+    alt: "نمونه کار پیمانکاری ساختمان",
+  },
+] as const;
+
+const portfolioTitles = [
+  "نمونه پروژه اجرایی",
+  "برداشت و مستندسازی پروژه",
+  "جزئیات نهایی پروژه",
+  "مرحله سازه و اجرا",
+  "بازدید کارگاهی",
+  "تحویل و مستندسازی",
+] as const;
+
+const reviewSeed: readonly Omit<ExpertReview, "id">[] = [
+  {
+    authorName: "امین قیاسی",
+    authorRole: "مشتری",
+    dateLabel: "۴ مرداد ۱۴۰۴",
+    rating: 5,
+    text: "با حوصله محدوده کار را توضیح دادند و زمان بازدید را دقیق رعایت کردند.",
+    highlights: [
+      { kind: "positive", label: "اشراف کامل به مسائل فنی" },
+      { kind: "positive", label: "وقت‌شناسی" },
     ],
-    organizationMembership: { label: "عضو سازمان نظام مهندسی" },
-    license:
+    replyText: "از اعتماد شما سپاسگزارم.",
+  },
+  {
+    authorName: "مالک پروژه",
+    authorRole: "مشتری",
+    dateLabel: "هفته گذشته",
+    rating: 4,
+    text: "بازدید در زمان وعده‌داده‌شده انجام شد و گزارش کار برای ادامه پرونده قابل استفاده بود.",
+    highlights: [{ kind: "positive", label: "تحویل کار طبق زمان توافق‌شده" }],
+  },
+  {
+    authorName: "همکار ساختمانی",
+    authorRole: "همکار",
+    dateLabel: "ماه گذشته",
+    rating: 5,
+    text: "توضیح محدوده خدمت شفاف بود و هماهنگی بدون رفت‌وبرگشت اضافه پیش رفت.",
+    highlights: [{ kind: "positive", label: "توضیح حین کار" }],
+  },
+  {
+    authorName: "زهرا محمدی",
+    authorRole: "مشتری",
+    dateLabel: "۱۲ تیر ۱۴۰۴",
+    rating: 5,
+    text: "مدارک مورد نیاز را از همان ابتدا فهرست کردند و مسیر کار روشن بود.",
+    highlights: [{ kind: "positive", label: "مهارت بالا" }],
+    replyText: "موفقیت پروژه برای ما هم مهم است.",
+  },
+  {
+    authorName: "کامران نوری",
+    authorRole: "مشتری",
+    dateLabel: "۲ خرداد ۱۴۰۴",
+    rating: 4,
+    text: "خروجی قابل استفاده بود؛ فقط هماهنگی مراجعه کمی بیشتر از انتظار طول کشید.",
+    highlights: [
+      { kind: "positive", label: "مهارت بالا" },
+      { kind: "negative", label: "تأخیر در حضور" },
+    ],
+  },
+  {
+    authorName: "لیلا حسینی",
+    authorRole: "مشتری",
+    dateLabel: "۱۸ اردیبهشت ۱۴۰۴",
+    rating: 5,
+    text: "پاسخ‌گویی منظم بود و برای انتخاب مرحله بعدی کار خیال‌مان راحت شد.",
+    highlights: [{ kind: "positive", label: "وقت‌شناسی" }],
+  },
+  {
+    authorName: "سعید اکبری",
+    authorRole: "مشتری",
+    dateLabel: "۹ فروردین ۱۴۰۴",
+    rating: 5,
+    text: "گزارش نهایی مرتب و قابل ارائه به مرجع مربوط بود.",
+    highlights: [{ kind: "positive", label: "اشراف کامل به مسائل فنی" }],
+  },
+  {
+    authorName: "نرگس رضایی",
+    authorRole: "مشتری",
+    dateLabel: "۲۵ اسفند ۱۴۰۳",
+    rating: 4,
+    text: "مسیر کار را مرحله‌به‌مرحله گفتند و ابهام پرونده کمتر شد.",
+    highlights: [{ kind: "positive", label: "توضیح حین کار" }],
+  },
+  {
+    authorName: "بهرام یوسفی",
+    authorRole: "مشتری",
+    dateLabel: "۱۴ بهمن ۱۴۰۳",
+    rating: 5,
+    text: "بازدید میدانی دقیق انجام شد و نتیجه با مدارک ملک هم‌خوان بود.",
+    highlights: [{ kind: "positive", label: "مهارت بالا" }],
+  },
+  {
+    authorName: "مریم کاظمی",
+    authorRole: "مشتری",
+    dateLabel: "۳۰ دی ۱۴۰۳",
+    rating: 5,
+    text: "زمان‌بندی روشن بود و پس از اتمام کار جمع‌بندی شفافی دریافت کردیم.",
+    highlights: [{ kind: "positive", label: "تحویل کار طبق زمان توافق‌شده" }],
+  },
+  {
+    authorName: "جواد امینی",
+    authorRole: "مشتری",
+    dateLabel: "۸ آذر ۱۴۰۳",
+    rating: 4,
+    text: "برای مقایسه چند مسیر اجرایی توضیح کافی دادند و انتخاب ساده‌تر شد.",
+    highlights: [{ kind: "positive", label: "اشراف کامل به مسائل فنی" }],
+  },
+];
+
+function buildServiceCities(city?: string): readonly string[] {
+  if (!city) {
+    return [];
+  }
+
+  if (city === "رشت" || city === "بندر انزلی") {
+    return [
+      city,
+      "رشت",
+      "خمام",
+      "فومن",
+      "شفت",
+      "لاهیجان",
+      "لنگرود",
+      "بندر انزلی",
+    ].filter((item, index, items) => items.indexOf(item) === index);
+  }
+
+  if (city === "تهران" || city === "کرج") {
+    return city === "تهران" ? ["تهران", "کرج"] : ["کرج", "تهران"];
+  }
+
+  return [city];
+}
+
+function buildPortfolio(expertId: string): readonly ExpertPortfolioItem[] {
+  return portfolioTitles.map((title, index) => {
+    const asset = portfolioAssets[index % portfolioAssets.length];
+
+    return {
+      id: `${expertId}-p${index + 1}`,
+      title,
+      imageSrc: asset?.src ?? "/images/portfolio/project-01.jpg",
+      imageAlt: asset?.alt ?? "نمونه پروژه ساختمانی اجراشده",
+    };
+  });
+}
+
+function buildReviews(
+  expertId: string,
+  count: number,
+): readonly ExpertReview[] {
+  return reviewSeed.slice(0, count).map((review, index) => ({
+    ...review,
+    id: `${expertId}-r${index + 1}`,
+  }));
+}
+
+function buildCertificates(
+  expertId: string,
+  hasLicense: boolean | undefined,
+): readonly ExpertCertificate[] {
+  if (hasLicense === false) {
+    return [
+      {
+        id: `${expertId}-tvto`,
+        title: "مدارک فنی و حرفه‌ای",
+        issuer: "سازمان آموزش فنی و حرفه‌ای",
+      },
+    ];
+  }
+
+  return [
+    {
+      id: `${expertId}-license`,
+      title: "پروانه اشتغال به کار مهندسی",
+      issuer: "سازمان نظام مهندسی ساختمان",
+    },
+  ];
+}
+
+export const mockExperts: readonly ExpertProfile[] = expertCards.map(
+  (expert, index) => {
+    const degreeLabel = expert.degree
+      ? (degreeLabels[expert.degree] ?? "کارشناسی")
+      : "کارشناسی";
+    const competencies =
       expert.hasLicense === false
         ? undefined
-        : { title: "پروانه اشتغال", competencies: ["طراحی", "نظارت"] },
-    history: `بیش از ${expert.experienceYears ?? 0} سال تجربه در پروژه‌های مرتبط با ${expert.primarySpecialty ?? expert.profession}.`,
-    portfolio: [
-      {
-        id: `${expert.id}-p1`,
-        title: "نمونه پروژه اجرایی",
-        imageSrc: "/images/portfolio/project-01.jpg",
-        imageAlt: "نمونه پروژه ساختمانی اجراشده",
-      },
-      {
-        id: `${expert.id}-p2`,
-        title: "برداشت و مستندسازی پروژه",
-        imageSrc: "/images/portfolio/project-02.jpg",
-        imageAlt: "نمونه مستندات یک پروژه مهندسی",
-      },
-      {
-        id: `${expert.id}-p3`,
-        title: "جزئیات نهایی پروژه",
-        imageSrc: "/images/portfolio/project-03.jpg",
-        imageAlt: "جزئیات نمونه‌کار مهندسی",
-      },
-    ],
-    reviews: [
-      {
-        id: `${expert.id}-r1`,
-        authorName: "کاربر نمایشی",
-        dateLabel: "نمونه طراحی",
-        rating: 5,
-        text: "پاسخ‌گویی منظم و توضیح روشن مراحل کار، انتخاب متخصص را برای ما ساده‌تر کرد.",
-      },
-      {
-        id: `${expert.id}-r2`,
-        authorName: "مالک پروژه",
-        dateLabel: "هفته گذشته",
-        rating: 4,
-        text: "بازدید در زمان وعده‌داده‌شده انجام شد و گزارش کار برای ادامه پرونده قابل استفاده بود.",
-      },
-      {
-        id: `${expert.id}-r3`,
-        authorName: "همکار ساختمانی",
-        dateLabel: "ماه گذشته",
-        rating: 5,
-        text: "توضیح محدوده خدمت شفاف بود و هماهنگی برای برداشت نقشه بدون رفت‌وبرگشت اضافه پیش رفت.",
-      },
-    ],
-    relatedExperts: expertCards
-      .filter(
-        (item) =>
-          item.id !== expert.id &&
-          item.serviceSlugs?.some((slug) =>
-            expert.serviceSlugs?.includes(slug),
-          ),
-      )
-      .slice(0, 3),
-  }),
+        : expert.discipline === "naghshe"
+          ? (["طراحی", "نظارت"] as const)
+          : (["طراحی", "نظارت", "اجرا"] as const);
+    const reviewCount = expert.id === "amirhossein-rostami" ? 11 : 3;
+    const reviews = buildReviews(expert.id, reviewCount);
+
+    return {
+      ...expert,
+      viewCount: 180 + index * 17,
+      shortIntroduction: `${expert.primarySpecialty ?? expert.profession}؛ آماده بررسی نیاز پروژه و ارائه مسیر اجرایی روشن.`,
+      about:
+        "این پروفایل نمایشی برای بررسی تجربه کاربری بازار متخصصان مهندس من است. اطلاعات واقعی متخصصان پس از اتصال سرویس عمومی پروفایل نمایش داده خواهد شد.",
+      discipline: expert.discipline
+        ? (disciplineLabels[expert.discipline] ?? expert.discipline)
+        : expert.profession.includes("معماری")
+          ? "معماری"
+          : "عمران",
+      serviceCities: buildServiceCities(expert.city),
+      software:
+        expert.track === "craftsman"
+          ? undefined
+          : expert.discipline === "memari"
+            ? ["AutoCAD", "Revit", "SketchUp", "Lumion"]
+            : expert.discipline === "omran"
+              ? ["AutoCAD", "ETABS", "SAFE"]
+              : ["AutoCAD", "Civil 3D"],
+      education:
+        expert.track === "craftsman" && !expert.degree
+          ? undefined
+          : [
+              {
+                degree: degreeLabel,
+                field: expert.profession,
+              },
+            ],
+      organizationMembership:
+        expert.hasLicense === false
+          ? undefined
+          : {
+              label: expert.city
+                ? (organizationByCity[expert.city] ??
+                  "عضو سازمان نظام مهندسی ساختمان")
+                : "عضو سازمان نظام مهندسی ساختمان",
+            },
+      license:
+        expert.hasLicense === false
+          ? undefined
+          : { title: "پروانه اشتغال", competencies },
+      qualifications: competencies,
+      certificates: buildCertificates(expert.id, expert.hasLicense),
+      history: [
+        `بیش از ${expert.experienceYears ?? 0} سال تجربه در پروژه‌های مرتبط با ${expert.primarySpecialty ?? expert.profession}.`,
+        "مسیر کار، مدارک مورد نیاز و خروجی قابل ارائه را پیش از شروع همکاری روشن می‌کند.",
+        expert.hasLicense === false
+          ? "دارای سوابق اجرایی و مدارک فنی مرتبط با حوزه فعالیت."
+          : "عضویت و صلاحیت حرفه‌ای بر اساس اطلاعات ثبت‌شده در پروفایل عمومی نمایش داده می‌شود.",
+      ].join("\n\n"),
+      portfolio: buildPortfolio(expert.id),
+      reviews,
+      reviewCount,
+      relatedExperts: expertCards
+        .filter(
+          (item) =>
+            item.id !== expert.id &&
+            item.serviceSlugs?.some((slug) =>
+              expert.serviceSlugs?.includes(slug),
+            ),
+        )
+        .slice(0, 3),
+    };
+  },
 );
 
 const defaultProcess = [

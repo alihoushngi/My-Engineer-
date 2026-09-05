@@ -1,3 +1,5 @@
+export const EXPERT_REVIEWS_PAGE_SIZE = 9;
+
 export const expertProfileCopy = {
   breadcrumbHome: "خانه",
   breadcrumbExperts: "متخصصان",
@@ -7,11 +9,24 @@ export const expertProfileCopy = {
   shareCopied: "پیوند کپی شد",
   shareError: "اشتراک‌گذاری انجام نشد. دوباره تلاش کنید.",
   shareRetry: "تلاش دوباره",
-  contactLabel: "تماس",
-  contactTitle: "تماس با متخصص",
+  saveLabel: "ذخیره",
+  saveUnavailableTitle: "ذخیره پروفایل هنوز فعال نیست",
+  saveUnavailableDescription:
+    "ذخیره متخصص به حساب کاربری مشتری نیاز دارد و پس از آماده شدن قرارداد حساب در دسترس قرار می‌گیرد.",
+  chatLabel: "چت",
+  chatUnavailableTitle: "گفتگوی درون‌برنامه‌ای هنوز فعال نیست",
+  chatUnavailableDescription:
+    "ارسال پیام و پیوست فایل در پروفایل عمومی پس از قرارداد گفتگو ممکن می‌شود. تا آن زمان از تماس یا پیامک استفاده کنید.",
+  contactLabel: "اطلاعات تماس",
+  contactTitle: "اطلاعات تماس",
   contactDescription: "با تماس یا پیامک مستقیم با متخصص گفتگو کنید.",
+  contactCaution:
+    "پیش از هر پرداخت یا هماهنگی، اطلاعات، سوابق و نمونه‌کارهای متخصص را بخوانید.",
+  contactPlatformNote:
+    "مهندس من راه ارتباطی امن با متخصصان حوزه ساختمان است؛ تماس شما مستقیم با متخصص انجام می‌شود.",
   callLabel: "تماس تلفنی",
   smsLabel: "ارسال پیامک",
+  freeContactCta: "همین حالا و رایگان تماس بگیرید",
   contactUnavailableTitle: "اطلاعات تماس در دسترس نیست",
   contactUnavailableDescription:
     "برای این متخصص هنوز راه تماس عمومی ثبت نشده است.",
@@ -31,15 +46,28 @@ export const expertProfileCopy = {
   cityLabel: "شهر",
   citiesTitle: "شهرهای ارائه خدمات",
   softwareTitle: "نرم‌افزارها",
-  portfolioTitle: "نمونه‌کارها",
+  certificatesTitle: "گواهی‌ها و مدارک",
+  portfolioTitle: "نمونه‌کارهای انجام‌شده",
   portfolioEmpty: "هنوز نمونه‌کاری برای نمایش وجود ندارد.",
   portfolioOpen: "مشاهده نمونه‌کار",
+  portfolioCountLabel: "عکس",
+  portfolioViewerTitle: "تصاویر رزومه",
   portfolioPrevious: "نمونه‌کار قبلی",
   portfolioNext: "نمونه‌کار بعدی",
   reviewsTitle: "نظرها",
+  reviewsIntro:
+    "نظرهای سازنده به انتخاب بهتر سایر مشتریان کمک می‌کند. ثبت نظر پس از اتصال سرویس احراز هویت مشتری ممکن می‌شود.",
   reviewsEmpty: "هنوز نظری ثبت نشده است.",
   reviewCountNoun: "نظر",
   reviewReplyLabel: "پاسخ متخصص",
+  reviewSubmitLabel: "ثبت نظر",
+  reviewSubmitUnavailableTitle: "ثبت نظر هنوز فعال نیست",
+  reviewSubmitUnavailableDescription:
+    "ارسال امتیاز، برچسب و متن نظر به ورود مشتری و قرارداد ثبت نظر نیاز دارد و در این نسخه شبیه‌سازی نمی‌شود.",
+  reviewPaginationLabel: "صفحه‌بندی نظرها",
+  previousLabel: "قبلی",
+  nextLabel: "بعدی",
+  avatarPreviewLabel: "بزرگ‌نمایی تصویر پروفایل",
   relatedTitle: "متخصصان مرتبط",
   ctaTitle: "ارتباط با متخصص",
   yearsSuffix: "سال",

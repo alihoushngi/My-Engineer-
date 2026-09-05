@@ -14,6 +14,13 @@ type ExpertQuickFactsProps = {
 export function ExpertQuickFacts({ expert }: ExpertQuickFactsProps) {
   const facts: QuickFact[] = [];
 
+  if (typeof expert.viewCount === "number") {
+    facts.push({
+      label: expertProfileCopy.viewsLabel,
+      value: formatFaNumber(expert.viewCount),
+    });
+  }
+
   if (typeof expert.experienceYears === "number") {
     facts.push({
       label: expertProfileCopy.experienceYearsLabel,

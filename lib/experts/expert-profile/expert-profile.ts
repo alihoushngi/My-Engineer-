@@ -93,6 +93,14 @@ export function getReviewCount(profile: ExpertProfile): number | undefined {
   return undefined;
 }
 
+export function getPrimaryDegree(
+  education: ExpertProfile["education"],
+): string | undefined {
+  const degree = education?.[0]?.degree?.trim();
+
+  return degree ? degree : undefined;
+}
+
 export function toExpertSharePath(id: string): `/experts/${string}` {
   return `/experts/${id}`;
 }

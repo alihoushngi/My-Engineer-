@@ -13,6 +13,7 @@ The redesign reuses project-owned PastDesign imagery when it is suitable and rec
 | `public/images/portfolio/project-01.jpg`   | `PastDesign/assets/img/sample-work/1.jpg`                           | Demo project portfolio                     | 259×194          |
 | `public/images/portfolio/project-02.jpg`   | `PastDesign/assets/img/sample-work/2.jpg`                           | Demo project portfolio                     | 255×198          |
 | `public/images/portfolio/project-03.jpg`   | `PastDesign/assets/img/sample-work/3.jpg`                           | Demo project portfolio                     | 201×251          |
+| `public/images/portfolio/project-04.jpg`   | `PastDesign/assets/img/sample-work/pey-1.jpg`                       | Demo project portfolio                     | sample-work      |
 | `public/images/services/*.png`             | `PastDesign/assets/img/services/*.png`                              | Six category illustrations                 | 172–341px square |
 | `public/images/trust/*.png`                | `PastDesign/assets/img/icon-services-auth/icons/icon-why-eng/*.png` | Three trust visuals                        | 172×172          |
 

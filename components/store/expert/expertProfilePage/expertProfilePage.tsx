@@ -6,6 +6,7 @@ import {
   AlertTitle,
 } from "@/components/ui/alert/alert";
 import { ExpertAbout } from "@/components/store/expert/expertAbout/expertAbout";
+import { ExpertCertificates } from "@/components/store/expert/expertCertificates/expertCertificates";
 import { ExpertContactCta } from "@/components/store/expert/expertContactCta/expertContactCta";
 import { ExpertExperience } from "@/components/store/expert/expertExperience/expertExperience";
 import { ExpertPortfolio } from "@/components/store/expert/expertPortfolio/expertPortfolio";
@@ -79,6 +80,9 @@ export function ExpertProfilePage({
           {hasText(expert.history) ? (
             <ExpertExperience history={expert.history} />
           ) : null}
+          {hasItems(expert.certificates) ? (
+            <ExpertCertificates certificates={expert.certificates} />
+          ) : null}
           {hasItems(expert.serviceCities) ? (
             <ExpertTagSection
               title={expertProfileCopy.citiesTitle}
@@ -100,6 +104,7 @@ export function ExpertProfilePage({
           typeof expert.rating === "number" ||
           typeof expert.reviewCount === "number" ? (
             <ExpertReviews
+              expertName={expert.name}
               reviews={expert.reviews}
               rating={expert.rating}
               reviewCount={expert.reviewCount}

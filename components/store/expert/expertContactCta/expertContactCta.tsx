@@ -32,7 +32,7 @@ export function ExpertContactCta({ expert }: ExpertContactCtaProps) {
           </h2>
           <p className="type-body text-muted-foreground">
             {canContact
-              ? expertProfileCopy.contactDescription
+              ? expertProfileCopy.freeContactCta
               : expertProfileCopy.contactUnavailableDescription}
           </p>
         </div>
